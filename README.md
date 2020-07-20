@@ -10,10 +10,10 @@ These instructions will get you up and running on your local machine for develop
 
 This software requires the following to be insalled:
 
+- MongoDB >= 3.6
 - Node.js >= 12.x
 - npm >= 6.x
-- yarn
-- MongoDB >= 3.6
+- yarn >= 1.22.4
 
 ### Installing
 
