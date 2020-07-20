@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dataset_fields",
+  "info": {
+    "name": "DatasetField"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "display": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "dataset": {
+      "via": "fields",
+      "model": "dataset"
+    }
+  }
+}

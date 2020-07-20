@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/topic-maps",
+      "handler": "topic-map.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/topic-maps/count",
+      "handler": "topic-map.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/topic-maps/:id",
+      "handler": "topic-map.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/topic-maps",
+      "handler": "topic-map.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/topic-maps/:id",
+      "handler": "topic-map.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/topic-maps/:id",
+      "handler": "topic-map.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

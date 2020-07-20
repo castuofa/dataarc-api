@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "concepts",
+  "info": {
+    "name": "Concept"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "combinators": {
+      "collection": "combinator",
+      "via": "concepts",
+      "dominant": true
+    }
+  }
+}

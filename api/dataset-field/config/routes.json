@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dataset-fields",
+      "handler": "dataset-field.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dataset-fields/count",
+      "handler": "dataset-field.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dataset-fields/:id",
+      "handler": "dataset-field.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dataset-fields",
+      "handler": "dataset-field.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dataset-fields/:id",
+      "handler": "dataset-field.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dataset-fields/:id",
+      "handler": "dataset-field.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

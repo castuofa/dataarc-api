@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/combinators",
+      "handler": "combinator.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/combinators/count",
+      "handler": "combinator.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/combinators/:id",
+      "handler": "combinator.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/combinators",
+      "handler": "combinator.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/combinators/:id",
+      "handler": "combinator.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/combinators/:id",
+      "handler": "combinator.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

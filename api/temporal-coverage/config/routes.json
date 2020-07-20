@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/temporal-coverages",
+      "handler": "temporal-coverage.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/temporal-coverages/count",
+      "handler": "temporal-coverage.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/temporal-coverages/:id",
+      "handler": "temporal-coverage.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/temporal-coverages",
+      "handler": "temporal-coverage.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/temporal-coverages/:id",
+      "handler": "temporal-coverage.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/temporal-coverages/:id",
+      "handler": "temporal-coverage.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

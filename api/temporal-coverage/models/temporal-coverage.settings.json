@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "temporal_coverages",
+  "info": {
+    "name": "TemporalCoverage"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "start": {
+      "type": "integer"
+    },
+    "end": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "datasets",
+  "info": {
+    "name": "Dataset"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "link": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "file": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "category": {
+      "model": "category",
+      "via": "datasets"
+    },
+    "combinators": {
+      "collection": "combinator",
+      "via": "dataset"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "datasets"
+    },
+    "fields": {
+      "collection": "dataset-field",
+      "via": "dataset"
+    }
+  }
+}
