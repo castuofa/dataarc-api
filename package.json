@@ -1,8 +1,8 @@
 {
-  "name": "dataarc-api-new",
+  "name": "dataarc-admin-api",
   "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "description": "DataARC Admin API",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -19,15 +19,13 @@
     "strapi-plugin-users-permissions": "3.0.6",
     "strapi-plugin-email": "3.0.6",
     "strapi-plugin-upload": "3.0.6",
-    "strapi-connector-bookshelf": "3.0.6",
-    "knex": "<0.20.0",
-    "sqlite3": "latest"
+    "strapi-connector-mongoose": "3.0.6"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Timothy Sexton"
   },
   "strapi": {
-    "uuid": "2c7b9f7f-3da5-4811-8d14-38193c076ce6"
+    "uuid": "bbe8adeb-c0f2-4be7-b0d8-1e8410886c01"
   },
   "engines": {
     "node": ">=10.0.0",
