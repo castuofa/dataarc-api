@@ -10,63 +10,78 @@
  * See more details here: https://strapi.io/documentation/v3.x/concepts/configurations.html#bootstrap
  */
 
-module.exports = async () => {
-  const lang = 'en';
+// Create the primary admin account
+async function bootstrap_admin() {
+  strapi.log.info(`(Bootstrap) Bootstrapping admin user`);
 
-  // Auto create the primary admin account
   const admin = {
-    username: process.env.ADMIN_USER || 'admin',
-    password: process.env.ADMIN_PASS || 'admin',
+    username: process.env.ADMIN_USERNAME || 'admin',
+    password: process.env.ADMIN_PASSWORD || 'admin',
     email: process.env.ADMIN_EMAIL || 'admin@data-arc.org',
     blocked: false,
   };
-  const admins = await strapi
-    .query('administrator', 'admin')
-    .find({ _limit: 1 });
-  if (admins.length) {
-    console.error('(Admin) A primary admin account already exists');
-  } else {
+
+  const admin_orm = strapi.query('administrator', 'admin');
+  const admins = await admin_orm.find({ username: admin.username });
+
+  if (admins.length === 0) {
     admin.password = await strapi.admin.services.auth.hashPassword(
       admin.password
     );
+
     try {
-      const admin = await strapi.query('administrator', 'admin').create({
-        ...admin,
-      });
-      console.info('(Admin) Primary admin account created');
+      await admin_orm.create(admin);
+
+      strapi.log.warn(`(Bootstrap) Primary admin account created`);
     } catch (error) {
       console.error(error);
     }
+  } else {
+    strapi.log.warn(`(Bootstrap) Primary admin account already exists`);
   }
+}
 
-  // Create the administrator role for users
+// Create the administrator role for users
+async function bootstrap_adminrole() {
+  strapi.log.info(`(Bootstrap) Bootstrapping user administrator role`);
+
   const roles = await strapi
     .query('role', 'users-permissions')
     .find({ type: 'administrator', _limit: 1 });
-  if (roles.length) {
-    console.error('(Role) Administrator user role already exists');
-  } else {
+
+  if (roles.length === 0) {
     try {
       const plugins = await strapi.plugins[
         'users-permissions'
-      ].services.userspermissions.getPlugins(lang);
+      ].services.userspermissions.getPlugins('en');
+
       const permissions = await strapi.plugins[
         'users-permissions'
       ].services.userspermissions.getActions(plugins);
+
       const admin_role = {
         name: 'Administrator',
         description: 'DataARC Administration Role',
         permissions,
         users: [],
       };
+
       await strapi.plugins[
         'users-permissions'
       ].services.userspermissions.createRole(admin_role);
-      console.info('(Role) Administrator user role created');
+
+      strapi.log.warn(`(Bootstrap) Administrator role created`);
     } catch (error) {
       console.error(error);
     }
+  } else {
+    strapi.log.warn(`(Bootstrap) Administrator role already exists`);
   }
+}
 
-  // TODO: Add data, clean up
+module.exports = async () => {
+  await bootstrap_admin();
+  await bootstrap_adminrole();
+
+  // TODO: Add data
 };
