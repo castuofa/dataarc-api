@@ -111,8 +111,11 @@ async function bootstrap_resource(resource_type, resource_service) {
 }
 
 module.exports = async () => {
-  await bootstrap_admin();
-  await bootstrap_adminrole();
+  const seed_data = process.env.SEED_DATA || false;
 
-  await bootstrap_resource('Categories', strapi.services.category);
+  if (seed_data) {
+    await bootstrap_admin();
+    await bootstrap_adminrole();
+    await bootstrap_resource('Categories', strapi.services.category);
+  }
 };
