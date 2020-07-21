@@ -103,7 +103,7 @@ async function bootstrap_resource(resource_type, resource_service) {
         `(Bootstrap) ${resource_type} created: ${JSON.stringify(resource)}`
       );
     } else {
-      strapi.log.warn(
+      strapi.log.info(
         `(Bootstrap) ${resource_type} aready exist: ${JSON.stringify(resource)}`
       );
     }
