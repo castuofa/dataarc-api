@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+
 /**
  * An asynchronous bootstrap function that runs before
  * your application gets started.
@@ -79,9 +81,38 @@ async function bootstrap_adminrole() {
   }
 }
 
+// Load a resource
+async function bootstrap_resource(resource_type, resource_service) {
+  strapi.log.info(`(Bootstrap) Loading resource: ${resource_type}`);
+
+  const path = `../../${process.env.DATA_FOLDER}/${resource_type}.json`;
+
+  try {
+    require.resolve(path);
+  } catch (err) {
+    strapi.log.warn(`(Bootstrap) File not found: ${path}`);
+    return;
+  }
+
+  let resources = require(path);
+
+  for (let resource of resources) {
+    if ((await resource_service.count(resource)) === 0) {
+      await resource_service.create(resource);
+      strapi.log.info(
+        `(Bootstrap) ${resource_type} created: ${JSON.stringify(resource)}`
+      );
+    } else {
+      strapi.log.info(
+        `(Bootstrap) ${resource_type} aready exist: ${JSON.stringify(resource)}`
+      );
+    }
+  }
+}
+
 module.exports = async () => {
   await bootstrap_admin();
   await bootstrap_adminrole();
 
-  // TODO: Add data
+  await bootstrap_resource('Categories', strapi.services.category);
 };
