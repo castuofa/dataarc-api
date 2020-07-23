@@ -40,9 +40,6 @@ ssl
 public/uploads/*
 !public/uploads/.gitkeep
 
-# data for import
-data
-
 # node.js
 lib-cov
 lcov.info
