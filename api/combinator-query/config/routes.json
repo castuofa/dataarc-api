@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/combinator-queries",
+      "handler": "combinator-query.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/combinator-queries/count",
+      "handler": "combinator-query.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/combinator-queries/:id",
+      "handler": "combinator-query.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/combinator-queries",
+      "handler": "combinator-query.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/combinator-queries/:id",
+      "handler": "combinator-query.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/combinator-queries/:id",
+      "handler": "combinator-query.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

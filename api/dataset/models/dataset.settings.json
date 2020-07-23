@@ -35,22 +35,30 @@
       "plugin": "upload",
       "required": false
     },
-    "category": {
-      "model": "category",
-      "via": "datasets"
-    },
-    "combinators": {
-      "collection": "combinator",
-      "via": "dataset"
-    },
     "user": {
       "plugin": "users-permissions",
       "model": "user",
       "via": "datasets"
     },
+    "category": {
+      "model": "category",
+      "via": "datasets"
+    },
+    "combinators": {
+      "via": "dataset",
+      "collection": "combinator"
+    },
     "fields": {
-      "collection": "dataset-field",
+      "via": "dataset",
+      "collection": "dataset-field"
+    },
+    "templates": {
+      "collection": "dataset-template",
       "via": "dataset"
+    },
+    "features": {
+      "via": "dataset",
+      "collection": "dataset-feature"
     }
   }
 }

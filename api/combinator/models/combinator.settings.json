@@ -20,13 +20,22 @@
     "citation": {
       "type": "text"
     },
+    "queries": {
+      "collection": "combinator-query",
+      "via": "combinator"
+    },
     "concepts": {
-      "via": "combinators",
-      "collection": "concept"
+      "collection": "concept",
+      "via": "combinators"
     },
     "dataset": {
+      "model": "dataset",
+      "via": "combinators"
+    },
+    "features": {
+      "collection": "dataset-feature",
       "via": "combinators",
-      "model": "dataset"
+      "dominant": true
     }
   }
 }

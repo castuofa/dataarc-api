@@ -17,11 +17,20 @@
       "type": "string"
     },
     "type": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": [
+        "boolean",
+        "date_start",
+        "date_end",
+        "date_text",
+        "float",
+        "integer",
+        "text"
+      ]
     },
     "dataset": {
-      "via": "fields",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "fields"
     }
   }
 }

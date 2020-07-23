@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "name": "Event"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "item": {
+      "type": "string"
+    },
+    "action": {
+      "type": "enumeration",
+      "enum": [
+        "save",
+        "update",
+        "create",
+        "destroy"
+      ]
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "events"
+    }
+  }
+}

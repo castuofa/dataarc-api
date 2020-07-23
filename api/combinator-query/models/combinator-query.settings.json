@@ -1,27 +1,27 @@
 {
   "kind": "collectionType",
-  "collectionName": "dataset_field_types",
+  "collectionName": "combinator_queries",
   "info": {
-    "name": "DatasetFieldType"
+    "name": "CombinatorQuery"
   },
   "options": {
     "increments": true,
     "timestamps": true
   },
   "attributes": {
-    "name": {
+    "field": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "required": true
     },
-    "description": {
-      "type": "text"
-    },
-    "criteria": {
+    "operator": {
       "type": "string"
     },
-    "type": {
+    "value": {
       "type": "string"
+    },
+    "combinator": {
+      "via": "queries",
+      "model": "combinator"
     }
   }
 }

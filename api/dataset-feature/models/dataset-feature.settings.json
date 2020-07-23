@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dataset_features",
+  "info": {
+    "name": "DatasetFeature"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "dataset": {
+      "model": "dataset",
+      "via": "features"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "details": {
+      "type": "text"
+    },
+    "link": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "float"
+    },
+    "lng": {
+      "type": "float"
+    },
+    "start": {
+      "type": "integer"
+    },
+    "end": {
+      "type": "integer"
+    },
+    "properties": {
+      "type": "json"
+    },
+    "combinators": {
+      "via": "features",
+      "collection": "combinator"
+    }
+  }
+}

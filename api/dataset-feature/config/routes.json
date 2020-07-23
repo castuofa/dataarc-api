@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/dataset-field-types",
-      "handler": "dataset-field-type.find",
+      "path": "/dataset-features",
+      "handler": "dataset-feature.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/dataset-field-types/count",
-      "handler": "dataset-field-type.count",
+      "path": "/dataset-features/count",
+      "handler": "dataset-feature.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/dataset-field-types/:id",
-      "handler": "dataset-field-type.findOne",
+      "path": "/dataset-features/:id",
+      "handler": "dataset-feature.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/dataset-field-types",
-      "handler": "dataset-field-type.create",
+      "path": "/dataset-features",
+      "handler": "dataset-feature.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/dataset-field-types/:id",
-      "handler": "dataset-field-type.update",
+      "path": "/dataset-features/:id",
+      "handler": "dataset-feature.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/dataset-field-types/:id",
-      "handler": "dataset-field-type.delete",
+      "path": "/dataset-features/:id",
+      "handler": "dataset-feature.delete",
       "config": {
         "policies": []
       }
