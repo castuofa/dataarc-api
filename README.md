@@ -25,6 +25,10 @@ Copy the `.env.example` file to `.env` and add the database information.
 
 `yarn install`
 
+`yarn develop`
+
+Once built you can use:
+
 `yarn start`
 
 #### Using the graphql interface
