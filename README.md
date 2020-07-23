@@ -19,15 +19,21 @@ This software requires the following to be insalled:
 
 #### Configure .env
 
-Copy the `.env.example` file to `.env` and add the database information.
+Copy the `.env.example` file to `.env` and
+- add the database information.
+- add admin username/pass/email (otherwise you'll seed an empty admin user and can't register a new one)
 
 #### Installing node modules and launch application
 
+Install packages
+
 `yarn install`
+
+Build
 
 `yarn develop`
 
-Once built you can use:
+Or if it's built already, use:
 
 `yarn start`
 
