@@ -522,20 +522,19 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
+          "action": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete"
+            ]
           },
           "item": {
             "type": "string"
           },
-          "action": {
-            "type": "string",
-            "enum": [
-              "save",
-              "update",
-              "create",
-              "destroy"
-            ]
+          "name": {
+            "type": "string"
           },
           "user": {
             "required": [
@@ -589,20 +588,19 @@
       },
       "NewEvent": {
         "properties": {
-          "name": {
-            "type": "string"
+          "action": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete"
+            ]
           },
           "item": {
             "type": "string"
           },
-          "action": {
-            "type": "string",
-            "enum": [
-              "save",
-              "update",
-              "create",
-              "destroy"
-            ]
+          "name": {
+            "type": "string"
           },
           "user": {
             "type": "string"

@@ -1317,13 +1317,13 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "action": {
                   "type": "string"
                 },
                 "item": {
                   "type": "string"
                 },
-                "action": {
+                "name": {
                   "type": "string"
                 },
                 "user": {

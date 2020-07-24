@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/23/2020 1:57:14 PM"
+    "x-generation-date": "07/23/2020 8:35:36 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10208,20 +10208,19 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
+          "action": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete"
+            ]
           },
           "item": {
             "type": "string"
           },
-          "action": {
-            "type": "string",
-            "enum": [
-              "save",
-              "update",
-              "create",
-              "destroy"
-            ]
+          "name": {
+            "type": "string"
           },
           "user": {
             "required": [
@@ -10275,20 +10274,19 @@
       },
       "NewEvent": {
         "properties": {
-          "name": {
-            "type": "string"
+          "action": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete"
+            ]
           },
           "item": {
             "type": "string"
           },
-          "action": {
-            "type": "string",
-            "enum": [
-              "save",
-              "update",
-              "create",
-              "destroy"
-            ]
+          "name": {
+            "type": "string"
           },
           "user": {
             "type": "string"
@@ -10826,13 +10824,13 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "action": {
                   "type": "string"
                 },
                 "item": {
                   "type": "string"
                 },
-                "action": {
+                "name": {
                   "type": "string"
                 },
                 "user": {

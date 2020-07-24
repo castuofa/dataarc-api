@@ -9,20 +9,15 @@
     "timestamps": true
   },
   "attributes": {
-    "name": {
-      "type": "string"
+    "action": {
+      "type": "enumeration",
+      "enum": ["create", "update", "delete"]
     },
     "item": {
       "type": "string"
     },
-    "action": {
-      "type": "enumeration",
-      "enum": [
-        "save",
-        "update",
-        "create",
-        "destroy"
-      ]
+    "name": {
+      "type": "string"
     },
     "user": {
       "plugin": "users-permissions",
