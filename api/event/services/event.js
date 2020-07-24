@@ -5,4 +5,13 @@
  * to customize this service
  */
 
-module.exports = {};
+module.exports = {
+  log: (action, item, name, user) => {
+    strapi.services.event.create({
+      name: name,
+      item: item,
+      action: action,
+      user: user,
+    });
+  },
+};
