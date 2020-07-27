@@ -29,8 +29,8 @@
       "via": "combinators"
     },
     "dataset": {
-      "model": "dataset",
-      "via": "combinators"
+      "via": "combinators",
+      "model": "dataset"
     },
     "features": {
       "collection": "dataset-feature",

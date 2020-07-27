@@ -45,20 +45,20 @@
       "via": "datasets"
     },
     "combinators": {
-      "via": "dataset",
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "dataset"
     },
     "fields": {
-      "via": "dataset",
-      "collection": "dataset-field"
+      "collection": "dataset-field",
+      "via": "dataset"
     },
     "templates": {
       "collection": "dataset-template",
       "via": "dataset"
     },
     "features": {
-      "via": "dataset",
-      "collection": "dataset-feature"
+      "collection": "dataset-feature",
+      "via": "dataset"
     }
   }
 }
