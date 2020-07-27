@@ -539,6 +539,12 @@
           "name": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
           "start": {
             "type": "integer"
           },
@@ -553,6 +559,12 @@
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "citation": {
             "type": "string"
           },
           "start": {
