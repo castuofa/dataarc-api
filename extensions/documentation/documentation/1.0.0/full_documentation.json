@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/27/2020 5:27:43 PM"
+    "x-generation-date": "07/28/2020 3:58:01 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9013,6 +9013,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                },
+                "old_category_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -9038,6 +9047,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_id": {
+            "type": "integer"
           }
         }
       },
@@ -9077,6 +9089,9 @@
               "citation": {
                 "type": "string"
               },
+              "operator": {
+                "type": "string"
+              },
               "queries": {
                 "type": "array",
                 "items": {
@@ -9093,6 +9108,84 @@
                 "type": "string"
               },
               "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "user": {
+                "type": "string"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              }
+            }
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinator_queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset_templates": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -9118,6 +9211,18 @@
           },
           "combinator": {
             "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_combinator_id": {
+            "type": "integer"
+          },
+          "old_user_id": {
+            "type": "integer"
           }
         }
       },
@@ -9138,6 +9243,14 @@
           },
           "citation": {
             "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "default": "AND",
+            "enum": [
+              "AND",
+              "OR"
+            ]
           },
           "queries": {
             "type": "array",
@@ -9161,6 +9274,18 @@
                 },
                 "combinator": {
                   "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_combinator_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -9190,6 +9315,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -9250,6 +9378,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "old_category_id": {
+                "type": "integer"
               }
             }
           },
@@ -9298,6 +9435,78 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinator_queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset_templates": {
+                "type": "array",
+                "items": {
+                  "type": "string"
                 }
               }
             }
@@ -9317,6 +9526,14 @@
           },
           "citation": {
             "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "default": "AND",
+            "enum": [
+              "AND",
+              "OR"
+            ]
           },
           "queries": {
             "type": "array",
@@ -9338,6 +9555,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "user": {
+            "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_dataset_id": {
+            "type": "integer"
+          },
+          "old_user_id": {
+            "type": "integer"
           }
         }
       },
@@ -9379,6 +9608,9 @@
                 "citation": {
                   "type": "string"
                 },
+                "operator": {
+                  "type": "string"
+                },
                 "queries": {
                   "type": "array",
                   "items": {
@@ -9399,6 +9631,18 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -9424,6 +9668,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_id": {
+            "type": "integer"
           }
         }
       },
@@ -9491,6 +9738,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "old_category_id": {
+                "type": "integer"
               }
             }
           },
@@ -9541,6 +9797,9 @@
                 "citation": {
                   "type": "string"
                 },
+                "operator": {
+                  "type": "string"
+                },
                 "queries": {
                   "type": "array",
                   "items": {
@@ -9561,6 +9820,18 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -9604,6 +9875,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_dataset_id": {
+            "type": "integer"
           }
         }
       },
@@ -9690,6 +9967,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "old_category_id": {
+                "type": "integer"
               }
             }
           }
@@ -9720,6 +10006,12 @@
           },
           "dataset": {
             "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_dataset_id": {
+            "type": "integer"
           }
         }
       },
@@ -9806,6 +10098,81 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "old_category_id": {
+                "type": "integer"
+              }
+            }
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinator_queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset_templates": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -9836,6 +10203,18 @@
           },
           "dataset": {
             "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_dataset_id": {
+            "type": "integer"
+          },
+          "old_user_id": {
+            "type": "integer"
           }
         }
       },
@@ -9969,6 +10348,24 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinator_queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset_templates": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -9995,6 +10392,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
               }
             }
           },
@@ -10018,6 +10418,9 @@
                 "citation": {
                   "type": "string"
                 },
+                "operator": {
+                  "type": "string"
+                },
                 "queries": {
                   "type": "array",
                   "items": {
@@ -10038,6 +10441,18 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -10064,6 +10479,12 @@
                 },
                 "dataset": {
                   "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -10093,6 +10514,18 @@
                 },
                 "dataset": {
                   "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -10142,6 +10575,12 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -10197,6 +10636,15 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_user_id": {
+            "type": "integer"
+          },
+          "old_category_id": {
+            "type": "integer"
           }
         }
       },
@@ -10263,6 +10711,24 @@
                 }
               },
               "events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinator_queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset_templates": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -10668,6 +11134,24 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "combinator_queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dataset_templates": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -10822,6 +11306,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                },
+                "old_category_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -10847,6 +11340,144 @@
                 },
                 "user": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "combinators": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "combinator_queries": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "field"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "field": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "combinator": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_combinator_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "dataset_templates": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "layout": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -10895,6 +11526,24 @@
             }
           },
           "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "combinators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "combinator_queries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dataset_templates": {
             "type": "array",
             "items": {
               "type": "string"

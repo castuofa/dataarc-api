@@ -591,6 +591,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "old_category_id": {
+                "type": "integer"
               }
             }
           },
@@ -641,6 +650,9 @@
                 "citation": {
                   "type": "string"
                 },
+                "operator": {
+                  "type": "string"
+                },
                 "queries": {
                   "type": "array",
                   "items": {
@@ -661,6 +673,18 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -704,6 +728,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_dataset_id": {
+            "type": "integer"
           }
         }
       }

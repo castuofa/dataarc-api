@@ -124,6 +124,21 @@ async function set_permissions(role, type, controller, actions) {
 }
 
 module.exports = async () => {
+  const seed_resources = [
+    'category',
+    'combinator',
+    'combinator-query',
+    'concept',
+    'dataset',
+    'dataset-feature',
+    'dataset-field',
+    'dataset-template',
+    'event',
+    'map-layer',
+    'search',
+    'temporal-coverage',
+    'topic-map',
+  ];
   const seed = process.env.SEED || false;
   const admin = {
     username: process.env.ADMIN_USERNAME || 'admin',
@@ -142,35 +157,10 @@ module.exports = async () => {
     // seed the users
     // await seed_data('user');
 
-    // seed the default data from the seed directory
-    // file names match controller names
-    await seed_data('category');
-    await seed_data('combinator');
-    await seed_data('combinator-query');
-    await seed_data('concept');
-    await seed_data('dataset');
-    await seed_data('dataset-feature');
-    await seed_data('dataset-field');
-    await seed_data('dataset-template');
-    await seed_data('event');
-    await seed_data('map-layer');
-    await seed_data('search');
-    await seed_data('temporal-coverage');
-    await seed_data('topic-map');
-
-    // now set the permissions
-    await seed_permissions('category');
-    await seed_permissions('combinator');
-    await seed_permissions('combinator-query');
-    await seed_permissions('concept');
-    await seed_permissions('dataset');
-    await seed_permissions('dataset-feature');
-    await seed_permissions('dataset-field');
-    await seed_permissions('dataset-template');
-    await seed_permissions('event');
-    await seed_permissions('map-layer');
-    await seed_permissions('search');
-    await seed_permissions('temporal-coverage');
-    await seed_permissions('topic-map');
+    // loop through the resources, add data, and set permissions
+    for (let resource of seed_resources) {
+      await seed_data(resource);
+      await seed_permissions(resource);
+    }
   }
 };

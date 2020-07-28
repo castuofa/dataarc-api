@@ -60,6 +60,18 @@
     "events": {
       "via": "user",
       "collection": "event"
+    },
+    "combinators": {
+      "via": "user",
+      "collection": "combinator"
+    },
+    "combinator_queries": {
+      "via": "user",
+      "collection": "combinator-query"
+    },
+    "dataset_templates": {
+      "via": "user",
+      "collection": "dataset-template"
     }
   }
 }

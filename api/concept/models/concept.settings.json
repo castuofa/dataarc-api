@@ -21,9 +21,13 @@
       "type": "text"
     },
     "combinators": {
-      "via": "concepts",
       "collection": "combinator",
+      "via": "concepts",
       "dominant": true
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

@@ -1303,6 +1303,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                },
+                "old_category_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -1328,6 +1337,144 @@
                 },
                 "user": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "combinators": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "combinator_queries": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "field"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "field": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "combinator": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_combinator_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "dataset_templates": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "layout": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -1376,6 +1523,24 @@
             }
           },
           "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "combinators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "combinator_queries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dataset_templates": {
             "type": "array",
             "items": {
               "type": "string"

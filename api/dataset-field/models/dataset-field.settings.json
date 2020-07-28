@@ -29,8 +29,16 @@
       ]
     },
     "dataset": {
-      "via": "fields",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "fields"
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_dataset_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

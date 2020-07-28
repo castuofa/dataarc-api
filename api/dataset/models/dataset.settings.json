@@ -41,24 +41,36 @@
       "via": "datasets"
     },
     "category": {
-      "model": "category",
-      "via": "datasets"
+      "via": "datasets",
+      "model": "category"
     },
     "combinators": {
       "collection": "combinator",
       "via": "dataset"
     },
     "fields": {
-      "collection": "dataset-field",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-field"
     },
     "templates": {
-      "collection": "dataset-template",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-template"
     },
     "features": {
-      "collection": "dataset-feature",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-feature"
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_user_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_category_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

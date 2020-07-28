@@ -563,6 +563,9 @@
               "citation": {
                 "type": "string"
               },
+              "operator": {
+                "type": "string"
+              },
               "queries": {
                 "type": "array",
                 "items": {
@@ -579,6 +582,84 @@
                 "type": "string"
               },
               "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "user": {
+                "type": "string"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              }
+            }
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "combinator_queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset_templates": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -604,6 +685,18 @@
           },
           "combinator": {
             "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_combinator_id": {
+            "type": "integer"
+          },
+          "old_user_id": {
+            "type": "integer"
           }
         }
       }

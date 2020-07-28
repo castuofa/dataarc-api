@@ -10,8 +10,8 @@
   },
   "attributes": {
     "dataset": {
-      "via": "features",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "features"
     },
     "title": {
       "type": "string"
@@ -41,8 +41,16 @@
       "type": "json"
     },
     "combinators": {
-      "via": "features",
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "features"
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_dataset_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

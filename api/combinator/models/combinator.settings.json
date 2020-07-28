@@ -20,22 +20,47 @@
     "citation": {
       "type": "text"
     },
+    "operator": {
+      "type": "enumeration",
+      "enum": [
+        "AND",
+        "OR"
+      ],
+      "default": "AND"
+    },
     "queries": {
-      "collection": "combinator-query",
-      "via": "combinator"
+      "via": "combinator",
+      "collection": "combinator-query"
     },
     "concepts": {
-      "collection": "concept",
-      "via": "combinators"
+      "via": "combinators",
+      "collection": "concept"
     },
     "dataset": {
       "via": "combinators",
       "model": "dataset"
     },
     "features": {
-      "collection": "dataset-feature",
       "via": "combinators",
+      "collection": "dataset-feature",
       "dominant": true
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "combinators"
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_dataset_id": {
+      "type": "biginteger",
+      "private": true
+    },
+    "old_user_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

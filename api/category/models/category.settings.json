@@ -21,8 +21,12 @@
       "type": "string"
     },
     "datasets": {
-      "via": "category",
-      "collection": "dataset"
+      "collection": "dataset",
+      "via": "category"
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

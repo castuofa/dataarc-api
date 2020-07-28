@@ -610,6 +610,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "old_category_id": {
+                "type": "integer"
               }
             }
           }
@@ -640,6 +649,12 @@
           },
           "dataset": {
             "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
+          },
+          "old_dataset_id": {
+            "type": "integer"
           }
         }
       }

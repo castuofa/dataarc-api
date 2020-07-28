@@ -590,6 +590,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_user_id": {
+                  "type": "integer"
+                },
+                "old_category_id": {
+                  "type": "integer"
                 }
               }
             }
@@ -615,6 +624,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_id": {
+            "type": "integer"
           }
         }
       }

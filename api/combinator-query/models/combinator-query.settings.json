@@ -20,8 +20,25 @@
       "type": "string"
     },
     "combinator": {
-      "via": "queries",
-      "model": "combinator"
+      "model": "combinator",
+      "via": "queries"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "combinator_queries"
+    },
+    "old_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_combinator_id": {
+      "type": "integer",
+      "private": true
+    },
+    "old_user_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }
