@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "topic_maps",
+  "collectionName": "concept_maps",
   "info": {
-    "name": "TopicMap"
+    "name": "ConceptMap"
   },
   "options": {
     "increments": true,
@@ -11,8 +11,7 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "required": true
     },
     "description": {
       "type": "text"
@@ -28,6 +27,10 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "concepts": {
+      "via": "concept_map",
+      "collection": "concept"
     }
   }
 }
