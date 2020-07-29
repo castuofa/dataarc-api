@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/29/2020 10:08:26 AM"
+    "x-generation-date": "07/29/2020 12:02:41 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9161,6 +9161,9 @@
               "blocked": {
                 "type": "boolean"
               },
+              "loginAt": {
+                "type": "datetime"
+              },
               "role": {
                 "type": "string"
               },
@@ -9481,6 +9484,9 @@
               },
               "blocked": {
                 "type": "boolean"
+              },
+              "loginAt": {
+                "type": "datetime"
               },
               "role": {
                 "type": "string"
@@ -10156,6 +10162,9 @@
               "blocked": {
                 "type": "boolean"
               },
+              "loginAt": {
+                "type": "datetime"
+              },
               "role": {
                 "type": "string"
               },
@@ -10348,6 +10357,9 @@
               },
               "blocked": {
                 "type": "boolean"
+              },
+              "loginAt": {
+                "type": "datetime"
               },
               "role": {
                 "type": "string"
@@ -10718,6 +10730,9 @@
               },
               "blocked": {
                 "type": "boolean"
+              },
+              "loginAt": {
+                "type": "datetime"
               },
               "role": {
                 "type": "string"
@@ -11138,6 +11153,9 @@
                 "blocked": {
                   "type": "boolean"
                 },
+                "loginAt": {
+                  "type": "datetime"
+                },
                 "role": {
                   "type": "string"
                 },
@@ -11233,6 +11251,9 @@
           "blocked": {
             "type": "boolean",
             "default": false
+          },
+          "loginAt": {
+            "type": "datetime"
           },
           "role": {
             "required": [
@@ -11536,6 +11557,9 @@
           "blocked": {
             "type": "boolean",
             "default": false
+          },
+          "loginAt": {
+            "type": "datetime"
           },
           "role": {
             "type": "string"

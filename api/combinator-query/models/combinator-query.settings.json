@@ -24,9 +24,9 @@
       "via": "queries"
     },
     "user": {
+      "via": "combinator_queries",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "combinator_queries"
+      "model": "user"
     },
     "old_id": {
       "type": "integer",

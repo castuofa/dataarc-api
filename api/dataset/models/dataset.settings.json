@@ -29,14 +29,16 @@
     "file": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["files"],
+      "allowedTypes": [
+        "files"
+      ],
       "plugin": "upload",
       "required": false
     },
     "user": {
+      "via": "datasets",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "datasets"
+      "model": "user"
     },
     "category": {
       "model": "category",

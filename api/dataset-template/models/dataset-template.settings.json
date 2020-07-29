@@ -34,9 +34,9 @@
       "model": "dataset"
     },
     "user": {
+      "via": "dataset_templates",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "dataset_templates"
+      "model": "user"
     },
     "old_id": {
       "type": "integer",

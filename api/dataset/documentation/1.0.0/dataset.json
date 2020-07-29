@@ -630,6 +630,9 @@
               "blocked": {
                 "type": "boolean"
               },
+              "loginAt": {
+                "type": "datetime"
+              },
               "role": {
                 "type": "string"
               },

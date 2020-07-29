@@ -47,6 +47,10 @@
       "default": false,
       "configurable": false
     },
+    "loginAt": {
+      "type": "datetime",
+      "configurable": false
+    },
     "role": {
       "model": "role",
       "via": "users",
@@ -54,24 +58,24 @@
       "configurable": false
     },
     "datasets": {
-      "via": "user",
-      "collection": "dataset"
+      "collection": "dataset",
+      "via": "user"
     },
     "events": {
-      "via": "user",
-      "collection": "event"
+      "collection": "event",
+      "via": "user"
     },
     "combinators": {
-      "via": "user",
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "user"
     },
     "combinator_queries": {
-      "via": "user",
-      "collection": "combinator-query"
+      "collection": "combinator-query",
+      "via": "user"
     },
     "dataset_templates": {
-      "via": "user",
-      "collection": "dataset-template"
+      "collection": "dataset-template",
+      "via": "user"
     }
   }
 }
