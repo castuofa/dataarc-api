@@ -45,9 +45,9 @@
       "dominant": true
     },
     "user": {
+      "via": "combinators",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "combinators"
+      "model": "user"
     },
     "old_id": {
       "type": "integer",

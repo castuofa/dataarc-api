@@ -517,10 +517,14 @@
       "Concept": {
         "required": [
           "id",
+          "topic",
           "name"
         ],
         "properties": {
           "id": {
+            "type": "string"
+          },
+          "topic": {
             "type": "string"
           },
           "name": {
@@ -531,6 +535,15 @@
           },
           "citation": {
             "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "parents": {
+            "type": "object"
+          },
+          "associations": {
+            "type": "object"
           },
           "combinators": {
             "type": "array",
@@ -590,14 +603,47 @@
                 }
               }
             }
+          },
+          "concept_map": {
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "concepts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
       "NewConcept": {
         "required": [
+          "topic",
           "name"
         ],
         "properties": {
+          "topic": {
+            "type": "string"
+          },
           "name": {
             "type": "string"
           },
@@ -607,11 +653,23 @@
           "citation": {
             "type": "string"
           },
+          "url": {
+            "type": "string"
+          },
+          "parents": {
+            "type": "object"
+          },
+          "associations": {
+            "type": "object"
+          },
           "combinators": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "concept_map": {
+            "type": "string"
           },
           "old_id": {
             "type": "integer"

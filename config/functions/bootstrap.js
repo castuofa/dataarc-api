@@ -25,25 +25,34 @@ async function loadFile(name) {
   }
 }
 
+// check if primary admin account exists
+async function admin_exists(admin) {
+  const admins = strapi
+    .query('administrator', 'admin')
+    .find({ username: admin.username });
+  if (admins.length !== 0) {
+    strapi.log.warn(`Primary admin account already exists`);
+    return true;
+  } else {
+    strapi.log.warn(`Primary admin account does not exist`);
+    return false;
+  }
+}
+
 // Create the primary admin account
 async function create_admin(admin) {
-  const admin_orm = strapi.query('administrator', 'admin');
-  const admins = await admin_orm.find({ username: admin.username });
-
-  if (admins.length === 0) {
-    admin.password = await strapi.admin.services.auth.hashPassword(
-      admin.password
-    );
-
+  const exists = await admin_exists(admin);
+  if (!exists) {
     try {
-      await admin_orm.create(admin);
+      admin.password = await strapi.admin.services.auth.hashPassword(
+        admin.password
+      );
 
+      await strapi.query('administrator', 'admin').create(admin);
       strapi.log.info(`Primary admin account created`);
     } catch (err) {
       strapi.log.error(`${err}`);
     }
-  } else {
-    strapi.log.warn(`Primary admin account already exists`);
   }
 }
 
@@ -71,14 +80,52 @@ async function seed_data(name) {
   let resources = await loadFile(`data/${name}`);
   if (!resources) return;
 
-  let service = strapi.services[name];
+  let service = strapi.query(name);
+  // let service = strapi.services[name];
 
   for (let resource of resources) {
-    if ((await service.count(resource)) === 0) {
+    strapi.log.info(`Resource ${JSON.stringify(resource)}`);
+    const existing = await service.find(resource);
+    if (existing === 0) {
+      // if ((await service.count(resource)) === 0) {
+      // await service.create(resource);
       await service.create(resource);
       strapi.log.info(`${name} created: ${JSON.stringify(resource)}`);
     }
   }
+}
+
+// set user permissions for a controller
+async function set_permissions(role, type, controller, actions) {
+  // query for the role
+  const r = await strapi
+    .query('role', 'users-permissions')
+    .findOne({ type: role });
+
+  // make sure we found the role
+  if (!r) return;
+
+  // get target permissions for object
+  let p = await strapi.query('permission', 'users-permissions').find({
+    role: r.id,
+    type: type,
+    controller: controller,
+  });
+
+  // make sure we have permissions
+  if (p.length == 0) return;
+
+  strapi.log.info(`Setting '${role}' permissions for '${controller}'`);
+
+  // loop through the objects permissions setting everything
+  p.forEach((permission) => {
+    let enable = actions.includes(permission.action);
+    let p = permission;
+    p.enabled = enable;
+    strapi.query('permission', 'users-permissions').update({ id: p.id }, p);
+  });
+
+  return;
 }
 
 // load seed permissions from file
@@ -91,10 +138,10 @@ async function seed_permissions(name) {
 }
 
 // set user permissions for a controller
-async function set_permissions(role, type, controller, actions) {
-  // query for the role
-  const r = await strapi
-    .query('role', 'users-permissions')
+async function create_user(user) {
+  // query for the user
+  const u = await strapi
+    .query('user', 'users-permissions')
     .findOne({ type: role });
 
   // make sure we found the role
@@ -138,6 +185,7 @@ module.exports = async () => {
     'search',
     'temporal-coverage',
     'topic-map',
+    // 'user',
   ];
   const seed = process.env.SEED || false;
   const admin = {
@@ -147,7 +195,8 @@ module.exports = async () => {
     blocked: false,
   };
 
-  if (seed) {
+  // only seed if true
+  if (seed && false) {
     // create the admin account
     await create_admin(admin);
 

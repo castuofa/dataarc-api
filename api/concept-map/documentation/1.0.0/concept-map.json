@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/topic-maps": {
+    "/concept-maps": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Topic-map"
+          "Concept-map"
         ],
         "parameters": [
           {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Topic-map"
+          "Concept-map"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewTopic-map"
+                "$ref": "#/components/schemas/NewConcept-map"
               }
             }
           }
         }
       }
     },
-    "/topic-maps/count": {
+    "/concept-maps/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -311,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Topic-map"
+          "Concept-map"
         ],
         "parameters": []
       }
     },
-    "/topic-maps/{id}": {
+    "/concept-maps/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Topic-map"
+          "Concept-map"
         ],
         "parameters": [
           {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Topic-map"
+          "Concept-map"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewTopic-map"
+                "$ref": "#/components/schemas/NewConcept-map"
               }
             }
           }
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Topic-map"
+          "Concept-map"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Topic-map": {
+      "Concept-map": {
         "required": [
           "id",
           "name"
@@ -605,10 +605,58 @@
                 "type": "string"
               }
             }
+          },
+          "concepts": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "topic",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "topic": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "parents": {
+                  "type": "object"
+                },
+                "associations": {
+                  "type": "object"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concept_map": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                }
+              }
+            }
           }
         }
       },
-      "NewTopic-map": {
+      "NewConcept-map": {
         "required": [
           "name"
         ],
@@ -621,6 +669,12 @@
           },
           "citation": {
             "type": "string"
+          },
+          "concepts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

@@ -630,6 +630,9 @@
               "blocked": {
                 "type": "boolean"
               },
+              "loginAt": {
+                "type": "datetime"
+              },
               "role": {
                 "type": "string"
               },
@@ -662,6 +665,18 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_external_id": {
+                "type": "integer"
+              },
+              "old_admin": {
+                "type": "boolean"
+              },
+              "old_editor": {
+                "type": "boolean"
               }
             }
           },

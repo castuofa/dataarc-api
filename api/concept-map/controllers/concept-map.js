@@ -13,17 +13,17 @@ module.exports = {
     let entity;
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['topic-map'].create(data, { files });
+      entity = await strapi.services['concept-map'].create(data, { files });
     } else {
-      entity = await strapi.services['topic-map'].create(ctx.request.body);
+      entity = await strapi.services['concept-map'].create(ctx.request.body);
     }
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models['concept-map'],
     });
 
     strapi.services.event.log(
       'update',
-      strapi.models['topic-map'].info.name,
+      strapi.models['concept-map'].info.name,
       entry.name,
       ctx.state.user.id
     );
@@ -43,23 +43,23 @@ module.exports = {
     let entity;
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['topic-map'].update({ id }, data, {
+      entity = await strapi.services['concept-map'].update({ id }, data, {
         files,
       });
     } else {
-      entity = await strapi.services['topic-map'].update(
+      entity = await strapi.services['concept-map'].update(
         { id },
         ctx.request.body
       );
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models['concept-map'],
     });
 
     strapi.services.event.log(
       'update',
-      strapi.models['topic-map'].info.name,
+      strapi.models['concept-map'].info.name,
       entry.name,
       ctx.state.user.id
     );
@@ -76,15 +76,15 @@ module.exports = {
   async delete(ctx) {
     const { id } = ctx.params;
 
-    const entity = await strapi.services['topic-map'].delete({ id });
+    const entity = await strapi.services['concept-map'].delete({ id });
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models['concept-map'],
     });
 
     strapi.services.event.log(
       'update',
-      strapi.models['topic-map'].info.name,
+      strapi.models['concept-map'].info.name,
       entry.name,
       ctx.state.user.id
     );

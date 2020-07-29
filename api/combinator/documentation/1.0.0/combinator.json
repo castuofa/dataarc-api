@@ -583,10 +583,14 @@
             "items": {
               "required": [
                 "id",
+                "topic",
                 "name"
               ],
               "properties": {
                 "id": {
+                  "type": "string"
+                },
+                "topic": {
                   "type": "string"
                 },
                 "name": {
@@ -598,11 +602,23 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
+                "parents": {
+                  "type": "object"
+                },
+                "associations": {
+                  "type": "object"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
+                },
+                "concept_map": {
+                  "type": "string"
                 },
                 "old_id": {
                   "type": "integer"
@@ -767,6 +783,9 @@
               "blocked": {
                 "type": "boolean"
               },
+              "loginAt": {
+                "type": "datetime"
+              },
               "role": {
                 "type": "string"
               },
@@ -799,6 +818,18 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_external_id": {
+                "type": "integer"
+              },
+              "old_admin": {
+                "type": "boolean"
+              },
+              "old_editor": {
+                "type": "boolean"
               }
             }
           }

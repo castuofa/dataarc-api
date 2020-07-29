@@ -11,7 +11,11 @@
   "attributes": {
     "action": {
       "type": "enumeration",
-      "enum": ["create", "update", "delete"]
+      "enum": [
+        "create",
+        "update",
+        "delete"
+      ]
     },
     "item": {
       "type": "string"
@@ -20,9 +24,9 @@
       "type": "string"
     },
     "user": {
+      "via": "events",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "events"
+      "model": "user"
     }
   }
 }
