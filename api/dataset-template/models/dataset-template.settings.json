@@ -22,11 +22,16 @@
     },
     "type": {
       "type": "enumeration",
-      "enum": ["title", "map", "result", "link"]
+      "enum": [
+        "title",
+        "map",
+        "result",
+        "link"
+      ]
     },
     "dataset": {
-      "model": "dataset",
-      "via": "templates"
+      "via": "templates",
+      "model": "dataset"
     },
     "user": {
       "plugin": "users-permissions",

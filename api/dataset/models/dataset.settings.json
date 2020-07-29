@@ -29,9 +29,7 @@
     "file": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },
@@ -41,27 +39,31 @@
       "via": "datasets"
     },
     "category": {
-      "via": "datasets",
-      "model": "category"
+      "model": "category",
+      "via": "datasets"
     },
     "combinators": {
       "collection": "combinator",
       "via": "dataset"
     },
     "fields": {
-      "via": "dataset",
-      "collection": "dataset-field"
+      "collection": "dataset-field",
+      "via": "dataset"
     },
     "templates": {
-      "via": "dataset",
-      "collection": "dataset-template"
+      "collection": "dataset-template",
+      "via": "dataset"
     },
     "features": {
-      "via": "dataset",
-      "collection": "dataset-feature"
+      "collection": "dataset-feature",
+      "via": "dataset"
     },
     "old_id": {
       "type": "integer",
+      "private": true
+    },
+    "old_name": {
+      "type": "string",
       "private": true
     },
     "old_user_id": {

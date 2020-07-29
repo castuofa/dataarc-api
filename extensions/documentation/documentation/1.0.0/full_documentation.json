@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/28/2020 3:58:01 PM"
+    "x-generation-date": "07/29/2020 10:08:26 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9017,6 +9017,9 @@
                 "old_id": {
                   "type": "integer"
                 },
+                "old_name": {
+                  "type": "string"
+                },
                 "old_user_id": {
                   "type": "integer"
                 },
@@ -9382,6 +9385,9 @@
               "old_id": {
                 "type": "integer"
               },
+              "old_name": {
+                "type": "string"
+              },
               "old_user_id": {
                 "type": "integer"
               },
@@ -9742,6 +9748,9 @@
               "old_id": {
                 "type": "integer"
               },
+              "old_name": {
+                "type": "string"
+              },
               "old_user_id": {
                 "type": "integer"
               },
@@ -9971,6 +9980,9 @@
               "old_id": {
                 "type": "integer"
               },
+              "old_name": {
+                "type": "string"
+              },
               "old_user_id": {
                 "type": "integer"
               },
@@ -10101,6 +10113,9 @@
               },
               "old_id": {
                 "type": "integer"
+              },
+              "old_name": {
+                "type": "string"
               },
               "old_user_id": {
                 "type": "integer"
@@ -10639,6 +10654,9 @@
           },
           "old_id": {
             "type": "integer"
+          },
+          "old_name": {
+            "type": "string"
           },
           "old_user_id": {
             "type": "integer"
@@ -11309,6 +11327,9 @@
                 },
                 "old_id": {
                   "type": "integer"
+                },
+                "old_name": {
+                  "type": "string"
                 },
                 "old_user_id": {
                   "type": "integer"

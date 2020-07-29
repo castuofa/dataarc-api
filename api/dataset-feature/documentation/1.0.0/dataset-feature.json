@@ -595,6 +595,9 @@
               "old_id": {
                 "type": "integer"
               },
+              "old_name": {
+                "type": "string"
+              },
               "old_user_id": {
                 "type": "integer"
               },
