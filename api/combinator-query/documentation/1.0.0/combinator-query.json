@@ -587,9 +587,6 @@
                   "type": "string"
                 }
               },
-              "user": {
-                "type": "string"
-              },
               "old_id": {
                 "type": "integer"
               },
@@ -598,87 +595,6 @@
               },
               "old_user_id": {
                 "type": "integer"
-              }
-            }
-          },
-          "user": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "loginAt": {
-                "type": "datetime"
-              },
-              "role": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "events": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "combinator_queries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "dataset_templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_external_id": {
-                "type": "integer"
-              },
-              "old_admin": {
-                "type": "boolean"
-              },
-              "old_editor": {
-                "type": "boolean"
               }
             }
           }
@@ -699,9 +615,6 @@
             "type": "string"
           },
           "combinator": {
-            "type": "string"
-          },
-          "user": {
             "type": "string"
           },
           "old_id": {

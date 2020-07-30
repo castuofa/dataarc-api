@@ -562,9 +562,6 @@
               "file": {
                 "type": "string"
               },
-              "user": {
-                "type": "string"
-              },
               "category": {
                 "type": "string"
               },
@@ -676,9 +673,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "user": {
-                  "type": "string"
                 },
                 "old_id": {
                   "type": "integer"

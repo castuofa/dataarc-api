@@ -26,6 +26,14 @@
     },
     {
       "method": "POST",
+      "path": "/concept-maps/process/:id",
+      "handler": "concept-map.process",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
       "path": "/concept-maps",
       "handler": "concept-map.create",
       "config": {

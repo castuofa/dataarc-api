@@ -589,9 +589,6 @@
                     "type": "string"
                   }
                 },
-                "user": {
-                  "type": "string"
-                },
                 "old_id": {
                   "type": "integer"
                 },

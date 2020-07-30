@@ -29,8 +29,8 @@
       "required": false
     },
     "concepts": {
-      "via": "concept_map",
-      "collection": "concept"
+      "collection": "concept",
+      "via": "concept_map"
     }
   }
 }

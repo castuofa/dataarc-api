@@ -21,7 +21,8 @@
     "strapi-plugin-graphql": "3.0.6",
     "strapi-plugin-upload": "3.0.6",
     "strapi-plugin-users-permissions": "3.0.6",
-    "strapi-utils": "3.0.6"
+    "strapi-utils": "3.0.6",
+    "xml-js": "^1.6.11"
   },
   "author": {
     "name": "Timothy Sexton"

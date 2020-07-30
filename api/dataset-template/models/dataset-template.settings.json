@@ -30,13 +30,8 @@
       ]
     },
     "dataset": {
-      "via": "templates",
-      "model": "dataset"
-    },
-    "user": {
-      "via": "dataset_templates",
-      "plugin": "users-permissions",
-      "model": "user"
+      "model": "dataset",
+      "via": "templates"
     },
     "old_id": {
       "type": "integer",

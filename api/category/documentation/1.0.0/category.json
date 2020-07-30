@@ -561,9 +561,6 @@
                 "file": {
                   "type": "string"
                 },
-                "user": {
-                  "type": "string"
-                },
                 "category": {
                   "type": "string"
                 },

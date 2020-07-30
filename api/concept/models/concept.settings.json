@@ -35,13 +35,13 @@
       "type": "json"
     },
     "combinators": {
-      "collection": "combinator",
       "via": "concepts",
+      "collection": "combinator",
       "dominant": true
     },
     "concept_map": {
-      "model": "concept-map",
-      "via": "concepts"
+      "via": "concepts",
+      "model": "concept-map"
     },
     "old_id": {
       "type": "integer",

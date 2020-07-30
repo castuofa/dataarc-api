@@ -35,11 +35,6 @@
       "plugin": "upload",
       "required": false
     },
-    "user": {
-      "via": "datasets",
-      "plugin": "users-permissions",
-      "model": "user"
-    },
     "category": {
       "model": "category",
       "via": "datasets"
@@ -53,8 +48,8 @@
       "via": "dataset"
     },
     "templates": {
-      "collection": "dataset-template",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-template"
     },
     "features": {
       "collection": "dataset-feature",

@@ -23,11 +23,6 @@
       "model": "combinator",
       "via": "queries"
     },
-    "user": {
-      "via": "combinator_queries",
-      "plugin": "users-permissions",
-      "model": "user"
-    },
     "old_id": {
       "type": "integer",
       "private": true

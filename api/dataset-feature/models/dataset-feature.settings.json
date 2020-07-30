@@ -41,8 +41,8 @@
       "type": "json"
     },
     "combinators": {
-      "collection": "combinator",
-      "via": "features"
+      "via": "features",
+      "collection": "combinator"
     },
     "old_id": {
       "type": "integer",

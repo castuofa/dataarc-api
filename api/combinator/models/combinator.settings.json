@@ -32,22 +32,17 @@
       "collection": "combinator-query"
     },
     "concepts": {
-      "via": "combinators",
-      "collection": "concept"
+      "collection": "concept",
+      "via": "combinators"
     },
     "dataset": {
       "via": "combinators",
       "model": "dataset"
     },
     "features": {
-      "via": "combinators",
       "collection": "dataset-feature",
-      "dominant": true
-    },
-    "user": {
       "via": "combinators",
-      "plugin": "users-permissions",
-      "model": "user"
+      "dominant": true
     },
     "old_id": {
       "type": "integer",
