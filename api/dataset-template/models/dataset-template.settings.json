@@ -30,8 +30,8 @@
       ]
     },
     "dataset": {
-      "model": "dataset",
-      "via": "templates"
+      "via": "templates",
+      "model": "dataset"
     },
     "old_id": {
       "type": "integer",

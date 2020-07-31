@@ -24,14 +24,16 @@
       "type": "string"
     },
     "image": {
-      "type": "string"
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["images"],
+      "plugin": "upload",
+      "required": false
     },
     "file": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },
@@ -48,8 +50,8 @@
       "via": "dataset"
     },
     "templates": {
-      "via": "dataset",
-      "collection": "dataset-template"
+      "collection": "dataset-template",
+      "via": "dataset"
     },
     "features": {
       "collection": "dataset-feature",
