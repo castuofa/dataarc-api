@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/30/2020 10:54:04 AM"
+    "x-generation-date": "07/30/2020 12:51:33 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2115,10 +2115,10 @@
         ]
       }
     },
-    "/concept-maps/process/{id}": {
-      "post": {
+    "/concept-maps/{id}/process": {
+      "get": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "",
         "responses": {
           "200": {
             "description": "response",
@@ -2169,21 +2169,18 @@
         "tags": [
           "Concept-map"
         ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "foo": {
-                    "type": "string"
-                  }
-                }
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        }
+        ]
       }
     },
     "/concepts": {
