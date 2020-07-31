@@ -619,7 +619,10 @@
               "citation": {
                 "type": "string"
               },
-              "file": {
+              "xtm": {
+                "type": "string"
+              },
+              "json": {
                 "type": "string"
               },
               "concepts": {
