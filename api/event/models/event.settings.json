@@ -14,7 +14,8 @@
       "enum": [
         "create",
         "update",
-        "delete"
+        "delete",
+        "process"
       ]
     },
     "item": {
@@ -24,9 +25,9 @@
       "type": "string"
     },
     "user": {
-      "via": "events",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "events"
     }
   }
 }

@@ -58,8 +58,8 @@
       "configurable": false
     },
     "events": {
-      "collection": "event",
-      "via": "user"
+      "via": "user",
+      "collection": "event"
     },
     "old_id": {
       "type": "integer",

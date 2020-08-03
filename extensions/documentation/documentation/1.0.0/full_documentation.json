@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/03/2020 4:44:51 PM"
+    "x-generation-date": "08/03/2020 5:04:20 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -11052,7 +11052,8 @@
             "enum": [
               "create",
               "update",
-              "delete"
+              "delete",
+              "process"
             ]
           },
           "item": {
@@ -11127,7 +11128,8 @@
             "enum": [
               "create",
               "update",
-              "delete"
+              "delete",
+              "process"
             ]
           },
           "item": {
