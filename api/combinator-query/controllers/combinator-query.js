@@ -25,12 +25,13 @@ module.exports = {
       model: strapi.models['combinator-query'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['combinator-query'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['combinator-query'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -61,12 +62,13 @@ module.exports = {
       model: strapi.models['combinator-query'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['combinator-query'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['combinator-query'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -86,12 +88,13 @@ module.exports = {
       model: strapi.models['combinator-query'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['combinator-query'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['combinator-query'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },

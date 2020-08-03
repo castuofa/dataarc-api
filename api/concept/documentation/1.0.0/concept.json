@@ -517,14 +517,10 @@
       "Concept": {
         "required": [
           "id",
-          "topic",
           "name"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "topic": {
             "type": "string"
           },
           "name": {
@@ -538,12 +534,6 @@
           },
           "url": {
             "type": "string"
-          },
-          "parents": {
-            "type": "object"
-          },
-          "associations": {
-            "type": "object"
           },
           "combinators": {
             "type": "array",
@@ -601,33 +591,27 @@
               }
             }
           },
-          "concept_map": {
-            "required": [
-              "id",
-              "name"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "xtm": {
-                "type": "string"
-              },
-              "json": {
-                "type": "string"
-              },
-              "concepts": {
-                "type": "array",
-                "items": {
+          "topics": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "identifier"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "map": {
+                  "type": "string"
+                },
+                "concept": {
                   "type": "string"
                 }
               }
@@ -637,13 +621,9 @@
       },
       "NewConcept": {
         "required": [
-          "topic",
           "name"
         ],
         "properties": {
-          "topic": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
@@ -656,23 +636,20 @@
           "url": {
             "type": "string"
           },
-          "parents": {
-            "type": "object"
-          },
-          "associations": {
-            "type": "object"
-          },
           "combinators": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "concept_map": {
-            "type": "string"
-          },
           "old_id": {
             "type": "integer"
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

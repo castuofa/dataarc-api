@@ -21,12 +21,13 @@ module.exports = {
       model: strapi.models['map-layer'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['map-layer'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['map-layer'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -57,12 +58,13 @@ module.exports = {
       model: strapi.models['map-layer'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['map-layer'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['map-layer'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -82,12 +84,13 @@ module.exports = {
       model: strapi.models['map-layer'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['map-layer'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['map-layer'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },

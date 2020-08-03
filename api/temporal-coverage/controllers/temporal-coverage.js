@@ -25,12 +25,13 @@ module.exports = {
       model: strapi.models['temporal-coverage'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['temporal-coverage'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['temporal-coverage'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -61,12 +62,13 @@ module.exports = {
       model: strapi.models['temporal-coverage'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['temporal-coverage'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['temporal-coverage'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -86,12 +88,13 @@ module.exports = {
       model: strapi.models['temporal-coverage'],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['temporal-coverage'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models['temporal-coverage'].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "topics",
+  "info": {
+    "name": "Topic"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "identifier": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "map": {
+      "model": "topic-map",
+      "via": "topics"
+    },
+    "concept": {
+      "model": "concept",
+      "via": "topics"
+    }
+  }
+}

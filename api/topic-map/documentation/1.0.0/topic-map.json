@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/concept-maps": {
+    "/topic-maps": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "parameters": [
           {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewConcept-map"
+                "$ref": "#/components/schemas/NewTopic-map"
               }
             }
           }
         }
       }
     },
-    "/concept-maps/count": {
+    "/topic-maps/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -311,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "parameters": []
       }
     },
-    "/concept-maps/{id}": {
+    "/topic-maps/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "parameters": [
           {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewConcept-map"
+                "$ref": "#/components/schemas/NewTopic-map"
               }
             }
           }
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "parameters": [
           {
@@ -524,7 +524,7 @@
         ]
       }
     },
-    "/concept-maps/{id}/process": {
+    "/topic-maps/{id}/process": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -576,7 +576,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept-map"
+          "Topic-map"
         ],
         "parameters": [
           {
@@ -595,10 +595,9 @@
   },
   "components": {
     "schemas": {
-      "Concept-map": {
+      "Topic-map": {
         "required": [
-          "id",
-          "name"
+          "id"
         ],
         "properties": {
           "id": {
@@ -613,7 +612,16 @@
           "citation": {
             "type": "string"
           },
-          "xtm": {
+          "url": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "object"
+          },
+          "edges": {
+            "type": "object"
+          },
+          "source": {
             "required": [
               "id",
               "name",
@@ -674,121 +682,35 @@
               }
             }
           },
-          "json": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              }
-            }
-          },
-          "concepts": {
+          "topics": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "topic",
-                "name"
+                "identifier"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "topic": {
+                "identifier": {
                   "type": "string"
                 },
                 "name": {
                   "type": "string"
                 },
-                "description": {
+                "map": {
                   "type": "string"
                 },
-                "citation": {
+                "concept": {
                   "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "parents": {
-                  "type": "object"
-                },
-                "associations": {
-                  "type": "object"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concept_map": {
-                  "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
                 }
               }
             }
           }
         }
       },
-      "NewConcept-map": {
-        "required": [
-          "name"
-        ],
+      "NewTopic-map": {
         "properties": {
           "name": {
             "type": "string"
@@ -799,7 +721,16 @@
           "citation": {
             "type": "string"
           },
-          "concepts": {
+          "url": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "object"
+          },
+          "edges": {
+            "type": "object"
+          },
+          "topics": {
             "type": "array",
             "items": {
               "type": "string"

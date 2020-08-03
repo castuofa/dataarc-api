@@ -32,8 +32,8 @@
       "collection": "combinator-query"
     },
     "concepts": {
-      "collection": "concept",
-      "via": "combinators"
+      "via": "combinators",
+      "collection": "concept"
     },
     "dataset": {
       "via": "combinators",

@@ -2,56 +2,56 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/concept-maps",
-      "handler": "concept-map.find",
+      "path": "/topic-maps",
+      "handler": "topic-map.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/concept-maps/count",
-      "handler": "concept-map.count",
+      "path": "/topic-maps/count",
+      "handler": "topic-map.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/concept-maps/:id",
-      "handler": "concept-map.findOne",
+      "path": "/topic-maps/:id",
+      "handler": "topic-map.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/concept-maps/:id/process",
-      "handler": "concept-map.process",
+      "path": "/topic-maps/:id/process",
+      "handler": "topic-map.process",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/concept-maps",
-      "handler": "concept-map.create",
+      "path": "/topic-maps",
+      "handler": "topic-map.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/concept-maps/:id",
-      "handler": "concept-map.update",
+      "path": "/topic-maps/:id",
+      "handler": "topic-map.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/concept-maps/:id",
-      "handler": "concept-map.delete",
+      "path": "/topic-maps/:id",
+      "handler": "topic-map.delete",
       "config": {
         "policies": []
       }
