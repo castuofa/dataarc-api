@@ -542,7 +542,7 @@
           "description": {
             "type": "string"
           },
-          "file": {
+          "source": {
             "required": [
               "id",
               "name",

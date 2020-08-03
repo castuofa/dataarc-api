@@ -17,7 +17,7 @@
     "description": {
       "type": "text"
     },
-    "file": {
+    "source": {
       "model": "file",
       "via": "related",
       "allowedTypes": [

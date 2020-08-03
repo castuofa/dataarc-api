@@ -578,7 +578,7 @@
               "image": {
                 "type": "string"
               },
-              "file": {
+              "source": {
                 "type": "string"
               },
               "category": {

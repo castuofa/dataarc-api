@@ -596,7 +596,7 @@
               }
             }
           },
-          "file": {
+          "source": {
             "required": [
               "id",
               "name",
