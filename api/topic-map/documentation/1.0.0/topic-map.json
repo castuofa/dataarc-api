@@ -597,13 +597,18 @@
     "schemas": {
       "Topic-map": {
         "required": [
-          "id"
+          "id",
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -712,8 +717,15 @@
         }
       },
       "NewTopic-map": {
+        "required": [
+          "name",
+          "title"
+        ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {

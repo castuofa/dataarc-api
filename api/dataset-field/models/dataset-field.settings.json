@@ -13,8 +13,12 @@
       "type": "string",
       "required": true
     },
-    "display": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
     },
     "type": {
       "type": "enumeration",

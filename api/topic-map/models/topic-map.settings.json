@@ -11,7 +11,11 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": false
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
     },
     "description": {
       "type": "text"
@@ -31,9 +35,7 @@
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },

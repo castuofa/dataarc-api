@@ -14,6 +14,11 @@
       "required": true,
       "unique": true
     },
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
     "description": {
       "type": "text"
     },
@@ -26,24 +31,20 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
+      "allowedTypes": ["images"],
       "plugin": "upload",
       "required": false
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },
     "category": {
-      "model": "category",
-      "via": "datasets"
+      "via": "datasets",
+      "model": "category"
     },
     "combinators": {
       "collection": "combinator",

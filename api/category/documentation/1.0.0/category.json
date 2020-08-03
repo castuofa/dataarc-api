@@ -517,13 +517,17 @@
       "Category": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -537,13 +541,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -607,10 +615,14 @@
       },
       "NewCategory": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {

@@ -530,13 +530,17 @@
       "Map-layer": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -607,10 +611,14 @@
       },
       "NewMap-layer": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {

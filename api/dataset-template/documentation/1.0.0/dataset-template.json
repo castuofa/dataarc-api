@@ -557,13 +557,17 @@
           "dataset": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {

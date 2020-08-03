@@ -13,6 +13,9 @@
       "via": "features",
       "model": "dataset"
     },
+    "name": {
+      "type": "string"
+    },
     "title": {
       "type": "string"
     },

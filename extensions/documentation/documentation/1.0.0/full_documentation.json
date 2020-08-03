@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/03/2020 5:04:20 PM"
+    "x-generation-date": "08/03/2020 5:17:17 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9519,13 +9519,17 @@
       "Category": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -9539,13 +9543,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -9609,10 +9617,14 @@
       },
       "NewCategory": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -9653,13 +9665,17 @@
           "combinator": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -9736,13 +9752,17 @@
       "Combinator": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -9799,13 +9819,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -9838,13 +9862,17 @@
           "dataset": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -9916,6 +9944,9 @@
                 "dataset": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },
@@ -9962,10 +9993,14 @@
       },
       "NewCombinator": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -10017,13 +10052,17 @@
       "Concept": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -10040,13 +10079,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -10122,10 +10165,14 @@
       },
       "NewConcept": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -10165,13 +10212,17 @@
           "dataset": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -10230,6 +10281,9 @@
               }
             }
           },
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
@@ -10262,13 +10316,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -10320,6 +10378,9 @@
           "dataset": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
@@ -10364,7 +10425,8 @@
       "Dataset-field": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
@@ -10373,7 +10435,10 @@
           "name": {
             "type": "string"
           },
-          "display": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           },
           "type": {
@@ -10391,13 +10456,17 @@
           "dataset": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -10460,13 +10529,17 @@
       },
       "NewDataset-field": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
             "type": "string"
           },
-          "display": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           },
           "type": {
@@ -10522,13 +10595,17 @@
           "dataset": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -10629,13 +10706,17 @@
       "Dataset": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -10772,13 +10853,17 @@
           "category": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -10803,13 +10888,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -10859,7 +10948,8 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
@@ -10868,7 +10958,10 @@
                 "name": {
                   "type": "string"
                 },
-                "display": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
                   "type": "string"
                 },
                 "type": {
@@ -10937,6 +11030,9 @@
                 "dataset": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },
@@ -10983,10 +11079,14 @@
       },
       "NewDataset": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -11146,13 +11246,17 @@
       "Map-layer": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -11223,10 +11327,14 @@
       },
       "NewMap-layer": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -11245,6 +11353,9 @@
           "name": {
             "type": "string"
           },
+          "title": {
+            "type": "string"
+          },
           "description": {
             "type": "string"
           },
@@ -11259,6 +11370,9 @@
       "NewSearch": {
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -11284,6 +11398,9 @@
           "name": {
             "type": "string"
           },
+          "title": {
+            "type": "string"
+          },
           "description": {
             "type": "string"
           },
@@ -11306,6 +11423,9 @@
           "name": {
             "type": "string"
           },
+          "title": {
+            "type": "string"
+          },
           "description": {
             "type": "string"
           },
@@ -11322,13 +11442,18 @@
       },
       "Topic-map": {
         "required": [
-          "id"
+          "id",
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -11437,8 +11562,15 @@
         }
       },
       "NewTopic-map": {
+        "required": [
+          "name",
+          "title"
+        ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -11482,13 +11614,18 @@
           },
           "map": {
             "required": [
-              "id"
+              "id",
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -11520,13 +11657,17 @@
           "concept": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {

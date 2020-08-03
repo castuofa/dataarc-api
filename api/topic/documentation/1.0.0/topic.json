@@ -532,13 +532,18 @@
           },
           "map": {
             "required": [
-              "id"
+              "id",
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -570,13 +575,17 @@
           "concept": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {

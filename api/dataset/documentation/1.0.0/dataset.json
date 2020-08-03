@@ -517,13 +517,17 @@
       "Dataset": {
         "required": [
           "id",
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -660,13 +664,17 @@
           "category": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -691,13 +699,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -747,7 +759,8 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
@@ -756,7 +769,10 @@
                 "name": {
                   "type": "string"
                 },
-                "display": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
                   "type": "string"
                 },
                 "type": {
@@ -825,6 +841,9 @@
                 "dataset": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },
@@ -871,10 +890,14 @@
       },
       "NewDataset": {
         "required": [
-          "name"
+          "name",
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {

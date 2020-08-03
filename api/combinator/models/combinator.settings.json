@@ -13,6 +13,10 @@
       "type": "string",
       "required": true
     },
+    "title": {
+      "type": "string",
+      "required": true
+    },
     "description": {
       "type": "text"
     },
@@ -21,10 +25,7 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": [
-        "AND",
-        "OR"
-      ],
+      "enum": ["AND", "OR"],
       "default": "AND"
     },
     "queries": {

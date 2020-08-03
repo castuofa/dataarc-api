@@ -538,13 +538,17 @@
           "dataset": {
             "required": [
               "id",
-              "name"
+              "name",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "description": {
@@ -603,6 +607,9 @@
               }
             }
           },
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
@@ -635,13 +642,17 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "name",
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -691,6 +702,9 @@
       "NewDataset-feature": {
         "properties": {
           "dataset": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "title": {
