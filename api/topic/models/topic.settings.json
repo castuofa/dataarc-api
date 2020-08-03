@@ -9,13 +9,13 @@
     "timestamps": true
   },
   "attributes": {
-    "identifier": {
+    "name": {
       "type": "string",
-      "unique": true,
       "required": true
     },
-    "name": {
-      "type": "string"
+    "identifier": {
+      "type": "string",
+      "required": true
     },
     "map": {
       "model": "topic-map",

@@ -1,5 +1,7 @@
 'use strict';
 
+const CONTENT_TYPE = 'topic-map';
+
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
@@ -9,22 +11,24 @@ module.exports = {
    * @return {Object}
    */
 
-  async create(ctx) {
+  create: async (ctx) => {
     let entity;
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['topic-map'].create(data, { files });
+      entity = await strapi.services[CONTENT_TYPE].create(data, { files });
     } else {
-      entity = await strapi.services['topic-map'].create(ctx.request.body);
+      entity = await strapi.services[CONTENT_TYPE].create(ctx.request.body);
     }
+
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['topic-map'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id
       );
@@ -38,30 +42,30 @@ module.exports = {
    * @return {Object}
    */
 
-  async update(ctx) {
+  update: async (ctx) => {
     const { id } = ctx.params;
-
     let entity;
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['topic-map'].update({ id }, data, {
+      entity = await strapi.services[CONTENT_TYPE].update({ id }, data, {
         files,
       });
     } else {
-      entity = await strapi.services['topic-map'].update(
+      entity = await strapi.services[CONTENT_TYPE].update(
         { id },
         ctx.request.body
       );
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['topic-map'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id
       );
@@ -75,19 +79,18 @@ module.exports = {
    * @return {Object}
    */
 
-  async delete(ctx) {
+  delete: async (ctx) => {
     const { id } = ctx.params;
-
-    const entity = await strapi.services['topic-map'].delete({ id });
+    const entity = await strapi.services[CONTENT_TYPE].delete({ id });
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['topic-map'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id
       );
@@ -101,21 +104,21 @@ module.exports = {
    * @return {Object}
    */
 
-  async process(ctx) {
+  process: async (ctx) => {
     const { id } = ctx.params;
 
-    let entity = await strapi.services['topic-map'].process({ id });
+    let entity = await strapi.services[CONTENT_TYPE].process({ id });
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['topic-map'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'process',
-        strapi.models['topic-map'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        '5f21efe9c07f47e1fbd908ce' // ctx.state.user.id
+        ctx.state.user.id
       );
 
     return entry;

@@ -11,50 +11,35 @@ module.exports = {
    *
    * @return {Promise}
    */
-  async process(params) {
+  process: async (params) => {
     const entry = await strapi.query('topic-map').findOne(params);
 
     if (entry != null) {
-      strapi.log.info(`Processing topic map ${JSON.stringify(entry)}`);
-
-      const fs = require('fs');
+      // remove existing topics for this map
+      strapi.log.info(`Removing existing topics for this map`);
+      await strapi.query('topic').delete({
+        map: entry.id,
+        _limit: 999999,
+      });
 
       // read file
+      const fs = require('fs');
       const path = `${strapi.dir}/public${entry.source.url}`;
-      // const path = `${strapi.dir}/../dataarc-data/source/topic-map/topic_nodes_old.json`;
       const map = JSON.parse(fs.readFileSync(path, 'utf8'));
 
-      strapi.log.info(`JSON data: ${JSON.stringify(map.links)}`);
+      // map nodes to the correct format
+      let topics = map.nodes.map((node) => {
+        return {
+          identifier: node.id.toString(),
+          name: node.title,
+          map: entry.id,
+        };
+      });
 
-      // const targetNode =
-
-      //     // element '/stats/runs/latest'
-      //     jsonData.stats.runs.latest
-
-      //     .find(x =>
-
-      //         // attribute '@date'
-      //         x._attributes.date === '2019-12-12'
-      //     );
-
-      // targetNode has the 'latest' node we want
-      // now output the 'fail' attribute from that node
-      // console.log(targetNode._attributes.fail);  // outputs: 2
-
-      // load the file
-
-      // loop through topics and create new entries
-
-      // let entry = sanitizeEntity(entity, {
-      //   model: strapi.models['topic-map'],
-      // });
-
-      // strapi.services.event.log(
-      //   'process',
-      //   strapi.models['topic-map'].info.name,
-      //   entry.name,
-      //   ctx.state.user.id
-      // );
+      // create new topics
+      strapi.log.info(`Creating ${map.nodes.length} topics`);
+      if (Array.isArray(topics))
+        await Promise.all(topics.map(strapi.query('topic').create));
     }
 
     return entry;

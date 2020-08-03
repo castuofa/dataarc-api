@@ -517,16 +517,17 @@
       "Topic": {
         "required": [
           "id",
+          "name",
           "identifier"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "identifier": {
+          "name": {
             "type": "string"
           },
-          "name": {
+          "identifier": {
             "type": "string"
           },
           "map": {
@@ -608,13 +609,14 @@
       },
       "NewTopic": {
         "required": [
+          "name",
           "identifier"
         ],
         "properties": {
-          "identifier": {
+          "name": {
             "type": "string"
           },
-          "name": {
+          "identifier": {
             "type": "string"
           },
           "map": {

@@ -1,5 +1,7 @@
 'use strict';
 
+const CONTENT_TYPE = 'dataset-field';
+
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
@@ -9,22 +11,24 @@ module.exports = {
    * @return {Object}
    */
 
-  async create(ctx) {
+  create: async (ctx) => {
     let entity;
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['dataset-field'].create(data, { files });
+      entity = await strapi.services[CONTENT_TYPE].create(data, { files });
     } else {
-      entity = await strapi.services['dataset-field'].create(ctx.request.body);
+      entity = await strapi.services[CONTENT_TYPE].create(ctx.request.body);
     }
+
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset-field'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['dataset-field'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id
       );
@@ -38,30 +42,30 @@ module.exports = {
    * @return {Object}
    */
 
-  async update(ctx) {
+  update: async (ctx) => {
     const { id } = ctx.params;
-
     let entity;
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['dataset-field'].update({ id }, data, {
+      entity = await strapi.services[CONTENT_TYPE].update({ id }, data, {
         files,
       });
     } else {
-      entity = await strapi.services['dataset-field'].update(
+      entity = await strapi.services[CONTENT_TYPE].update(
         { id },
         ctx.request.body
       );
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset-field'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['dataset-field'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id
       );
@@ -75,19 +79,18 @@ module.exports = {
    * @return {Object}
    */
 
-  async delete(ctx) {
+  delete: async (ctx) => {
     const { id } = ctx.params;
-
-    const entity = await strapi.services['dataset-field'].delete({ id });
+    const entity = await strapi.services[CONTENT_TYPE].delete({ id });
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset-field'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['dataset-field'].info.name,
+        strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id
       );

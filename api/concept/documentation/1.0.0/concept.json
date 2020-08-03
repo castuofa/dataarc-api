@@ -596,16 +596,17 @@
             "items": {
               "required": [
                 "id",
+                "name",
                 "identifier"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "identifier": {
+                "name": {
                   "type": "string"
                 },
-                "name": {
+                "identifier": {
                   "type": "string"
                 },
                 "map": {
