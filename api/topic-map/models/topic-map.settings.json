@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "concept_maps",
+  "collectionName": "topic_maps",
   "info": {
-    "name": "ConceptMap"
+    "name": "TopicMap"
   },
   "options": {
     "increments": true,
@@ -11,7 +11,7 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "description": {
       "type": "text"
@@ -19,7 +19,16 @@
     "citation": {
       "type": "text"
     },
-    "file": {
+    "url": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "json"
+    },
+    "edges": {
+      "type": "json"
+    },
+    "source": {
       "model": "file",
       "via": "related",
       "allowedTypes": [
@@ -28,9 +37,9 @@
       "plugin": "upload",
       "required": false
     },
-    "concepts": {
-      "via": "concept_map",
-      "collection": "concept"
+    "topics": {
+      "via": "map",
+      "collection": "topic"
     }
   }
 }

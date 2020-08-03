@@ -40,14 +40,9 @@
       "model": "dataset"
     },
     "features": {
-      "via": "combinators",
       "collection": "dataset-feature",
-      "dominant": true
-    },
-    "user": {
       "via": "combinators",
-      "plugin": "users-permissions",
-      "model": "user"
+      "dominant": true
     },
     "old_id": {
       "type": "integer",

@@ -33,11 +33,6 @@
       "via": "templates",
       "model": "dataset"
     },
-    "user": {
-      "via": "dataset_templates",
-      "plugin": "users-permissions",
-      "model": "user"
-    },
     "old_id": {
       "type": "integer",
       "private": true

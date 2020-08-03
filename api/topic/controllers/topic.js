@@ -1,6 +1,6 @@
 'use strict';
 
-const CONTENT_TYPE = 'combinator-query';
+const CONTENT_TYPE = 'topic';
 
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 

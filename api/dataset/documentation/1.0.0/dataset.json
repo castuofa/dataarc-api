@@ -536,9 +536,6 @@
             "type": "string"
           },
           "image": {
-            "type": "string"
-          },
-          "file": {
             "required": [
               "id",
               "name",
@@ -599,84 +596,64 @@
               }
             }
           },
-          "user": {
+          "file": {
             "required": [
               "id",
-              "username",
-              "email"
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "username": {
+              "name": {
                 "type": "string"
               },
-              "email": {
+              "alternativeText": {
+                "type": "string"
+              },
+              "caption": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
+                "type": "string"
+              },
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "url": {
+                "type": "string"
+              },
+              "previewUrl": {
                 "type": "string"
               },
               "provider": {
                 "type": "string"
               },
-              "password": {
+              "provider_metadata": {
+                "type": "object"
+              },
+              "related": {
                 "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "loginAt": {
-                "type": "datetime"
-              },
-              "role": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "events": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "combinator_queries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "dataset_templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_external_id": {
-                "type": "integer"
-              },
-              "old_admin": {
-                "type": "boolean"
-              },
-              "old_editor": {
-                "type": "boolean"
               }
             }
           },
@@ -753,9 +730,6 @@
                     "type": "string"
                   }
                 },
-                "user": {
-                  "type": "string"
-                },
                 "old_id": {
                   "type": "integer"
                 },
@@ -824,9 +798,6 @@
                   "type": "string"
                 },
                 "dataset": {
-                  "type": "string"
-                },
-                "user": {
                   "type": "string"
                 },
                 "old_id": {
@@ -913,12 +884,6 @@
             "type": "string"
           },
           "link": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
-          },
-          "user": {
             "type": "string"
           },
           "category": {

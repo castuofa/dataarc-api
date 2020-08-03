@@ -1,6 +1,6 @@
 'use strict';
 
-const CONTENT_TYPE = 'combinator-query';
+const CONTENT_TYPE = 'topic-map';
 
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
@@ -90,6 +90,32 @@ module.exports = {
     if (entry != null)
       strapi.services.event.log(
         'update',
+        strapi.models[CONTENT_TYPE].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
+
+    return entry;
+  },
+
+  /**
+   * process a concept map
+   *
+   * @return {Object}
+   */
+
+  process: async (ctx) => {
+    const { id } = ctx.params;
+
+    let entity = await strapi.services[CONTENT_TYPE].process({ id });
+
+    let entry = sanitizeEntity(entity, {
+      model: strapi.models[CONTENT_TYPE],
+    });
+
+    if (entry != null)
+      strapi.services.event.log(
+        'process',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         ctx.state.user.id

@@ -24,21 +24,18 @@
       "type": "string"
     },
     "image": {
-      "type": "string"
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["images"],
+      "plugin": "upload",
+      "required": false
     },
     "file": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
-    },
-    "user": {
-      "via": "datasets",
-      "plugin": "users-permissions",
-      "model": "user"
     },
     "category": {
       "model": "category",

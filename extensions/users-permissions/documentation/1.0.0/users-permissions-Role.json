@@ -612,31 +612,7 @@
                 "role": {
                   "type": "string"
                 },
-                "datasets": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "combinator_queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "dataset_templates": {
                   "type": "array",
                   "items": {
                     "type": "string"

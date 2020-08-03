@@ -1,5 +1,7 @@
 'use strict';
 
+const CONTENT_TYPE = 'temporal-coverage';
+
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
@@ -9,28 +11,27 @@ module.exports = {
    * @return {Object}
    */
 
-  async create(ctx) {
+  create: async (ctx) => {
     let entity;
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['temporal-coverage'].create(data, {
-        files,
-      });
+      entity = await strapi.services[CONTENT_TYPE].create(data, { files });
     } else {
-      entity = await strapi.services['temporal-coverage'].create(
-        ctx.request.body
-      );
+      entity = await strapi.services[CONTENT_TYPE].create(ctx.request.body);
     }
+
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['temporal-coverage'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['temporal-coverage'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models[CONTENT_TYPE].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -41,32 +42,33 @@ module.exports = {
    * @return {Object}
    */
 
-  async update(ctx) {
+  update: async (ctx) => {
     const { id } = ctx.params;
-
     let entity;
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['temporal-coverage'].update({ id }, data, {
+      entity = await strapi.services[CONTENT_TYPE].update({ id }, data, {
         files,
       });
     } else {
-      entity = await strapi.services['temporal-coverage'].update(
+      entity = await strapi.services[CONTENT_TYPE].update(
         { id },
         ctx.request.body
       );
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['temporal-coverage'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['temporal-coverage'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models[CONTENT_TYPE].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },
@@ -77,21 +79,21 @@ module.exports = {
    * @return {Object}
    */
 
-  async delete(ctx) {
+  delete: async (ctx) => {
     const { id } = ctx.params;
-
-    const entity = await strapi.services['temporal-coverage'].delete({ id });
+    const entity = await strapi.services[CONTENT_TYPE].delete({ id });
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['temporal-coverage'],
+      model: strapi.models[CONTENT_TYPE],
     });
 
-    strapi.services.event.log(
-      'update',
-      strapi.models['temporal-coverage'].info.name,
-      entry.name,
-      ctx.state.user.id
-    );
+    if (entry != null)
+      strapi.services.event.log(
+        'update',
+        strapi.models[CONTENT_TYPE].info.name,
+        entry.name,
+        ctx.state.user.id
+      );
 
     return entry;
   },

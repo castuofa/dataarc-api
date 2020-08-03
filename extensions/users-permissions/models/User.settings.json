@@ -57,24 +57,8 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "datasets": {
-      "collection": "dataset",
-      "via": "user"
-    },
     "events": {
       "collection": "event",
-      "via": "user"
-    },
-    "combinators": {
-      "collection": "combinator",
-      "via": "user"
-    },
-    "combinator_queries": {
-      "collection": "combinator-query",
-      "via": "user"
-    },
-    "dataset_templates": {
-      "collection": "dataset-template",
       "via": "user"
     },
     "old_id": {

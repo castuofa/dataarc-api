@@ -9,11 +9,6 @@
     "timestamps": true
   },
   "attributes": {
-    "topic": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
     "name": {
       "type": "string",
       "required": true,
@@ -28,24 +23,18 @@
     "url": {
       "type": "string"
     },
-    "parents": {
-      "type": "json"
-    },
-    "associations": {
-      "type": "json"
-    },
     "combinators": {
       "collection": "combinator",
       "via": "concepts",
       "dominant": true
     },
-    "concept_map": {
-      "model": "concept-map",
-      "via": "concepts"
-    },
     "old_id": {
       "type": "integer",
       "private": true
+    },
+    "topics": {
+      "via": "concept",
+      "collection": "topic"
     }
   }
 }

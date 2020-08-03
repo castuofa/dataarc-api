@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/combinators": {
+    "/topics": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Combinator"
+                    "$ref": "#/components/schemas/Topic"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Topic"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "$ref": "#/components/schemas/Topic"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Topic"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCombinator"
+                "$ref": "#/components/schemas/NewTopic"
               }
             }
           }
         }
       }
     },
-    "/combinators/count": {
+    "/topics/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Topic"
         ],
         "parameters": []
       }
     },
-    "/combinators/{id}": {
+    "/topics/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "$ref": "#/components/schemas/Topic"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Topic"
         ],
         "parameters": [
           {
@@ -383,7 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "$ref": "#/components/schemas/Topic"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Topic"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCombinator"
+                "$ref": "#/components/schemas/NewTopic"
               }
             }
           }
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Topic"
         ],
         "parameters": [
           {
@@ -514,10 +514,11 @@
   },
   "components": {
     "schemas": {
-      "Combinator": {
+      "Topic": {
         "required": [
           "id",
-          "name"
+          "name",
+          "identifier"
         ],
         "properties": {
           "id": {
@@ -526,97 +527,47 @@
           "name": {
             "type": "string"
           },
-          "description": {
+          "identifier": {
             "type": "string"
           },
-          "citation": {
-            "type": "string"
-          },
-          "operator": {
-            "type": "string",
-            "default": "AND",
-            "enum": [
-              "AND",
-              "OR"
-            ]
-          },
-          "queries": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "field"
-              ],
-              "properties": {
-                "id": {
+          "map": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "nodes": {
+                "type": "object"
+              },
+              "edges": {
+                "type": "object"
+              },
+              "source": {
+                "type": "string"
+              },
+              "topics": {
+                "type": "array",
+                "items": {
                   "type": "string"
-                },
-                "field": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string"
-                },
-                "combinator": {
-                  "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_combinator_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
                 }
               }
             }
           },
-          "concepts": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "name"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "topics": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "dataset": {
+          "concept": {
             "required": [
               "id",
               "name"
@@ -634,16 +585,7 @@
               "citation": {
                 "type": "string"
               },
-              "link": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "file": {
-                "type": "string"
-              },
-              "category": {
+              "url": {
                 "type": "string"
               },
               "combinators": {
@@ -652,146 +594,36 @@
                   "type": "string"
                 }
               },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "old_id": {
                 "type": "integer"
               },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              }
-            }
-          },
-          "features": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
+              "topics": {
+                "type": "array",
+                "items": {
                   "type": "string"
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "summary": {
-                  "type": "string"
-                },
-                "details": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                },
-                "lat": {
-                  "type": "number"
-                },
-                "lng": {
-                  "type": "number"
-                },
-                "start": {
-                  "type": "integer"
-                },
-                "end": {
-                  "type": "integer"
-                },
-                "properties": {
-                  "type": "object"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
                 }
               }
             }
           }
         }
       },
-      "NewCombinator": {
+      "NewTopic": {
         "required": [
-          "name"
+          "name",
+          "identifier"
         ],
         "properties": {
           "name": {
             "type": "string"
           },
-          "description": {
+          "identifier": {
             "type": "string"
           },
-          "citation": {
+          "map": {
             "type": "string"
           },
-          "operator": {
-            "type": "string",
-            "default": "AND",
-            "enum": [
-              "AND",
-              "OR"
-            ]
-          },
-          "queries": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "concepts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "dataset": {
+          "concept": {
             "type": "string"
-          },
-          "features": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
-          },
-          "old_user_id": {
-            "type": "integer"
           }
         }
       }
@@ -799,7 +631,7 @@
   },
   "tags": [
     {
-      "name": "Combinator"
+      "name": "Topic"
     }
   ]
 }

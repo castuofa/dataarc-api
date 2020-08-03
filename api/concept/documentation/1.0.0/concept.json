@@ -517,14 +517,10 @@
       "Concept": {
         "required": [
           "id",
-          "topic",
           "name"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "topic": {
             "type": "string"
           },
           "name": {
@@ -538,12 +534,6 @@
           },
           "url": {
             "type": "string"
-          },
-          "parents": {
-            "type": "object"
-          },
-          "associations": {
-            "type": "object"
           },
           "combinators": {
             "type": "array",
@@ -589,9 +579,6 @@
                     "type": "string"
                   }
                 },
-                "user": {
-                  "type": "string"
-                },
                 "old_id": {
                   "type": "integer"
                 },
@@ -604,30 +591,28 @@
               }
             }
           },
-          "concept_map": {
-            "required": [
-              "id",
-              "name"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "file": {
-                "type": "string"
-              },
-              "concepts": {
-                "type": "array",
-                "items": {
+          "topics": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name",
+                "identifier"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "string"
+                },
+                "map": {
+                  "type": "string"
+                },
+                "concept": {
                   "type": "string"
                 }
               }
@@ -637,13 +622,9 @@
       },
       "NewConcept": {
         "required": [
-          "topic",
           "name"
         ],
         "properties": {
-          "topic": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
@@ -656,23 +637,20 @@
           "url": {
             "type": "string"
           },
-          "parents": {
-            "type": "object"
-          },
-          "associations": {
-            "type": "object"
-          },
           "combinators": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "concept_map": {
-            "type": "string"
-          },
           "old_id": {
             "type": "integer"
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
