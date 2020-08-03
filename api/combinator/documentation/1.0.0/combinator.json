@@ -517,7 +517,6 @@
       "Combinator": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -584,7 +583,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -627,7 +625,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -700,7 +697,8 @@
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "title"
               ],
               "properties": {
                 "id": {
@@ -758,7 +756,6 @@
       },
       "NewCombinator": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {

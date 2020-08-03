@@ -530,7 +530,7 @@
       "Temporal-coverage": {
         "required": [
           "id",
-          "name"
+          "title"
         ],
         "properties": {
           "id": {
@@ -558,7 +558,7 @@
       },
       "NewTemporal-coverage": {
         "required": [
-          "name"
+          "title"
         ],
         "properties": {
           "name": {

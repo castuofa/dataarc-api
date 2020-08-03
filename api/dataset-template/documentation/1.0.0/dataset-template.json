@@ -530,13 +530,16 @@
       "Dataset-template": {
         "required": [
           "id",
-          "name"
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -557,7 +560,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -630,10 +632,13 @@
       },
       "NewDataset-template": {
         "required": [
-          "name"
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {

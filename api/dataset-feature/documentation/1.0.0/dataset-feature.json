@@ -529,7 +529,8 @@
     "schemas": {
       "Dataset-feature": {
         "required": [
-          "id"
+          "id",
+          "title"
         ],
         "properties": {
           "id": {
@@ -538,7 +539,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -642,7 +642,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -700,6 +699,9 @@
         }
       },
       "NewDataset-feature": {
+        "required": [
+          "title"
+        ],
         "properties": {
           "dataset": {
             "type": "string"

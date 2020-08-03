@@ -17,7 +17,8 @@
       "type": "string"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "summary": {
       "type": "text"

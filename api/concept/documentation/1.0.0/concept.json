@@ -517,7 +517,6 @@
       "Concept": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -544,7 +543,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -604,14 +602,14 @@
             "items": {
               "required": [
                 "id",
-                "name",
+                "title",
                 "identifier"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "identifier": {
@@ -630,7 +628,6 @@
       },
       "NewConcept": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {

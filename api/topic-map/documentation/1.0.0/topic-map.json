@@ -598,7 +598,6 @@
       "Topic-map": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -692,14 +691,14 @@
             "items": {
               "required": [
                 "id",
-                "name",
+                "title",
                 "identifier"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "identifier": {
@@ -718,7 +717,6 @@
       },
       "NewTopic-map": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {

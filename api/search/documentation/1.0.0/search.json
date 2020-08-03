@@ -516,7 +516,8 @@
     "schemas": {
       "Search": {
         "required": [
-          "id"
+          "id",
+          "title"
         ],
         "properties": {
           "id": {
@@ -540,6 +541,9 @@
         }
       },
       "NewSearch": {
+        "required": [
+          "title"
+        ],
         "properties": {
           "name": {
             "type": "string"

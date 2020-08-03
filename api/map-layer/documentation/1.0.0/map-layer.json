@@ -530,7 +530,6 @@
       "Map-layer": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -611,7 +610,6 @@
       },
       "NewMap-layer": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {

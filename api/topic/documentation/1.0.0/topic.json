@@ -517,14 +517,14 @@
       "Topic": {
         "required": [
           "id",
-          "name",
+          "title",
           "identifier"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "identifier": {
@@ -533,7 +533,6 @@
           "map": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -575,7 +574,6 @@
           "concept": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -618,11 +616,11 @@
       },
       "NewTopic": {
         "required": [
-          "name",
+          "title",
           "identifier"
         ],
         "properties": {
-          "name": {
+          "title": {
             "type": "string"
           },
           "identifier": {

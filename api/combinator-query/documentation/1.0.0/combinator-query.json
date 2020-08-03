@@ -548,7 +548,6 @@
           "combinator": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {

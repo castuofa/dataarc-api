@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/03/2020 5:17:17 PM"
+    "x-generation-date": "08/03/2020 5:45:47 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9519,7 +9519,6 @@
       "Category": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -9543,7 +9542,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -9617,7 +9615,6 @@
       },
       "NewCategory": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -9665,7 +9662,6 @@
           "combinator": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -9752,7 +9748,6 @@
       "Combinator": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -9819,7 +9814,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -9862,7 +9856,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -9935,7 +9928,8 @@
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "title"
               ],
               "properties": {
                 "id": {
@@ -9993,7 +9987,6 @@
       },
       "NewCombinator": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -10052,7 +10045,6 @@
       "Concept": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -10079,7 +10071,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -10139,14 +10130,14 @@
             "items": {
               "required": [
                 "id",
-                "name",
+                "title",
                 "identifier"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "identifier": {
@@ -10165,7 +10156,6 @@
       },
       "NewConcept": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -10203,7 +10193,8 @@
       },
       "Dataset-feature": {
         "required": [
-          "id"
+          "id",
+          "title"
         ],
         "properties": {
           "id": {
@@ -10212,7 +10203,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -10316,7 +10306,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -10374,6 +10363,9 @@
         }
       },
       "NewDataset-feature": {
+        "required": [
+          "title"
+        ],
         "properties": {
           "dataset": {
             "type": "string"
@@ -10456,7 +10448,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -10568,13 +10559,16 @@
       "Dataset-template": {
         "required": [
           "id",
-          "name"
+          "title"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -10595,7 +10589,6 @@
           "dataset": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -10668,10 +10661,13 @@
       },
       "NewDataset-template": {
         "required": [
-          "name"
+          "title"
         ],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "description": {
@@ -10706,7 +10702,6 @@
       "Dataset": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -10853,7 +10848,6 @@
           "category": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -10888,7 +10882,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -10984,13 +10977,16 @@
             "items": {
               "required": [
                 "id",
-                "name"
+                "title"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "description": {
@@ -11021,7 +11017,8 @@
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "title"
               ],
               "properties": {
                 "id": {
@@ -11079,7 +11076,6 @@
       },
       "NewDataset": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -11246,7 +11242,6 @@
       "Map-layer": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -11327,7 +11322,6 @@
       },
       "NewMap-layer": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -11344,7 +11338,8 @@
       },
       "Search": {
         "required": [
-          "id"
+          "id",
+          "title"
         ],
         "properties": {
           "id": {
@@ -11368,6 +11363,9 @@
         }
       },
       "NewSearch": {
+        "required": [
+          "title"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -11389,7 +11387,7 @@
       "Temporal-coverage": {
         "required": [
           "id",
-          "name"
+          "title"
         ],
         "properties": {
           "id": {
@@ -11417,7 +11415,7 @@
       },
       "NewTemporal-coverage": {
         "required": [
-          "name"
+          "title"
         ],
         "properties": {
           "name": {
@@ -11443,7 +11441,6 @@
       "Topic-map": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -11537,14 +11534,14 @@
             "items": {
               "required": [
                 "id",
-                "name",
+                "title",
                 "identifier"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "identifier": {
@@ -11563,7 +11560,6 @@
       },
       "NewTopic-map": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -11599,14 +11595,14 @@
       "Topic": {
         "required": [
           "id",
-          "name",
+          "title",
           "identifier"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "identifier": {
@@ -11615,7 +11611,6 @@
           "map": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -11657,7 +11652,6 @@
           "concept": {
             "required": [
               "id",
-              "name",
               "title"
             ],
             "properties": {
@@ -11700,11 +11694,11 @@
       },
       "NewTopic": {
         "required": [
-          "name",
+          "title",
           "identifier"
         ],
         "properties": {
-          "name": {
+          "title": {
             "type": "string"
           },
           "identifier": {
