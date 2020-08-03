@@ -30,7 +30,7 @@ module.exports = {
         'update',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;
@@ -67,7 +67,7 @@ module.exports = {
         'update',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;
@@ -92,7 +92,7 @@ module.exports = {
         'update',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;

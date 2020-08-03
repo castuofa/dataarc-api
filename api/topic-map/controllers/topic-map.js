@@ -30,7 +30,7 @@ module.exports = {
         'update',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;
@@ -67,7 +67,7 @@ module.exports = {
         'update',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;
@@ -92,7 +92,7 @@ module.exports = {
         'update',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;
@@ -108,7 +108,6 @@ module.exports = {
     const { id } = ctx.params;
 
     let entity = await strapi.services[CONTENT_TYPE].process({ id });
-
     let entry = sanitizeEntity(entity, {
       model: strapi.models[CONTENT_TYPE],
     });
@@ -118,7 +117,7 @@ module.exports = {
         'process',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
-        ctx.state.user.id
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
     return entry;
