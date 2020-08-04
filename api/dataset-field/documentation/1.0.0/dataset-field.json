@@ -550,12 +550,11 @@
             "type": "string",
             "enum": [
               "boolean",
+              "number",
+              "string",
               "date_start",
               "date_end",
-              "date_text",
-              "float",
-              "integer",
-              "text"
+              "date_text"
             ]
           },
           "dataset": {
@@ -650,12 +649,11 @@
             "type": "string",
             "enum": [
               "boolean",
+              "number",
+              "string",
               "date_start",
               "date_end",
-              "date_text",
-              "float",
-              "integer",
-              "text"
+              "date_text"
             ]
           },
           "dataset": {

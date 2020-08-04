@@ -24,17 +24,16 @@
       "type": "enumeration",
       "enum": [
         "boolean",
+        "number",
+        "string",
         "date_start",
         "date_end",
-        "date_text",
-        "float",
-        "integer",
-        "text"
+        "date_text"
       ]
     },
     "dataset": {
-      "via": "fields",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "fields"
     },
     "old_id": {
       "type": "integer",
