@@ -10,8 +10,7 @@
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "title": {
       "type": "string",
@@ -30,6 +29,9 @@
         "date_end",
         "date_text"
       ]
+    },
+    "path": {
+      "type": "string"
     },
     "dataset": {
       "model": "dataset",

@@ -1,12 +1,5 @@
 'use strict';
 
-let flatten = require('flat');
-
-/**
- * Read the documentation (https://strapi.io/documentation/v3.x/concepts/services.html#core-services)
- * to customize this service
- */
-
 module.exports = {
   /**
    * Promise to process a record
@@ -26,33 +19,74 @@ module.exports = {
 
       // read file
       const fs = require('fs');
+      const nestedIndicator = ' --> ';
       const path = `${strapi.dir}/public${entry.source.url}`;
-      const source = JSON.parse(fs.readFileSync(path, 'utf8'));
+      let source;
+      try {
+        source = JSON.parse(fs.readFileSync(path, 'utf8'));
+      } catch (e) {
+        throw new Error(
+          `There was a problem parsing the JSON file in ${entry.name}`
+        );
+      }
 
-      // function to determine property type
-      let types = {
-        get: (prop) => {
+      // helper function
+      let helper = {
+        type: (prop) => {
           return Object.prototype.toString
             .call(prop)
             .match(/\s([a-zA-Z]+)/)[1]
             .toLowerCase();
         },
+        clean_type: (prop) => {
+          let allowed = ['string', 'number', 'boolean'];
+          let type = helper.type(prop);
+          if (!allowed.includes(type)) return 'string';
+          return type;
+        },
+        flatten: (objectOrArray, prefix = '', formatter = (k) => k) => {
+          const nestedFormatter = (k) => nestedIndicator + k;
+          const nestElement = (prev, value, key) =>
+            value && typeof value === 'object'
+              ? {
+                  ...prev,
+                  ...helper.flatten(
+                    value,
+                    `${prefix}${formatter(key)}`,
+                    nestedFormatter
+                  ),
+                }
+              : { ...prev, ...{ [`${prefix}${formatter(key)}`]: value } };
+
+          return Array.isArray(objectOrArray)
+            ? objectOrArray.reduce(nestElement, {})
+            : Object.keys(objectOrArray).reduce(
+                (prev, element) =>
+                  nestElement(prev, objectOrArray[element], element),
+                {}
+              );
+        },
       };
 
-      // flatten the fields
-      let properties = {};
-      source.features.forEach((feature) => {
-        properties = flatten(feature.properties);
-      });
-
-      // map fields to the correct format
+      // go through all the features, get all the fields
+      let keys = [];
       let fields = [];
-      Object.keys(properties).forEach((property) => {
-        fields.push({
-          name: property,
-          title: property,
-          type: types.get(properties[property]),
-          dataset: entry.id,
+      let regex = new RegExp(nestedIndicator + '\\d+', 'g');
+      source.features.forEach((feature) => {
+        let p = helper.flatten(feature.properties);
+        Object.keys(p).forEach((k) => {
+          let key = k.replace(regex, '');
+          if (keys.indexOf(key) === -1) {
+            fields.push({
+              title: key
+                .replace(regex, '')
+                .replace(new RegExp(nestedIndicator, 'g'), ' '),
+              path: key.replace(regex, ''),
+              type: helper.clean_type(p[key]),
+              dataset: entry.id,
+            });
+            keys.push(key);
+          }
         });
       });
 

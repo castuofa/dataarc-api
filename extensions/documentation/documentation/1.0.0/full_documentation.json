@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/04/2020 12:12:58 PM"
+    "x-generation-date": "08/04/2020 4:22:34 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10485,7 +10485,6 @@
       "Dataset-field": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -10511,6 +10510,9 @@
               "date_end",
               "date_text"
             ]
+          },
+          "path": {
+            "type": "string"
           },
           "dataset": {
             "required": [
@@ -10587,7 +10589,6 @@
       },
       "NewDataset-field": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -10610,6 +10611,9 @@
               "date_end",
               "date_text"
             ]
+          },
+          "path": {
+            "type": "string"
           },
           "dataset": {
             "type": "string"
@@ -11007,7 +11011,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title"
               ],
               "properties": {
@@ -11024,6 +11027,9 @@
                   "type": "string"
                 },
                 "type": {
+                  "type": "string"
+                },
+                "path": {
                   "type": "string"
                 },
                 "dataset": {

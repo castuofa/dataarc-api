@@ -530,7 +530,6 @@
       "Dataset-field": {
         "required": [
           "id",
-          "name",
           "title"
         ],
         "properties": {
@@ -556,6 +555,9 @@
               "date_end",
               "date_text"
             ]
+          },
+          "path": {
+            "type": "string"
           },
           "dataset": {
             "required": [
@@ -632,7 +634,6 @@
       },
       "NewDataset-field": {
         "required": [
-          "name",
           "title"
         ],
         "properties": {
@@ -655,6 +656,9 @@
               "date_end",
               "date_text"
             ]
+          },
+          "path": {
+            "type": "string"
           },
           "dataset": {
             "type": "string"
