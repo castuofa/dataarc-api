@@ -567,6 +567,18 @@
                 "source": {
                   "type": "string"
                 },
+                "title_layout": {
+                  "type": "string"
+                },
+                "link_layout": {
+                  "type": "string"
+                },
+                "map_layout": {
+                  "type": "string"
+                },
+                "result_layout": {
+                  "type": "string"
+                },
                 "category": {
                   "type": "string"
                 },
@@ -577,12 +589,6 @@
                   }
                 },
                 "fields": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "templates": {
                   "type": "array",
                   "items": {
                     "type": "string"

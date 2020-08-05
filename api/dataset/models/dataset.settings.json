@@ -30,35 +30,39 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
+      "allowedTypes": ["images"],
       "plugin": "upload",
       "required": false
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },
+    "title_layout": {
+      "type": "text"
+    },
+    "link_layout": {
+      "type": "text"
+    },
+    "map_layout": {
+      "type": "text"
+    },
+    "result_layout": {
+      "type": "text"
+    },
     "category": {
-      "via": "datasets",
-      "model": "category"
+      "model": "category",
+      "via": "datasets"
     },
     "combinators": {
       "collection": "combinator",
       "via": "dataset"
     },
     "fields": {
-      "via": "dataset",
-      "collection": "dataset-field"
-    },
-    "templates": {
-      "collection": "dataset-template",
+      "collection": "dataset-field",
       "via": "dataset"
     },
     "features": {

@@ -728,6 +728,18 @@
               }
             }
           },
+          "title_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
+          },
+          "map_layout": {
+            "type": "string"
+          },
+          "result_layout": {
+            "type": "string"
+          },
           "category": {
             "required": [
               "id",
@@ -857,47 +869,6 @@
               }
             }
           },
-          "templates": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "title"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "layout": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                }
-              }
-            }
-          },
           "features": {
             "type": "array",
             "items": {
@@ -979,6 +950,18 @@
           "link": {
             "type": "string"
           },
+          "title_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
+          },
+          "map_layout": {
+            "type": "string"
+          },
+          "result_layout": {
+            "type": "string"
+          },
           "category": {
             "type": "string"
           },
@@ -989,12 +972,6 @@
             }
           },
           "fields": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "templates": {
             "type": "array",
             "items": {
               "type": "string"

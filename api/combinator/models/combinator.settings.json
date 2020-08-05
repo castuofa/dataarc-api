@@ -24,7 +24,10 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["AND", "OR"],
+      "enum": [
+        "AND",
+        "OR"
+      ],
       "default": "AND"
     },
     "queries": {
