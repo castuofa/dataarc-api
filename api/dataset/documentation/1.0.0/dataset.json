@@ -731,13 +731,13 @@
           "title_layout": {
             "type": "string"
           },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
           "link_layout": {
-            "type": "string"
-          },
-          "map_layout": {
-            "type": "string"
-          },
-          "result_layout": {
             "type": "string"
           },
           "category": {
@@ -836,6 +836,8 @@
             "items": {
               "required": [
                 "id",
+                "name",
+                "type",
                 "title"
               ],
               "properties": {
@@ -845,16 +847,19 @@
                 "name": {
                   "type": "string"
                 },
+                "type": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },
                 "description": {
                   "type": "string"
                 },
-                "type": {
+                "path": {
                   "type": "string"
                 },
-                "path": {
+                "source": {
                   "type": "string"
                 },
                 "dataset": {
@@ -874,7 +879,7 @@
             "items": {
               "required": [
                 "id",
-                "title"
+                "properties"
               ],
               "properties": {
                 "id": {
@@ -883,8 +888,8 @@
                 "dataset": {
                   "type": "string"
                 },
-                "name": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -896,6 +901,9 @@
                   "type": "string"
                 },
                 "link": {
+                  "type": "string"
+                },
+                "url": {
                   "type": "string"
                 },
                 "lat": {
@@ -910,8 +918,8 @@
                 "end": {
                   "type": "integer"
                 },
-                "properties": {
-                  "type": "object"
+                "keywords": {
+                  "type": "string"
                 },
                 "combinators": {
                   "type": "array",
@@ -953,13 +961,13 @@
           "title_layout": {
             "type": "string"
           },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
           "link_layout": {
-            "type": "string"
-          },
-          "map_layout": {
-            "type": "string"
-          },
-          "result_layout": {
             "type": "string"
           },
           "category": {

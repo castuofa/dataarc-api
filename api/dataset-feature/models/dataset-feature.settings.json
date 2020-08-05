@@ -10,15 +10,15 @@
   },
   "attributes": {
     "dataset": {
-      "via": "features",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "features"
     },
-    "name": {
-      "type": "string"
+    "properties": {
+      "type": "json",
+      "required": true
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "summary": {
       "type": "text"
@@ -27,6 +27,9 @@
       "type": "text"
     },
     "link": {
+      "type": "string"
+    },
+    "url": {
       "type": "string"
     },
     "lat": {
@@ -41,12 +44,12 @@
     "end": {
       "type": "integer"
     },
-    "properties": {
-      "type": "json"
+    "keywords": {
+      "type": "text"
     },
     "combinators": {
-      "via": "features",
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "features"
     },
     "old_id": {
       "type": "integer",

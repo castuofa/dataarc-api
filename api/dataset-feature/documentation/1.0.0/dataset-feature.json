@@ -530,7 +530,7 @@
       "Dataset-feature": {
         "required": [
           "id",
-          "title"
+          "properties"
         ],
         "properties": {
           "id": {
@@ -569,13 +569,13 @@
               "title_layout": {
                 "type": "string"
               },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
               "link_layout": {
-                "type": "string"
-              },
-              "map_layout": {
-                "type": "string"
-              },
-              "result_layout": {
                 "type": "string"
               },
               "category": {
@@ -613,8 +613,8 @@
               }
             }
           },
-          "name": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "title": {
             "type": "string"
@@ -626,6 +626,9 @@
             "type": "string"
           },
           "link": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "lat": {
@@ -640,8 +643,8 @@
           "end": {
             "type": "integer"
           },
-          "properties": {
-            "type": "object"
+          "keywords": {
+            "type": "string"
           },
           "combinators": {
             "type": "array",
@@ -706,14 +709,14 @@
       },
       "NewDataset-feature": {
         "required": [
-          "title"
+          "properties"
         ],
         "properties": {
           "dataset": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "title": {
             "type": "string"
@@ -725,6 +728,9 @@
             "type": "string"
           },
           "link": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "lat": {
@@ -739,8 +745,8 @@
           "end": {
             "type": "integer"
           },
-          "properties": {
-            "type": "object"
+          "keywords": {
+            "type": "string"
           },
           "combinators": {
             "type": "array",

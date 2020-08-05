@@ -570,13 +570,13 @@
                 "title_layout": {
                   "type": "string"
                 },
+                "summary_layout": {
+                  "type": "string"
+                },
+                "details_layout": {
+                  "type": "string"
+                },
                 "link_layout": {
-                  "type": "string"
-                },
-                "map_layout": {
-                  "type": "string"
-                },
-                "result_layout": {
                   "type": "string"
                 },
                 "category": {

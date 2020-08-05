@@ -10,7 +10,23 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "string",
+        "number",
+        "boolean",
+        "link",
+        "start_date",
+        "end_date",
+        "text_date"
+      ],
+      "required": true,
+      "default": "string"
     },
     "title": {
       "type": "string",
@@ -19,23 +35,15 @@
     "description": {
       "type": "text"
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "boolean",
-        "number",
-        "string",
-        "date_start",
-        "date_end",
-        "date_text"
-      ]
-    },
     "path": {
       "type": "string"
     },
+    "source": {
+      "type": "string"
+    },
     "dataset": {
-      "via": "fields",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "fields"
     },
     "old_id": {
       "type": "integer",

@@ -530,6 +530,8 @@
       "Dataset-field": {
         "required": [
           "id",
+          "name",
+          "type",
           "title"
         ],
         "properties": {
@@ -539,24 +541,29 @@
           "name": {
             "type": "string"
           },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "link",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
+          },
           "title": {
             "type": "string"
           },
           "description": {
             "type": "string"
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "boolean",
-              "number",
-              "string",
-              "date_start",
-              "date_end",
-              "date_text"
-            ]
-          },
           "path": {
+            "type": "string"
+          },
+          "source": {
             "type": "string"
           },
           "dataset": {
@@ -592,13 +599,13 @@
               "title_layout": {
                 "type": "string"
               },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
               "link_layout": {
-                "type": "string"
-              },
-              "map_layout": {
-                "type": "string"
-              },
-              "result_layout": {
                 "type": "string"
               },
               "category": {
@@ -640,11 +647,26 @@
       },
       "NewDataset-field": {
         "required": [
+          "name",
+          "type",
           "title"
         ],
         "properties": {
           "name": {
             "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "link",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
           },
           "title": {
             "type": "string"
@@ -652,18 +674,10 @@
           "description": {
             "type": "string"
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "boolean",
-              "number",
-              "string",
-              "date_start",
-              "date_end",
-              "date_text"
-            ]
-          },
           "path": {
+            "type": "string"
+          },
+          "source": {
             "type": "string"
           },
           "dataset": {

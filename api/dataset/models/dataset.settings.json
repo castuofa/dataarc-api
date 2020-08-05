@@ -44,13 +44,13 @@
     "title_layout": {
       "type": "text"
     },
+    "summary_layout": {
+      "type": "text"
+    },
+    "details_layout": {
+      "type": "text"
+    },
     "link_layout": {
-      "type": "text"
-    },
-    "map_layout": {
-      "type": "text"
-    },
-    "result_layout": {
       "type": "text"
     },
     "category": {
@@ -62,12 +62,12 @@
       "via": "dataset"
     },
     "fields": {
-      "collection": "dataset-field",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-field"
     },
     "features": {
-      "collection": "dataset-feature",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-feature"
     },
     "old_id": {
       "type": "integer",
