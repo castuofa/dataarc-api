@@ -30,14 +30,18 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["images"],
+      "allowedTypes": [
+        "images"
+      ],
       "plugin": "upload",
       "required": false
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["files"],
+      "allowedTypes": [
+        "files"
+      ],
       "plugin": "upload",
       "required": false
     },

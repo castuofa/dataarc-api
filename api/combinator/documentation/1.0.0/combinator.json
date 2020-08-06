@@ -731,17 +731,20 @@
                 "url": {
                   "type": "string"
                 },
-                "lat": {
+                "latitude": {
                   "type": "number"
                 },
-                "lng": {
+                "longitude": {
                   "type": "number"
                 },
-                "start": {
+                "start_date": {
                   "type": "integer"
                 },
-                "end": {
+                "end_date": {
                   "type": "integer"
+                },
+                "text_date": {
+                  "type": "string"
                 },
                 "keywords": {
                   "type": "string"

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/05/2020 3:32:38 PM"
+    "x-generation-date": "08/06/2020 1:16:57 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9512,17 +9512,20 @@
                 "url": {
                   "type": "string"
                 },
-                "lat": {
+                "latitude": {
                   "type": "number"
                 },
-                "lng": {
+                "longitude": {
                   "type": "number"
                 },
-                "start": {
+                "start_date": {
                   "type": "integer"
                 },
-                "end": {
+                "end_date": {
                   "type": "integer"
+                },
+                "text_date": {
+                  "type": "string"
                 },
                 "keywords": {
                   "type": "string"
@@ -9854,17 +9857,20 @@
           "url": {
             "type": "string"
           },
-          "lat": {
+          "latitude": {
             "type": "number"
           },
-          "lng": {
+          "longitude": {
             "type": "number"
           },
-          "start": {
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
+          },
+          "text_date": {
+            "type": "string"
           },
           "keywords": {
             "type": "string"
@@ -9956,17 +9962,20 @@
           "url": {
             "type": "string"
           },
-          "lat": {
+          "latitude": {
             "type": "number"
           },
-          "lng": {
+          "longitude": {
             "type": "number"
           },
-          "start": {
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
+          },
+          "text_date": {
+            "type": "string"
           },
           "keywords": {
             "type": "string"
@@ -9989,8 +9998,8 @@
         "required": [
           "id",
           "name",
-          "type",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "id": {
@@ -9998,19 +10007,6 @@
           },
           "name": {
             "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "default": "string",
-            "enum": [
-              "string",
-              "number",
-              "boolean",
-              "link",
-              "start_date",
-              "end_date",
-              "text_date"
-            ]
           },
           "title": {
             "type": "string"
@@ -10023,6 +10019,20 @@
           },
           "source": {
             "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
           },
           "dataset": {
             "required": [
@@ -10106,25 +10116,12 @@
       "NewDataset-field": {
         "required": [
           "name",
-          "type",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "name": {
             "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "default": "string",
-            "enum": [
-              "string",
-              "number",
-              "boolean",
-              "link",
-              "start_date",
-              "end_date",
-              "text_date"
-            ]
           },
           "title": {
             "type": "string"
@@ -10137,6 +10134,20 @@
           },
           "source": {
             "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
           },
           "dataset": {
             "type": "string"
@@ -10404,17 +10415,14 @@
               "required": [
                 "id",
                 "name",
-                "type",
-                "title"
+                "title",
+                "type"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "name": {
-                  "type": "string"
-                },
-                "type": {
                   "type": "string"
                 },
                 "title": {
@@ -10427,6 +10435,9 @@
                   "type": "string"
                 },
                 "source": {
+                  "type": "string"
+                },
+                "type": {
                   "type": "string"
                 },
                 "dataset": {
@@ -10473,17 +10484,20 @@
                 "url": {
                   "type": "string"
                 },
-                "lat": {
+                "latitude": {
                   "type": "number"
                 },
-                "lng": {
+                "longitude": {
                   "type": "number"
                 },
-                "start": {
+                "start_date": {
                   "type": "integer"
                 },
-                "end": {
+                "end_date": {
                   "type": "integer"
+                },
+                "text_date": {
+                  "type": "string"
                 },
                 "keywords": {
                   "type": "string"

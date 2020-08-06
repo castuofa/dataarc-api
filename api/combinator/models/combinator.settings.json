@@ -43,8 +43,8 @@
       "model": "dataset"
     },
     "features": {
-      "collection": "dataset-feature",
       "via": "combinators",
+      "collection": "dataset-feature",
       "dominant": true
     },
     "old_id": {

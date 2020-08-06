@@ -108,11 +108,11 @@ module.exports = {
     const { id } = ctx.params;
 
     let entity;
-    try {
-      entity = await strapi.services[CONTENT_TYPE].process({ id });
-    } catch (err) {
-      return ctx.response.badData(err.message);
-    }
+    // try {
+    entity = await strapi.services[CONTENT_TYPE].process({ id });
+    // } catch (err) {
+    //   return ctx.response.badData(err.message);
+    // }
 
     let entry = sanitizeEntity(entity, {
       model: strapi.models[CONTENT_TYPE],

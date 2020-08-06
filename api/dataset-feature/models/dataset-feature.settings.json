@@ -32,17 +32,20 @@
     "url": {
       "type": "string"
     },
-    "lat": {
+    "latitude": {
       "type": "float"
     },
-    "lng": {
+    "longitude": {
       "type": "float"
     },
-    "start": {
+    "start_date": {
       "type": "integer"
     },
-    "end": {
+    "end_date": {
       "type": "integer"
+    },
+    "text_date": {
+      "type": "string"
     },
     "keywords": {
       "type": "text"

@@ -14,20 +14,6 @@
       "unique": true,
       "required": true
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "string",
-        "number",
-        "boolean",
-        "link",
-        "start_date",
-        "end_date",
-        "text_date"
-      ],
-      "required": true,
-      "default": "string"
-    },
     "title": {
       "type": "string",
       "required": true
@@ -40,6 +26,21 @@
     },
     "source": {
       "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "string",
+        "number",
+        "boolean",
+        "array",
+        "url",
+        "start_date",
+        "end_date",
+        "text_date"
+      ],
+      "required": true,
+      "default": "string"
     },
     "dataset": {
       "model": "dataset",

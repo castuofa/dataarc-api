@@ -531,8 +531,8 @@
         "required": [
           "id",
           "name",
-          "type",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "id": {
@@ -540,19 +540,6 @@
           },
           "name": {
             "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "default": "string",
-            "enum": [
-              "string",
-              "number",
-              "boolean",
-              "link",
-              "start_date",
-              "end_date",
-              "text_date"
-            ]
           },
           "title": {
             "type": "string"
@@ -565,6 +552,20 @@
           },
           "source": {
             "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
           },
           "dataset": {
             "required": [
@@ -648,25 +649,12 @@
       "NewDataset-field": {
         "required": [
           "name",
-          "type",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "name": {
             "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "default": "string",
-            "enum": [
-              "string",
-              "number",
-              "boolean",
-              "link",
-              "start_date",
-              "end_date",
-              "text_date"
-            ]
           },
           "title": {
             "type": "string"
@@ -679,6 +667,20 @@
           },
           "source": {
             "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
           },
           "dataset": {
             "type": "string"
