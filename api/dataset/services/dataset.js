@@ -16,22 +16,16 @@ let helper = {
       .match(/\s([a-zA-Z]+)/)[1]
       .toLowerCase();
   },
-  type_clean: (prop) => {
-    let allowed = ['string', 'number', 'boolean', 'array'];
-    let type = helper.type(prop);
-    if (!allowed.includes(type)) return 'string';
-    return type;
-  },
-  path: (words, wordSeparator = '_', pathSeparator = '.') => {
+  path: (words, wordSeparator = '_', pathSeparator = '_') => {
     return words
       .split(nestedIndicator)
       .map((word) => {
-        return slugify(word.replace(/[\/\\\-_*+~.()'"!:@\?\s+]/, ' '), {
+        return slugify(word.replace(/[\/\\\-_*+~.()'"!:@\?\s+]/g, ' '), {
           replacement: wordSeparator,
           lower: true,
           strict: true,
           remove: /[\/\\*+~.()'"!:@\?]/g,
-        }).replace(new RegExp('_array_', 'g'), '[]');
+        });
       })
       .join(pathSeparator);
   },
@@ -43,168 +37,28 @@ let helper = {
         return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();
       });
   },
+  keyword: (value) => {
+    return helper
+      .path(
+        value
+          .replace(/https?:\/\/(www\.)?/g, '')
+          .replace(
+            /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g,
+            ''
+          ),
+        ' '
+      )
+      .replace(/\d+/g, ' ')
+      .replace(/\s\s+/g, ' ')
+      .trim();
+  },
   random: (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
-  logtime: (end) => {
+  logtime: (start) => {
+    let end = process.hrtime(start);
     strapi.log.info('Execution time (hr): %ds %dms', end[0], end[1] / 1000000);
   },
-  // getFieldsFromArray: (properties, dataset, parent = '') => {
-  //   let p = flatten(properties, {
-  //     delimiter: nestedIndicator,
-  //     safe: true,
-  //   });
-
-  //   Object.keys(p).forEach((k) => {
-  //     let key = parent + nestedIndicator + k.replace(regex, '');
-  //     let path = helper.path(key);
-  // },
-
-  getFields: (source, dataset) => {
-    let keys = [];
-    let fields = [];
-    let features = [];
-    let regex = new RegExp(nestedIndicator + '\\d+', 'g');
-
-    turf.featureEach(source, function (f, i) {
-      let props = {};
-      let words = [];
-
-      // get everything except arrays
-      let p = flatten(f.properties, {
-        delimiter: nestedIndicator,
-      });
-      Object.keys(p).forEach((k) => {
-        let key = k.replace(regex, '[]');
-        let path = helper.path(k.replace(regex, '_array_'));
-
-        // only add the field to the array if it doesn't already exist
-        if (keys.indexOf(path) === -1 && helper.type(p[k]) !== 'null') {
-          let field = {
-            title: helper.title(path),
-            path: path,
-            source: key,
-            type: helper.type_clean(p[k]),
-            dataset: dataset,
-          };
-
-          strapi.log.info(`Found new ${field.type} field ${field.path}`);
-          keys.push(path);
-          fields.push(field);
-        }
-
-        // make sure field is not null or empty string
-        let store = true;
-        store = p[k] !== null;
-        if (helper.type(p[k]) === 'string') store = p[k].trim() !== '';
-
-        if (store) {
-          // build keywords
-          if (helper.type(p[k]) == 'string' && isNaN(p[k])) {
-            words.push(helper.path(p[k], ' ').replace(/\d+/g, '').trim());
-          }
-
-          // add the property to the new feature using the clean path
-          if (path.indexOf('[]') === -1) props[path] = p[k];
-        }
-      });
-
-      // get arrays
-      p = flatten(f.properties, {
-        delimiter: nestedIndicator,
-        safe: true,
-      });
-      Object.keys(p).forEach((k) => {
-        let key = k;
-        let path = helper.path(k);
-
-        // only add the field to the array if it doesn't already exist
-        if (keys.indexOf(path) === -1 && helper.type(p[k]) === 'array') {
-          let field = {
-            title: helper.title(path),
-            path: path,
-            source: key,
-            type: helper.type_clean(p[k]),
-            dataset: dataset,
-          };
-
-          strapi.log.info(`Found new ${field.type} field ${path}`);
-          keys.push(path);
-          fields.push(field);
-        }
-
-        // add the property to the new feature using the clean path
-        props[path] = p[k];
-      });
-
-      // extract cooridnates from feature
-      let coords = [null, null, null];
-      try {
-        coords = turf.getCoord(f);
-        coords[0] = Math.round(coords[0] * 1e7) / 1e7;
-        coords[1] = Math.round(coords[1] * 1e7) / 1e7;
-      } catch (err) {
-        strapi.log.warn(`Found invalid coordinates`);
-      }
-
-      // process our words to make sure we have unique values
-      let keywords = _.uniq(words.join(' ').split(' ')).join(' ');
-
-      // push the new feature object
-      features.push({
-        dataset: dataset,
-        properties: props,
-        latitude: coords[1],
-        longitude: coords[0],
-        keywords: keywords,
-      });
-    });
-
-    return { fields, features };
-  },
-  // processProperties: (properties, dataset, keys = [], fields = []) => {
-  //   let props = {};
-  //   let words = [];
-
-  //   Object.keys(p).forEach((k) => {
-
-  //       // if (field.type === 'array') {
-  //       //   strapi.log.info(`Processing array field`);
-  //       //   let array_value = flatten(p[key], {
-  //       //     delimiter: nestedIndicator,
-  //       //   });
-  //       //   let result = helper.processProperties(
-  //       //     array_value,
-  //       //     dataset,
-  //       //     keys,
-  //       //     fields
-  //       //   );
-  //       //   keys = _.union(keys, result.keys);
-  //       //   fields = _.union(fields, result.fields);
-  //       //   p[key] = result.props;
-
-  //       //   console.log(`${JSON.stringify(result, null, 2)}`);
-  //       // }
-  //     }
-
-  //     // make sure field is not null or empty string
-  //     let store = true;
-  //     store = p[key] !== null;
-  //     if (helper.type(p[key]) === 'string') store = p[key].trim() !== '';
-
-  //     if (store) {
-  //       // build keywords
-  //       if (helper.type(p[key]) == 'string' && isNaN(p[key])) {
-  //         words.push(helper.path(p[key], ' '));
-  //       }
-
-  //       // add the property to the new feature using the clean path
-  //       props[path] = p[key];
-  //     }
-  //   });
-
-  //   return { keys, fields, props, words };
-  // },
 };
 
 module.exports = {
@@ -221,19 +75,19 @@ module.exports = {
 
     // only proceed if we found the dataset
     if (entry != null) {
-      // // remove existing fields for this dataset
-      // strapi.log.info(`Removing existing fields for this dataset`);
-      // await strapi.query('dataset-field').delete({
-      //   dataset: entry.id,
-      //   _limit: 999999999,
-      // });
-
-      // // remove existing features for this dataset
-      // strapi.log.info(`Removing existing features for this dataset`);
-      // await strapi.query('dataset-feature').delete({
-      //   dataset: entry.id,
-      //   _limit: 999999999,
-      // });
+      let start_cleanup = process.hrtime();
+      // remove existing fields for this dataset
+      strapi.log.info(`Removing existing fields and features for this dataset`);
+      await strapi.query('dataset-field').delete({
+        dataset: entry.id,
+        _limit: 999999999,
+      });
+      // remove existing features for this dataset
+      await strapi.query('dataset-feature').delete({
+        dataset: entry.id,
+        _limit: 999999999,
+      });
+      helper.logtime(start_cleanup);
 
       // read file
       // const path = `${strapi.dir}/public${entry.source.url}`;
@@ -243,87 +97,176 @@ module.exports = {
       fs.readdirSync(folder).forEach((file) => {
         if (file !== '.DS_Store') datasets.push(file);
       });
-
       let dataset = datasets[7];
-
       strapi.log.info(`Processing ${dataset}`);
-
       const path = `${strapi.dir}/../dataarc-data/source/dataset/${dataset}`;
+
       let source;
-      // try {
-      source = JSON.parse(fs.readFileSync(path, 'utf8'));
-      source = turf.featureCollection(source.features);
-      // } catch (e) {
-      //   throw new Error(
-      //     `There was a problem parsing the JSON file in ${entry.name}`
-      //   );
-      // }
+      try {
+        source = JSON.parse(fs.readFileSync(path, 'utf8'));
+        source = turf.featureCollection(source.features);
+      } catch (e) {
+        throw new Error(
+          `There was a problem parsing the JSON file in ${entry.name}`
+        );
+      }
+
+      let extract_properties = (
+        input,
+        keys,
+        fields,
+        properties = {},
+        words = [],
+        parent = ''
+      ) => {
+        // flatten properties
+        let props = flatten(input, {
+          delimiter: nestedIndicator,
+          safe: true,
+        });
+
+        // loop through the properties
+        _.forOwn(props, function (value, key) {
+          let type = helper.type(value);
+          let path = (parent ? parent + '_' : '') + helper.path(key);
+          let store_property = false;
+
+          // process based on the type
+          switch (type) {
+            case 'string':
+              value = value.trim();
+
+              // don't process if empty string
+              if (value === '') break;
+
+              store_property = true;
+              break;
+            case 'number':
+              store_property = true;
+              break;
+            case 'boolean':
+              store_property = true;
+              break;
+            case 'array':
+              if (_.isEmpty(value)) break;
+
+              // loop through array
+              let values = [];
+              value.forEach((item) => {
+                let item_type = helper.type(item);
+                if (item_type === 'object') {
+                  let p = {};
+                  // extract properties
+                  extract_properties(item, keys, fields, p, words, path);
+                  values.push(p);
+                } else {
+                  strapi.log.warn(
+                    `Array item is not object ${JSON.stringify(item)}`
+                  );
+                }
+              });
+              value = values;
+              store_property = true;
+              break;
+            default:
+              // ignore null, undefined, and other types
+              store_property = false;
+              break;
+          }
+
+          // process the property
+          if (store_property) {
+            let field = {
+              title: helper.title(path),
+              path: path,
+              source: key,
+              type: type,
+              dataset: entry.id,
+            };
+
+            // build keywords
+            if (type === 'string' && isNaN(value)) {
+              words.push(helper.keyword(value));
+            }
+
+            // add to keys/fields if its new
+            if (keys.indexOf(path) === -1) {
+              keys.push(path);
+              fields.push(field);
+              strapi.log.info(`Found new ${field.type} field ${field.path}`);
+            }
+
+            // add the property to the new feature using the clean path
+            properties[path] = value;
+          }
+        });
+
+        return { keys, fields, properties, words };
+      };
+
+      let keys = [];
+      let fields = [];
+      let features = [];
 
       let start_features = process.hrtime();
+      turf.featureEach(source, function (f, i) {
+        // extract properties
+        let { ex_keys, ex_fields, properties, words } = extract_properties(
+          f.properties,
+          keys,
+          fields
+        );
 
-      // get the keys and fields
-      let { fields, features } = helper.getFields(source);
+        keys = _.union(keys, ex_keys);
+        fields = _.union(fields, ex_fields);
 
-      // strapi.log.info(`FIELDS`);
-      // console.log(`${JSON.stringify(fields, null, 2)}`);
-      // strapi.log.info(`KEYS`);
-      // console.log(`${JSON.stringify(keys, null, 2)}`);
+        // extract cooridnates from feature
+        let coords = [null, null, null];
+        try {
+          coords = turf.getCoord(f);
+          coords[0] = Math.round(coords[0] * 1e7) / 1e7;
+          coords[1] = Math.round(coords[1] * 1e7) / 1e7;
+        } catch (err) {
+          strapi.log.warn(`Found invalid coordinates`);
+        }
 
-      // go through all the features, get all the fields
-      // let features = [];
+        // process words to make sure we have unique values
+        let keywords = _.uniq(words.join(' ').split(' ')).join(' ');
 
-      // extract features and process
-      // turf.featureEach(source, function (f, i) {
-      //   // extract and process properties
-
-      //   let result = helper.processProperties(
-      //     f.properties,
-      //     entry.id,
-      //     keys,
-      //     fields
-      //   );
-      //   keys = _.union(keys, result.keys);
-      //   fields = _.union(fields, result.fields);
-
-      //   // extract cooridnates from feature
-      //   let coords = [null, null, null];
-      //   try {
-      //     coords = turf.getCoord(f);
-      //     coords[0] = Math.round(coords[0] * 1e7) / 1e7;
-      //     coords[1] = Math.round(coords[1] * 1e7) / 1e7;
-      //   } catch (err) {
-      //     strapi.log.warn(`Found invalid coordinates`);
-      //   }
-
-      //   // push the new feature object
-      //   features.push({
-      //     dataset: entry.id,
-      //     properties: result.props,
-      //     latitude: coords[1],
-      //     longitude: coords[0],
-      //     keywords: result.words.join(' '),
-      //   });
-      // });
+        // push the new feature object
+        features.push({
+          dataset: entry.id,
+          properties: properties,
+          latitude: coords[1],
+          longitude: coords[0],
+          keywords: keywords,
+        });
+      });
 
       strapi.log.info(`Done processing features`);
-      helper.logtime(process.hrtime(start_features));
+      helper.logtime(start_features);
 
-      // // create new fields
-      // strapi.log.info(`Creating ${fields.length} fields`);
-      // if (Array.isArray(fields))
-      //   await Promise.all(fields.map(strapi.query('dataset-field').create));
+      let start_create = process.hrtime();
+      // create new fields
+      strapi.log.info(`Creating ${fields.length} fields`);
+      if (Array.isArray(fields))
+        await Promise.all(fields.map(strapi.query('dataset-field').create));
 
-      // // create new features
-      // strapi.log.info(`Creating ${features.length} features`);
-      // if (Array.isArray(features))
-      //   await Promise.all(features.map(strapi.query('dataset-feature').create));
+      // create new features
+      strapi.log.info(`Creating ${features.length} features`);
+      if (Array.isArray(features))
+        await Promise.all(features.map(strapi.query('dataset-feature').create));
+      helper.logtime(start_create);
 
+      // show information about processed dataset
       strapi.log.info(`Finished processing ${dataset}`);
-      helper.logtime(process.hrtime(start_all));
-      let random_record = helper.random(0, features.length - 1);
+      helper.logtime(start_all);
       strapi.log.info(
         `Processed ${fields.length} fields in ${features.length} features`
       );
+
+      // show a random record for spot checking
+      let random_record = helper.random(0, features.length - 1);
       strapi.log.info(`Showing random record ${random_record}:`);
       console.log(`${JSON.stringify(features[random_record], null, 2)}`);
     }
