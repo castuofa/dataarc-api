@@ -30,18 +30,14 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
+      "allowedTypes": ["images"],
       "plugin": "upload",
       "required": false
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },
@@ -66,12 +62,26 @@
       "via": "dataset"
     },
     "fields": {
-      "via": "dataset",
-      "collection": "dataset-field"
+      "collection": "dataset-field",
+      "via": "dataset"
     },
     "features": {
-      "via": "dataset",
-      "collection": "dataset-feature"
+      "collection": "dataset-feature",
+      "via": "dataset"
+    },
+    "processing": {
+      "type": "boolean",
+      "default": false
+    },
+    "processedAt": {
+      "type": "datetime"
+    },
+    "refreshing": {
+      "type": "boolean",
+      "default": false
+    },
+    "refreshedAt": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

@@ -90,16 +90,17 @@ module.exports = {
       helper.logtime(start_cleanup);
 
       // read file
-      // const path = `${strapi.dir}/public${entry.source.url}`;
+      const path = `${strapi.dir}/public${entry.source.url}`;
+      const dataset = entry.source.name;
 
-      let folder = `${strapi.dir}/../dataarc-data/source/dataset/`;
-      let datasets = [];
-      fs.readdirSync(folder).forEach((file) => {
-        if (file !== '.DS_Store') datasets.push(file);
-      });
-      let dataset = datasets[7];
-      strapi.log.info(`Processing ${dataset}`);
-      const path = `${strapi.dir}/../dataarc-data/source/dataset/${dataset}`;
+      // let folder = `${strapi.dir}/../dataarc-data/source/dataset/`;
+      // let datasets = [];
+      // fs.readdirSync(folder).forEach((file) => {
+      //   if (file !== '.DS_Store') datasets.push(file);
+      // });
+      // let dataset = datasets[6];
+      // strapi.log.info(`Processing ${dataset}`);
+      // const path = `${strapi.dir}/../dataarc-data/source/dataset/${dataset}`;
 
       let source;
       try {
@@ -194,7 +195,7 @@ module.exports = {
             if (keys.indexOf(path) === -1) {
               keys.push(path);
               fields.push(field);
-              strapi.log.info(`Found new ${field.type} field ${field.path}`);
+              // strapi.log.info(`Found new ${field.type} field ${field.path}`);
             }
 
             // add the property to the new feature using the clean path
@@ -210,16 +211,12 @@ module.exports = {
       let features = [];
 
       let start_features = process.hrtime();
-      turf.featureEach(source, function (f, i) {
-        // extract properties
-        let { ex_keys, ex_fields, properties, words } = extract_properties(
-          f.properties,
-          keys,
-          fields
-        );
+      _.each(source.features, function (f) {
+        let properties = {};
+        let words = [];
 
-        keys = _.union(keys, ex_keys);
-        fields = _.union(fields, ex_fields);
+        // extract properties
+        extract_properties(f.properties, keys, fields, properties, words);
 
         // extract cooridnates from feature
         let coords = [null, null, null];
@@ -267,9 +264,9 @@ module.exports = {
       );
 
       // show a random record for spot checking
-      let random_record = helper.random(0, features.length - 1);
-      strapi.log.info(`Showing random record ${random_record}:`);
-      console.log(`${JSON.stringify(features[random_record], null, 2)}`);
+      // let random_record = helper.random(0, features.length - 1);
+      // strapi.log.info(`Showing random record ${random_record}:`);
+      // console.log(`${JSON.stringify(features[random_record], null, 2)}`);
     }
 
     return entry;

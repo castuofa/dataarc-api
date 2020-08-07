@@ -10,8 +10,8 @@
   },
   "attributes": {
     "dataset": {
-      "model": "dataset",
-      "via": "features"
+      "via": "features",
+      "model": "dataset"
     },
     "properties": {
       "type": "json",

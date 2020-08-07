@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/06/2020 1:16:57 PM"
+    "x-generation-date": "08/07/2020 6:18:19 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9146,6 +9146,18 @@
                     "type": "string"
                   }
                 },
+                "processing": {
+                  "type": "boolean"
+                },
+                "processedAt": {
+                  "type": "datetime"
+                },
+                "refreshing": {
+                  "type": "boolean"
+                },
+                "refreshedAt": {
+                  "type": "datetime"
+                },
                 "old_id": {
                   "type": "integer"
                 },
@@ -9465,6 +9477,18 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -9825,6 +9849,18 @@
                   "type": "string"
                 }
               },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
+              },
               "old_id": {
                 "type": "integer"
               },
@@ -10096,6 +10132,18 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -10516,6 +10564,20 @@
                 }
               }
             }
+          },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
+          "processedAt": {
+            "type": "datetime"
+          },
+          "refreshing": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshedAt": {
+            "type": "datetime"
           }
         }
       },
@@ -10572,6 +10634,20 @@
               "type": "string"
             }
           },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
+          "processedAt": {
+            "type": "datetime"
+          },
+          "refreshing": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshedAt": {
+            "type": "datetime"
+          },
           "old_id": {
             "type": "integer"
           },
@@ -10607,6 +10683,9 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "details": {
             "type": "string"
           },
           "user": {
@@ -10683,6 +10762,9 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "details": {
             "type": "string"
           },
           "user": {
@@ -11389,6 +11471,9 @@
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "details": {
                   "type": "string"
                 },
                 "user": {

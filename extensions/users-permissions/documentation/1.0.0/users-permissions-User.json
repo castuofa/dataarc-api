@@ -1267,6 +1267,9 @@
                 "name": {
                   "type": "string"
                 },
+                "details": {
+                  "type": "string"
+                },
                 "user": {
                   "type": "string"
                 }

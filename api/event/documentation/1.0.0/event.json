@@ -537,6 +537,9 @@
           "name": {
             "type": "string"
           },
+          "details": {
+            "type": "string"
+          },
           "user": {
             "required": [
               "id",
@@ -611,6 +614,9 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "details": {
             "type": "string"
           },
           "user": {

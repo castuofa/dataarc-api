@@ -600,6 +600,18 @@
                     "type": "string"
                   }
                 },
+                "processing": {
+                  "type": "boolean"
+                },
+                "processedAt": {
+                  "type": "datetime"
+                },
+                "refreshing": {
+                  "type": "boolean"
+                },
+                "refreshedAt": {
+                  "type": "datetime"
+                },
                 "old_id": {
                   "type": "integer"
                 },

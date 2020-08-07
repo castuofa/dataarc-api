@@ -938,6 +938,20 @@
                 }
               }
             }
+          },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
+          "processedAt": {
+            "type": "datetime"
+          },
+          "refreshing": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshedAt": {
+            "type": "datetime"
           }
         }
       },
@@ -993,6 +1007,20 @@
             "items": {
               "type": "string"
             }
+          },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
+          "processedAt": {
+            "type": "datetime"
+          },
+          "refreshing": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshedAt": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"
