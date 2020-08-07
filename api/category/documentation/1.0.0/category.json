@@ -567,6 +567,18 @@
                 "source": {
                   "type": "string"
                 },
+                "title_layout": {
+                  "type": "string"
+                },
+                "summary_layout": {
+                  "type": "string"
+                },
+                "details_layout": {
+                  "type": "string"
+                },
+                "link_layout": {
+                  "type": "string"
+                },
                 "category": {
                   "type": "string"
                 },
@@ -582,17 +594,23 @@
                     "type": "string"
                   }
                 },
-                "templates": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "features": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
+                },
+                "processing": {
+                  "type": "boolean"
+                },
+                "processedAt": {
+                  "type": "datetime"
+                },
+                "refreshing": {
+                  "type": "boolean"
+                },
+                "refreshedAt": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"

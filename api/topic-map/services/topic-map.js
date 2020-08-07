@@ -25,10 +25,10 @@ module.exports = {
       // read file
       const fs = require('fs');
       const path = `${strapi.dir}/public${entry.source.url}`;
-      const map = JSON.parse(fs.readFileSync(path, 'utf8'));
+      const source = JSON.parse(fs.readFileSync(path, 'utf8'));
 
       // map nodes to the correct format
-      let topics = map.nodes.map((node) => {
+      let topics = source.nodes.map((node) => {
         return {
           identifier: node.id.toString(),
           name: node.title,
@@ -37,7 +37,7 @@ module.exports = {
       });
 
       // create new topics
-      strapi.log.info(`Creating ${map.nodes.length} topics`);
+      strapi.log.info(`Creating ${source.nodes.length} topics`);
       if (Array.isArray(topics))
         await Promise.all(topics.map(strapi.query('topic').create));
     }

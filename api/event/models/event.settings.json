@@ -11,18 +11,16 @@
   "attributes": {
     "action": {
       "type": "enumeration",
-      "enum": [
-        "create",
-        "update",
-        "delete",
-        "process"
-      ]
+      "enum": ["create", "update", "delete", "process"]
     },
     "item": {
       "type": "string"
     },
     "name": {
       "type": "string"
+    },
+    "details": {
+      "type": "text"
     },
     "user": {
       "plugin": "users-permissions",

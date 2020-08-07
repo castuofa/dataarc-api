@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/03/2020 5:45:47 PM"
+    "x-generation-date": "08/07/2020 6:18:19 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3150,530 +3150,6 @@
         ]
       }
     },
-    "/dataset-templates": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset-template"
-        ],
-        "parameters": [
-          {
-            "name": "_limit",
-            "in": "query",
-            "required": false,
-            "description": "Maximum number of results possible",
-            "schema": {
-              "type": "integer"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_sort",
-            "in": "query",
-            "required": false,
-            "description": "Sort according to a specific field.",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_start",
-            "in": "query",
-            "required": false,
-            "description": "Skip a specific number of entries (especially useful for pagination)",
-            "schema": {
-              "type": "integer"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "=",
-            "in": "query",
-            "required": false,
-            "description": "Get entries that matches exactly your input",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_ne",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are not equals to something",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_lt",
-            "in": "query",
-            "required": false,
-            "description": "Get record that are lower than a value",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_lte",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are lower than or equal to a value",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_gt",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are greater than a value",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_gte",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are greater than  or equal a value",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_contains",
-            "in": "query",
-            "required": false,
-            "description": "Get records that contains a value",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_containss",
-            "in": "query",
-            "required": false,
-            "description": "Get records that contains (case sensitive) a value",
-            "schema": {
-              "type": "string"
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_in",
-            "in": "query",
-            "required": false,
-            "description": "Get records that matches any value in the array of values",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "deprecated": false
-          },
-          {
-            "name": "_nin",
-            "in": "query",
-            "required": false,
-            "description": "Get records that doesn't match any value in the array of values",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "deprecated": false
-          }
-        ]
-      },
-      "post": {
-        "deprecated": false,
-        "description": "Create a new record",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset-template"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewDataset-template"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dataset-templates/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset-template"
-        ],
-        "parameters": []
-      }
-    },
-    "/dataset-templates/{id}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset-template"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "put": {
-        "deprecated": false,
-        "description": "Update a record",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset-template"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewDataset-template"
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "delete": {
-        "deprecated": false,
-        "description": "Delete a record",
-        "responses": {
-          "200": {
-            "description": "deletes a single record based on the ID supplied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset-template"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
     "/datasets": {
       "get": {
         "deprecated": false,
@@ -4132,6 +3608,74 @@
                 "schema": {
                   "type": "integer",
                   "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/datasets/{id}/process": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -9569,6 +9113,18 @@
                 "source": {
                   "type": "string"
                 },
+                "title_layout": {
+                  "type": "string"
+                },
+                "summary_layout": {
+                  "type": "string"
+                },
+                "details_layout": {
+                  "type": "string"
+                },
+                "link_layout": {
+                  "type": "string"
+                },
                 "category": {
                   "type": "string"
                 },
@@ -9584,17 +9140,23 @@
                     "type": "string"
                   }
                 },
-                "templates": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "features": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
+                },
+                "processing": {
+                  "type": "boolean"
+                },
+                "processedAt": {
+                  "type": "datetime"
+                },
+                "refreshing": {
+                  "type": "boolean"
+                },
+                "refreshedAt": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"
@@ -9883,6 +9445,18 @@
               "source": {
                 "type": "string"
               },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
               "category": {
                 "type": "string"
               },
@@ -9898,17 +9472,23 @@
                   "type": "string"
                 }
               },
-              "templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "features": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -9929,7 +9509,7 @@
             "items": {
               "required": [
                 "id",
-                "title"
+                "properties"
               ],
               "properties": {
                 "id": {
@@ -9938,8 +9518,8 @@
                 "dataset": {
                   "type": "string"
                 },
-                "name": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -9953,20 +9533,26 @@
                 "link": {
                   "type": "string"
                 },
-                "lat": {
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
                   "type": "number"
                 },
-                "lng": {
+                "longitude": {
                   "type": "number"
                 },
-                "start": {
+                "start_date": {
                   "type": "integer"
                 },
-                "end": {
+                "end_date": {
                   "type": "integer"
                 },
-                "properties": {
-                  "type": "object"
+                "text_date": {
+                  "type": "string"
+                },
+                "keywords": {
+                  "type": "string"
                 },
                 "combinators": {
                   "type": "array",
@@ -10194,7 +9780,7 @@
       "Dataset-feature": {
         "required": [
           "id",
-          "title"
+          "properties"
         ],
         "properties": {
           "id": {
@@ -10230,6 +9816,18 @@
               "source": {
                 "type": "string"
               },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
               "category": {
                 "type": "string"
               },
@@ -10245,17 +9843,23 @@
                   "type": "string"
                 }
               },
-              "templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "features": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -10271,8 +9875,8 @@
               }
             }
           },
-          "name": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "title": {
             "type": "string"
@@ -10286,20 +9890,26 @@
           "link": {
             "type": "string"
           },
-          "lat": {
+          "url": {
+            "type": "string"
+          },
+          "latitude": {
             "type": "number"
           },
-          "lng": {
+          "longitude": {
             "type": "number"
           },
-          "start": {
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
           },
-          "properties": {
-            "type": "object"
+          "text_date": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "string"
           },
           "combinators": {
             "type": "array",
@@ -10364,14 +9974,14 @@
       },
       "NewDataset-feature": {
         "required": [
-          "title"
+          "properties"
         ],
         "properties": {
           "dataset": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "title": {
             "type": "string"
@@ -10385,20 +9995,26 @@
           "link": {
             "type": "string"
           },
-          "lat": {
+          "url": {
+            "type": "string"
+          },
+          "latitude": {
             "type": "number"
           },
-          "lng": {
+          "longitude": {
             "type": "number"
           },
-          "start": {
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
           },
-          "properties": {
-            "type": "object"
+          "text_date": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "string"
           },
           "combinators": {
             "type": "array",
@@ -10418,7 +10034,8 @@
         "required": [
           "id",
           "name",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "id": {
@@ -10433,16 +10050,24 @@
           "description": {
             "type": "string"
           },
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
           "type": {
             "type": "string",
+            "default": "string",
             "enum": [
+              "string",
+              "number",
               "boolean",
-              "date_start",
-              "date_end",
-              "date_text",
-              "float",
-              "integer",
-              "text"
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
             ]
           },
           "dataset": {
@@ -10475,6 +10100,18 @@
               "source": {
                 "type": "string"
               },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
               "category": {
                 "type": "string"
               },
@@ -10490,17 +10127,23 @@
                   "type": "string"
                 }
               },
-              "templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "features": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -10521,7 +10164,8 @@
       "NewDataset-field": {
         "required": [
           "name",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "name": {
@@ -10533,16 +10177,24 @@
           "description": {
             "type": "string"
           },
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
           "type": {
             "type": "string",
+            "default": "string",
             "enum": [
+              "string",
+              "number",
               "boolean",
-              "date_start",
-              "date_end",
-              "date_text",
-              "float",
-              "integer",
-              "text"
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
             ]
           },
           "dataset": {
@@ -10552,149 +10204,6 @@
             "type": "integer"
           },
           "old_dataset_id": {
-            "type": "integer"
-          }
-        }
-      },
-      "Dataset-template": {
-        "required": [
-          "id",
-          "title"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "layout": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "title",
-              "map",
-              "result",
-              "link"
-            ]
-          },
-          "dataset": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              }
-            }
-          }
-        }
-      },
-      "NewDataset-template": {
-        "required": [
-          "title"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "layout": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "title",
-              "map",
-              "result",
-              "link"
-            ]
-          },
-          "dataset": {
-            "type": "string"
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
-          },
-          "old_user_id": {
             "type": "integer"
           }
         }
@@ -10845,6 +10354,18 @@
               }
             }
           },
+          "title_layout": {
+            "type": "string"
+          },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
+          },
           "category": {
             "required": [
               "id",
@@ -10942,7 +10463,8 @@
               "required": [
                 "id",
                 "name",
-                "title"
+                "title",
+                "type"
               ],
               "properties": {
                 "id": {
@@ -10957,42 +10479,10 @@
                 "description": {
                   "type": "string"
                 },
-                "type": {
+                "path": {
                   "type": "string"
                 },
-                "dataset": {
-                  "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                }
-              }
-            }
-          },
-          "templates": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "title"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "layout": {
+                "source": {
                   "type": "string"
                 },
                 "type": {
@@ -11005,9 +10495,6 @@
                   "type": "integer"
                 },
                 "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
                   "type": "integer"
                 }
               }
@@ -11018,7 +10505,7 @@
             "items": {
               "required": [
                 "id",
-                "title"
+                "properties"
               ],
               "properties": {
                 "id": {
@@ -11027,8 +10514,8 @@
                 "dataset": {
                   "type": "string"
                 },
-                "name": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -11042,20 +10529,26 @@
                 "link": {
                   "type": "string"
                 },
-                "lat": {
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
                   "type": "number"
                 },
-                "lng": {
+                "longitude": {
                   "type": "number"
                 },
-                "start": {
+                "start_date": {
                   "type": "integer"
                 },
-                "end": {
+                "end_date": {
                   "type": "integer"
                 },
-                "properties": {
-                  "type": "object"
+                "text_date": {
+                  "type": "string"
+                },
+                "keywords": {
+                  "type": "string"
                 },
                 "combinators": {
                   "type": "array",
@@ -11071,6 +10564,20 @@
                 }
               }
             }
+          },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
+          "processedAt": {
+            "type": "datetime"
+          },
+          "refreshing": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshedAt": {
+            "type": "datetime"
           }
         }
       },
@@ -11094,6 +10601,18 @@
           "link": {
             "type": "string"
           },
+          "title_layout": {
+            "type": "string"
+          },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
+          },
           "category": {
             "type": "string"
           },
@@ -11109,17 +10628,25 @@
               "type": "string"
             }
           },
-          "templates": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "features": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
+          "processedAt": {
+            "type": "datetime"
+          },
+          "refreshing": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshedAt": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"
@@ -11156,6 +10683,9 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "details": {
             "type": "string"
           },
           "user": {
@@ -11232,6 +10762,9 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "details": {
             "type": "string"
           },
           "user": {
@@ -11938,6 +11471,9 @@
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "details": {
                   "type": "string"
                 },
                 "user": {

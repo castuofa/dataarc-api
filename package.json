@@ -11,6 +11,8 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "@turf/turf": "^5.1.6",
+    "flat": "^5.0.2",
     "slugify": "^1.4.5",
     "strapi": "3.0.6",
     "strapi-admin": "3.0.6",

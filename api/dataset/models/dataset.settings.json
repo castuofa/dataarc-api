@@ -41,9 +41,21 @@
       "plugin": "upload",
       "required": false
     },
+    "title_layout": {
+      "type": "text"
+    },
+    "summary_layout": {
+      "type": "text"
+    },
+    "details_layout": {
+      "type": "text"
+    },
+    "link_layout": {
+      "type": "text"
+    },
     "category": {
-      "via": "datasets",
-      "model": "category"
+      "model": "category",
+      "via": "datasets"
     },
     "combinators": {
       "collection": "combinator",
@@ -53,13 +65,23 @@
       "collection": "dataset-field",
       "via": "dataset"
     },
-    "templates": {
-      "collection": "dataset-template",
-      "via": "dataset"
-    },
     "features": {
       "collection": "dataset-feature",
       "via": "dataset"
+    },
+    "processing": {
+      "type": "boolean",
+      "default": false
+    },
+    "processedAt": {
+      "type": "datetime"
+    },
+    "refreshing": {
+      "type": "boolean",
+      "default": false
+    },
+    "refreshedAt": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

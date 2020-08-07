@@ -531,7 +531,8 @@
         "required": [
           "id",
           "name",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "id": {
@@ -546,16 +547,24 @@
           "description": {
             "type": "string"
           },
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
           "type": {
             "type": "string",
+            "default": "string",
             "enum": [
+              "string",
+              "number",
               "boolean",
-              "date_start",
-              "date_end",
-              "date_text",
-              "float",
-              "integer",
-              "text"
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
             ]
           },
           "dataset": {
@@ -588,6 +597,18 @@
               "source": {
                 "type": "string"
               },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
               "category": {
                 "type": "string"
               },
@@ -603,17 +624,23 @@
                   "type": "string"
                 }
               },
-              "templates": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "features": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "processing": {
+                "type": "boolean"
+              },
+              "processedAt": {
+                "type": "datetime"
+              },
+              "refreshing": {
+                "type": "boolean"
+              },
+              "refreshedAt": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -634,7 +661,8 @@
       "NewDataset-field": {
         "required": [
           "name",
-          "title"
+          "title",
+          "type"
         ],
         "properties": {
           "name": {
@@ -646,16 +674,24 @@
           "description": {
             "type": "string"
           },
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
           "type": {
             "type": "string",
+            "default": "string",
             "enum": [
+              "string",
+              "number",
               "boolean",
-              "date_start",
-              "date_end",
-              "date_text",
-              "float",
-              "integer",
-              "text"
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
             ]
           },
           "dataset": {

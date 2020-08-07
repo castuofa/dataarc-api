@@ -13,12 +13,12 @@
       "via": "features",
       "model": "dataset"
     },
-    "name": {
-      "type": "string"
+    "properties": {
+      "type": "json",
+      "required": true
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "summary": {
       "type": "text"
@@ -29,24 +29,30 @@
     "link": {
       "type": "string"
     },
-    "lat": {
+    "url": {
+      "type": "string"
+    },
+    "latitude": {
       "type": "float"
     },
-    "lng": {
+    "longitude": {
       "type": "float"
     },
-    "start": {
+    "start_date": {
       "type": "integer"
     },
-    "end": {
+    "end_date": {
       "type": "integer"
     },
-    "properties": {
-      "type": "json"
+    "text_date": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "text"
     },
     "combinators": {
-      "via": "features",
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "features"
     },
     "old_id": {
       "type": "integer",
