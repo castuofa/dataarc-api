@@ -127,8 +127,9 @@ module.exports = {
 
         // loop through the properties
         _.forOwn(props, function (value, key) {
+          let source = (parent ? parent + nestedIndicator : '') + key;
           let type = helper.type(value);
-          let path = (parent ? parent + '_' : '') + helper.path(key);
+          let path = helper.path(source);
           let store_property = false;
 
           // process based on the type
@@ -152,19 +153,19 @@ module.exports = {
 
               // loop through array
               let values = [];
-              value.forEach((item) => {
-                let item_type = helper.type(item);
+              for (var i = value.length; i--; ) {
+                let item_type = helper.type(value[i]);
                 if (item_type === 'object') {
                   let p = {};
                   // extract properties
-                  extract_properties(item, keys, fields, p, words, path);
+                  extract_properties(value[i], keys, fields, p, words, key);
                   values.push(p);
                 } else {
                   strapi.log.warn(
-                    `Array item is not object ${JSON.stringify(item)}`
+                    `Array item is not object ${JSON.stringify(value[i])}`
                   );
                 }
-              });
+              }
               value = values;
               store_property = true;
               break;
@@ -177,9 +178,9 @@ module.exports = {
           // process the property
           if (store_property) {
             let field = {
-              title: helper.title(path),
+              title: helper.title(entry.name + ' ' + path),
               path: path,
-              source: key,
+              source: source,
               type: type,
               dataset: entry.id,
             };
