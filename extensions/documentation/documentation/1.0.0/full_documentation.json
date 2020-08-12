@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/12/2020 10:04:47 AM"
+    "x-generation-date": "08/12/2020 11:50:13 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10506,7 +10506,6 @@
       "Dataset-field": {
         "required": [
           "id",
-          "name",
           "title",
           "type"
         ],
@@ -10730,7 +10729,6 @@
       },
       "NewDataset-field": {
         "required": [
-          "name",
           "title",
           "type"
         ],
@@ -11059,7 +11057,6 @@
             "items": {
               "required": [
                 "id",
-                "name",
                 "title",
                 "type"
               ],

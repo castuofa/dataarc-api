@@ -530,7 +530,6 @@
       "Dataset-field": {
         "required": [
           "id",
-          "name",
           "title",
           "type"
         ],
@@ -754,7 +753,6 @@
       },
       "NewDataset-field": {
         "required": [
-          "name",
           "title",
           "type"
         ],

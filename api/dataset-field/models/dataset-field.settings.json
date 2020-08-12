@@ -10,9 +10,7 @@
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "unique": true,
-      "required": true
+      "type": "string"
     },
     "title": {
       "type": "string",

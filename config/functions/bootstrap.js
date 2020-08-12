@@ -2,32 +2,23 @@
 
 var fs = require('fs');
 
-/**
- * An asynchronous bootstrap function that runs before
- * your application gets started.
- *
- * This gives you an opportunity to set up your data model,
- * run jobs, or perform some special logic.
- *
- * See more details here: https://strapi.io/documentation/v3.x/concepts/configurations.html#bootstrap
- */
-
 // load a file
-async function loadFile(name) {
-  const path = `../../${process.env.SEED_DATA}/${name}.json`;
+async function loadFile(type, name) {
+  const seed_path = `${strapi.dir}/${process.env.SEED_DATA}`;
+  const file = `${seed_path}/${type}/${name}.json`;
   try {
-    strapi.log.info(`Loading '${name}'`);
-    var content = fs.readFileSync(require.resolve(path));
+    strapi.log.info(`loading ${name} ${type}`);
+    var content = fs.readFileSync(require.resolve(file));
     return JSON.parse(content);
   } catch (err) {
-    strapi.log.warn(`Missing '${name}'`);
+    strapi.log.warn(`missing ${name} ${type}`);
     return;
   }
 }
 
 // create user roles
-async function create_roles(name) {
-  let roles = await loadFile(`data/${name}`);
+async function seed_roles() {
+  let roles = await loadFile('data', 'role');
 
   for (let role of roles) {
     // check if it exists
@@ -37,29 +28,31 @@ async function create_roles(name) {
     });
     if (existing.length === 0) {
       let result = await strapi.query('role', 'users-permissions').create(role);
-      strapi.log.info(`Role '${role.name}' created ${JSON.stringify(result)}`);
+      strapi.log.info(`role created: ${role.name}`);
     } else {
-      strapi.log.warn(`Role '${role.name}' already exists`);
+      strapi.log.warn(`role exists: ${role.name}`);
     }
   }
 }
 
 // seed a resource
 async function seed_data(name) {
-  let resources = await loadFile(`data/${name}`);
+  let resources = await loadFile('data', name);
   if (!resources) return;
 
   let service = strapi.query(name);
-  // let service = strapi.services[name];
 
   for (let resource of resources) {
-    strapi.log.info(`Resource ${JSON.stringify(resource)}`);
     const existing = await service.find(resource);
-    if (existing === 0) {
-      // if ((await service.count(resource)) === 0) {
-      // await service.create(resource);
+    if (existing.length === 0) {
       await service.create(resource);
-      strapi.log.info(`${name} created: ${JSON.stringify(resource)}`);
+      strapi.log.info(
+        `${name} created: '${JSON.stringify(resource).substring(0, 35)}...'`
+      );
+    } else {
+      strapi.log.warn(
+        `${name} exists: '${JSON.stringify(resource).substring(0, 35)}...'`
+      );
     }
   }
 }
@@ -84,8 +77,6 @@ async function set_permissions(role, type, controller, actions) {
   // make sure we have permissions
   if (p.length == 0) return;
 
-  strapi.log.info(`Setting '${role}' permissions for '${controller}'`);
-
   // loop through the objects permissions setting everything
   p.forEach((permission) => {
     let enable = actions.includes(permission.action);
@@ -94,12 +85,14 @@ async function set_permissions(role, type, controller, actions) {
     strapi.query('permission', 'users-permissions').update({ id: p.id }, p);
   });
 
+  strapi.log.info(`${controller} permissions set for ${role}`);
+
   return;
 }
 
 // load seed permissions from file
 async function seed_permissions(name) {
-  let roles = await loadFile(`permissions/${name}`);
+  let roles = await loadFile('permissions', name);
   if (!roles) return;
 
   for (let role of roles)
@@ -126,8 +119,6 @@ async function create_user(user) {
   // make sure we have permissions
   if (p.length == 0) return;
 
-  strapi.log.info(`Setting '${role}' permissions for '${controller}'`);
-
   // loop through the objects permissions setting everything
   p.forEach((permission) => {
     let enable = actions.includes(permission.action);
@@ -136,10 +127,13 @@ async function create_user(user) {
     strapi.query('permission', 'users-permissions').update({ id: p.id }, p);
   });
 
+  strapi.log.info(`${controller} permissions set for ${role}`);
+
   return;
 }
 
 module.exports = async () => {
+  const seed = process.env.SEED || false;
   const seed_resources = [
     'category',
     'combinator',
@@ -156,26 +150,18 @@ module.exports = async () => {
     'topic-map',
     // 'user',
   ];
-  const seed = process.env.SEED || false;
-  const admin = {
-    username: process.env.ADMIN_USERNAME || 'admin',
-    password: process.env.ADMIN_PASSWORD || 'admin',
-    email: process.env.ADMIN_EMAIL || 'admin@data-arc.org',
-    blocked: false,
-  };
-
   // only seed if true
   if (seed) {
     // create the default user roles
-    // await create_roles('role');
+    await seed_roles();
 
     // seed the users
     // await seed_data('user');
 
     // loop through the resources, add data, and set permissions
     for (let resource of seed_resources) {
-      // await seed_data(resource);
-      // await seed_permissions(resource);
+      await seed_data(resource);
+      await seed_permissions(resource);
     }
   }
 };
