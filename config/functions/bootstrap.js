@@ -26,35 +26,35 @@ async function loadFile(name) {
 }
 
 // check if primary admin account exists
-async function admin_exists(admin) {
-  const admins = strapi
-    .query('administrator', 'admin')
-    .find({ username: admin.username });
-  if (admins.length !== 0) {
-    strapi.log.warn(`Primary admin account already exists`);
-    return true;
-  } else {
-    strapi.log.warn(`Primary admin account does not exist`);
-    return false;
-  }
-}
+// async function admin_exists(admin) {
+//   const admins = strapi
+//     .query('administrator', 'admin')
+//     .find({ username: admin.username });
+//   if (admins.length !== 0) {
+//     strapi.log.warn(`Primary admin account already exists`);
+//     return true;
+//   } else {
+//     strapi.log.warn(`Primary admin account does not exist`);
+//     return false;
+//   }
+// }
 
 // Create the primary admin account
-async function create_admin(admin) {
-  const exists = await admin_exists(admin);
-  if (!exists) {
-    try {
-      admin.password = await strapi.admin.services.auth.hashPassword(
-        admin.password
-      );
+// async function create_admin(admin) {
+//   const exists = await admin_exists(admin);
+//   if (!exists) {
+//     try {
+//       admin.password = await strapi.admin.services.auth.hashPassword(
+//         admin.password
+//       );
 
-      await strapi.query('administrator', 'admin').create(admin);
-      strapi.log.info(`Primary admin account created`);
-    } catch (err) {
-      strapi.log.error(`${err}`);
-    }
-  }
-}
+//       await strapi.query('administrator', 'admin').create(admin);
+//       strapi.log.info(`Primary admin account created`);
+//     } catch (err) {
+//       strapi.log.error(`${err}`);
+//     }
+//   }
+// }
 
 // create user roles
 async function create_roles(name) {
@@ -196,20 +196,20 @@ module.exports = async () => {
   };
 
   // only seed if true
-  if (seed && false) {
+  if (seed) {
     // create the admin account
-    await create_admin(admin);
+    // await create_admin(admin);
 
     // create the default user roles
-    await create_roles('role');
+    // await create_roles('role');
 
     // seed the users
     // await seed_data('user');
 
     // loop through the resources, add data, and set permissions
     for (let resource of seed_resources) {
-      await seed_data(resource);
-      await seed_permissions(resource);
+      // await seed_data(resource);
+      // await seed_permissions(resource);
     }
   }
 };
