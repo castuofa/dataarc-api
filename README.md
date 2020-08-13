@@ -23,22 +23,20 @@ Copy the `.env.example` file to `.env` and add the database information.
 
 Variable definitions
 
+- `ADMIN_JWT_SECRET` Token to secure the admin login for strapi
 - `HOST` Where the API server will run
 - `PORT` Port for the API server
-- `DATABASE_HOST` - localhost | dataarc.mjsgh.gcp.mongodb.net
-- `DATABASE_SRV` - false for local dev, true for mongodb.net
-- `DATABASE_PORT` - 27017 for local dev, not used for mongodb.net
+- `DATABASE_HOST` - localhost
+- `DATABASE_SRV` - false for local dev
+- `DATABASE_SSL` - false for local dev
+- `DATABASE_PORT` - 27017 for local dev
 - `DATABASE_NAME` - the name of the database "dataarc"
 - `DATABASE_USERNAME` - database username
 - `DATABASE_PASSWORD` - database password
-- `DATABASE_SSL` - false for local dev, true for mongodb.net
-- `AUTHENTICATION_DATABASE` - admin for local dev, null for mongodb.net
+- `AUTHENTICATION_DATABASE` - maybe 'admin' or blank depending on mongodb instance
 
 The following are used in setting up a new/blank database. It will not hurt to leave them configured after the initial setup since there are checks in place to make sure duplicate entries are not created.
 
-- `ADMIN_USERNAME` - user created for strapi admin interface
-- `ADMIN_PASSWORD` - password for strapi admin account
-- `ADMIN_EMAIL` - email address for strapi admin account
 - `SEED_DATA` - (eg: ../dataarc-data) relative to the project root, data is pulled from dataarc-data git repo
   - _IMPORTANT_: If you decided to put the data repo within the project folder make sure you add it to .gitignore
 - `SEED` - true only if you want to add data from the data folder
