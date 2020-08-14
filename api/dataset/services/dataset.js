@@ -271,4 +271,24 @@ module.exports = {
 
     return entry;
   },
+
+  /**
+   * Promise to refresh a record
+   *
+   * @return {Promise}
+   */
+  refresh: async (params) => {
+    // let start_all = process.hrtime();
+
+    // find the dataset
+    const entry = await strapi.query('dataset').findOne(params);
+
+    // only proceed if we found the dataset
+    if (entry != null) {
+      let start_cleanup = process.hrtime();
+      // remove existing fields for this dataset
+    }
+
+    return entry;
+  },
 };

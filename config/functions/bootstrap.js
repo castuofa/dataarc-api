@@ -145,7 +145,7 @@ async function create_user(user) {
 }
 
 module.exports = async () => {
-  const seed = process.env.SEED || false;
+  const seed = process.env.SEED == 'true';
   const seed_resources = [
     'category',
     'combinator',
