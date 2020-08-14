@@ -99,7 +99,7 @@ module.exports = {
   },
 
   /**
-   * process a concept map
+   * process a record.
    *
    * @return {Object}
    */

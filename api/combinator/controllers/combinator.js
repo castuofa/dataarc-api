@@ -97,4 +97,35 @@ module.exports = {
 
     return entry;
   },
+
+  /**
+   * refresh a record
+   *
+   * @return {Object}
+   */
+
+  refresh: async (ctx) => {
+    const { id } = ctx.params;
+
+    let entity;
+    // try {
+    entity = await strapi.services[CONTENT_TYPE].refresh({ id });
+    // } catch (err) {
+    //   return ctx.response.badData(err.message);
+    // }
+
+    let entry = sanitizeEntity(entity, {
+      model: strapi.models[CONTENT_TYPE],
+    });
+
+    if (entry != null)
+      strapi.services.event.log(
+        'refresh',
+        strapi.models[CONTENT_TYPE].info.name,
+        entry.name,
+        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
+      );
+
+    return entry;
+  },
 };

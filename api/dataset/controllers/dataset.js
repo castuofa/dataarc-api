@@ -99,7 +99,7 @@ module.exports = {
   },
 
   /**
-   * process a dataset
+   * process a record
    *
    * @return {Object}
    */
@@ -130,7 +130,7 @@ module.exports = {
   },
 
   /**
-   * refresh a dataset
+   * refresh a record
    *
    * @return {Object}
    */

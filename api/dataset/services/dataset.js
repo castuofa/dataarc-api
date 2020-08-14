@@ -1,12 +1,13 @@
 'use strict';
 
+const nestedIndicator = ' --> ';
+
+// helper libs
 const _ = require('lodash');
 const fs = require('fs');
 const flatten = require('flat');
 const turf = require('@turf/turf');
 const slugify = require('slugify');
-
-const nestedIndicator = ' --> ';
 
 // helper functions
 let helper = {
@@ -70,10 +71,10 @@ module.exports = {
   process: async (params) => {
     let start_all = process.hrtime();
 
-    // find the dataset
+    // find the entry
     const entry = await strapi.query('dataset').findOne(params);
 
-    // only proceed if we found the dataset
+    // only proceed if we found an entry
     if (entry != null) {
       let start_cleanup = process.hrtime();
       // remove existing fields for this dataset
@@ -278,15 +279,12 @@ module.exports = {
    * @return {Promise}
    */
   refresh: async (params) => {
-    // let start_all = process.hrtime();
-
-    // find the dataset
+    // find the entry
     const entry = await strapi.query('dataset').findOne(params);
 
-    // only proceed if we found the dataset
+    // only proceed if we found an entry
     if (entry != null) {
-      let start_cleanup = process.hrtime();
-      // remove existing fields for this dataset
+      // refresh the entry
     }
 
     return entry;

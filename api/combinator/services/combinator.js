@@ -1,8 +1,20 @@
 'use strict';
 
-/**
- * Read the documentation (https://strapi.io/documentation/v3.x/concepts/services.html#core-services)
- * to customize this service
- */
+module.exports = {
+  /**
+   * Promise to refresh a record
+   *
+   * @return {Promise}
+   */
+  refresh: async (params) => {
+    // find the entry
+    const entry = await strapi.query('combinator').findOne(params);
 
-module.exports = {};
+    // only proceed if we found an entry
+    if (entry != null) {
+      // refresh the entry
+    }
+
+    return entry;
+  },
+};
