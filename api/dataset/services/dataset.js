@@ -160,12 +160,13 @@ module.exports = {
                 if (item_type === 'object') {
                   let p = {};
                   // extract properties
-                  extract_properties(value[i], keys, fields, p, words, key);
+                  extract_properties(value[i], keys, fields, p, words, path);
                   values.push(p);
                 } else {
                   strapi.log.warn(
                     `Array item is not object ${JSON.stringify(value[i])}`
                   );
+                  values.push(value[i]);
                 }
               }
               value = values;
