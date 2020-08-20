@@ -590,6 +590,15 @@
                   "type": "string"
                 }
               },
+              "refresh": {
+                "type": "string"
+              },
+              "refresh_notes": {
+                "type": "string"
+              },
+              "refresh_at": {
+                "type": "datetime"
+              },
               "old_id": {
                 "type": "integer"
               },

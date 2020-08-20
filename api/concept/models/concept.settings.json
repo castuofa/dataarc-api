@@ -28,8 +28,8 @@
       "type": "string"
     },
     "combinators": {
-      "collection": "combinator",
       "via": "concepts",
+      "collection": "combinator",
       "dominant": true
     },
     "old_id": {

@@ -30,14 +30,18 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["images"],
+      "allowedTypes": [
+        "images"
+      ],
       "plugin": "upload",
       "required": false
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["files"],
+      "allowedTypes": [
+        "files"
+      ],
       "plugin": "upload",
       "required": false
     },
@@ -58,8 +62,8 @@
       "via": "datasets"
     },
     "combinators": {
-      "collection": "combinator",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "combinator"
     },
     "fields": {
       "collection": "dataset-field",
@@ -69,18 +73,36 @@
       "collection": "dataset-feature",
       "via": "dataset"
     },
-    "processing": {
-      "type": "boolean",
-      "default": false
+    "process": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "active",
+        "failed",
+        "complete"
+      ],
+      "default": "pending"
     },
-    "processedAt": {
+    "process_notes": {
+      "type": "string"
+    },
+    "process_at": {
       "type": "datetime"
     },
-    "refreshing": {
-      "type": "boolean",
-      "default": false
+    "refresh": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "active",
+        "failed",
+        "complete"
+      ],
+      "default": "pending"
     },
-    "refreshedAt": {
+    "refresh_notes": {
+      "type": "string"
+    },
+    "refresh_at": {
       "type": "datetime"
     },
     "old_id": {

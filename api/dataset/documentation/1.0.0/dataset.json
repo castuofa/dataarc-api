@@ -905,6 +905,15 @@
                     "type": "string"
                   }
                 },
+                "refresh": {
+                  "type": "string"
+                },
+                "refresh_notes": {
+                  "type": "string"
+                },
+                "refresh_at": {
+                  "type": "datetime"
+                },
                 "old_id": {
                   "type": "integer"
                 },
@@ -1042,18 +1051,36 @@
               }
             }
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
+          "process": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "active",
+              "failed",
+              "complete"
+            ]
           },
-          "processedAt": {
+          "process_notes": {
+            "type": "string"
+          },
+          "process_at": {
             "type": "datetime"
           },
-          "refreshing": {
-            "type": "boolean",
-            "default": false
+          "refresh": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "active",
+              "failed",
+              "complete"
+            ]
           },
-          "refreshedAt": {
+          "refresh_notes": {
+            "type": "string"
+          },
+          "refresh_at": {
             "type": "datetime"
           },
           "created_by": {
@@ -1199,18 +1226,36 @@
               "type": "string"
             }
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
+          "process": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "active",
+              "failed",
+              "complete"
+            ]
           },
-          "processedAt": {
+          "process_notes": {
+            "type": "string"
+          },
+          "process_at": {
             "type": "datetime"
           },
-          "refreshing": {
-            "type": "boolean",
-            "default": false
+          "refresh": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "active",
+              "failed",
+              "complete"
+            ]
           },
-          "refreshedAt": {
+          "refresh_notes": {
+            "type": "string"
+          },
+          "refresh_at": {
             "type": "datetime"
           },
           "old_id": {

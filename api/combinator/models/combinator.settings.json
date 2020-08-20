@@ -24,28 +24,36 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": [
-        "AND",
-        "OR"
-      ],
+      "enum": ["AND", "OR"],
       "default": "AND"
     },
     "queries": {
-      "via": "combinator",
-      "collection": "combinator-query"
+      "collection": "combinator-query",
+      "via": "combinator"
     },
     "concepts": {
-      "via": "combinators",
-      "collection": "concept"
+      "collection": "concept",
+      "via": "combinators"
     },
     "dataset": {
-      "via": "combinators",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "combinators"
     },
     "features": {
-      "via": "combinators",
       "collection": "dataset-feature",
+      "via": "combinators",
       "dominant": true
+    },
+    "refresh": {
+      "type": "enumeration",
+      "enum": ["pending", "active", "failed", "complete"],
+      "default": "pending"
+    },
+    "refresh_notes": {
+      "type": "string"
+    },
+    "refresh_at": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

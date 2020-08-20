@@ -599,16 +599,22 @@
                   "type": "string"
                 }
               },
-              "processing": {
-                "type": "boolean"
+              "process": {
+                "type": "string"
               },
-              "processedAt": {
+              "process_notes": {
+                "type": "string"
+              },
+              "process_at": {
                 "type": "datetime"
               },
-              "refreshing": {
-                "type": "boolean"
+              "refresh": {
+                "type": "string"
               },
-              "refreshedAt": {
+              "refresh_notes": {
+                "type": "string"
+              },
+              "refresh_at": {
                 "type": "datetime"
               },
               "old_id": {
@@ -713,6 +719,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "refresh": {
+                  "type": "string"
+                },
+                "refresh_notes": {
+                  "type": "string"
+                },
+                "refresh_at": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"

@@ -71,11 +71,24 @@ module.exports = {
   process: async (params) => {
     let start_all = process.hrtime();
 
-    // find the entry
-    const entry = await strapi.query('dataset').findOne(params);
+    // find the entry and set to processing
+    const entry = await strapi
+      .query('dataset')
+      .update(params, { process: 'active' });
 
     // only proceed if we found an entry
     if (entry != null) {
+      // ***************************************************
+      // * flag related combinators for refresh
+      // ***************************************************
+      let combs = strapi.query('combinator').update(
+        { dataset: entry.id },
+        {
+          refresh: 'pending',
+          refresh_notes: 'Dataset has been updated, refresh is needed.',
+        }
+      );
+
       let start_cleanup = process.hrtime();
       // remove existing fields for this dataset
       strapi.log.info(`Removing existing fields and features for this dataset`);
@@ -286,6 +299,10 @@ module.exports = {
     // only proceed if we found an entry
     if (entry != null) {
       // refresh the entry
+      // load dataset file
+      // remove existing features
+      // rebuild features
+      // look for start_time, end_time, text_time fields
     }
 
     return entry;
