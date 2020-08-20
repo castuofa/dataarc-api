@@ -962,6 +962,9 @@
                 "type": {
                   "type": "string"
                 },
+                "state": {
+                  "type": "string"
+                },
                 "dataset": {
                   "type": "string"
                 },

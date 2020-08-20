@@ -40,9 +40,14 @@
       "required": true,
       "default": "string"
     },
+    "state": {
+      "type": "enumeration",
+      "enum": ["pending", "missing", "complete"],
+      "default": "pending"
+    },
     "dataset": {
-      "via": "fields",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "fields"
     },
     "old_id": {
       "type": "integer",

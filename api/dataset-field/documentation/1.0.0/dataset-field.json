@@ -566,6 +566,15 @@
               "text_date"
             ]
           },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "complete"
+            ]
+          },
           "dataset": {
             "required": [
               "id",
@@ -790,6 +799,15 @@
               "start_date",
               "end_date",
               "text_date"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "complete"
             ]
           },
           "dataset": {

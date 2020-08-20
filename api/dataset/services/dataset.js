@@ -71,26 +71,30 @@ module.exports = {
   process: async (params) => {
     let start_all = process.hrtime();
 
-    // find the entry and set to processing
-    const entry = await strapi
-      .query('dataset')
-      .update(params, { process: 'active' });
+    // find the entry, set to processing, flag for refresh
+    const entry = await strapi.query('dataset').update(params, {
+      process: 'active',
+      process_notes: 'Currently processing dataset.',
+      refresh: 'active',
+      refresh_notes: 'Currently processing dataset.',
+    });
 
     // only proceed if we found an entry
     if (entry != null) {
-      // ***************************************************
-      // * flag related combinators for refresh
+      // flag related combinators for refresh
+      strapi.query('combinator').update(
       // ***************************************************
       let combs = strapi.query('combinator').update(
         { dataset: entry.id },
         {
           refresh: 'pending',
-          refresh_notes: 'Dataset has been updated, refresh is needed.',
+          refresh_notes: 'Dataset has been processed, refresh is needed.',
         }
       );
 
       let start_cleanup = process.hrtime();
       // remove existing fields for this dataset
+      let start_cleanup = process.hrtime();
       strapi.log.info(`Removing existing fields and features for this dataset`);
       await strapi.query('dataset-field').delete({
         dataset: entry.id,

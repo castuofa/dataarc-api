@@ -66,8 +66,8 @@
       "collection": "combinator"
     },
     "fields": {
-      "collection": "dataset-field",
-      "via": "dataset"
+      "via": "dataset",
+      "collection": "dataset-field"
     },
     "features": {
       "collection": "dataset-feature",

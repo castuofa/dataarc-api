@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/20/2020 3:15:37 PM"
+    "x-generation-date": "08/20/2020 4:15:45 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10755,6 +10755,15 @@
               "text_date"
             ]
           },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "complete"
+            ]
+          },
           "dataset": {
             "required": [
               "id",
@@ -10979,6 +10988,15 @@
               "start_date",
               "end_date",
               "text_date"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "complete"
             ]
           },
           "dataset": {
@@ -11308,6 +11326,9 @@
                   "type": "string"
                 },
                 "type": {
+                  "type": "string"
+                },
+                "state": {
                   "type": "string"
                 },
                 "dataset": {
