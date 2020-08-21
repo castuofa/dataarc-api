@@ -20,8 +20,8 @@
       "type": "string"
     },
     "combinator": {
-      "via": "queries",
-      "model": "combinator"
+      "model": "combinator",
+      "via": "queries"
     },
     "old_id": {
       "type": "integer",

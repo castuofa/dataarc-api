@@ -24,12 +24,15 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["AND", "OR"],
+      "enum": [
+        "AND",
+        "OR"
+      ],
       "default": "AND"
     },
     "queries": {
-      "collection": "combinator-query",
-      "via": "combinator"
+      "via": "combinator",
+      "collection": "combinator-query"
     },
     "concepts": {
       "collection": "concept",
@@ -46,7 +49,12 @@
     },
     "refresh": {
       "type": "enumeration",
-      "enum": ["pending", "active", "failed", "complete"],
+      "enum": [
+        "pending",
+        "active",
+        "failed",
+        "complete"
+      ],
       "default": "pending"
     },
     "refresh_notes": {

@@ -17,7 +17,7 @@ let helper = {
       .match(/\s([a-zA-Z]+)/)[1]
       .toLowerCase();
   },
-  path: (words, wordSeparator = '_', pathSeparator = '_') => {
+  path: (words, wordSeparator = '_', pathSeparator = '-') => {
     return words
       .split(nestedIndicator)
       .map((word) => {
@@ -64,6 +64,54 @@ let helper = {
 
 module.exports = {
   /**
+   * Promise to add record
+   *
+   * @return {Promise}
+   */
+
+  create: async (data, { files } = {}) => {
+    data.process = 'pending';
+    data.process_notes = 'New dataset, needs processing.';
+    data.refresh = 'pending';
+    data.refresh_notes = 'New dataset, needs refreshed.';
+    const entry = await strapi.query('dataset').create(data);
+
+    if (files) {
+      // automatically uploads the files based on the entry and the model
+      await strapi.entityService.uploadFiles(entry, files, {
+        model: 'dataset',
+      });
+      return this.findOne({ id: entry.id });
+    }
+
+    return entry;
+  },
+
+  /**
+   * Promise to edit record
+   *
+   * @return {Promise}
+   */
+
+  update: async (params, data, { files } = {}) => {
+    data.process = 'pending';
+    data.process_notes = 'Dataset has been updated, needs processing.';
+    data.refresh = 'pending';
+    data.refresh_notes = 'Dataset has been updated, needs refreshed.';
+    const entry = await strapi.query('dataset').update(params, data);
+
+    if (files) {
+      // automatically uploads the files based on the entry and the model
+      await strapi.entityService.uploadFiles(entry, files, {
+        model: 'dataset',
+      });
+      return this.findOne({ id: entry.id });
+    }
+
+    return entry;
+  },
+
+  /**
    * Promise to process a record
    *
    * @return {Promise}
@@ -83,8 +131,6 @@ module.exports = {
     if (entry != null) {
       // flag related combinators for refresh
       strapi.query('combinator').update(
-      // ***************************************************
-      let combs = strapi.query('combinator').update(
         { dataset: entry.id },
         {
           refresh: 'pending',
@@ -94,12 +140,12 @@ module.exports = {
 
       let start_cleanup = process.hrtime();
       // remove existing fields for this dataset
-      let start_cleanup = process.hrtime();
       strapi.log.info(`Removing existing fields and features for this dataset`);
       await strapi.query('dataset-field').delete({
         dataset: entry.id,
         _limit: 999999999,
       });
+
       // remove existing features for this dataset
       await strapi.query('dataset-feature').delete({
         dataset: entry.id,
@@ -116,7 +162,7 @@ module.exports = {
       // fs.readdirSync(folder).forEach((file) => {
       //   if (file !== '.DS_Store') datasets.push(file);
       // });
-      // let dataset = datasets[6];
+      // let dataset = datasets[12];
       // strapi.log.info(`Processing ${dataset}`);
       // const path = `${strapi.dir}/../dataarc-data/source/dataset/${dataset}`;
 
@@ -282,10 +328,20 @@ module.exports = {
         `Processed ${fields.length} fields in ${features.length} features`
       );
 
+      //
+      //
+      //
+      // show fields
+      // strapi.log.info(`Fields:`);
+      // console.log(`${JSON.stringify(fields, null, 2)}`);
+
       // show a random record for spot checking
       // let random_record = helper.random(0, features.length - 1);
       // strapi.log.info(`Showing random record ${random_record}:`);
-      // console.log(`${JSON.stringify(features[random_record], null, 2)}`);
+      // console.log(`${JSON.stringify(features[0], null, 2)}`);
+      //
+      //
+      //
     }
 
     return entry;
