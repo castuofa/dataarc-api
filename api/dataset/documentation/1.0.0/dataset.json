@@ -885,10 +885,7 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 },
                 "concepts": {
                   "type": "array",
@@ -905,13 +902,13 @@
                 "dataset": {
                   "type": "string"
                 },
-                "refresh": {
+                "state": {
                   "type": "string"
                 },
-                "refresh_notes": {
+                "state_msg": {
                   "type": "string"
                 },
-                "refresh_at": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {
@@ -967,6 +964,12 @@
                 },
                 "state": {
                   "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"
@@ -1057,36 +1060,21 @@
               }
             }
           },
-          "process": {
+          "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "active",
+              "processing",
+              "updating",
               "failed",
-              "complete"
+              "done"
             ]
           },
-          "process_notes": {
+          "state_msg": {
             "type": "string"
           },
-          "process_at": {
-            "type": "datetime"
-          },
-          "refresh": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "active",
-              "failed",
-              "complete"
-            ]
-          },
-          "refresh_notes": {
-            "type": "string"
-          },
-          "refresh_at": {
+          "state_at": {
             "type": "datetime"
           },
           "created_by": {
@@ -1232,36 +1220,21 @@
               "type": "string"
             }
           },
-          "process": {
+          "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "active",
+              "processing",
+              "updating",
               "failed",
-              "complete"
+              "done"
             ]
           },
-          "process_notes": {
+          "state_msg": {
             "type": "string"
           },
-          "process_at": {
-            "type": "datetime"
-          },
-          "refresh": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "active",
-              "failed",
-              "complete"
-            ]
-          },
-          "refresh_notes": {
-            "type": "string"
-          },
-          "refresh_at": {
+          "state_at": {
             "type": "datetime"
           },
           "old_id": {

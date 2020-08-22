@@ -565,10 +565,7 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 },
                 "concepts": {
                   "type": "array",
@@ -585,13 +582,13 @@
                 "dataset": {
                   "type": "string"
                 },
-                "refresh": {
+                "state": {
                   "type": "string"
                 },
-                "refresh_notes": {
+                "state_msg": {
                   "type": "string"
                 },
-                "refresh_at": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {

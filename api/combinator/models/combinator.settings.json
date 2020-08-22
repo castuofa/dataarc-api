@@ -31,39 +31,38 @@
       "default": "and"
     },
     "queries": {
-      "via": "combinator",
       "autoPopulate": false,
       "collection": "combinator-query"
     },
     "concepts": {
+      "autoPopulate": false,
       "collection": "concept",
-      "via": "combinators",
-      "autoPopulate": false
+      "via": "combinators"
     },
     "features": {
+      "autoPopulate": false,
       "collection": "feature",
-      "via": "combinators",
-      "autoPopulate": false
+      "via": "combinators"
     },
     "dataset": {
+      "autoPopulate": false,
       "model": "dataset",
-      "via": "combinators",
-      "autoPopulate": false
+      "via": "combinators"
     },
-    "refresh": {
+    "state": {
       "type": "enumeration",
       "enum": [
         "pending",
-        "active",
+        "running",
         "failed",
-        "complete"
+        "done"
       ],
       "default": "pending"
     },
-    "refresh_notes": {
+    "state_msg": {
       "type": "string"
     },
-    "refresh_at": {
+    "state_at": {
       "type": "datetime"
     },
     "old_id": {

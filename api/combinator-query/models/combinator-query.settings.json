@@ -9,6 +9,9 @@
     "timestamps": true
   },
   "attributes": {
+    "combinator": {
+      "model": "combinator"
+    },
     "field": {
       "model": "dataset-field"
     },
@@ -30,10 +33,16 @@
     "value": {
       "type": "string"
     },
-    "combinator": {
-      "autoPopulate": false,
-      "model": "combinator",
-      "via": "queries"
+    "state": {
+      "type": "enumeration",
+      "enum": ["pending", "done"],
+      "default": "pending"
+    },
+    "state_msg": {
+      "type": "string"
+    },
+    "state_at": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

@@ -600,22 +600,13 @@
                   "type": "string"
                 }
               },
-              "process": {
+              "state": {
                 "type": "string"
               },
-              "process_notes": {
+              "state_msg": {
                 "type": "string"
               },
-              "process_at": {
-                "type": "datetime"
-              },
-              "refresh": {
-                "type": "string"
-              },
-              "refresh_notes": {
-                "type": "string"
-              },
-              "refresh_at": {
+              "state_at": {
                 "type": "datetime"
               },
               "old_id": {
@@ -673,8 +664,14 @@
             "enum": [
               "pending",
               "missing",
-              "complete"
+              "done"
             ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -810,8 +807,14 @@
             "enum": [
               "pending",
               "missing",
-              "complete"
+              "done"
             ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"

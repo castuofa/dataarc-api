@@ -536,6 +536,74 @@
           "id": {
             "type": "string"
           },
+          "combinator": {
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "queries": {
+                "type": "string"
+              },
+              "concepts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "field": {
             "required": [
               "id",
@@ -570,6 +638,12 @@
               "state": {
                 "type": "string"
               },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
               "old_id": {
                 "type": "integer"
               },
@@ -601,76 +675,19 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string"
-              },
-              "queries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "concepts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "refresh": {
-                "type": "string"
-              },
-              "refresh_notes": {
-                "type": "string"
-              },
-              "refresh_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -767,6 +784,9 @@
           "property"
         ],
         "properties": {
+          "combinator": {
+            "type": "string"
+          },
           "field": {
             "type": "string"
           },
@@ -787,8 +807,19 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
             "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"

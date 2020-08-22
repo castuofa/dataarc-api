@@ -10,6 +10,7 @@
   },
   "attributes": {
     "dataset": {
+      "via": "fields",
       "model": "dataset"
     },
     "name": {
@@ -45,12 +46,14 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "missing",
-        "complete"
-      ],
+      "enum": ["pending", "missing", "done"],
       "default": "pending"
+    },
+    "state_msg": {
+      "type": "string"
+    },
+    "state_at": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

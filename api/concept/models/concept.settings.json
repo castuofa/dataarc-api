@@ -29,9 +29,9 @@
     },
     "combinators": {
       "via": "concepts",
+      "autoPopulate": false,
       "collection": "combinator",
-      "dominant": true,
-      "autoPopulate": false
+      "dominant": true
     },
     "old_id": {
       "type": "integer",

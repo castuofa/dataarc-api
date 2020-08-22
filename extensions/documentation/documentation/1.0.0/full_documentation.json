@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/22/2020 3:40:18 PM"
+    "x-generation-date": "08/22/2020 5:39:05 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9212,22 +9212,13 @@
                     "type": "string"
                   }
                 },
-                "process": {
+                "state": {
                   "type": "string"
                 },
-                "process_notes": {
+                "state_msg": {
                   "type": "string"
                 },
-                "process_at": {
-                  "type": "datetime"
-                },
-                "refresh": {
-                  "type": "string"
-                },
-                "refresh_notes": {
-                  "type": "string"
-                },
-                "refresh_at": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {
@@ -9384,6 +9375,74 @@
           "id": {
             "type": "string"
           },
+          "combinator": {
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "queries": {
+                "type": "string"
+              },
+              "concepts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "field": {
             "required": [
               "id",
@@ -9418,6 +9477,12 @@
               "state": {
                 "type": "string"
               },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
               "old_id": {
                 "type": "integer"
               },
@@ -9449,76 +9514,19 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string"
-              },
-              "queries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "concepts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "refresh": {
-                "type": "string"
-              },
-              "refresh_notes": {
-                "type": "string"
-              },
-              "refresh_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -9615,6 +9623,9 @@
           "property"
         ],
         "properties": {
+          "combinator": {
+            "type": "string"
+          },
           "field": {
             "type": "string"
           },
@@ -9635,8 +9646,19 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
             "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"
@@ -9685,46 +9707,52 @@
             ]
           },
           "queries": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "property"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "field": {
-                  "type": "string"
-                },
-                "property": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string"
-                },
-                "combinator": {
-                  "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_combinator_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
+            "required": [
+              "id",
+              "property"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "combinator": {
+                "type": "string"
+              },
+              "field": {
+                "type": "string"
+              },
+              "property": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_combinator_id": {
+                "type": "integer"
+              },
+              "old_user_id": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -9915,22 +9943,13 @@
                   "type": "string"
                 }
               },
-              "process": {
+              "state": {
                 "type": "string"
               },
-              "process_notes": {
+              "state_msg": {
                 "type": "string"
               },
-              "process_at": {
-                "type": "datetime"
-              },
-              "refresh": {
-                "type": "string"
-              },
-              "refresh_notes": {
-                "type": "string"
-              },
-              "refresh_at": {
+              "state_at": {
                 "type": "datetime"
               },
               "old_id": {
@@ -9953,20 +9972,20 @@
               }
             }
           },
-          "refresh": {
+          "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "active",
+              "running",
               "failed",
-              "complete"
+              "done"
             ]
           },
-          "refresh_notes": {
+          "state_msg": {
             "type": "string"
           },
-          "refresh_at": {
+          "state_at": {
             "type": "datetime"
           },
           "created_by": {
@@ -10085,10 +10104,7 @@
             ]
           },
           "queries": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "string"
           },
           "concepts": {
             "type": "array",
@@ -10105,20 +10121,20 @@
           "dataset": {
             "type": "string"
           },
-          "refresh": {
+          "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "active",
+              "running",
               "failed",
-              "complete"
+              "done"
             ]
           },
-          "refresh_notes": {
+          "state_msg": {
             "type": "string"
           },
-          "refresh_at": {
+          "state_at": {
             "type": "datetime"
           },
           "old_id": {
@@ -10189,10 +10205,7 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 },
                 "concepts": {
                   "type": "array",
@@ -10209,13 +10222,13 @@
                 "dataset": {
                   "type": "string"
                 },
-                "refresh": {
+                "state": {
                   "type": "string"
                 },
-                "refresh_notes": {
+                "state_msg": {
                   "type": "string"
                 },
-                "refresh_at": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {
@@ -10475,22 +10488,13 @@
                   "type": "string"
                 }
               },
-              "process": {
+              "state": {
                 "type": "string"
               },
-              "process_notes": {
+              "state_msg": {
                 "type": "string"
               },
-              "process_at": {
-                "type": "datetime"
-              },
-              "refresh": {
-                "type": "string"
-              },
-              "refresh_notes": {
-                "type": "string"
-              },
-              "refresh_at": {
+              "state_at": {
                 "type": "datetime"
               },
               "old_id": {
@@ -10548,8 +10552,14 @@
             "enum": [
               "pending",
               "missing",
-              "complete"
+              "done"
             ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -10685,8 +10695,14 @@
             "enum": [
               "pending",
               "missing",
-              "complete"
+              "done"
             ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"
@@ -10937,10 +10953,7 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 },
                 "concepts": {
                   "type": "array",
@@ -10957,13 +10970,13 @@
                 "dataset": {
                   "type": "string"
                 },
-                "refresh": {
+                "state": {
                   "type": "string"
                 },
-                "refresh_notes": {
+                "state_msg": {
                   "type": "string"
                 },
-                "refresh_at": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {
@@ -11019,6 +11032,12 @@
                 },
                 "state": {
                   "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"
@@ -11109,36 +11128,21 @@
               }
             }
           },
-          "process": {
+          "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "active",
+              "processing",
+              "updating",
               "failed",
-              "complete"
+              "done"
             ]
           },
-          "process_notes": {
+          "state_msg": {
             "type": "string"
           },
-          "process_at": {
-            "type": "datetime"
-          },
-          "refresh": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "active",
-              "failed",
-              "complete"
-            ]
-          },
-          "refresh_notes": {
-            "type": "string"
-          },
-          "refresh_at": {
+          "state_at": {
             "type": "datetime"
           },
           "created_by": {
@@ -11284,36 +11288,21 @@
               "type": "string"
             }
           },
-          "process": {
+          "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "active",
+              "processing",
+              "updating",
               "failed",
-              "complete"
+              "done"
             ]
           },
-          "process_notes": {
+          "state_msg": {
             "type": "string"
           },
-          "process_at": {
-            "type": "datetime"
-          },
-          "refresh": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "active",
-              "failed",
-              "complete"
-            ]
-          },
-          "refresh_notes": {
-            "type": "string"
-          },
-          "refresh_at": {
+          "state_at": {
             "type": "datetime"
           },
           "old_id": {
@@ -11614,22 +11603,13 @@
                   "type": "string"
                 }
               },
-              "process": {
+              "state": {
                 "type": "string"
               },
-              "process_notes": {
+              "state_msg": {
                 "type": "string"
               },
-              "process_at": {
-                "type": "datetime"
-              },
-              "refresh": {
-                "type": "string"
-              },
-              "refresh_notes": {
-                "type": "string"
-              },
-              "refresh_at": {
+              "state_at": {
                 "type": "datetime"
               },
               "old_id": {
@@ -11715,10 +11695,7 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 },
                 "concepts": {
                   "type": "array",
@@ -11735,13 +11712,13 @@
                 "dataset": {
                   "type": "string"
                 },
-                "refresh": {
+                "state": {
                   "type": "string"
                 },
-                "refresh_notes": {
+                "state_msg": {
                   "type": "string"
                 },
-                "refresh_at": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {

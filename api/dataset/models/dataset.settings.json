@@ -59,39 +59,28 @@
     },
     "combinators": {
       "via": "dataset",
-      "collection": "combinator",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "combinator"
     },
     "fields": {
-      "via": "dataset",
+      "autoPopulate": false,
       "collection": "dataset-field",
-      "autoPopulate": false
+      "via": "dataset"
     },
     "features": {
+      "autoPopulate": false,
       "collection": "feature",
-      "via": "dataset",
-      "autoPopulate": false
+      "via": "dataset"
     },
-    "process": {
+    "state": {
       "type": "enumeration",
-      "enum": ["pending", "active", "failed", "complete"],
+      "enum": ["pending", "processing", "updating", "failed", "done"],
       "default": "pending"
     },
-    "process_notes": {
+    "state_msg": {
       "type": "string"
     },
-    "process_at": {
-      "type": "datetime"
-    },
-    "refresh": {
-      "type": "enumeration",
-      "enum": ["pending", "active", "failed", "complete"],
-      "default": "pending"
-    },
-    "refresh_notes": {
-      "type": "string"
-    },
-    "refresh_at": {
+    "state_at": {
       "type": "datetime"
     },
     "old_id": {

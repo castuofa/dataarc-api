@@ -17,8 +17,7 @@ module.exports = {
       strapi.services.helper.set_state(
         entry.id,
         'dataset',
-        'process',
-        'active',
+        'processing',
         'Dataset processing in progress'
       );
 
@@ -176,7 +175,6 @@ module.exports = {
               strapi.services.helper.set_state(
                 entry.id,
                 'dataset',
-                'process',
                 'failed',
                 'Something went wrong when creating the new records, please try again'
               );
@@ -189,7 +187,7 @@ module.exports = {
             entry.id,
             'dataset',
             'process',
-            'complete'
+            'done'
           );
 
           // show information about processed dataset
@@ -211,17 +209,17 @@ module.exports = {
     return entry;
   },
 
-  refresh: async (params) => {
+  update_features: async (params) => {
     // find the entry
+    console.log(`${JSON.stringify(params, null, 2)}`);
     const entry = await strapi.query('dataset').findOne(params);
     if (entry != null) {
       // set refresh to active
       strapi.services.helper.set_state(
         entry.id,
         'dataset',
-        'refresh',
-        'active',
-        'Dataset refresh in progress'
+        'updating',
+        'Updating dataset features'
       );
 
       // pull the dataset fields
@@ -256,40 +254,51 @@ module.exports = {
             feature.text_date = feature.properties[text_date.path];
           }
 
-          // set url and link values
+          // set url and render link
           let url = _.find(fields, {
             type: 'url',
           });
           if (url) {
             feature.url = feature.properties[url.path];
-            feature.link = pug.render(
-              `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
-              feature.properties
-            );
+            try {
+              feature.link = pug.render(
+                `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
+                feature.properties
+              );
+            } catch (err) {
+              feature.link = 'Invalid layout';
+            }
           }
 
-          // set layout values
-          // 1. load layouts
-          feature.title = pug.render(
-            'span. \n  ' + feature.dataset.title_layout,
-            feature.properties
-          );
-          feature.summary = pug.render(
-            feature.dataset.summary_layout,
-            feature.properties
-          );
-          // feature.details = pug.render(
-          //   feature.dataset.details_layout,
-          //   feature.properties
-          // );
+          // render title
+          try {
+            feature.title = pug.render(
+              'span. \n  ' + feature.dataset.title_layout,
+              feature.properties
+            );
+          } catch (err) {
+            feature.title = 'Invalid layout';
+          }
 
-          // 2. render layouts with pug
+          // render summary
+          try {
+            feature.summary = pug.render(
+              feature.dataset.summary_layout,
+              feature.properties
+            );
+          } catch (err) {
+            feature.summary = 'Invalid layout';
+          }
 
-          strapi.log.info(`Title: ${feature.title}`);
-          strapi.log.info(`Link: ${feature.link}`);
-          strapi.log.info(`Summary: ${feature.summary}`);
-          strapi.log.info(`Details: ${feature.details}`);
-          // console.log(`${JSON.stringify(feature.properties, null, 2)}`);
+          // render details
+          try {
+            feature.details = pug.render(
+              feature.dataset.details_layout,
+              feature.properties
+            );
+          } catch (err) {
+            feature.details = 'Invalid layout';
+          }
 
           // update the feature
           strapi.query('feature').update({ id: feature.id }, feature);
@@ -297,12 +306,7 @@ module.exports = {
       }
 
       // set refresh to complete
-      strapi.services.helper.set_state(
-        entry.id,
-        'dataset',
-        'refresh',
-        'complete'
-      );
+      strapi.services.helper.set_state(entry.id, 'dataset', 'done');
     }
 
     return entry;

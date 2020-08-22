@@ -60,16 +60,16 @@ module.exports = {
   },
 
   // set the state for a collection based on params
-  set_state: async (params, collection, type, state, notes = '') => {
-    if (!params || !collection || !type || !state) return null;
+  set_state: async (params, collection, state, notes = '') => {
+    if (!params || !collection || !state) return null;
     if (strapi.services.helper.get_type(params) != 'object') {
       params = { id: params };
     }
-    let data = {};
-    data[type] = state;
-    data[type + '_notes'] = notes;
-    data[type + '_at'] = Date.now();
-    return strapi.query(collection).update(params, data);
+    return strapi.query(collection).update(params, {
+      state: state,
+      state_notes: notes,
+      state_at: Date.now(),
+    });
   },
 
   // directly access the mongoose model to perform bulk actions
