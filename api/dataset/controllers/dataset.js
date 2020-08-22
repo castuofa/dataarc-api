@@ -5,12 +5,6 @@ const CONTENT_TYPE = 'dataset';
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
-  /**
-   * Create a record.
-   *
-   * @return {Object}
-   */
-
   create: async (ctx) => {
     let entity;
 
@@ -35,12 +29,6 @@ module.exports = {
 
     return entry;
   },
-
-  /**
-   * Update a record.
-   *
-   * @return {Object}
-   */
 
   update: async (ctx) => {
     const { id } = ctx.params;
@@ -73,12 +61,6 @@ module.exports = {
     return entry;
   },
 
-  /**
-   * delete a record.
-   *
-   * @return {Object}
-   */
-
   delete: async (ctx) => {
     const { id } = ctx.params;
     const entity = await strapi.services[CONTENT_TYPE].delete({ id });
@@ -98,21 +80,16 @@ module.exports = {
     return entry;
   },
 
-  /**
-   * process a record
-   *
-   * @return {Object}
-   */
-
   process: async (ctx) => {
     const { id } = ctx.params;
 
     let entity;
-    // try {
-    entity = await strapi.services[CONTENT_TYPE].process({ id });
-    // } catch (err) {
-    //   return ctx.response.badData(err.message);
-    // }
+    try {
+      entity = await strapi.services[CONTENT_TYPE].process({ id });
+    } catch (err) {
+      strapi.services[CONTENT_TYPE].process_state(id, 'failed', err.message);
+      return ctx.response.badData(err.message);
+    }
 
     let entry = sanitizeEntity(entity, {
       model: strapi.models[CONTENT_TYPE],
@@ -129,21 +106,16 @@ module.exports = {
     return entry;
   },
 
-  /**
-   * refresh a record
-   *
-   * @return {Object}
-   */
-
   refresh: async (ctx) => {
     const { id } = ctx.params;
 
     let entity;
-    // try {
-    entity = await strapi.services[CONTENT_TYPE].refresh({ id });
-    // } catch (err) {
-    //   return ctx.response.badData(err.message);
-    // }
+    try {
+      entity = await strapi.services[CONTENT_TYPE].refresh({ id });
+    } catch (err) {
+      strapi.services[CONTENT_TYPE].refresh_state(id, 'failed', err.message);
+      return ctx.response.badData(err.message);
+    }
 
     let entry = sanitizeEntity(entity, {
       model: strapi.models[CONTENT_TYPE],

@@ -8,6 +8,7 @@ const fs = require('fs');
 const flatten = require('flat');
 const turf = require('@turf/turf');
 const slugify = require('slugify');
+const pug = require('pug');
 
 // helper functions
 let helper = {
@@ -17,7 +18,7 @@ let helper = {
       .match(/\s([a-zA-Z]+)/)[1]
       .toLowerCase();
   },
-  path: (words, wordSeparator = '_', pathSeparator = '-') => {
+  path: (words, wordSeparator = '_', pathSeparator = '_') => {
     return words
       .split(nestedIndicator)
       .map((word) => {
@@ -53,6 +54,12 @@ let helper = {
       .replace(/\s\s+/g, ' ')
       .trim();
   },
+  layout: (value, fields, properties) => {
+    _.each(fields, function (field) {
+      value = value.replace(/\#\{{field.path}\}/g, properties[field.path]);
+    });
+    return value;
+  },
   random: (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
@@ -67,12 +74,12 @@ module.exports = {
     const entry = await strapi.query('dataset').create(data);
 
     // set process and refresh state
-    strapi.services.dataset.set_process(
+    strapi.services.dataset.process_state(
       entry.id,
       'pending',
       'Dataset has been updated, needs processing.'
     );
-    strapi.services.dataset.set_refresh(
+    strapi.services.dataset.refresh_state(
       entry.id,
       'pending',
       'Dataset has been updated, needs refreshed.'
@@ -93,12 +100,12 @@ module.exports = {
     const entry = await strapi.query('dataset').update(params, data);
 
     // set process and refresh state
-    strapi.services.dataset.set_process(
+    strapi.services.dataset.process_state(
       entry.id,
       'pending',
       'Dataset has been updated, needs processing.'
     );
-    strapi.services.dataset.set_refresh(
+    strapi.services.dataset.refresh_state(
       entry.id,
       'pending',
       'Dataset has been updated, needs refreshed.'
@@ -338,7 +345,9 @@ module.exports = {
       // console.log(`${JSON.stringify(features[0], null, 2)}`);
       //
       //
-      //
+      // country
+      // sampledata-sample_name
+      // sampledata-site_name
     }
 
     return entry;
@@ -347,20 +356,82 @@ module.exports = {
   refresh: async (params) => {
     // find the entry
     const entry = await strapi.query('dataset').findOne(params);
-
-    // only proceed if we found an entry
     if (entry != null) {
-      // refresh the entry
-      // load dataset file
-      // remove existing features
-      // rebuild features
-      // look for start_time, end_time, text_time fields
+      // set refresh to active
+      strapi.services.dataset.refresh_state(
+        entry.id,
+        'active',
+        'Dataset refresh in progress.'
+      );
+
+      // pull the dataset fields
+      const fields = await strapi
+        .query('dataset-field')
+        .find({ dataset: entry.id });
+
+      // pull the datasets features
+      const features = await strapi
+        .query('feature')
+        .find({ dataset: entry.id });
+
+      if (fields && features) {
+        _.each(features, function (feature) {
+          // strapi.log.info(`Feature ${feature.id}`);
+          // console.log(`${JSON.stringify(feature.properties, null, 2)}`);
+
+          // set temporal values
+          let start_date = _.find(fields, { type: 'start_date' });
+          if (start_date) {
+            feature.start_date = feature.properties[start_date.path];
+          }
+          let end_date = _.find(fields, { type: 'end_date' });
+          if (end_date) {
+            feature.end_date = feature.properties[end_date.path];
+          }
+          let text_date = _.find(fields, { type: 'text_date' });
+          if (text_date) {
+            feature.text_date = feature.properties[text_date.path];
+          }
+
+          // set url value
+          let url = _.find(fields, { type: 'url' });
+          if (url) {
+            feature.url = feature.properties[url.path];
+          }
+
+          // set layout values
+          // 1. load layouts
+          feature.title = pug.render(
+            feature.dataset.title_layout,
+            feature.properties
+          );
+          feature.summary = pug.render(
+            feature.dataset.summary_layout,
+            feature.properties
+          );
+          // feature.details = pug.render(
+          //   feature.dataset.details_layout,
+          //   feature.properties
+          // );
+          feature.link = pug.render(
+            feature.dataset.link_layout,
+            feature.properties
+          );
+          // 2. render layouts with pug
+
+          // update the feature
+          strapi.query('feature').update({ id: feature.id }, feature);
+        });
+      }
+
+      // set refresh to complete
+      strapi.services.dataset.refresh_state(entry.id, 'complete');
     }
 
     return entry;
   },
 
-  set_process: async (id, state, notes = '') => {
+  process_state: async (id, state, notes = '') => {
     strapi.query('dataset').update(
       {
         id: id,
@@ -368,18 +439,20 @@ module.exports = {
       {
         process: state,
         process_notes: notes,
+        process_at: Date.now(),
       }
     );
   },
 
-  set_refresh: async (id, state, notes = '') => {
+  refresh_state: async (id, state, notes = '') => {
     strapi.query('dataset').update(
       {
         id: id,
       },
       {
-        process: state,
-        process_notes: notes,
+        refresh: state,
+        refresh_notes: notes,
+        refresh_at: Date.now(),
       }
     );
   },
