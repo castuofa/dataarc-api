@@ -8,67 +8,22 @@ const flatten = require('flat');
 const turf = require('@turf/turf');
 const pug = require('pug');
 
-// helper functions
-let logtime = (start) => {
-  let end = process.hrtime(start);
-  strapi.log.info('Execution time: %ds %dms', end[0], end[1] / 1000000);
-};
-
 module.exports = {
   process: async (params) => {
-    let start_all = process.hrtime();
-
-    // find the entry, set to processing, flag for refresh
-    const entry = await strapi.query('dataset').update(params, {
-      process: 'active',
-      process_notes: 'Currently processing dataset.',
-    });
-
-    // only proceed if we found an entry
+    // find the entry
+    const entry = await strapi.query('dataset').findOne(params);
     if (entry != null) {
-      // flag related combinators for refresh
+      // set process to active and start processing
       strapi.services.helper.set_state(
-        { dataset: entry.id },
-        'combinator',
-        'refresh',
-        'pending',
-        'Dataset has been updated, needs refreshed'
+        entry.id,
+        'dataset',
+        'process',
+        'active',
+        'Dataset processing in progress'
       );
-
-      let start_cleanup = process.hrtime();
-      // remove existing fields for this dataset
-      strapi.log.info(`Removing existing fields and features for this dataset`);
-      await strapi.services.helper.delete_many('dataset-field', {
-        dataset: entry.id,
-      });
-      // await strapi.query('dataset-field').delete({
-      //   dataset: entry.id,
-      //   _limit: 999999999,
-      // });
-
-      // remove existing features for this dataset
-      await strapi.services.helper.delete_many('feature', {
-        dataset: entry.id,
-      });
-      // await strapi.query('feature').delete({
-      //   dataset: entry.id,
-      //   _limit: 999999999,
-      // });
-      logtime(start_cleanup);
 
       // read file
       const path = `${strapi.dir}/public${entry.source.url}`;
-      const dataset = entry.source.name;
-
-      // let folder = `${strapi.dir}/../dataarc-data/source/dataset/`;
-      // let datasets = [];
-      // fs.readdirSync(folder).forEach((file) => {
-      //   if (file !== '.DS_Store') datasets.push(file);
-      // });
-      // let dataset = datasets[12];
-      // strapi.log.info(`Processing ${dataset}`);
-      // const path = `${strapi.dir}/../dataarc-data/source/dataset/${dataset}`;
-
       let source;
       try {
         source = JSON.parse(fs.readFileSync(path, 'utf8'));
@@ -79,6 +34,7 @@ module.exports = {
         );
       }
 
+      // main function called to extract the properties
       let extract_properties = (
         input,
         keys,
@@ -104,10 +60,7 @@ module.exports = {
           switch (type) {
             case 'string':
               value = value.trim();
-
-              // don't process if empty string
               if (value === '') break;
-
               store_property = true;
               break;
             case 'number':
@@ -118,14 +71,11 @@ module.exports = {
               break;
             case 'array':
               if (_.isEmpty(value)) break;
-
-              // loop through array
               let values = [];
               for (var i = value.length; i--; ) {
                 let item_type = strapi.services.helper.get_type(value[i]);
                 if (item_type === 'object') {
                   let p = {};
-                  // extract properties
                   extract_properties(value[i], keys, fields, p, words, path);
                   values.push(p);
                 } else {
@@ -163,14 +113,12 @@ module.exports = {
             if (keys.indexOf(path) === -1) {
               keys.push(path);
               fields.push(field);
-              // strapi.log.info(`Found new ${field.type} field ${field.path}`);
             }
 
             // add the property to the new feature using the clean path
             properties[path] = value;
           }
         });
-
         return { keys, fields, properties, words };
       };
 
@@ -178,7 +126,7 @@ module.exports = {
       let fields = [];
       let features = [];
 
-      let start_features = process.hrtime();
+      // loop through the source features to build our fields and new features
       _.each(source.features, function (f) {
         let properties = {};
         let words = [];
@@ -209,33 +157,48 @@ module.exports = {
         });
       });
 
-      strapi.log.info(`Done processing features`);
-      logtime(start_features);
+      // remove existing fields and features for this dataset then create new
+      Promise.allSettled([
+        strapi.services.helper.delete_many('dataset-field', {
+          dataset: entry.id,
+        }),
+        strapi.services.helper.delete_many('feature', {
+          dataset: entry.id,
+        }),
+      ]).then(
+        Promise.allSettled([
+          strapi.services.helper.insert_many('dataset-field', fields),
+          strapi.services.helper.insert_many('feature', features),
+        ]).then((results) => {
+          // check to make sure all promises were fulfilled
+          _.each(results, (result) => {
+            if (result.status != 'fulfilled') {
+              strapi.services.helper.set_state(
+                entry.id,
+                'dataset',
+                'process',
+                'failed',
+                'Something went wrong when creating the new records, please try again'
+              );
+              return entry;
+            }
+          });
 
-      let start_create = process.hrtime();
-      // create new fields
-      strapi.log.info(`Creating ${fields.length} fields`);
-      await strapi.services.helper.insert_many('dataset-field', fields);
-      // if (Array.isArray(fields))
-      //   await Promise.all(fields.map(strapi.query('dataset-field').create));
+          // set processs to complete
+          strapi.services.helper.set_state(
+            entry.id,
+            'dataset',
+            'process',
+            'complete'
+          );
 
-      // create new features
-      strapi.log.info(`Creating ${features.length} features`);
-      await strapi.services.helper.insert_many('feature', features);
-      // if (Array.isArray(features))
-      //   await Promise.all(features.map(strapi.query('feature').create));
-      logtime(start_create);
-
-      // show information about processed dataset
-      strapi.log.info(`Finished processing ${dataset}`);
-      logtime(start_all);
-      strapi.log.info(
-        `Processed ${fields.length} fields in ${features.length} features`
+          // show information about processed dataset
+          strapi.log.info(
+            `Processed ${fields.length} fields in ${features.length} features`
+          );
+        })
       );
 
-      //
-      //
-      //
       // show fields
       // strapi.log.info(`Fields:`);
       // console.log(`${JSON.stringify(fields, null, 2)}`);
@@ -243,11 +206,6 @@ module.exports = {
       // show a random record for spot checking
       // strapi.log.info(`Showing random record:`);
       // console.log(`${JSON.stringify(_.sample(features), null, 2)}`);
-      //
-      //
-      // country
-      // sampledata-sample_name
-      // sampledata-site_name
     }
 
     return entry;

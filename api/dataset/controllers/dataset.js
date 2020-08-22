@@ -85,14 +85,6 @@ module.exports = {
 
     let entity;
     try {
-      // set process to active and start processing
-      strapi.services.helper.set_state(
-        id,
-        CONTENT_TYPE,
-        'process',
-        'active',
-        'Dataset processing in progress'
-      );
       entity = await strapi.services[CONTENT_TYPE].process({ id });
     } catch (err) {
       // set process to failed and return error
@@ -119,7 +111,7 @@ module.exports = {
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
 
-      // set refresh to pending for dataset
+      // set refresh state to pending for dataset
       strapi.services.helper.set_state(
         id,
         CONTENT_TYPE,
