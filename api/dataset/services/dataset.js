@@ -209,7 +209,7 @@ module.exports = {
     return entry;
   },
 
-  update_features: async (params) => {
+  refresh: async (params) => {
     // find the entry
     console.log(`${JSON.stringify(params, null, 2)}`);
     const entry = await strapi.query('dataset').findOne(params);

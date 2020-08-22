@@ -117,7 +117,7 @@ module.exports = {
 
     let entity;
     try {
-      entity = await strapi.services.dataset.update_features({ id });
+      entity = await strapi.services.dataset.refresh({ id });
     } catch (err) {
       strapi.services.helper.set_state(id, 'dataset', 'failed', err.message);
       return ctx.response.badData(err.message);

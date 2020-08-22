@@ -18,7 +18,7 @@ module.exports = {
       // watch for changes to specific fields and set state
       let watch_refresh = ['type'];
       if (_.intersection(_.keys(data), watch_refresh).length) {
-        strapi.services.dataset.update_features({ id: result.dataset.id });
+        strapi.services.dataset.refresh({ id: result.dataset.id });
         strapi.services.helper.set_state(
           { dataset: result.dataset.id },
           'combinator',

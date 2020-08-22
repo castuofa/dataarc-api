@@ -32,7 +32,7 @@ module.exports = {
         );
       }
       if (_.intersection(_.keys(data), watch_refresh).length) {
-        strapi.services.dataset.update_features({ id: result.id });
+        strapi.services.dataset.refresh({ id: result.id });
       }
     },
   },
