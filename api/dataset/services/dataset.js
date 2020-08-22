@@ -63,19 +63,21 @@ let helper = {
 };
 
 module.exports = {
-  /**
-   * Promise to add record
-   *
-   * @return {Promise}
-   */
-
   create: async (data, { files } = {}) => {
-    data.process = 'pending';
-    data.process_notes = 'New dataset, needs processing.';
-    data.refresh = 'pending';
-    data.refresh_notes = 'New dataset, needs refreshed.';
     const entry = await strapi.query('dataset').create(data);
 
+    // set process and refresh state
+    strapi.services.dataset.set_process(
+      entry.id,
+      'pending',
+      'Dataset has been updated, needs processing.'
+    );
+    strapi.services.dataset.set_refresh(
+      entry.id,
+      'pending',
+      'Dataset has been updated, needs refreshed.'
+    );
+
     if (files) {
       // automatically uploads the files based on the entry and the model
       await strapi.entityService.uploadFiles(entry, files, {
@@ -86,19 +88,21 @@ module.exports = {
 
     return entry;
   },
-
-  /**
-   * Promise to edit record
-   *
-   * @return {Promise}
-   */
 
   update: async (params, data, { files } = {}) => {
-    data.process = 'pending';
-    data.process_notes = 'Dataset has been updated, needs processing.';
-    data.refresh = 'pending';
-    data.refresh_notes = 'Dataset has been updated, needs refreshed.';
     const entry = await strapi.query('dataset').update(params, data);
+
+    // set process and refresh state
+    strapi.services.dataset.set_process(
+      entry.id,
+      'pending',
+      'Dataset has been updated, needs processing.'
+    );
+    strapi.services.dataset.set_refresh(
+      entry.id,
+      'pending',
+      'Dataset has been updated, needs refreshed.'
+    );
 
     if (files) {
       // automatically uploads the files based on the entry and the model
@@ -111,11 +115,6 @@ module.exports = {
     return entry;
   },
 
-  /**
-   * Promise to process a record
-   *
-   * @return {Promise}
-   */
   process: async (params) => {
     let start_all = process.hrtime();
 
@@ -123,8 +122,6 @@ module.exports = {
     const entry = await strapi.query('dataset').update(params, {
       process: 'active',
       process_notes: 'Currently processing dataset.',
-      refresh: 'active',
-      refresh_notes: 'Currently processing dataset.',
     });
 
     // only proceed if we found an entry
@@ -347,11 +344,6 @@ module.exports = {
     return entry;
   },
 
-  /**
-   * Promise to refresh a record
-   *
-   * @return {Promise}
-   */
   refresh: async (params) => {
     // find the entry
     const entry = await strapi.query('dataset').findOne(params);
@@ -366,5 +358,29 @@ module.exports = {
     }
 
     return entry;
+  },
+
+  set_process: async (id, state, notes = '') => {
+    strapi.query('dataset').update(
+      {
+        id: id,
+      },
+      {
+        process: state,
+        process_notes: notes,
+      }
+    );
+  },
+
+  set_refresh: async (id, state, notes = '') => {
+    strapi.query('dataset').update(
+      {
+        id: id,
+      },
+      {
+        process: state,
+        process_notes: notes,
+      }
+    );
   },
 };

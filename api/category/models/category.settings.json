@@ -24,7 +24,8 @@
     },
     "datasets": {
       "via": "category",
-      "collection": "dataset"
+      "collection": "dataset",
+      "autoPopulate": false
     },
     "old_id": {
       "type": "integer",

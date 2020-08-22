@@ -32,20 +32,18 @@
     },
     "queries": {
       "via": "combinator",
+      "autoPopulate": false,
       "collection": "combinator-query"
     },
     "concepts": {
       "collection": "concept",
-      "via": "combinators"
+      "via": "combinators",
+      "autoPopulate": false
     },
     "dataset": {
       "model": "dataset",
-      "via": "combinators"
-    },
-    "features": {
-      "collection": "dataset-feature",
       "via": "combinators",
-      "dominant": true
+      "autoPopulate": false
     },
     "refresh": {
       "type": "enumeration",

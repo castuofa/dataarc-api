@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "dataset_features",
+  "collectionName": "features",
   "info": {
-    "name": "DatasetFeature"
+    "name": "Feature"
   },
   "options": {
     "increments": true,
@@ -10,7 +10,6 @@
   },
   "attributes": {
     "dataset": {
-      "via": "features",
       "model": "dataset"
     },
     "properties": {
@@ -51,8 +50,12 @@
       "type": "text"
     },
     "combinators": {
-      "via": "features",
-      "collection": "combinator"
+      "autoPopulate": false,
+      "collection": "combinator",
+      "via": "features"
+    },
+    "concepts": {
+      "collection": "concept"
     },
     "old_id": {
       "type": "integer",

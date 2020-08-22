@@ -537,44 +537,6 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "source": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "default": "string",
-            "enum": [
-              "string",
-              "number",
-              "boolean",
-              "array",
-              "url",
-              "start_date",
-              "end_date",
-              "text_date"
-            ]
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "missing",
-              "complete"
-            ]
-          },
           "dataset": {
             "required": [
               "id",
@@ -676,6 +638,44 @@
               }
             }
           },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "complete"
+            ]
+          },
           "created_by": {
             "required": [
               "id",
@@ -772,6 +772,9 @@
           "type"
         ],
         "properties": {
+          "dataset": {
+            "type": "string"
+          },
           "name": {
             "type": "string"
           },
@@ -809,9 +812,6 @@
               "missing",
               "complete"
             ]
-          },
-          "dataset": {
-            "type": "string"
           },
           "old_id": {
             "type": "integer"

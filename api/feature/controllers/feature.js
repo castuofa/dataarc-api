@@ -1,16 +1,10 @@
 'use strict';
 
-const CONTENT_TYPE = 'dataset-feature';
+const CONTENT_TYPE = 'feature';
 
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
-  /**
-   * Create a record.
-   *
-   * @return {Object}
-   */
-
   create: async (ctx) => {
     let entity;
 
@@ -27,7 +21,7 @@ module.exports = {
 
     if (entry != null)
       strapi.services.event.log(
-        'update',
+        'create',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
@@ -35,12 +29,6 @@ module.exports = {
 
     return entry;
   },
-
-  /**
-   * Update a record.
-   *
-   * @return {Object}
-   */
 
   update: async (ctx) => {
     const { id } = ctx.params;
@@ -73,12 +61,6 @@ module.exports = {
     return entry;
   },
 
-  /**
-   * delete a record.
-   *
-   * @return {Object}
-   */
-
   delete: async (ctx) => {
     const { id } = ctx.params;
     const entity = await strapi.services[CONTENT_TYPE].delete({ id });
@@ -89,7 +71,7 @@ module.exports = {
 
     if (entry != null)
       strapi.services.event.log(
-        'update',
+        'delete',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null

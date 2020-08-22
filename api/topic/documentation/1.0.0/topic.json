@@ -563,12 +563,6 @@
               "source": {
                 "type": "string"
               },
-              "topics": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "created_by": {
                 "type": "string"
               },

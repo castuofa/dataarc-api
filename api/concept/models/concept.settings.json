@@ -30,7 +30,8 @@
     "combinators": {
       "via": "concepts",
       "collection": "combinator",
-      "dominant": true
+      "dominant": true,
+      "autoPopulate": false
     },
     "old_id": {
       "type": "integer",
@@ -38,6 +39,7 @@
     },
     "topics": {
       "via": "concept",
+      "autoPopulate": false,
       "collection": "topic"
     }
   }

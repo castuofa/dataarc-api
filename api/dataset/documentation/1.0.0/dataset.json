@@ -944,6 +944,9 @@
                 "id": {
                   "type": "string"
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "name": {
                   "type": "string"
                 },
@@ -963,9 +966,6 @@
                   "type": "string"
                 },
                 "state": {
-                  "type": "string"
-                },
-                "dataset": {
                   "type": "string"
                 },
                 "old_id": {
@@ -1038,6 +1038,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "concepts": {
+                  "type": "string"
                 },
                 "old_id": {
                   "type": "integer"

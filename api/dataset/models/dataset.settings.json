@@ -63,15 +63,13 @@
     },
     "combinators": {
       "via": "dataset",
-      "collection": "combinator"
+      "collection": "combinator",
+      "autoPopulate": false
     },
     "fields": {
       "via": "dataset",
+      "autoPopulate": false,
       "collection": "dataset-field"
-    },
-    "features": {
-      "collection": "dataset-feature",
-      "via": "dataset"
     },
     "process": {
       "type": "enumeration",
