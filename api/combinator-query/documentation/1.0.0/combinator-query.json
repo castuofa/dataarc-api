@@ -530,10 +530,75 @@
       "Combinator-query": {
         "required": [
           "id",
-          "field"
+          "property"
         ],
         "properties": {
           "id": {
+            "type": "string"
+          },
+          "field": {
+            "required": [
+              "id",
+              "title",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "property": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "equals",
+              "not_equals",
+              "contains",
+              "not_contains",
+              "greater_than",
+              "less_than"
+            ]
+          },
+          "value": {
             "type": "string"
           },
           "combinator": {
@@ -606,71 +671,6 @@
                 "type": "string"
               }
             }
-          },
-          "dataset_field": {
-            "required": [
-              "id",
-              "title",
-              "type"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "path": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "field": {
-            "type": "string"
-          },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "EQUALS",
-              "NOT_EQUALS",
-              "CONTAINS",
-              "NOT_CONTAINS",
-              "GREATER_THAN",
-              "LESS_THAN"
-            ]
-          },
-          "value": {
-            "type": "string"
           },
           "created_by": {
             "required": [
@@ -764,30 +764,30 @@
       },
       "NewCombinator-query": {
         "required": [
-          "field"
+          "property"
         ],
         "properties": {
-          "combinator": {
-            "type": "string"
-          },
-          "dataset_field": {
-            "type": "string"
-          },
           "field": {
+            "type": "string"
+          },
+          "property": {
             "type": "string"
           },
           "operator": {
             "type": "string",
             "enum": [
-              "EQUALS",
-              "NOT_EQUALS",
-              "CONTAINS",
-              "NOT_CONTAINS",
-              "GREATER_THAN",
-              "LESS_THAN"
+              "equals",
+              "not_equals",
+              "contains",
+              "not_contains",
+              "greater_than",
+              "less_than"
             ]
           },
           "value": {
+            "type": "string"
+          },
+          "combinator": {
             "type": "string"
           },
           "old_id": {

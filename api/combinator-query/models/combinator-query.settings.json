@@ -9,31 +9,31 @@
     "timestamps": true
   },
   "attributes": {
-    "combinator": {
-      "autoPopulate": false,
-      "model": "combinator",
-      "via": "queries"
-    },
-    "dataset_field": {
+    "field": {
       "model": "dataset-field"
     },
-    "field": {
+    "property": {
       "type": "string",
       "required": true
     },
     "operator": {
       "type": "enumeration",
       "enum": [
-        "EQUALS",
-        "NOT_EQUALS",
-        "CONTAINS",
-        "NOT_CONTAINS",
-        "GREATER_THAN",
-        "LESS_THAN"
+        "equals",
+        "not_equals",
+        "contains",
+        "not_contains",
+        "greater_than",
+        "less_than"
       ]
     },
     "value": {
       "type": "string"
+    },
+    "combinator": {
+      "autoPopulate": false,
+      "model": "combinator",
+      "via": "queries"
     },
     "old_id": {
       "type": "integer",

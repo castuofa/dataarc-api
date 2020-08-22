@@ -25,10 +25,10 @@
     "operator": {
       "type": "enumeration",
       "enum": [
-        "AND",
-        "OR"
+        "and",
+        "or"
       ],
-      "default": "AND"
+      "default": "and"
     },
     "queries": {
       "via": "combinator",

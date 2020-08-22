@@ -605,10 +605,10 @@
           },
           "operator": {
             "type": "string",
-            "default": "AND",
+            "default": "and",
             "enum": [
-              "AND",
-              "OR"
+              "and",
+              "or"
             ]
           },
           "queries": {
@@ -616,25 +616,25 @@
             "items": {
               "required": [
                 "id",
-                "field"
+                "property"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "combinator": {
-                  "type": "string"
-                },
-                "dataset_field": {
-                  "type": "string"
-                },
                 "field": {
+                  "type": "string"
+                },
+                "property": {
                   "type": "string"
                 },
                 "operator": {
                   "type": "string"
                 },
                 "value": {
+                  "type": "string"
+                },
+                "combinator": {
                   "type": "string"
                 },
                 "old_id": {
@@ -1005,10 +1005,10 @@
           },
           "operator": {
             "type": "string",
-            "default": "AND",
+            "default": "and",
             "enum": [
-              "AND",
-              "OR"
+              "and",
+              "or"
             ]
           },
           "queries": {
