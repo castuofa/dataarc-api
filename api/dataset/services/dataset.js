@@ -2,7 +2,6 @@
 
 const nestedIndicator = ' --> ';
 
-// helper libs
 const _ = require('lodash');
 const fs = require('fs');
 const flatten = require('flat');
@@ -12,7 +11,7 @@ const pug = require('pug');
 // helper functions
 let logtime = (start) => {
   let end = process.hrtime(start);
-  strapi.log.info('Execution time (hr): %ds %dms', end[0], end[1] / 1000000);
+  strapi.log.info('Execution time: %ds %dms', end[0], end[1] / 1000000);
 };
 
 module.exports = {

@@ -24,7 +24,10 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["AND", "OR"],
+      "enum": [
+        "AND",
+        "OR"
+      ],
       "default": "AND"
     },
     "queries": {
@@ -49,7 +52,12 @@
     },
     "refresh": {
       "type": "enumeration",
-      "enum": ["pending", "active", "failed", "complete"],
+      "enum": [
+        "pending",
+        "active",
+        "failed",
+        "complete"
+      ],
       "default": "pending"
     },
     "refresh_notes": {

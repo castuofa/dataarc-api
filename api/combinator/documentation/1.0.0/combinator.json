@@ -622,6 +622,12 @@
                 "id": {
                   "type": "string"
                 },
+                "combinator": {
+                  "type": "string"
+                },
+                "dataset_field": {
+                  "type": "string"
+                },
                 "field": {
                   "type": "string"
                 },
@@ -629,9 +635,6 @@
                   "type": "string"
                 },
                 "value": {
-                  "type": "string"
-                },
-                "combinator": {
                   "type": "string"
                 },
                 "old_id": {

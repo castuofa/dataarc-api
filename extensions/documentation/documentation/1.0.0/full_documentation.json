@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/22/2020 11:27:01 AM"
+    "x-generation-date": "08/22/2020 2:34:17 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9384,15 +9384,6 @@
           "id": {
             "type": "string"
           },
-          "field": {
-            "type": "string"
-          },
-          "operator": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          },
           "combinator": {
             "required": [
               "id",
@@ -9463,6 +9454,71 @@
                 "type": "string"
               }
             }
+          },
+          "dataset_field": {
+            "required": [
+              "id",
+              "title",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "field": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "EQUALS",
+              "NOT_EQUALS",
+              "CONTAINS",
+              "NOT_CONTAINS",
+              "GREATER_THAN",
+              "LESS_THAN"
+            ]
+          },
+          "value": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -9559,16 +9615,27 @@
           "field"
         ],
         "properties": {
+          "combinator": {
+            "type": "string"
+          },
+          "dataset_field": {
+            "type": "string"
+          },
           "field": {
             "type": "string"
           },
           "operator": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EQUALS",
+              "NOT_EQUALS",
+              "CONTAINS",
+              "NOT_CONTAINS",
+              "GREATER_THAN",
+              "LESS_THAN"
+            ]
           },
           "value": {
-            "type": "string"
-          },
-          "combinator": {
             "type": "string"
           },
           "old_id": {
@@ -9628,6 +9695,12 @@
                 "id": {
                   "type": "string"
                 },
+                "combinator": {
+                  "type": "string"
+                },
+                "dataset_field": {
+                  "type": "string"
+                },
                 "field": {
                   "type": "string"
                 },
@@ -9635,9 +9708,6 @@
                   "type": "string"
                 },
                 "value": {
-                  "type": "string"
-                },
-                "combinator": {
                   "type": "string"
                 },
                 "old_id": {
