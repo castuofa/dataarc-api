@@ -7,121 +7,15 @@ const _ = require('lodash');
 const fs = require('fs');
 const flatten = require('flat');
 const turf = require('@turf/turf');
-const slugify = require('slugify');
 const pug = require('pug');
 
 // helper functions
-let helper = {
-  type: (prop) => {
-    return Object.prototype.toString
-      .call(prop)
-      .match(/\s([a-zA-Z]+)/)[1]
-      .toLowerCase();
-  },
-  path: (words, wordSeparator = '_', pathSeparator = '_') => {
-    return words
-      .split(nestedIndicator)
-      .map((word) => {
-        return slugify(word.replace(/[\/\\\-_*+~.()'"!:@\?\s+]/g, ' '), {
-          replacement: wordSeparator,
-          lower: true,
-          strict: true,
-          remove: /[\/\\*+~.()'"!:@\?]/g,
-        });
-      })
-      .join(pathSeparator);
-  },
-  title: (path) => {
-    return path
-      .replace(/[\[\]-_.]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .replace(/\w\S*/g, (s) => {
-        return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();
-      });
-  },
-  keyword: (value) => {
-    return helper
-      .path(
-        value
-          .replace(/https?:\/\/(www\.)?/g, '')
-          .replace(
-            /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g,
-            ''
-          ),
-        ' '
-      )
-      .replace(/\d+/g, ' ')
-      .replace(/\s\s+/g, ' ')
-      .trim();
-  },
-  layout: (value, fields, properties) => {
-    _.each(fields, function (field) {
-      value = value.replace(/\#\{{field.path}\}/g, properties[field.path]);
-    });
-    return value;
-  },
-  random: (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  },
-  logtime: (start) => {
-    let end = process.hrtime(start);
-    strapi.log.info('Execution time (hr): %ds %dms', end[0], end[1] / 1000000);
-  },
+let logtime = (start) => {
+  let end = process.hrtime(start);
+  strapi.log.info('Execution time (hr): %ds %dms', end[0], end[1] / 1000000);
 };
 
 module.exports = {
-  create: async (data, { files } = {}) => {
-    const entry = await strapi.query('dataset').create(data);
-
-    // set process and refresh state
-    strapi.services.dataset.process_state(
-      entry.id,
-      'pending',
-      'Dataset has been updated, needs processing.'
-    );
-    strapi.services.dataset.refresh_state(
-      entry.id,
-      'pending',
-      'Dataset has been updated, needs refreshed.'
-    );
-
-    if (files) {
-      // automatically uploads the files based on the entry and the model
-      await strapi.entityService.uploadFiles(entry, files, {
-        model: 'dataset',
-      });
-      return this.findOne({ id: entry.id });
-    }
-
-    return entry;
-  },
-
-  update: async (params, data, { files } = {}) => {
-    const entry = await strapi.query('dataset').update(params, data);
-
-    // set process and refresh state
-    strapi.services.dataset.process_state(
-      entry.id,
-      'pending',
-      'Dataset has been updated, needs processing.'
-    );
-    strapi.services.dataset.refresh_state(
-      entry.id,
-      'pending',
-      'Dataset has been updated, needs refreshed.'
-    );
-
-    if (files) {
-      // automatically uploads the files based on the entry and the model
-      await strapi.entityService.uploadFiles(entry, files, {
-        model: 'dataset',
-      });
-      return this.findOne({ id: entry.id });
-    }
-
-    return entry;
-  },
-
   process: async (params) => {
     let start_all = process.hrtime();
 
@@ -134,28 +28,34 @@ module.exports = {
     // only proceed if we found an entry
     if (entry != null) {
       // flag related combinators for refresh
-      strapi.query('combinator').update(
+      strapi.services.helper.set_state(
         { dataset: entry.id },
-        {
-          refresh: 'pending',
-          refresh_notes: 'Dataset has been processed, refresh is needed.',
-        }
+        'combinator',
+        'refresh',
+        'pending',
+        'Dataset has been updated, needs refreshed'
       );
 
       let start_cleanup = process.hrtime();
       // remove existing fields for this dataset
       strapi.log.info(`Removing existing fields and features for this dataset`);
-      await strapi.query('dataset-field').delete({
+      await strapi.services.helper.delete_many('dataset-field', {
         dataset: entry.id,
-        _limit: 999999999,
       });
+      // await strapi.query('dataset-field').delete({
+      //   dataset: entry.id,
+      //   _limit: 999999999,
+      // });
 
       // remove existing features for this dataset
-      await strapi.query('feature').delete({
+      await strapi.services.helper.delete_many('feature', {
         dataset: entry.id,
-        _limit: 999999999,
       });
-      helper.logtime(start_cleanup);
+      // await strapi.query('feature').delete({
+      //   dataset: entry.id,
+      //   _limit: 999999999,
+      // });
+      logtime(start_cleanup);
 
       // read file
       const path = `${strapi.dir}/public${entry.source.url}`;
@@ -197,8 +97,8 @@ module.exports = {
         // loop through the properties
         _.forOwn(props, function (value, key) {
           let source = (parent ? parent + nestedIndicator : '') + key;
-          let type = helper.type(value);
-          let path = helper.path(source);
+          let type = strapi.services.helper.get_type(value);
+          let path = strapi.services.helper.get_name(source);
           let store_property = false;
 
           // process based on the type
@@ -223,7 +123,7 @@ module.exports = {
               // loop through array
               let values = [];
               for (var i = value.length; i--; ) {
-                let item_type = helper.type(value[i]);
+                let item_type = strapi.services.helper.get_type(value[i]);
                 if (item_type === 'object') {
                   let p = {};
                   // extract properties
@@ -248,7 +148,7 @@ module.exports = {
           // process the property
           if (store_property) {
             let field = {
-              title: helper.title(entry.name + ' ' + path),
+              title: strapi.services.helper.get_title(entry.name + ' ' + path),
               path: path,
               source: source,
               type: type,
@@ -257,7 +157,7 @@ module.exports = {
 
             // build keywords
             if (type === 'string' && isNaN(value)) {
-              words.push(helper.keyword(value));
+              words.push(strapi.services.helper.get_keyword(value));
             }
 
             // add to keys/fields if its new
@@ -311,23 +211,25 @@ module.exports = {
       });
 
       strapi.log.info(`Done processing features`);
-      helper.logtime(start_features);
+      logtime(start_features);
 
       let start_create = process.hrtime();
       // create new fields
       strapi.log.info(`Creating ${fields.length} fields`);
-      if (Array.isArray(fields))
-        await Promise.all(fields.map(strapi.query('dataset-field').create));
+      await strapi.services.helper.insert_many('dataset-field', fields);
+      // if (Array.isArray(fields))
+      //   await Promise.all(fields.map(strapi.query('dataset-field').create));
 
       // create new features
       strapi.log.info(`Creating ${features.length} features`);
-      if (Array.isArray(features))
-        await Promise.all(features.map(strapi.query('feature').create));
-      helper.logtime(start_create);
+      await strapi.services.helper.insert_many('feature', features);
+      // if (Array.isArray(features))
+      //   await Promise.all(features.map(strapi.query('feature').create));
+      logtime(start_create);
 
       // show information about processed dataset
       strapi.log.info(`Finished processing ${dataset}`);
-      helper.logtime(start_all);
+      logtime(start_all);
       strapi.log.info(
         `Processed ${fields.length} fields in ${features.length} features`
       );
@@ -340,9 +242,8 @@ module.exports = {
       // console.log(`${JSON.stringify(fields, null, 2)}`);
 
       // show a random record for spot checking
-      // let random_record = helper.random(0, features.length - 1);
-      // strapi.log.info(`Showing random record ${random_record}:`);
-      // console.log(`${JSON.stringify(features[0], null, 2)}`);
+      // strapi.log.info(`Showing random record:`);
+      // console.log(`${JSON.stringify(_.sample(features), null, 2)}`);
       //
       //
       // country
@@ -358,10 +259,12 @@ module.exports = {
     const entry = await strapi.query('dataset').findOne(params);
     if (entry != null) {
       // set refresh to active
-      strapi.services.dataset.refresh_state(
+      strapi.services.helper.set_state(
         entry.id,
+        'dataset',
+        'refresh',
         'active',
-        'Dataset refresh in progress.'
+        'Dataset refresh in progress'
       );
 
       // pull the dataset fields
@@ -376,33 +279,42 @@ module.exports = {
 
       if (fields && features) {
         _.each(features, function (feature) {
-          // strapi.log.info(`Feature ${feature.id}`);
-          // console.log(`${JSON.stringify(feature.properties, null, 2)}`);
-
           // set temporal values
-          let start_date = _.find(fields, { type: 'start_date' });
+          let start_date = _.find(fields, {
+            type: 'start_date',
+          });
           if (start_date) {
             feature.start_date = feature.properties[start_date.path];
           }
-          let end_date = _.find(fields, { type: 'end_date' });
+          let end_date = _.find(fields, {
+            type: 'end_date',
+          });
           if (end_date) {
             feature.end_date = feature.properties[end_date.path];
           }
-          let text_date = _.find(fields, { type: 'text_date' });
+          let text_date = _.find(fields, {
+            type: 'text_date',
+          });
           if (text_date) {
             feature.text_date = feature.properties[text_date.path];
           }
 
-          // set url value
-          let url = _.find(fields, { type: 'url' });
+          // set url and link values
+          let url = _.find(fields, {
+            type: 'url',
+          });
           if (url) {
             feature.url = feature.properties[url.path];
+            feature.link = pug.render(
+              `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
+              feature.properties
+            );
           }
 
           // set layout values
           // 1. load layouts
           feature.title = pug.render(
-            feature.dataset.title_layout,
+            'span. \n  ' + feature.dataset.title_layout,
             feature.properties
           );
           feature.summary = pug.render(
@@ -413,11 +325,14 @@ module.exports = {
           //   feature.dataset.details_layout,
           //   feature.properties
           // );
-          feature.link = pug.render(
-            feature.dataset.link_layout,
-            feature.properties
-          );
+
           // 2. render layouts with pug
+
+          strapi.log.info(`Title: ${feature.title}`);
+          strapi.log.info(`Link: ${feature.link}`);
+          strapi.log.info(`Summary: ${feature.summary}`);
+          strapi.log.info(`Details: ${feature.details}`);
+          // console.log(`${JSON.stringify(feature.properties, null, 2)}`);
 
           // update the feature
           strapi.query('feature').update({ id: feature.id }, feature);
@@ -425,35 +340,14 @@ module.exports = {
       }
 
       // set refresh to complete
-      strapi.services.dataset.refresh_state(entry.id, 'complete');
+      strapi.services.helper.set_state(
+        entry.id,
+        'dataset',
+        'refresh',
+        'complete'
+      );
     }
 
     return entry;
-  },
-
-  process_state: async (id, state, notes = '') => {
-    strapi.query('dataset').update(
-      {
-        id: id,
-      },
-      {
-        process: state,
-        process_notes: notes,
-        process_at: Date.now(),
-      }
-    );
-  },
-
-  refresh_state: async (id, state, notes = '') => {
-    strapi.query('dataset').update(
-      {
-        id: id,
-      },
-      {
-        refresh: state,
-        refresh_notes: notes,
-        refresh_at: Date.now(),
-      }
-    );
   },
 };

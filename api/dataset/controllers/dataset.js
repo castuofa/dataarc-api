@@ -84,12 +84,18 @@ module.exports = {
     const { id } = ctx.params;
 
     let entity;
-    try {
-      entity = await strapi.services[CONTENT_TYPE].process({ id });
-    } catch (err) {
-      strapi.services[CONTENT_TYPE].process_state(id, 'failed', err.message);
-      return ctx.response.badData(err.message);
-    }
+    // try {
+    entity = await strapi.services[CONTENT_TYPE].process({ id });
+    // } catch (err) {
+    //   strapi.services.helper.set_state(
+    //     id,
+    //     CONTENT_TYPE,
+    //     'process',
+    //     'failed',
+    //     err.message
+    //   );
+    //   return ctx.response.badData(err.message);
+    // }
 
     let entry = sanitizeEntity(entity, {
       model: strapi.models[CONTENT_TYPE],
@@ -113,7 +119,13 @@ module.exports = {
     try {
       entity = await strapi.services[CONTENT_TYPE].refresh({ id });
     } catch (err) {
-      strapi.services[CONTENT_TYPE].refresh_state(id, 'failed', err.message);
+      strapi.services.helper.set_state(
+        id,
+        CONTENT_TYPE,
+        'refresh',
+        'failed',
+        err.message
+      );
       return ctx.response.badData(err.message);
     }
 
