@@ -16,8 +16,8 @@ module.exports = {
     },
     afterUpdate: async (result, params, data) => {
       // watch for changes to specific fields and set state
-      let watch_for = ['type'];
-      if (_.intersection(_.keys(data), watch_for).length > 0) {
+      let watch_refresh = ['type'];
+      if (_.intersection(_.keys(data), watch_refresh).length) {
         strapi.services.helper.set_state(
           result.id,
           'dataset',
