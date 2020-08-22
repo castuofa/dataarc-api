@@ -172,11 +172,13 @@ module.exports = {
           // check to make sure all promises were fulfilled
           _.each(results, (result) => {
             if (result.status != 'fulfilled') {
+              // have to set the state here instaed of throw an error
+              // since these contine to run after the function returns
               strapi.services.helper.set_state(
                 entry.id,
                 'dataset',
                 'failed',
-                'Something went wrong when creating the new records, please try again'
+                'Something went wrong, please try again'
               );
               return entry;
             }
@@ -190,20 +192,20 @@ module.exports = {
             'done'
           );
 
+          // set state to pending for related combinaotors
+          strapi.services.helper.set_state(
+            { dataset: id },
+            'combinator',
+            'pending',
+            'Dataset has been updated, please verify all combinator settings'
+          );
+
           // show information about processed dataset
           strapi.log.info(
             `Processed ${fields.length} fields in ${features.length} features`
           );
         })
       );
-
-      // show fields
-      // strapi.log.info(`Fields:`);
-      // console.log(`${JSON.stringify(fields, null, 2)}`);
-
-      // show a random record for spot checking
-      // strapi.log.info(`Showing random record:`);
-      // console.log(`${JSON.stringify(_.sample(features), null, 2)}`);
     }
 
     return entry;
@@ -211,7 +213,6 @@ module.exports = {
 
   refresh: async (params) => {
     // find the entry
-    console.log(`${JSON.stringify(params, null, 2)}`);
     const entry = await strapi.query('dataset').findOne(params);
     if (entry != null) {
       // set refresh to active

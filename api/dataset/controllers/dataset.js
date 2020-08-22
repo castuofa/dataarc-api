@@ -14,13 +14,13 @@ module.exports = {
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
+      model: strapi.models.dataset,
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['dataset'].info.name,
+        strapi.models.dataset.info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
@@ -42,13 +42,13 @@ module.exports = {
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
+      model: strapi.models.dataset,
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['dataset'].info.name,
+        strapi.models.dataset.info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
@@ -61,13 +61,13 @@ module.exports = {
     const entity = await strapi.services.dataset.delete({ id });
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
+      model: strapi.models.dataset,
     });
 
     if (entry != null)
       strapi.services.event.log(
         'update',
-        strapi.models['dataset'].info.name,
+        strapi.models.dataset.info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
@@ -82,30 +82,21 @@ module.exports = {
     try {
       entity = await strapi.services.dataset.process({ id });
     } catch (err) {
-      // set process to failed and return error
       strapi.services.helper.set_state(id, 'dataset', 'failed', err.message);
       return ctx.response.badData(err.message);
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
+      model: strapi.models.dataset,
     });
 
     if (entry != null) {
       // log the process event
       strapi.services.event.log(
         'process',
-        strapi.models['dataset'].info.name,
+        strapi.models.dataset.info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
-      );
-
-      // set refresh to pending for related combinaotors
-      strapi.services.helper.set_state(
-        { dataset: id },
-        'combinator',
-        'pending',
-        'Dataset has been updated, please verify combinator settings'
       );
     }
 
@@ -124,13 +115,13 @@ module.exports = {
     }
 
     let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
+      model: strapi.models.dataset,
     });
 
     if (entry != null)
       strapi.services.event.log(
         'refresh',
-        strapi.models['dataset'].info.name,
+        strapi.models.dataset.info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );

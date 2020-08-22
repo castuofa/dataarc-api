@@ -23,7 +23,13 @@ module.exports = {
           { dataset: result.dataset.id },
           'combinator',
           'pending',
-          'Related fields have been updated, please verify combinator settings'
+          'Related field(s) have changed, please verify queries'
+        );
+        strapi.services.helper.set_state(
+          { field: result.id },
+          'combinator-query',
+          'pending',
+          'Related field has changed, please verify query settings'
         );
       }
     },
