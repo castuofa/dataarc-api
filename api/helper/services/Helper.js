@@ -4,6 +4,7 @@ const _ = require('lodash');
 const slugify = require('slugify');
 
 module.exports = {
+  // get the type of the property
   get_type: (prop) => {
     return Object.prototype.toString
       .call(prop)
@@ -11,6 +12,7 @@ module.exports = {
       .toLowerCase();
   },
 
+  // get an seo friendly keyword
   get_keyword: (value) => {
     return strapi.services.helper
       .get_name(
@@ -27,6 +29,7 @@ module.exports = {
       .trim();
   },
 
+  // get an seo friendly name
   get_name: (
     words,
     wordSeparator = '_',
@@ -46,6 +49,7 @@ module.exports = {
       .join(pathSeparator);
   },
 
+  // get a clean title
   get_title: (path) => {
     return path
       .replace(/[\[\]-_.]/g, ' ')
@@ -55,6 +59,7 @@ module.exports = {
       });
   },
 
+  // set the state for a collection based on params
   set_state: async (params, collection, type, state, notes = '') => {
     if (!params || !collection || !type || !state) return null;
     if (strapi.services.helper.get_type(params) != 'object') {
