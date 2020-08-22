@@ -19,7 +19,7 @@ module.exports = {
       let watch_refresh = ['type'];
       if (_.intersection(_.keys(data), watch_refresh).length) {
         strapi.services.helper.set_state(
-          result.id,
+          result.dataset.id,
           'dataset',
           'refresh',
           'pending',
