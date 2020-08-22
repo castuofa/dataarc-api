@@ -576,14 +576,14 @@
                     "type": "string"
                   }
                 },
-                "dataset": {
-                  "type": "string"
-                },
                 "features": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
+                },
+                "dataset": {
+                  "type": "string"
                 },
                 "refresh": {
                   "type": "string"

@@ -144,7 +144,7 @@ module.exports = {
       });
 
       // remove existing features for this dataset
-      await strapi.query('dataset-feature').delete({
+      await strapi.query('feature').delete({
         dataset: entry.id,
         _limit: 999999999,
       });
@@ -315,7 +315,7 @@ module.exports = {
       // create new features
       strapi.log.info(`Creating ${features.length} features`);
       if (Array.isArray(features))
-        await Promise.all(features.map(strapi.query('dataset-feature').create));
+        await Promise.all(features.map(strapi.query('feature').create));
       helper.logtime(start_create);
 
       // show information about processed dataset

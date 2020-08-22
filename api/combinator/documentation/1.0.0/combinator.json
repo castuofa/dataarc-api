@@ -702,6 +702,80 @@
               }
             }
           },
+          "features": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "properties"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "properties": {
+                  "type": "object"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "start_date": {
+                  "type": "integer"
+                },
+                "end_date": {
+                  "type": "integer"
+                },
+                "text_date": {
+                  "type": "string"
+                },
+                "keywords": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "dataset": {
             "required": [
               "id",
@@ -800,80 +874,6 @@
               },
               "updated_by": {
                 "type": "string"
-              }
-            }
-          },
-          "features": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "properties"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "properties": {
-                  "type": "object"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "summary": {
-                  "type": "string"
-                },
-                "details": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "latitude": {
-                  "type": "number"
-                },
-                "longitude": {
-                  "type": "number"
-                },
-                "start_date": {
-                  "type": "integer"
-                },
-                "end_date": {
-                  "type": "integer"
-                },
-                "text_date": {
-                  "type": "string"
-                },
-                "keywords": {
-                  "type": "string"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
               }
             }
           },
@@ -1020,14 +1020,14 @@
               "type": "string"
             }
           },
-          "dataset": {
-            "type": "string"
-          },
           "features": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "dataset": {
+            "type": "string"
           },
           "refresh": {
             "type": "string",
