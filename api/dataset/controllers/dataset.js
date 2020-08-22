@@ -85,6 +85,7 @@ module.exports = {
 
     let entity;
     try {
+      // set process to active and start processing
       strapi.services.helper.set_state(
         id,
         CONTENT_TYPE,
@@ -94,6 +95,7 @@ module.exports = {
       );
       entity = await strapi.services[CONTENT_TYPE].process({ id });
     } catch (err) {
+      // set process to failed and return error
       strapi.services.helper.set_state(
         id,
         CONTENT_TYPE,
@@ -104,35 +106,38 @@ module.exports = {
       return ctx.response.badData(err.message);
     }
 
-    strapi.services.helper.set_state(
-      id,
-      CONTENT_TYPE,
-      'refresh',
-      'pending',
-      'Dataset has been processed, please refresh the dataset'
-    );
-    // flag related combinators for refresh
-    strapi.services.helper.set_state(
-      { dataset: entry.id },
-      'combinator',
-      'refresh',
-      'pending',
-      'Dataset has been updated, needs refreshed'
-    );
-
-    // *** refresh the dataset automatically
-
     let entry = sanitizeEntity(entity, {
       model: strapi.models[CONTENT_TYPE],
     });
 
-    if (entry != null)
+    if (entry != null) {
+      // log the process event
       strapi.services.event.log(
         'process',
         strapi.models[CONTENT_TYPE].info.name,
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
+
+      // set refresh to pending for dataset
+      strapi.services.helper.set_state(
+        id,
+        CONTENT_TYPE,
+        'refresh',
+        'pending',
+        'Dataset has been processed, please refresh the dataset'
+      );
+      // *** refresh the dataset automatically
+
+      // set refresh to pending for related combinaotors
+      strapi.services.helper.set_state(
+        { dataset: id },
+        'combinator',
+        'refresh',
+        'pending',
+        'Dataset has been updated, please verify combinator'
+      );
+    }
 
     return entry;
   },
