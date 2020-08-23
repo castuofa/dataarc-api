@@ -60,7 +60,7 @@ async function seed_roles() {
       _limit: 1,
     });
     if (existing.length === 0) {
-      let result = await strapi.query('role', 'users-permissions').create(role);
+      await strapi.query('role', 'users-permissions').create(role);
       strapi.log.info(`role created: ${role.name}`);
     } else {
       strapi.log.warn(`role exists: ${role.name}`);
@@ -88,15 +88,11 @@ async function seed_data(name) {
   let service = strapi.query(name);
 
   for (let resource of resources) {
-    const existing = await service.find(resource);
+    const existing = await service.find({ id: resource.id });
     if (existing.length === 0) {
       await service.create(resource);
       strapi.log.info(
         `${name} created: '${JSON.stringify(resource).substring(0, 35)}...'`
-      );
-    } else {
-      strapi.log.warn(
-        `${name} exists: '${JSON.stringify(resource).substring(0, 35)}...'`
       );
     }
   }

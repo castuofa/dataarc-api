@@ -70,7 +70,7 @@
       "private": true
     },
     "old_dataset_id": {
-      "type": "biginteger",
+      "type": "integer",
       "private": true
     },
     "old_user_id": {
