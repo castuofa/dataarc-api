@@ -184,6 +184,9 @@ module.exports = {
             }
           });
 
+          // after dataset has been processed, refresh the features
+          strapi.services.dataset.refresh({ id: entry.id });
+
           // set processs to complete
           strapi.services.helper.set_state(
             entry.id,
@@ -194,7 +197,7 @@ module.exports = {
 
           // set state to pending for related combinaotors
           strapi.services.helper.set_state(
-            { dataset: id },
+            { dataset: entry.id },
             'combinator',
             'pending',
             'Dataset has been updated, please verify all combinator settings'
