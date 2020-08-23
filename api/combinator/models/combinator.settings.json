@@ -24,39 +24,27 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": [
-        "and",
-        "or"
-      ],
+      "enum": ["and", "or"],
       "default": "and"
     },
     "queries": {
-      "autoPopulate": false,
       "collection": "combinator-query"
     },
     "concepts": {
-      "autoPopulate": false,
       "collection": "concept",
       "via": "combinators"
     },
     "features": {
-      "autoPopulate": false,
       "collection": "feature",
       "via": "combinators"
     },
     "dataset": {
-      "autoPopulate": false,
       "model": "dataset",
       "via": "combinators"
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "running",
-        "failed",
-        "done"
-      ],
+      "enum": ["pending", "running", "failed", "done"],
       "default": "pending"
     },
     "state_msg": {

@@ -46,18 +46,6 @@
     },
     "state_at": {
       "type": "datetime"
-    },
-    "old_id": {
-      "type": "integer",
-      "private": true
-    },
-    "old_combinator_id": {
-      "type": "integer",
-      "private": true
-    },
-    "old_user_id": {
-      "type": "integer",
-      "private": true
     }
   }
 }

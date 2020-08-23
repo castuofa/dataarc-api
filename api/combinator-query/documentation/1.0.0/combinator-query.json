@@ -821,15 +821,6 @@
           "state_at": {
             "type": "datetime"
           },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_combinator_id": {
-            "type": "integer"
-          },
-          "old_user_id": {
-            "type": "integer"
-          },
           "created_by": {
             "type": "string"
           },
