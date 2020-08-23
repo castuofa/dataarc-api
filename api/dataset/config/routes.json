@@ -33,6 +33,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/datasets/:id/refresh",
+      "handler": "dataset.refresh",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/datasets",
       "handler": "dataset.create",

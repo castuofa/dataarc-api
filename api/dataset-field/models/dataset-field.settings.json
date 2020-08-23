@@ -9,6 +9,10 @@
     "timestamps": true
   },
   "attributes": {
+    "dataset": {
+      "via": "fields",
+      "model": "dataset"
+    },
     "name": {
       "type": "string"
     },
@@ -40,9 +44,16 @@
       "required": true,
       "default": "string"
     },
-    "dataset": {
-      "via": "fields",
-      "model": "dataset"
+    "state": {
+      "type": "enumeration",
+      "enum": ["pending", "missing", "done"],
+      "default": "pending"
+    },
+    "state_msg": {
+      "type": "string"
+    },
+    "state_at": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

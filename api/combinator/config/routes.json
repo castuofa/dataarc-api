@@ -25,6 +25,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/combinators/:id/refresh",
+      "handler": "combinator.refresh",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/combinators",
       "handler": "combinator.create",

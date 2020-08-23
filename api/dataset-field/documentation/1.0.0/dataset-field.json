@@ -537,35 +537,6 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "source": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "default": "string",
-            "enum": [
-              "string",
-              "number",
-              "boolean",
-              "array",
-              "url",
-              "start_date",
-              "end_date",
-              "text_date"
-            ]
-          },
           "dataset": {
             "required": [
               "id",
@@ -629,16 +600,13 @@
                   "type": "string"
                 }
               },
-              "processing": {
-                "type": "boolean"
+              "state": {
+                "type": "string"
               },
-              "processedAt": {
-                "type": "datetime"
+              "state_msg": {
+                "type": "string"
               },
-              "refreshing": {
-                "type": "boolean"
-              },
-              "refreshedAt": {
+              "state_at": {
                 "type": "datetime"
               },
               "old_id": {
@@ -660,6 +628,50 @@
                 "type": "string"
               }
             }
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "url",
+              "start_date",
+              "end_date",
+              "text_date"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -757,6 +769,9 @@
           "type"
         ],
         "properties": {
+          "dataset": {
+            "type": "string"
+          },
           "name": {
             "type": "string"
           },
@@ -786,8 +801,20 @@
               "text_date"
             ]
           },
-          "dataset": {
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "missing",
+              "done"
+            ]
+          },
+          "state_msg": {
             "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"

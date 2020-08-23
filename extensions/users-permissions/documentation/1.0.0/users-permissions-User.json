@@ -1254,40 +1254,6 @@
               }
             }
           },
-          "events": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "action": {
-                  "type": "string"
-                },
-                "item": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "details": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "created_by": {
             "required": [
               "id",
@@ -1415,12 +1381,6 @@
           },
           "role": {
             "type": "string"
-          },
-          "events": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "old_id": {
             "type": "integer"

@@ -578,6 +578,74 @@
           }
         ]
       }
+    },
+    "/datasets/{id}/refresh": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -817,12 +885,15 @@
                   "type": "string"
                 },
                 "queries": {
+                  "type": "string"
+                },
+                "concepts": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "concepts": {
+                "features": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -831,11 +902,14 @@
                 "dataset": {
                   "type": "string"
                 },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"
@@ -867,6 +941,9 @@
                 "id": {
                   "type": "string"
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "name": {
                   "type": "string"
                 },
@@ -885,8 +962,14 @@
                 "type": {
                   "type": "string"
                 },
-                "dataset": {
+                "state": {
                   "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"
@@ -959,6 +1042,9 @@
                     "type": "string"
                   }
                 },
+                "concepts": {
+                  "type": "string"
+                },
                 "old_id": {
                   "type": "integer"
                 },
@@ -974,18 +1060,21 @@
               }
             }
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
           },
-          "processedAt": {
-            "type": "datetime"
+          "state_msg": {
+            "type": "string"
           },
-          "refreshing": {
-            "type": "boolean",
-            "default": false
-          },
-          "refreshedAt": {
+          "state_at": {
             "type": "datetime"
           },
           "created_by": {
@@ -1131,18 +1220,21 @@
               "type": "string"
             }
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
           },
-          "processedAt": {
-            "type": "datetime"
+          "state_msg": {
+            "type": "string"
           },
-          "refreshing": {
-            "type": "boolean",
-            "default": false
-          },
-          "refreshedAt": {
+          "state_at": {
             "type": "datetime"
           },
           "old_id": {

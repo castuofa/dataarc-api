@@ -565,12 +565,15 @@
                   "type": "string"
                 },
                 "queries": {
+                  "type": "string"
+                },
+                "concepts": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "concepts": {
+                "features": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -579,11 +582,14 @@
                 "dataset": {
                   "type": "string"
                 },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "old_id": {
                   "type": "integer"

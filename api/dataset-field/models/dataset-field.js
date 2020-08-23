@@ -1,21 +1,37 @@
 'use strict';
 
-const slugify = require('slugify');
-const options = {
-  lower: true,
-  strict: true,
-  remove: /[*+~.()'"!:@]/g,
-};
+const _ = require('lodash');
 
 module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
-      if (data.title) {
-        data.name = slugify(data.title, options);
+      if (data.title && !data.name) {
+        data.name = strapi.services.helper.get_name(data.title);
       }
     },
     beforeUpdate: async (params, data) => {
-      data.name = slugify(data.title, options);
+      if (data.title && !data.name) {
+        data.name = strapi.services.helper.get_name(data.title);
+      }
+    },
+    afterUpdate: async (result, params, data) => {
+      // watch for changes to specific fields and set state
+      let watch_refresh = ['type'];
+      if (_.intersection(_.keys(data), watch_refresh).length) {
+        strapi.services.dataset.refresh({ id: result.dataset.id });
+        strapi.services.helper.set_state(
+          { dataset: result.dataset.id },
+          'combinator',
+          'pending',
+          'Related field(s) have changed, please verify queries'
+        );
+        strapi.services.helper.set_state(
+          { field: result.id },
+          'combinator-query',
+          'pending',
+          'Related field has changed, please verify query settings'
+        );
+      }
     },
   },
 };

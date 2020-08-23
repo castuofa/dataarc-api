@@ -600,16 +600,13 @@
                     "type": "string"
                   }
                 },
-                "processing": {
-                  "type": "boolean"
+                "state": {
+                  "type": "string"
                 },
-                "processedAt": {
-                  "type": "datetime"
+                "state_msg": {
+                  "type": "string"
                 },
-                "refreshing": {
-                  "type": "boolean"
-                },
-                "refreshedAt": {
+                "state_at": {
                   "type": "datetime"
                 },
                 "old_id": {

@@ -1,107 +1,28 @@
 'use strict';
 
+const nestedIndicator = ' --> ';
+
 const _ = require('lodash');
 const fs = require('fs');
 const flatten = require('flat');
 const turf = require('@turf/turf');
-const slugify = require('slugify');
-
-const nestedIndicator = ' --> ';
-
-// helper functions
-let helper = {
-  type: (prop) => {
-    return Object.prototype.toString
-      .call(prop)
-      .match(/\s([a-zA-Z]+)/)[1]
-      .toLowerCase();
-  },
-  path: (words, wordSeparator = '_', pathSeparator = '_') => {
-    return words
-      .split(nestedIndicator)
-      .map((word) => {
-        return slugify(word.replace(/[\/\\\-_*+~.()'"!:@\?\s+]/g, ' '), {
-          replacement: wordSeparator,
-          lower: true,
-          strict: true,
-          remove: /[\/\\*+~.()'"!:@\?]/g,
-        });
-      })
-      .join(pathSeparator);
-  },
-  title: (path) => {
-    return path
-      .replace(/[\[\]-_.]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .replace(/\w\S*/g, (s) => {
-        return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();
-      });
-  },
-  keyword: (value) => {
-    return helper
-      .path(
-        value
-          .replace(/https?:\/\/(www\.)?/g, '')
-          .replace(
-            /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g,
-            ''
-          ),
-        ' '
-      )
-      .replace(/\d+/g, ' ')
-      .replace(/\s\s+/g, ' ')
-      .trim();
-  },
-  random: (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  },
-  logtime: (start) => {
-    let end = process.hrtime(start);
-    strapi.log.info('Execution time (hr): %ds %dms', end[0], end[1] / 1000000);
-  },
-};
+const pug = require('pug');
 
 module.exports = {
-  /**
-   * Promise to process a record
-   *
-   * @return {Promise}
-   */
   process: async (params) => {
-    let start_all = process.hrtime();
-
-    // find the dataset
+    // find the entry
     const entry = await strapi.query('dataset').findOne(params);
-
-    // only proceed if we found the dataset
     if (entry != null) {
-      let start_cleanup = process.hrtime();
-      // remove existing fields for this dataset
-      strapi.log.info(`Removing existing fields and features for this dataset`);
-      await strapi.query('dataset-field').delete({
-        dataset: entry.id,
-        _limit: 999999999,
-      });
-      // remove existing features for this dataset
-      await strapi.query('dataset-feature').delete({
-        dataset: entry.id,
-        _limit: 999999999,
-      });
-      helper.logtime(start_cleanup);
+      // set process to active and start processing
+      strapi.services.helper.set_state(
+        entry.id,
+        'dataset',
+        'processing',
+        'Dataset processing in progress'
+      );
 
       // read file
       const path = `${strapi.dir}/public${entry.source.url}`;
-      const dataset = entry.source.name;
-
-      // let folder = `${strapi.dir}/../dataarc-data/source/dataset/`;
-      // let datasets = [];
-      // fs.readdirSync(folder).forEach((file) => {
-      //   if (file !== '.DS_Store') datasets.push(file);
-      // });
-      // let dataset = datasets[6];
-      // strapi.log.info(`Processing ${dataset}`);
-      // const path = `${strapi.dir}/../dataarc-data/source/dataset/${dataset}`;
-
       let source;
       try {
         source = JSON.parse(fs.readFileSync(path, 'utf8'));
@@ -112,6 +33,7 @@ module.exports = {
         );
       }
 
+      // main function called to extract the properties
       let extract_properties = (
         input,
         keys,
@@ -129,18 +51,15 @@ module.exports = {
         // loop through the properties
         _.forOwn(props, function (value, key) {
           let source = (parent ? parent + nestedIndicator : '') + key;
-          let type = helper.type(value);
-          let path = helper.path(source);
+          let type = strapi.services.helper.get_type(value);
+          let path = strapi.services.helper.get_name(source);
           let store_property = false;
 
           // process based on the type
           switch (type) {
             case 'string':
               value = value.trim();
-
-              // don't process if empty string
               if (value === '') break;
-
               store_property = true;
               break;
             case 'number':
@@ -151,20 +70,18 @@ module.exports = {
               break;
             case 'array':
               if (_.isEmpty(value)) break;
-
-              // loop through array
               let values = [];
               for (var i = value.length; i--; ) {
-                let item_type = helper.type(value[i]);
+                let item_type = strapi.services.helper.get_type(value[i]);
                 if (item_type === 'object') {
                   let p = {};
-                  // extract properties
-                  extract_properties(value[i], keys, fields, p, words, key);
+                  extract_properties(value[i], keys, fields, p, words, path);
                   values.push(p);
                 } else {
                   strapi.log.warn(
                     `Array item is not object ${JSON.stringify(value[i])}`
                   );
+                  values.push(value[i]);
                 }
               }
               value = values;
@@ -179,7 +96,7 @@ module.exports = {
           // process the property
           if (store_property) {
             let field = {
-              title: helper.title(entry.name + ' ' + path),
+              title: strapi.services.helper.get_title(entry.name + ' ' + path),
               path: path,
               source: source,
               type: type,
@@ -188,21 +105,19 @@ module.exports = {
 
             // build keywords
             if (type === 'string' && isNaN(value)) {
-              words.push(helper.keyword(value));
+              words.push(strapi.services.helper.get_keyword(value));
             }
 
             // add to keys/fields if its new
             if (keys.indexOf(path) === -1) {
               keys.push(path);
               fields.push(field);
-              // strapi.log.info(`Found new ${field.type} field ${field.path}`);
             }
 
             // add the property to the new feature using the clean path
             properties[path] = value;
           }
         });
-
         return { keys, fields, properties, words };
       };
 
@@ -210,7 +125,7 @@ module.exports = {
       let fields = [];
       let features = [];
 
-      let start_features = process.hrtime();
+      // loop through the source features to build our fields and new features
       _.each(source.features, function (f) {
         let properties = {};
         let words = [];
@@ -241,32 +156,161 @@ module.exports = {
         });
       });
 
-      strapi.log.info(`Done processing features`);
-      helper.logtime(start_features);
+      // remove existing fields and features for this dataset then create new
+      Promise.allSettled([
+        strapi.services.helper.delete_many('dataset-field', {
+          dataset: entry.id,
+        }),
+        strapi.services.helper.delete_many('feature', {
+          dataset: entry.id,
+        }),
+      ]).then(
+        Promise.allSettled([
+          strapi.services.helper.insert_many('dataset-field', fields),
+          strapi.services.helper.insert_many('feature', features),
+        ]).then((results) => {
+          // check to make sure all promises were fulfilled
+          _.each(results, (result) => {
+            if (result.status != 'fulfilled') {
+              // have to set the state here instaed of throw an error
+              // since these contine to run after the function returns
+              strapi.services.helper.set_state(
+                entry.id,
+                'dataset',
+                'failed',
+                'Something went wrong, please try again'
+              );
+              return entry;
+            }
+          });
 
-      let start_create = process.hrtime();
-      // create new fields
-      strapi.log.info(`Creating ${fields.length} fields`);
-      if (Array.isArray(fields))
-        await Promise.all(fields.map(strapi.query('dataset-field').create));
+          // after dataset has been processed, refresh the features
+          strapi.services.dataset.refresh({ id: entry.id });
 
-      // create new features
-      strapi.log.info(`Creating ${features.length} features`);
-      if (Array.isArray(features))
-        await Promise.all(features.map(strapi.query('dataset-feature').create));
-      helper.logtime(start_create);
+          // set processs to complete
+          strapi.services.helper.set_state(
+            entry.id,
+            'dataset',
+            'process',
+            'done'
+          );
 
-      // show information about processed dataset
-      strapi.log.info(`Finished processing ${dataset}`);
-      helper.logtime(start_all);
-      strapi.log.info(
-        `Processed ${fields.length} fields in ${features.length} features`
+          // set state to pending for related combinaotors
+          strapi.services.helper.set_state(
+            { dataset: entry.id },
+            'combinator',
+            'pending',
+            'Dataset has been updated, please verify all combinator settings'
+          );
+
+          // show information about processed dataset
+          strapi.log.info(
+            `Processed ${fields.length} fields in ${features.length} features`
+          );
+        })
+      );
+    }
+
+    return entry;
+  },
+
+  refresh: async (params) => {
+    // find the entry
+    const entry = await strapi.query('dataset').findOne(params);
+    if (entry != null) {
+      // set refresh to active
+      strapi.services.helper.set_state(
+        entry.id,
+        'dataset',
+        'updating',
+        'Updating dataset features'
       );
 
-      // show a random record for spot checking
-      // let random_record = helper.random(0, features.length - 1);
-      // strapi.log.info(`Showing random record ${random_record}:`);
-      // console.log(`${JSON.stringify(features[random_record], null, 2)}`);
+      // pull the dataset fields
+      const fields = await strapi
+        .query('dataset-field')
+        .find({ dataset: entry.id });
+
+      // pull the datasets features
+      const features = await strapi
+        .query('feature')
+        .find({ dataset: entry.id });
+
+      if (fields && features) {
+        _.each(features, function (feature) {
+          // set temporal values
+          let start_date = _.find(fields, {
+            type: 'start_date',
+          });
+          if (start_date) {
+            feature.start_date = feature.properties[start_date.path];
+          }
+          let end_date = _.find(fields, {
+            type: 'end_date',
+          });
+          if (end_date) {
+            feature.end_date = feature.properties[end_date.path];
+          }
+          let text_date = _.find(fields, {
+            type: 'text_date',
+          });
+          if (text_date) {
+            feature.text_date = feature.properties[text_date.path];
+          }
+
+          // set url and render link
+          let url = _.find(fields, {
+            type: 'url',
+          });
+          if (url) {
+            feature.url = feature.properties[url.path];
+            try {
+              feature.link = pug.render(
+                `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
+                feature.properties
+              );
+            } catch (err) {
+              feature.link = 'Invalid layout';
+            }
+          }
+
+          // render title
+          try {
+            feature.title = pug.render(
+              'span. \n  ' + feature.dataset.title_layout,
+              feature.properties
+            );
+          } catch (err) {
+            feature.title = 'Invalid layout';
+          }
+
+          // render summary
+          try {
+            feature.summary = pug.render(
+              feature.dataset.summary_layout,
+              feature.properties
+            );
+          } catch (err) {
+            feature.summary = 'Invalid layout';
+          }
+
+          // render details
+          try {
+            feature.details = pug.render(
+              feature.dataset.details_layout,
+              feature.properties
+            );
+          } catch (err) {
+            feature.details = 'Invalid layout';
+          }
+
+          // update the feature
+          strapi.query('feature').update({ id: feature.id }, feature);
+        });
+      }
+
+      // set refresh to complete
+      strapi.services.helper.set_state(entry.id, 'dataset', 'done');
     }
 
     return entry;

@@ -528,7 +528,8 @@
               "create",
               "update",
               "delete",
-              "process"
+              "process",
+              "refresh"
             ]
           },
           "item": {
@@ -576,12 +577,6 @@
               },
               "role": {
                 "type": "string"
-              },
-              "events": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "old_id": {
                 "type": "integer"
@@ -701,7 +696,8 @@
               "create",
               "update",
               "delete",
-              "process"
+              "process",
+              "refresh"
             ]
           },
           "item": {

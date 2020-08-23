@@ -28,8 +28,9 @@
       "type": "string"
     },
     "combinators": {
-      "collection": "combinator",
       "via": "concepts",
+      "autoPopulate": false,
+      "collection": "combinator",
       "dominant": true
     },
     "old_id": {
@@ -38,6 +39,7 @@
     },
     "topics": {
       "via": "concept",
+      "autoPopulate": false,
       "collection": "topic"
     }
   }

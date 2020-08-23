@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/dataset-features",
-      "handler": "dataset-feature.find",
+      "path": "/features",
+      "handler": "feature.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/dataset-features/count",
-      "handler": "dataset-feature.count",
+      "path": "/features/count",
+      "handler": "feature.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/dataset-features/:id",
-      "handler": "dataset-feature.findOne",
+      "path": "/features/:id",
+      "handler": "feature.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/dataset-features",
-      "handler": "dataset-feature.create",
+      "path": "/features",
+      "handler": "feature.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/dataset-features/:id",
-      "handler": "dataset-feature.update",
+      "path": "/features/:id",
+      "handler": "feature.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/dataset-features/:id",
-      "handler": "dataset-feature.delete",
+      "path": "/features/:id",
+      "handler": "feature.delete",
       "config": {
         "policies": []
       }

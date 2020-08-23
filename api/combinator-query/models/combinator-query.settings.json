@@ -9,19 +9,40 @@
     "timestamps": true
   },
   "attributes": {
+    "combinator": {
+      "model": "combinator"
+    },
     "field": {
+      "model": "dataset-field"
+    },
+    "property": {
       "type": "string",
       "required": true
     },
     "operator": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": [
+        "equals",
+        "not_equals",
+        "contains",
+        "not_contains",
+        "greater_than",
+        "less_than"
+      ]
     },
     "value": {
       "type": "string"
     },
-    "combinator": {
-      "model": "combinator",
-      "via": "queries"
+    "state": {
+      "type": "enumeration",
+      "enum": ["pending", "done"],
+      "default": "pending"
+    },
+    "state_msg": {
+      "type": "string"
+    },
+    "state_at": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",

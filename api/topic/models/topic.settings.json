@@ -18,12 +18,12 @@
       "required": true
     },
     "map": {
-      "model": "topic-map",
-      "via": "topics"
+      "model": "topic-map"
     },
     "concept": {
       "model": "concept",
-      "via": "topics"
+      "via": "topics",
+      "autoPopulate": false
     }
   }
 }

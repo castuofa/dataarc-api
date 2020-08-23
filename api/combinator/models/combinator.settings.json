@@ -25,34 +25,52 @@
     "operator": {
       "type": "enumeration",
       "enum": [
-        "AND",
-        "OR"
+        "and",
+        "or"
       ],
-      "default": "AND"
+      "default": "and"
     },
     "queries": {
-      "via": "combinator",
+      "autoPopulate": false,
       "collection": "combinator-query"
     },
     "concepts": {
-      "via": "combinators",
-      "collection": "concept"
-    },
-    "dataset": {
-      "via": "combinators",
-      "model": "dataset"
+      "autoPopulate": false,
+      "collection": "concept",
+      "via": "combinators"
     },
     "features": {
-      "via": "combinators",
-      "collection": "dataset-feature",
-      "dominant": true
+      "autoPopulate": false,
+      "collection": "feature",
+      "via": "combinators"
+    },
+    "dataset": {
+      "autoPopulate": false,
+      "model": "dataset",
+      "via": "combinators"
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "running",
+        "failed",
+        "done"
+      ],
+      "default": "pending"
+    },
+    "state_msg": {
+      "type": "string"
+    },
+    "state_at": {
+      "type": "datetime"
     },
     "old_id": {
       "type": "integer",
       "private": true
     },
     "old_dataset_id": {
-      "type": "biginteger",
+      "type": "integer",
       "private": true
     },
     "old_user_id": {

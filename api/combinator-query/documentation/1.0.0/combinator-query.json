@@ -530,19 +530,10 @@
       "Combinator-query": {
         "required": [
           "id",
-          "field"
+          "property"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "field": {
-            "type": "string"
-          },
-          "operator": {
-            "type": "string"
-          },
-          "value": {
             "type": "string"
           },
           "combinator": {
@@ -570,12 +561,15 @@
                 "type": "string"
               },
               "queries": {
+                "type": "string"
+              },
+              "concepts": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "concepts": {
+              "features": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -584,11 +578,14 @@
               "dataset": {
                 "type": "string"
               },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
               },
               "old_id": {
                 "type": "integer"
@@ -606,6 +603,91 @@
                 "type": "string"
               }
             }
+          },
+          "field": {
+            "required": [
+              "id",
+              "title",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "old_dataset_id": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "property": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "equals",
+              "not_equals",
+              "contains",
+              "not_contains",
+              "greater_than",
+              "less_than"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -699,20 +781,45 @@
       },
       "NewCombinator-query": {
         "required": [
-          "field"
+          "property"
         ],
         "properties": {
+          "combinator": {
+            "type": "string"
+          },
           "field": {
             "type": "string"
           },
-          "operator": {
+          "property": {
             "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "equals",
+              "not_equals",
+              "contains",
+              "not_contains",
+              "greater_than",
+              "less_than"
+            ]
           },
           "value": {
             "type": "string"
           },
-          "combinator": {
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
             "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "old_id": {
             "type": "integer"

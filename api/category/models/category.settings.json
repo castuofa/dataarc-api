@@ -24,6 +24,7 @@
     },
     "datasets": {
       "via": "category",
+      "autoPopulate": false,
       "collection": "dataset"
     },
     "old_id": {
