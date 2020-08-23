@@ -60,18 +60,6 @@
     "old_id": {
       "type": "integer",
       "private": true
-    },
-    "old_external_id": {
-      "type": "integer",
-      "private": true
-    },
-    "old_admin": {
-      "type": "boolean",
-      "private": true
-    },
-    "old_editor": {
-      "type": "boolean",
-      "private": true
     }
   }
 }

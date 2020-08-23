@@ -564,15 +564,6 @@
                 "old_id": {
                   "type": "integer"
                 },
-                "old_external_id": {
-                  "type": "integer"
-                },
-                "old_admin": {
-                  "type": "boolean"
-                },
-                "old_editor": {
-                  "type": "boolean"
-                },
                 "created_by": {
                   "type": "string"
                 },

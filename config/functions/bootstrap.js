@@ -80,6 +80,26 @@ async function seed_roles() {
   }
 }
 
+// seed users
+async function seed_users() {
+  let users = await loadFile('data', 'user');
+  if (!users) return;
+
+  for (let user of users) {
+    // check if it exists
+    let existing = await strapi.query('user', 'users-permissions').find({
+      email: user.email,
+      _limit: 1,
+    });
+    if (existing.length === 0) {
+      await strapi.query('user', 'users-permissions').create(user);
+      strapi.log.info(`user created: ${user.email}`);
+    } else {
+      strapi.log.warn(`user exists: ${user.email}`);
+    }
+  }
+}
+
 // seed a resource
 async function seed_data(name) {
   let resources = await loadFile('data', name);
@@ -107,39 +127,6 @@ async function seed_permissions(name) {
     await set_permissions(role.name, role.type, name, role.actions);
 }
 
-// set user permissions for a controller
-async function create_user(user) {
-  // query for the user
-  const u = await strapi
-    .query('user', 'users-permissions')
-    .findOne({ type: role });
-
-  // make sure we found the role
-  if (!r) return;
-
-  // get target permissions for object
-  let p = await strapi.query('permission', 'users-permissions').find({
-    role: r.id,
-    type: type,
-    controller: controller,
-  });
-
-  // make sure we have permissions
-  if (p.length == 0) return;
-
-  // loop through the objects permissions setting everything
-  p.forEach((permission) => {
-    let enable = actions.includes(permission.action);
-    let p = permission;
-    p.enabled = enable;
-    strapi.query('permission', 'users-permissions').update({ id: p.id }, p);
-  });
-
-  strapi.log.info(`${controller} permissions set for ${role}`);
-
-  return;
-}
-
 module.exports = async () => {
   const seed = process.env.SEED == 'true';
   const seed_resources = [
@@ -161,7 +148,7 @@ module.exports = async () => {
     await seed_roles();
 
     // seed the users
-    // await seed_data('user');
+    await seed_users();
 
     // loop through the resources, add data, and set permissions
     for (let resource of seed_resources) {
