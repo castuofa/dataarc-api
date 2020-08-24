@@ -524,6 +524,9 @@
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
@@ -729,6 +732,9 @@
           "identifier"
         ],
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },

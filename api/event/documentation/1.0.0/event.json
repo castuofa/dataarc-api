@@ -541,6 +541,9 @@
           "details": {
             "type": "string"
           },
+          "payload": {
+            "type": "object"
+          },
           "user": {
             "required": [
               "id",
@@ -699,6 +702,9 @@
           },
           "details": {
             "type": "string"
+          },
+          "payload": {
+            "type": "object"
           },
           "user": {
             "type": "string"

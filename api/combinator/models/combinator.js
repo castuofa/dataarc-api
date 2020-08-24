@@ -12,5 +12,35 @@ module.exports = {
         data.name = strapi.services.helper.get_name(data.title);
       }
     },
+    afterCreate: async (result, data) => {
+      if (result != null)
+        strapi.services.helper.log_event(
+          'create',
+          'combinator',
+          result.name,
+          result.updated_by == null ? null : result.updated_by.id,
+          { data }
+        );
+    },
+    afterUpdate: async (result, params, data) => {
+      if (result != null)
+        strapi.services.helper.log_event(
+          'update',
+          'combinator',
+          result.name,
+          result.updated_by == null ? null : result.updated_by.id,
+          { params, data }
+        );
+    },
+    afterDelete: async (result, params) => {
+      if (result != null)
+        strapi.services.helper.log_event(
+          'delete',
+          'combinator',
+          result.name,
+          result.updated_by == null ? null : result.updated_by.id,
+          { params }
+        );
+    },
   },
 };

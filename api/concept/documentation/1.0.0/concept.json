@@ -637,6 +637,9 @@
                 "id": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },

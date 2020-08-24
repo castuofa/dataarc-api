@@ -50,8 +50,8 @@
       "private": true
     },
     "topics": {
-      "collection": "topic",
-      "via": "concept"
+      "via": "concept",
+      "collection": "topic"
     },
     "old_identifier": {
       "type": "string"

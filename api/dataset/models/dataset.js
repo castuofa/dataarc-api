@@ -14,7 +14,26 @@ module.exports = {
         data.name = strapi.services.helper.get_name(data.title);
       }
     },
+    afterCreate: async (result, data) => {
+      if (result != null)
+        strapi.services.helper.log_event(
+          'create',
+          'dataset',
+          result.name,
+          result.updated_by == null ? null : result.updated_by.id,
+          { data }
+        );
+    },
     afterUpdate: async (result, params, data) => {
+      if (result != null)
+        strapi.services.helper.log_event(
+          'update',
+          'dataset',
+          result.name,
+          result.updated_by == null ? null : result.updated_by.id,
+          { params, data }
+        );
+
       // watch for changes to specific fields
       if (_.intersection(_.keys(data), ['source']).length) {
         strapi.services.helper.set_state(
@@ -33,6 +52,16 @@ module.exports = {
       ) {
         strapi.services.dataset.refresh({ id: result.id });
       }
+    },
+    afterDelete: async (result, params) => {
+      if (result != null)
+        strapi.services.helper.log_event(
+          'delete',
+          'dataset',
+          result.name,
+          result.updated_by == null ? null : result.updated_by.id,
+          { params }
+        );
     },
   },
 };

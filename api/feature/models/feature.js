@@ -12,5 +12,36 @@ module.exports = {
         data.name = strapi.services.helper.get_name(data.title);
       }
     },
+    // DISABLE THESE FOR NOW, TOO MANY EVENTS WHEN RUNNING PROCESS/REFRESH
+    // afterCreate: async (result, data) => {
+    //   if (result != null)
+    //     strapi.services.helper.log_event(
+    //       'create',
+    //       'feature',
+    //       result.id,
+    //       result.updated_by == null ? null : result.updated_by.id,
+    //       { data }
+    //     );
+    // },
+    // afterUpdate: async (result, params, data) => {
+    //   if (result != null)
+    //     strapi.services.helper.log_event(
+    //       'update',
+    //       'feature',
+    //       result.id,
+    //       result.updated_by == null ? null : result.updated_by.id,
+    //       { params, data }
+    //     );
+    // },
+    // afterDelete: async (result, params) => {
+    //   if (result != null)
+    //     strapi.services.helper.log_event(
+    //       'delete',
+    //       'feature',
+    //       result.id,
+    //       result.updated_by == null ? null : result.updated_by.id,
+    //       { params }
+    //     );
+    // },
   },
 };

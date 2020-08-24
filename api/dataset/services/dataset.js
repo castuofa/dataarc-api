@@ -53,6 +53,8 @@ module.exports = {
           let source = (parent ? parent + nestedIndicator : '') + key;
           let type = strapi.services.helper.get_type(value);
           let path = strapi.services.helper.get_name(source);
+          let title = strapi.services.helper.get_title(entry.name + ' ' + path);
+          let name = strapi.services.helper.get_name(title);
           let store_property = false;
 
           // process based on the type
@@ -96,10 +98,14 @@ module.exports = {
           // process the property
           if (store_property) {
             let field = {
-              title: strapi.services.helper.get_title(entry.name + ' ' + path),
+              name: name,
+              title: title,
               path: path,
               source: source,
               type: type,
+              state: 'pending',
+              state_msg: 'New field, pending verification',
+              state_at: Date.now(),
               dataset: entry.id,
             };
 
@@ -188,12 +194,7 @@ module.exports = {
           strapi.services.dataset.refresh({ id: entry.id });
 
           // set processs to complete
-          strapi.services.helper.set_state(
-            entry.id,
-            'dataset',
-            'process',
-            'done'
-          );
+          strapi.services.helper.set_state(entry.id, 'dataset', 'done');
 
           // set state to pending for related combinaotors
           strapi.services.helper.set_state(

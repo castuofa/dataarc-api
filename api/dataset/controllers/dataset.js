@@ -3,81 +3,6 @@
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
-  create: async (ctx) => {
-    let entity;
-
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['dataset'].create(data, { files });
-    } else {
-      entity = await strapi.services['dataset'].create(ctx.request.body);
-    }
-
-    let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
-    });
-
-    if (entry != null)
-      strapi.services.event.log(
-        'create',
-        strapi.models['dataset'].info.name,
-        entry.name,
-        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
-      );
-
-    return entry;
-  },
-
-  update: async (ctx) => {
-    const { id } = ctx.params;
-    let entity;
-
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services['dataset'].update({ id }, data, {
-        files,
-      });
-    } else {
-      entity = await strapi.services['dataset'].update(
-        { id },
-        ctx.request.body
-      );
-    }
-
-    let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
-    });
-
-    if (entry != null)
-      strapi.services.event.log(
-        'update',
-        strapi.models['dataset'].info.name,
-        entry.name,
-        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
-      );
-
-    return entry;
-  },
-
-  delete: async (ctx) => {
-    const { id } = ctx.params;
-    const entity = await strapi.services['dataset'].delete({ id });
-
-    let entry = sanitizeEntity(entity, {
-      model: strapi.models['dataset'],
-    });
-
-    if (entry != null)
-      strapi.services.event.log(
-        'delete',
-        strapi.models['dataset'].info.name,
-        entry.name,
-        typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
-      );
-
-    return entry;
-  },
-
   process: async (ctx) => {
     const { id } = ctx.params;
 
@@ -94,10 +19,9 @@ module.exports = {
     });
 
     if (entry != null) {
-      // log the process event
-      strapi.services.event.log(
+      strapi.services.helper.log_event(
         'process',
-        strapi.models['dataset'].info.name,
+        'dataset',
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );
@@ -122,9 +46,9 @@ module.exports = {
     });
 
     if (entry != null)
-      strapi.services.event.log(
+      strapi.services.helper.log_event(
         'refresh',
-        strapi.models['dataset'].info.name,
+        'dataset',
         entry.name,
         typeof ctx.state.user !== 'undefined' ? ctx.state.user.id : null
       );

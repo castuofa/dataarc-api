@@ -72,6 +72,26 @@ module.exports = {
     });
   },
 
+  // log an event
+  log_event: async (
+    action,
+    item,
+    name,
+    user,
+    payload = null,
+    details = null
+  ) => {
+    // let { result, params, data }
+    strapi.services.event.create({
+      action,
+      item,
+      name,
+      details,
+      payload,
+      user,
+    });
+  },
+
   // directly access the mongoose model to perform bulk actions
   delete_many: async (collection, filter, options, callback) => {
     return strapi.query(collection).model.deleteMany(filter, options, callback);
