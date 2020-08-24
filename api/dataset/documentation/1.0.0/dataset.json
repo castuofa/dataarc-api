@@ -885,7 +885,10 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "array",

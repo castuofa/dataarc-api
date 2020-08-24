@@ -27,10 +27,22 @@
     "url": {
       "type": "string"
     },
+    "group": {
+      "type": "enumeration",
+      "enum": [
+        "activities",
+        "actors",
+        "community_places",
+        "events",
+        "ideas",
+        "imaginary_landscape",
+        "physical_landscape",
+        "physical_processes"
+      ]
+    },
     "combinators": {
-      "via": "concepts",
-      "autoPopulate": false,
       "collection": "combinator",
+      "via": "concepts",
       "dominant": true
     },
     "old_id": {
@@ -39,8 +51,10 @@
     },
     "topics": {
       "via": "concept",
-      "autoPopulate": false,
       "collection": "topic"
+    },
+    "old_identifier": {
+      "type": "string"
     }
   }
 }

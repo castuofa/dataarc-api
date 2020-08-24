@@ -524,13 +524,69 @@
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
           "identifier": {
             "type": "string"
           },
-          "map": {
+          "concept": {
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "group": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "topics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "old_identifier": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "topic_map": {
             "required": [
               "id",
               "title"
@@ -563,47 +619,6 @@
               "source": {
                 "type": "string"
               },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "concept": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_id": {
-                "type": "integer"
-              },
               "topics": {
                 "type": "array",
                 "items": {
@@ -617,6 +632,9 @@
                 "type": "string"
               }
             }
+          },
+          "old_id": {
+            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -714,17 +732,23 @@
           "identifier"
         ],
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
           "identifier": {
             "type": "string"
           },
-          "map": {
-            "type": "string"
-          },
           "concept": {
             "type": "string"
+          },
+          "topic_map": {
+            "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

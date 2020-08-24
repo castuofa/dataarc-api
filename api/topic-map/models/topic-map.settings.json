@@ -39,6 +39,10 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "topics": {
+      "via": "topic_map",
+      "collection": "topic"
     }
   }
 }

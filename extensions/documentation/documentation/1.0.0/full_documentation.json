@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/22/2020 11:19:12 PM"
+    "x-generation-date": "08/24/2020 11:09:21 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9375,6 +9375,23 @@
           "id": {
             "type": "string"
           },
+          "property": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "equals",
+              "not_equals",
+              "contains",
+              "not_contains",
+              "greater_than",
+              "less_than"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
           "combinator": {
             "required": [
               "id",
@@ -9400,7 +9417,10 @@
                 "type": "string"
               },
               "queries": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "concepts": {
                 "type": "array",
@@ -9496,23 +9516,6 @@
                 "type": "string"
               }
             }
-          },
-          "property": {
-            "type": "string"
-          },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "equals",
-              "not_equals",
-              "contains",
-              "not_contains",
-              "greater_than",
-              "less_than"
-            ]
-          },
-          "value": {
-            "type": "string"
           },
           "state": {
             "type": "string",
@@ -9623,12 +9626,6 @@
           "property"
         ],
         "properties": {
-          "combinator": {
-            "type": "string"
-          },
-          "field": {
-            "type": "string"
-          },
           "property": {
             "type": "string"
           },
@@ -9646,6 +9643,12 @@
           "value": {
             "type": "string"
           },
+          "combinator": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
           "state": {
             "type": "string",
             "default": "pending",
@@ -9659,15 +9662,6 @@
           },
           "state_at": {
             "type": "datetime"
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_combinator_id": {
-            "type": "integer"
-          },
-          "old_user_id": {
-            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -9707,52 +9701,46 @@
             ]
           },
           "queries": {
-            "required": [
-              "id",
-              "property"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "combinator": {
-                "type": "string"
-              },
-              "field": {
-                "type": "string"
-              },
-              "property": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_combinator_id": {
-                "type": "integer"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "property"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "property": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "combinator": {
+                  "type": "string"
+                },
+                "field": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -9782,6 +9770,9 @@
                 "url": {
                   "type": "string"
                 },
+                "group": {
+                  "type": "string"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -9796,6 +9787,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "old_identifier": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -10104,7 +10098,10 @@
             ]
           },
           "queries": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "concepts": {
             "type": "array",
@@ -10178,6 +10175,19 @@
           "url": {
             "type": "string"
           },
+          "group": {
+            "type": "string",
+            "enum": [
+              "activities",
+              "actors",
+              "community_places",
+              "events",
+              "ideas",
+              "imaginary_landscape",
+              "physical_landscape",
+              "physical_processes"
+            ]
+          },
           "combinators": {
             "type": "array",
             "items": {
@@ -10205,7 +10215,10 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "array",
@@ -10261,17 +10274,23 @@
                 "id": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },
                 "identifier": {
                   "type": "string"
                 },
-                "map": {
-                  "type": "string"
-                },
                 "concept": {
                   "type": "string"
+                },
+                "topic_map": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -10281,6 +10300,9 @@
                 }
               }
             }
+          },
+          "old_identifier": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -10392,6 +10414,19 @@
           "url": {
             "type": "string"
           },
+          "group": {
+            "type": "string",
+            "enum": [
+              "activities",
+              "actors",
+              "community_places",
+              "events",
+              "ideas",
+              "imaginary_landscape",
+              "physical_landscape",
+              "physical_processes"
+            ]
+          },
           "combinators": {
             "type": "array",
             "items": {
@@ -10406,6 +10441,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_identifier": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -10953,7 +10991,10 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "array",
@@ -11352,6 +11393,9 @@
           "details": {
             "type": "string"
           },
+          "payload": {
+            "type": "object"
+          },
           "user": {
             "required": [
               "id",
@@ -11510,6 +11554,9 @@
           },
           "details": {
             "type": "string"
+          },
+          "payload": {
+            "type": "object"
           },
           "user": {
             "type": "string"
@@ -11686,7 +11733,10 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "array",
@@ -11754,6 +11804,9 @@
               "url": {
                 "type": "string"
               },
+              "group": {
+                "type": "string"
+              },
               "combinators": {
                 "type": "array",
                 "items": {
@@ -11768,6 +11821,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_identifier": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -12518,6 +12574,45 @@
               }
             }
           },
+          "topics": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "title",
+                "identifier"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "string"
+                },
+                "concept": {
+                  "type": "string"
+                },
+                "topic_map": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -12634,6 +12729,12 @@
           "edges": {
             "type": "object"
           },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "created_by": {
             "type": "string"
           },
@@ -12652,13 +12753,69 @@
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
           "identifier": {
             "type": "string"
           },
-          "map": {
+          "concept": {
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "group": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "old_id": {
+                "type": "integer"
+              },
+              "topics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "old_identifier": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "topic_map": {
             "required": [
               "id",
               "title"
@@ -12691,47 +12848,6 @@
               "source": {
                 "type": "string"
               },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "concept": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_id": {
-                "type": "integer"
-              },
               "topics": {
                 "type": "array",
                 "items": {
@@ -12745,6 +12861,9 @@
                 "type": "string"
               }
             }
+          },
+          "old_id": {
+            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -12842,17 +12961,23 @@
           "identifier"
         ],
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
           "identifier": {
             "type": "string"
           },
-          "map": {
-            "type": "string"
-          },
           "concept": {
             "type": "string"
+          },
+          "topic_map": {
+            "type": "string"
+          },
+          "old_id": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

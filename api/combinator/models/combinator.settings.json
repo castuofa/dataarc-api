@@ -31,21 +31,18 @@
       "default": "and"
     },
     "queries": {
-      "autoPopulate": false,
-      "collection": "combinator-query"
+      "collection": "combinator-query",
+      "via": "combinator"
     },
     "concepts": {
-      "autoPopulate": false,
-      "collection": "concept",
-      "via": "combinators"
+      "via": "combinators",
+      "collection": "concept"
     },
     "features": {
-      "autoPopulate": false,
       "collection": "feature",
       "via": "combinators"
     },
     "dataset": {
-      "autoPopulate": false,
       "model": "dataset",
       "via": "combinators"
     },

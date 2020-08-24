@@ -9,6 +9,9 @@
     "timestamps": true
   },
   "attributes": {
+    "name": {
+      "type": "string"
+    },
     "title": {
       "type": "string",
       "required": true
@@ -17,13 +20,16 @@
       "type": "string",
       "required": true
     },
-    "map": {
-      "model": "topic-map"
-    },
     "concept": {
       "model": "concept",
-      "via": "topics",
-      "autoPopulate": false
+      "via": "topics"
+    },
+    "topic_map": {
+      "model": "topic-map",
+      "via": "topics"
+    },
+    "old_id": {
+      "type": "integer"
     }
   }
 }

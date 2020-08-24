@@ -536,6 +536,23 @@
           "id": {
             "type": "string"
           },
+          "property": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "equals",
+              "not_equals",
+              "contains",
+              "not_contains",
+              "greater_than",
+              "less_than"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
           "combinator": {
             "required": [
               "id",
@@ -561,7 +578,10 @@
                 "type": "string"
               },
               "queries": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "concepts": {
                 "type": "array",
@@ -657,23 +677,6 @@
                 "type": "string"
               }
             }
-          },
-          "property": {
-            "type": "string"
-          },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "equals",
-              "not_equals",
-              "contains",
-              "not_contains",
-              "greater_than",
-              "less_than"
-            ]
-          },
-          "value": {
-            "type": "string"
           },
           "state": {
             "type": "string",
@@ -784,12 +787,6 @@
           "property"
         ],
         "properties": {
-          "combinator": {
-            "type": "string"
-          },
-          "field": {
-            "type": "string"
-          },
           "property": {
             "type": "string"
           },
@@ -807,6 +804,12 @@
           "value": {
             "type": "string"
           },
+          "combinator": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
           "state": {
             "type": "string",
             "default": "pending",
@@ -820,15 +823,6 @@
           },
           "state_at": {
             "type": "datetime"
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_combinator_id": {
-            "type": "integer"
-          },
-          "old_user_id": {
-            "type": "integer"
           },
           "created_by": {
             "type": "string"

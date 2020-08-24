@@ -538,6 +538,19 @@
           "url": {
             "type": "string"
           },
+          "group": {
+            "type": "string",
+            "enum": [
+              "activities",
+              "actors",
+              "community_places",
+              "events",
+              "ideas",
+              "imaginary_landscape",
+              "physical_landscape",
+              "physical_processes"
+            ]
+          },
           "combinators": {
             "type": "array",
             "items": {
@@ -565,7 +578,10 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "array",
@@ -621,17 +637,23 @@
                 "id": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "title": {
                   "type": "string"
                 },
                 "identifier": {
                   "type": "string"
                 },
-                "map": {
-                  "type": "string"
-                },
                 "concept": {
                   "type": "string"
+                },
+                "topic_map": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -641,6 +663,9 @@
                 }
               }
             }
+          },
+          "old_identifier": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -752,6 +777,19 @@
           "url": {
             "type": "string"
           },
+          "group": {
+            "type": "string",
+            "enum": [
+              "activities",
+              "actors",
+              "community_places",
+              "events",
+              "ideas",
+              "imaginary_landscape",
+              "physical_landscape",
+              "physical_processes"
+            ]
+          },
           "combinators": {
             "type": "array",
             "items": {
@@ -766,6 +804,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "old_identifier": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

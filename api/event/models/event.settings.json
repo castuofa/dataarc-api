@@ -28,6 +28,9 @@
     "details": {
       "type": "text"
     },
+    "payload": {
+      "type": "json"
+    },
     "user": {
       "plugin": "users-permissions",
       "model": "user"

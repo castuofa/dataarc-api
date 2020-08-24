@@ -60,15 +60,35 @@ module.exports = {
   },
 
   // set the state for a collection based on params
-  set_state: async (params, collection, state, notes = '') => {
+  set_state: async (params, collection, state, msg = '') => {
     if (!params || !collection || !state) return null;
     if (strapi.services.helper.get_type(params) != 'object') {
       params = { id: params };
     }
     return strapi.query(collection).update(params, {
       state: state,
-      state_notes: notes,
+      state_msg: msg,
       state_at: Date.now(),
+    });
+  },
+
+  // log an event
+  log_event: async (
+    action,
+    item,
+    name,
+    user,
+    payload = null,
+    details = null
+  ) => {
+    // let { result, params, data }
+    strapi.services.event.create({
+      action,
+      item,
+      name,
+      details,
+      payload,
+      user,
     });
   },
 

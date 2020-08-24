@@ -114,6 +114,10 @@ async function seed_data(name) {
       strapi.log.info(
         `${name} created: '${JSON.stringify(resource).substring(0, 35)}...'`
       );
+    } else {
+      strapi.log.warn(
+        `${name} exists: '${JSON.stringify(resource).substring(0, 35)}...'`
+      );
     }
   }
 }
@@ -131,27 +135,28 @@ module.exports = async () => {
   const seed = process.env.SEED == 'true';
   const seed_resources = [
     'category',
-    'combinator',
-    'combinator-query',
     'concept',
-    'dataset',
     'event',
     'map-layer',
     'search',
     'temporal-coverage',
     'topic-map',
-    'topic',
+    'dataset', // after category
+    'topic', // after topic-map & concept
+    'combinator', // after dataset & concept
+    'combinator-query', // after combinator
   ];
   // only seed if true
   if (seed) {
     // create the default user roles
     await seed_roles();
 
-    // seed the users
+    // seed the users after roles
     await seed_users();
 
     // loop through the resources, add data, and set permissions
     for (let resource of seed_resources) {
+      await strapi.services.helper.delete_many(resource, {});
       await seed_data(resource);
       await seed_permissions(resource);
     }
