@@ -98,14 +98,18 @@ module.exports = {
     details = null
   ) => {
     // let { result, params, data }
-    strapi.services.event.create({
-      action,
-      item,
-      name,
-      details,
-      payload,
-      user,
-    });
+    strapi.services.event
+      .create({
+        action,
+        item,
+        name,
+        details,
+        payload,
+        user,
+      })
+      .catch(function (err) {
+        strapi.log.warn(`${err.status}: event log error for ${item}:${action}`);
+      });
   },
 
   // directly access the mongoose model to perform bulk actions
