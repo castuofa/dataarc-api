@@ -10,6 +10,9 @@ module.exports = {
       }
     },
     beforeUpdate: async (params, data) => {
+      data.state = 'done';
+      data.state_msg = '';
+      data.state_at = Date.now();
       if (data.title && !data.name) {
         data.name = strapi.services.helper.get_name(data.title);
       }
