@@ -65,11 +65,27 @@ module.exports = {
     if (strapi.services.helper.get_type(params) != 'object') {
       params = { id: params };
     }
-    return strapi.query(collection).update(params, {
-      state: state,
-      state_msg: msg,
-      state_at: Date.now(),
-    });
+    return strapi
+      .query(collection)
+      .update(params, {
+        state: state,
+        state_msg: msg,
+        state_at: Date.now(),
+      })
+      .catch(function (err) {
+        switch (err.status) {
+          case 404:
+            strapi.log.warn(
+              `${collection} state not updated, no matching results`
+            );
+            break;
+          default:
+            strapi.log.warn(
+              `${collection} state not updated, error ${err.status}`
+            );
+            break;
+        }
+      });
   },
 
   // log an event
