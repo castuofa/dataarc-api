@@ -135,23 +135,23 @@ module.exports = async () => {
   const seed = process.env.SEED == 'true';
   const seed_resources = [
     'category',
-    'combinator',
-    'combinator-query',
     'concept',
-    'dataset',
     'event',
     'map-layer',
     'search',
     'temporal-coverage',
     'topic-map',
-    'topic',
+    'dataset', // after category
+    'topic', // after topic-map & concept
+    'combinator', // after dataset & concept
+    'combinator-query', // after combinator
   ];
   // only seed if true
   if (seed) {
     // create the default user roles
     await seed_roles();
 
-    // seed the users
+    // seed the users after roles
     await seed_users();
 
     // loop through the resources, add data, and set permissions

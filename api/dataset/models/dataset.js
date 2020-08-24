@@ -23,8 +23,7 @@ module.exports = {
           'pending',
           'Dataset source has been updated, processing required'
         );
-      }
-      if (
+      } else if (
         _.intersection(_.keys(data), [
           'title_layout',
           'summary_layout',

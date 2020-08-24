@@ -13,7 +13,7 @@ module.exports = {
       // remove existing topics for this map
       strapi.log.info(`Removing existing topics for this map`);
       await strapi.query('topic').delete({
-        map: entry.id,
+        topic_map: entry.id,
         _limit: 999999,
       });
 
@@ -27,7 +27,7 @@ module.exports = {
         return {
           identifier: node.id.toString(),
           title: node.title,
-          map: entry.id,
+          topic_map: entry.id,
         };
       });
 
