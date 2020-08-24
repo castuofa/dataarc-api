@@ -24,15 +24,19 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["and", "or"],
+      "enum": [
+        "and",
+        "or"
+      ],
       "default": "and"
     },
     "queries": {
-      "collection": "combinator-query"
+      "collection": "combinator-query",
+      "via": "combinator"
     },
     "concepts": {
-      "collection": "concept",
-      "via": "combinators"
+      "via": "combinators",
+      "collection": "concept"
     },
     "features": {
       "collection": "feature",
@@ -44,7 +48,12 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": ["pending", "running", "failed", "done"],
+      "enum": [
+        "pending",
+        "running",
+        "failed",
+        "done"
+      ],
       "default": "pending"
     },
     "state_msg": {

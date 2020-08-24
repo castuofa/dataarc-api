@@ -678,7 +678,10 @@
                   "type": "string"
                 },
                 "queries": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "array",
@@ -746,6 +749,9 @@
               "url": {
                 "type": "string"
               },
+              "group": {
+                "type": "string"
+              },
               "combinators": {
                 "type": "array",
                 "items": {
@@ -760,6 +766,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "old_identifier": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

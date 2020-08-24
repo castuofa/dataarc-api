@@ -17,13 +17,16 @@
       "type": "string",
       "required": true
     },
-    "map": {
+    "concept": {
+      "via": "topics",
+      "model": "concept"
+    },
+    "topic_map": {
+      "via": "topics",
       "model": "topic-map"
     },
-    "concept": {
-      "model": "concept",
-      "via": "topics",
-      "autoPopulate": false
+    "old_id": {
+      "type": "integer"
     }
   }
 }

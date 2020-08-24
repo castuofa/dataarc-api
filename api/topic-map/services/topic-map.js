@@ -26,7 +26,7 @@ module.exports = {
       let topics = source.nodes.map((node) => {
         return {
           identifier: node.id.toString(),
-          name: node.title,
+          title: node.title,
           map: entry.id,
         };
       });

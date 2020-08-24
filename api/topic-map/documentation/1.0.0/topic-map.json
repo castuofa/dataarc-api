@@ -692,6 +692,42 @@
               }
             }
           },
+          "topics": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "title",
+                "identifier"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "string"
+                },
+                "concept": {
+                  "type": "string"
+                },
+                "topic_map": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -807,6 +843,12 @@
           },
           "edges": {
             "type": "object"
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
