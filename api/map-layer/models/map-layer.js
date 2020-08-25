@@ -13,34 +13,34 @@ module.exports = {
       }
     },
     afterCreate: async (result, data) => {
-      if (result != null)
-        strapi.services.helper.log_event(
-          'create',
-          'may-layer',
-          result.name,
-          result.updated_by == null ? null : result.updated_by.id,
-          { data }
-        );
+      if (result == null) return;
+      strapi.services.helper.log_event(
+        'create',
+        'may-layer',
+        result.name,
+        result.updated_by == null ? null : result.updated_by.id,
+        { data }
+      );
     },
     afterUpdate: async (result, params, data) => {
-      if (result != null)
-        strapi.services.helper.log_event(
-          'update',
-          'may-layer',
-          result.name,
-          result.updated_by == null ? null : result.updated_by.id,
-          { params, data }
-        );
+      if (result == null) return;
+      strapi.services.helper.log_event(
+        'update',
+        'may-layer',
+        result.name,
+        result.updated_by == null ? null : result.updated_by.id,
+        { params, data }
+      );
     },
     afterDelete: async (result, params) => {
-      if (result != null)
-        strapi.services.helper.log_event(
-          'delete',
-          'may-layer',
-          result.name,
-          result.updated_by == null ? null : result.updated_by.id,
-          { params }
-        );
+      if (result == null) return;
+      strapi.services.helper.log_event(
+        'delete',
+        'may-layer',
+        result.name,
+        result.updated_by == null ? null : result.updated_by.id,
+        { params }
+      );
     },
   },
 };
