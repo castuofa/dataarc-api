@@ -32,6 +32,7 @@ nbproject
 *.sqlite
 *.sqlite3
 *.env
+*.ignore
 /db
 ssl
 *#
