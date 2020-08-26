@@ -2,6 +2,10 @@
 
 const _ = require('lodash');
 const fs = require('fs');
+const zlib = require('zlib');
+const { chain } = require('stream-chain');
+const { parser } = require('stream-json');
+const { streamArray } = require('stream-json/streamers/StreamArray');
 const slugify = require('slugify');
 
 module.exports = {
@@ -124,11 +128,11 @@ module.exports = {
   },
 
   // load json from a file
-  load_json: async (type, collection) => {
-    const seed_path = `${strapi.dir}/${process.env.SEED_DATA}`;
+  load_json: (type, collection) => {
+    const seed_path = `${strapi.dir}/${process.env.SEED_PATH}`;
     const file = `${seed_path}/${type}/${collection}.json`;
     if (!fs.existsSync(file)) {
-      strapi.log.warn(`missing ${collection} ${type}`);
+      strapi.log.warn(`missing ${file}`);
       return;
     }
     try {
@@ -141,50 +145,51 @@ module.exports = {
   },
 
   // set user permissions for a controller
-  set_permissions: async (role, type, controller, actions) => {
+  set_permissions: async (role_name, type, controller, actions) => {
     // query for the role
-    const r = await strapi
+    let role = await strapi
       .query('role', 'users-permissions')
-      .findOne({ type: role });
+      .findOne({ type: role_name });
 
     // make sure we found the role
-    if (!r) return;
+    if (!role) return;
 
     // get target permissions for object
-    let p = await strapi.query('permission', 'users-permissions').find({
-      role: r.id,
-      type: type,
-      controller: controller,
-    });
+    let permissions = await strapi
+      .query('permission', 'users-permissions')
+      .find({
+        role: role.id,
+        type: type,
+        controller: controller,
+      });
 
     // make sure we have permissions
-    if (p.length == 0) return;
+    if (permissions.length == 0) return;
 
     // loop through the objects permissions setting everything
-    p.forEach((permission) => {
+    _.each(permissions, async (permission) => {
       let enable = actions.includes(permission.action);
-      let p = permission;
-      p.enabled = enable;
-      strapi.query('permission', 'users-permissions').update({ id: p.id }, p);
+      permission.enabled = enable;
+      await strapi
+        .query('permission', 'users-permissions')
+        .update({ id: permission.id }, permission);
     });
   },
 
   // create user roles
   seed_roles: async () => {
-    let roles = await strapi.services.helper.load_json('data', 'role');
-
-    for (let role of roles) {
-      // check if it exists
-      let existing = await strapi.query('role', 'users-permissions').find({
-        name: role.name,
-        _limit: 1,
+    let roles = strapi.services.helper.load_json('data', 'role');
+    _.each(roles, async (role) => {
+      let exists = await strapi.query('role', 'users-permissions').count({
+        type: role.type,
       });
-      if (existing.length === 0) {
-        await strapi.query('role', 'users-permissions').create(role);
+      if (!exists) {
+        strapi.query('role', 'users-permissions').create(role);
         strapi.log.info(`role created: ${role.name}`);
       }
 
-      const promises = role.permissions.map((permission) =>
+      // set permissions
+      _.each(role.permissions, async (permission) =>
         strapi.services.helper.set_permissions(
           role.type,
           permission.type,
@@ -192,39 +197,31 @@ module.exports = {
           permission.actions
         )
       );
-      Promise.allSettled(promises).then((result) =>
-        strapi.log.info(
-          `${result.length} permissions(s) updated \t[${role.type}]`
-        )
-      );
-    }
+    });
   },
 
   // seed users
   seed_users: async () => {
-    let users = await strapi.services.helper.load_json('data', 'user');
+    let users = strapi.services.helper.load_json('data', 'user');
     if (!users) return;
 
-    for (let user of users) {
-      // check if it exists
-      let existing = await strapi.query('user', 'users-permissions').find({
+    _.each(users, async (user) => {
+      let exists = await strapi.query('user', 'users-permissions').count({
         email: user.email,
-        _limit: 1,
       });
-      if (existing.length === 0) {
-        strapi
-          .query('user', 'users-permissions')
-          .create(user)
-          .then((result) => {
-            strapi.log.info(`user created \t[${user.email}]`);
-          });
+      if (!exists) {
+        await strapi.query('user', 'users-permissions').create(user);
+        strapi.log.info(`user created \t[${user.email}]`);
       }
-    }
+    });
   },
 
   // seed collection permissions
   seed_permissions: async (collection) => {
-    let roles = await loadFile('permissions', collection);
+    let roles = await strapi.services.helper.load_json(
+      'permissions',
+      collection
+    );
     if (!roles) return;
 
     roles.map((role) => {
@@ -239,37 +236,85 @@ module.exports = {
 
   // seed a collection
   seed_collection: async (collection) => {
-    let docs = await strapi.services.helper.load_json('data', collection);
-    if (!docs) return;
-
     // set permissions
-    strapi.service.helper.seed_permissions(collection);
+    // strapi.services.helper.seed_permissions(collection);
 
     // clear docs
-    strapi
-      .query(collection)
-      .model.deleteMany({})
-      .then((result) => {
-        strapi.log.info(
-          `${result.deletedCount} items(s) removed \t[${collection}]`
-        );
+    // await strapi
+    //   .query(collection)
+    //   .model.deleteMany({})
+    //   .then((result) => {
+    //     strapi.log.info(
+    //       `${result.deletedCount} items(s) removed \t[${collection}]`
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     strapi.log.error(`${collection} delete failed: ${err}`);
+    //   });
 
-        // create and reconnect relationships
-        const promises = docs.map((doc) =>
-          strapi.query(collection).create(doc)
-        );
-        Promise.all(promises).then((result) =>
-          strapi.log.info(`${result.length} item(s) created \t[${collection}]`)
-        );
-      })
-      .catch((err) => {
-        strapi.log.error(`${collection} delete failed: ${err}`);
-      });
+    // create relationships
+    const pipeline = chain([
+      await strapi.services.helper.seed_permissions(collection),
+      await strapi
+        .query(collection)
+        .model.deleteMany({})
+        .then((result) => {
+          strapi.log.debug(
+            `${result.deletedCount} items(s) removed \t[${collection}]`
+          );
+        })
+        .catch((err) => {
+          strapi.log.error(`${collection} delete failed: ${err}`);
+        }),
+      fs
+        .createReadStream(
+          `${strapi.dir}/${process.env.SEED_PATH}/data/${collection}.json.gz`
+        )
+        .on('error', (err) => {
+          strapi.log.error(`${collection} unable to load data file`);
+        }),
+      zlib.createGunzip(),
+      parser(),
+      streamArray(),
+      (data) => {
+        strapi.query(collection).create(data.value);
+        return data;
+      },
+    ]);
+
+    let createdCount = 0;
+    pipeline.on('data', () => ++createdCount);
+    pipeline.on('end', () =>
+      strapi.log.debug(`${createdCount} item(s) created \t[${collection}]`)
+    );
+    pipeline.on('error', (error) =>
+      strapi.log.error(`${collection} create failed: ${error}`)
+    );
+
+    // strapi.query(collection).create(docs);
+
+    // create and reconnect relationships
+    // _.each(docs, async (doc) => {
+    //   await strapi
+    //     .query(collection)
+    //     .create(doc)
+    //     .then((result) => {
+    //       strapi.log.info(`${doc.id} record created \t[${collection}]`);
+    //     });
+    // });
+  },
+
+  // seed collection array
+  seed_collections: async (collections) => {
+    _.each(collections, (collection) => {
+      strapi.services.helper.seed_collection(collection);
+    });
   },
 
   // seed data
   seed: async () => {
-    strapi.services.helper.seed_roles().then(strapi.services.helper.seed_users);
+    await strapi.services.helper.seed_roles();
+    await strapi.services.helper.seed_users();
 
     let first = [
       'category',
@@ -279,24 +324,25 @@ module.exports = {
       'search',
       'temporal-coverage',
       'topic-map',
-    ].map(strapi.services.helper.seed_collection);
+    ];
+    await strapi.services.helper.seed_collections(first);
+
     let second = [
       'dataset', // after category
       'topic', // after topic-map & concept
-    ].map(strapi.services.helper.seed_collection);
+    ];
+    await strapi.services.helper.seed_collections(second);
+
     let third = [
       'dataset-field', // after dataset
       'combinator', // after dataset & concept
-    ].map(strapi.services.helper.seed_collection);
+    ];
+    await strapi.services.helper.seed_collections(third);
+
     let fourth = [
       'combinator-query', // after combinator
-      // 'feature', // after concept, dataset, combinator
-    ].map(strapi.services.helper.seed_collection);
-
-    // async waterfall using promises
-    await Promise.allSettled(first)
-      .then(() => Promise.allSettled(second))
-      .then(() => Promise.allSettled(third))
-      .then(() => Promise.allSettled(fourth));
+      'feature', // after concept, dataset, combinator
+    ];
+    // await strapi.services.helper.seed_collections(fourth);
   },
 };

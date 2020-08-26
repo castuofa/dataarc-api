@@ -516,8 +516,7 @@
     "schemas": {
       "Feature": {
         "required": [
-          "id",
-          "properties"
+          "id"
         ],
         "properties": {
           "id": {
@@ -878,9 +877,6 @@
         }
       },
       "NewFeature": {
-        "required": [
-          "properties"
-        ],
         "properties": {
           "dataset": {
             "type": "string"

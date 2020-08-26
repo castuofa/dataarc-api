@@ -993,8 +993,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "properties"
+                "id"
               ],
               "properties": {
                 "id": {

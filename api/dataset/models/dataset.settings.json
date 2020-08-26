@@ -30,14 +30,18 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["images"],
+      "allowedTypes": [
+        "images"
+      ],
       "plugin": "upload",
       "required": false
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["files"],
+      "allowedTypes": [
+        "files"
+      ],
       "plugin": "upload",
       "required": false
     },
@@ -69,12 +73,18 @@
     },
     "features": {
       "via": "dataset",
-      "collection": "feature",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "feature"
     },
     "state": {
       "type": "enumeration",
-      "enum": ["pending", "processing", "updating", "failed", "done"],
+      "enum": [
+        "pending",
+        "processing",
+        "updating",
+        "failed",
+        "done"
+      ],
       "default": "pending"
     },
     "state_msg": {

@@ -15,7 +15,7 @@
     },
     "properties": {
       "type": "json",
-      "required": true
+      "required": false
     },
     "title": {
       "type": "string"
