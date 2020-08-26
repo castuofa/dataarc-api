@@ -566,6 +566,12 @@
                   "type": "string"
                 }
               },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "old_id": {
                 "type": "integer"
               },

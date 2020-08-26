@@ -1046,7 +1046,10 @@
                   }
                 },
                 "concepts": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "old_id": {
                   "type": "integer"

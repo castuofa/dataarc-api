@@ -45,6 +45,10 @@
       "via": "concepts",
       "dominant": true
     },
+    "features": {
+      "via": "concepts",
+      "collection": "feature"
+    },
     "old_id": {
       "type": "integer",
       "private": true

@@ -39,8 +39,8 @@
       "collection": "concept"
     },
     "features": {
-      "collection": "feature",
-      "via": "combinators"
+      "via": "combinators",
+      "collection": "feature"
     },
     "dataset": {
       "model": "dataset",

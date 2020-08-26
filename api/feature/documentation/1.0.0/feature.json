@@ -726,55 +726,64 @@
             }
           },
           "concepts": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "group": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "title"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "topics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "old_identifier": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "topics": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_identifier": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -919,7 +928,10 @@
             }
           },
           "concepts": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "old_id": {
             "type": "integer"
