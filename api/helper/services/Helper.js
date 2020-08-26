@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const fs = require('fs');
 const slugify = require('slugify');
 
 module.exports = {
@@ -120,5 +121,182 @@ module.exports = {
   // directly access the mongoose model to perform bulk actions
   insert_many: async (collection, docs, options, callback) => {
     return strapi.query(collection).model.insertMany(docs, options, callback);
+  },
+
+  // load json from a file
+  load_json: async (type, collection) => {
+    const seed_path = `${strapi.dir}/${process.env.SEED_DATA}`;
+    const file = `${seed_path}/${type}/${collection}.json`;
+    if (!fs.existsSync(file)) {
+      strapi.log.warn(`missing ${collection} ${type}`);
+      return;
+    }
+    try {
+      var content = fs.readFileSync(require.resolve(file));
+      return JSON.parse(content);
+    } catch (err) {
+      strapi.log.warn(`invalid ${collection} ${type}`);
+      return;
+    }
+  },
+
+  // set user permissions for a controller
+  set_permissions: async (role, type, controller, actions) => {
+    // query for the role
+    const r = await strapi
+      .query('role', 'users-permissions')
+      .findOne({ type: role });
+
+    // make sure we found the role
+    if (!r) return;
+
+    // get target permissions for object
+    let p = await strapi.query('permission', 'users-permissions').find({
+      role: r.id,
+      type: type,
+      controller: controller,
+    });
+
+    // make sure we have permissions
+    if (p.length == 0) return;
+
+    // loop through the objects permissions setting everything
+    p.forEach((permission) => {
+      let enable = actions.includes(permission.action);
+      let p = permission;
+      p.enabled = enable;
+      strapi.query('permission', 'users-permissions').update({ id: p.id }, p);
+    });
+  },
+
+  // create user roles
+  seed_roles: async () => {
+    let roles = await strapi.services.helper.load_json('data', 'role');
+
+    for (let role of roles) {
+      // check if it exists
+      let existing = await strapi.query('role', 'users-permissions').find({
+        name: role.name,
+        _limit: 1,
+      });
+      if (existing.length === 0) {
+        await strapi.query('role', 'users-permissions').create(role);
+        strapi.log.info(`role created: ${role.name}`);
+      }
+
+      const promises = role.permissions.map((permission) =>
+        strapi.services.helper.set_permissions(
+          role.type,
+          permission.type,
+          permission.controller,
+          permission.actions
+        )
+      );
+      Promise.allSettled(promises).then((result) =>
+        strapi.log.info(
+          `${result.length} permissions(s) updated \t[${role.type}]`
+        )
+      );
+    }
+  },
+
+  // seed users
+  seed_users: async () => {
+    let users = await strapi.services.helper.load_json('data', 'user');
+    if (!users) return;
+
+    for (let user of users) {
+      // check if it exists
+      let existing = await strapi.query('user', 'users-permissions').find({
+        email: user.email,
+        _limit: 1,
+      });
+      if (existing.length === 0) {
+        strapi
+          .query('user', 'users-permissions')
+          .create(user)
+          .then((result) => {
+            strapi.log.info(`user created \t[${user.email}]`);
+          });
+      }
+    }
+  },
+
+  // seed collection permissions
+  seed_permissions: async (collection) => {
+    let roles = await loadFile('permissions', collection);
+    if (!roles) return;
+
+    roles.map((role) => {
+      strapi.services.helper.set_permissions(
+        role.name,
+        role.type,
+        collection,
+        role.actions
+      );
+    });
+  },
+
+  // seed a collection
+  seed_collection: async (collection) => {
+    let docs = await strapi.services.helper.load_json('data', collection);
+    if (!docs) return;
+
+    // set permissions
+    strapi.service.helper.seed_permissions(collection);
+
+    // clear docs
+    strapi
+      .query(collection)
+      .model.deleteMany({})
+      .then((result) => {
+        strapi.log.info(
+          `${result.deletedCount} items(s) removed \t[${collection}]`
+        );
+
+        // create and reconnect relationships
+        const promises = docs.map((doc) =>
+          strapi.query(collection).create(doc)
+        );
+        Promise.all(promises).then((result) =>
+          strapi.log.info(`${result.length} item(s) created \t[${collection}]`)
+        );
+      })
+      .catch((err) => {
+        strapi.log.error(`${collection} delete failed: ${err}`);
+      });
+  },
+
+  // seed data
+  seed: async () => {
+    strapi.services.helper.seed_roles().then(strapi.services.helper.seed_users);
+
+    let first = [
+      'category',
+      'concept',
+      'event',
+      'map-layer',
+      'search',
+      'temporal-coverage',
+      'topic-map',
+    ].map(strapi.services.helper.seed_collection);
+    let second = [
+      'dataset', // after category
+      'topic', // after topic-map & concept
+    ].map(strapi.services.helper.seed_collection);
+    let third = [
+      'dataset-field', // after dataset
+      'combinator', // after dataset & concept
+    ].map(strapi.services.helper.seed_collection);
+    let fourth = [
+      'combinator-query', // after combinator
+      // 'feature', // after concept, dataset, combinator
+    ].map(strapi.services.helper.seed_collection);
+
+    // async waterfall using promises
+    await Promise.allSettled(first)
+      .then(() => Promise.allSettled(second))
+      .then(() => Promise.allSettled(third))
+      .then(() => Promise.allSettled(fourth));
   },
 };

@@ -10,8 +10,8 @@
   },
   "attributes": {
     "dataset": {
-      "via": "features",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "features"
     },
     "properties": {
       "type": "json",
@@ -51,13 +51,15 @@
       "type": "text"
     },
     "combinators": {
-      "via": "features",
       "autoPopulate": false,
       "collection": "combinator",
+      "via": "features",
       "dominant": true
     },
     "concepts": {
-      "collection": "concept"
+      "collection": "concept",
+      "via": "features",
+      "dominant": true
     },
     "old_id": {
       "type": "integer",

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/24/2020 6:06:06 PM"
+    "x-generation-date": "08/25/2020 7:13:34 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9779,6 +9779,12 @@
                     "type": "string"
                   }
                 },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "old_id": {
                   "type": "integer"
                 },
@@ -9857,7 +9863,10 @@
                   }
                 },
                 "concepts": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "old_id": {
                   "type": "integer"
@@ -10262,6 +10271,83 @@
               }
             }
           },
+          "features": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "properties"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "properties": {
+                  "type": "object"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "start_date": {
+                  "type": "integer"
+                },
+                "end_date": {
+                  "type": "integer"
+                },
+                "text_date": {
+                  "type": "string"
+                },
+                "keywords": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "old_dataset_id": {
+                  "type": "integer"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "topics": {
             "type": "array",
             "items": {
@@ -10428,6 +10514,12 @@
             ]
           },
           "combinators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "features": {
             "type": "array",
             "items": {
               "type": "string"
@@ -11152,7 +11244,10 @@
                   }
                 },
                 "concepts": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "old_id": {
                   "type": "integer"
@@ -11781,55 +11876,64 @@
             }
           },
           "concepts": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "group": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "title"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "old_id": {
+                  "type": "integer"
+                },
+                "topics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "old_identifier": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "topics": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "old_identifier": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -11974,7 +12078,10 @@
             }
           },
           "concepts": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "old_id": {
             "type": "integer"
@@ -12790,6 +12897,12 @@
                 "type": "string"
               },
               "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
                 "type": "array",
                 "items": {
                   "type": "string"
