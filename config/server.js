@@ -4,7 +4,7 @@ module.exports = ({ env }) => ({
   url: env('URL', ''),
   admin: {
     url: env('ADMIN_URL', '/admin'),
-    serveAdminPanel: env('ADMIN_PANEL', false),
+    serveAdminPanel: env.bool('ADMIN_PANEL', false),
     autoOpen: false,
     auth: {
       secret: env('ADMIN_JWT_SECRET', undefined),
