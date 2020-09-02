@@ -529,105 +529,11 @@
     "schemas": {
       "Dataset-field": {
         "required": [
-          "id",
-          "title",
-          "type"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
-          },
-          "dataset": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
           },
           "name": {
             "type": "string"
@@ -636,6 +542,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "path": {
@@ -660,7 +572,6 @@
           },
           "state": {
             "type": "string",
-            "default": "pending",
             "enum": [
               "pending",
               "missing",
@@ -672,6 +583,85 @@
           },
           "state_at": {
             "type": "datetime"
+          },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "category": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -764,14 +754,7 @@
         }
       },
       "NewDataset-field": {
-        "required": [
-          "title",
-          "type"
-        ],
         "properties": {
-          "dataset": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
@@ -779,6 +762,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "path": {
@@ -803,7 +792,6 @@
           },
           "state": {
             "type": "string",
-            "default": "pending",
             "enum": [
               "pending",
               "missing",
@@ -816,11 +804,8 @@
           "state_at": {
             "type": "datetime"
           },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
+          "dataset": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

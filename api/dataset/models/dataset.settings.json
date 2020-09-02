@@ -10,13 +10,10 @@
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "unique": true
+      "type": "string"
     },
     "title": {
-      "type": "string",
-      "required": true,
-      "unique": true
+      "type": "string"
     },
     "description": {
       "type": "text"
@@ -24,7 +21,7 @@
     "citation": {
       "type": "text"
     },
-    "link": {
+    "url": {
       "type": "string"
     },
     "image": {
@@ -57,25 +54,6 @@
     "link_layout": {
       "type": "text"
     },
-    "category": {
-      "model": "category",
-      "via": "datasets"
-    },
-    "combinators": {
-      "via": "dataset",
-      "collection": "combinator",
-      "autoPopulate": false
-    },
-    "fields": {
-      "collection": "dataset-field",
-      "via": "dataset",
-      "autoPopulate": false
-    },
-    "features": {
-      "via": "dataset",
-      "autoPopulate": false,
-      "collection": "feature"
-    },
     "state": {
       "type": "enumeration",
       "enum": [
@@ -93,21 +71,21 @@
     "state_at": {
       "type": "datetime"
     },
-    "old_id": {
-      "type": "integer",
-      "private": true
+    "category": {
+      "model": "category",
+      "via": "datasets"
     },
-    "old_name": {
-      "type": "string",
-      "private": true
+    "combinators": {
+      "collection": "combinator",
+      "via": "dataset"
     },
-    "old_user_id": {
-      "type": "integer",
-      "private": true
+    "fields": {
+      "collection": "dataset-field",
+      "via": "dataset"
     },
-    "old_category_id": {
-      "type": "integer",
-      "private": true
+    "features": {
+      "collection": "feature",
+      "via": "dataset"
     }
   }
 }

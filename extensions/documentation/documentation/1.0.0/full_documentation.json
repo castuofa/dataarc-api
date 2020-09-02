@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/27/2020 11:35:49 PM"
+    "x-generation-date": "09/02/2020 5:11:18 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1592,6 +1592,74 @@
       }
     },
     "/combinators/{id}/refresh": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Combinator"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/combinators/{id}/results": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -9128,8 +9196,7 @@
     "schemas": {
       "Category": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -9144,6 +9211,12 @@
           "description": {
             "type": "string"
           },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
           "color": {
             "type": "string"
           },
@@ -9151,8 +9224,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -9170,7 +9242,7 @@
                 "citation": {
                   "type": "string"
                 },
-                "link": {
+                "url": {
                   "type": "string"
                 },
                 "image": {
@@ -9190,6 +9262,15 @@
                 },
                 "link_layout": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "category": {
                   "type": "string"
@@ -9211,27 +9292,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_name": {
-                  "type": "string"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
-                "old_category_id": {
-                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -9333,9 +9393,6 @@
         }
       },
       "NewCategory": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -9344,6 +9401,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "color": {
@@ -9355,9 +9418,6 @@
               "type": "string"
             }
           },
-          "old_id": {
-            "type": "integer"
-          },
           "created_by": {
             "type": "string"
           },
@@ -9368,11 +9428,13 @@
       },
       "Combinator-query": {
         "required": [
-          "id",
-          "property"
+          "id"
         ],
         "properties": {
           "id": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "property": {
@@ -9392,10 +9454,23 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
+          "field": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -9413,8 +9488,72 @@
               "citation": {
                 "type": "string"
               },
+              "url": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "combinator": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
               "operator": {
                 "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
               },
               "queries": {
                 "type": "array",
@@ -9437,24 +9576,6 @@
               "dataset": {
                 "type": "string"
               },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -9462,74 +9583,6 @@
                 "type": "string"
               }
             }
-          },
-          "field": {
-            "required": [
-              "id",
-              "title",
-              "type"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "path": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -9622,10 +9675,10 @@
         }
       },
       "NewCombinator-query": {
-        "required": [
-          "property"
-        ],
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "property": {
             "type": "string"
           },
@@ -9643,12 +9696,6 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
-            "type": "string"
-          },
-          "field": {
-            "type": "string"
-          },
           "state": {
             "type": "string",
             "default": "pending",
@@ -9663,6 +9710,12 @@
           "state_at": {
             "type": "datetime"
           },
+          "field": {
+            "type": "string"
+          },
+          "combinator": {
+            "type": "string"
+          },
           "created_by": {
             "type": "string"
           },
@@ -9673,8 +9726,7 @@
       },
       "Combinator": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -9692,23 +9744,43 @@
           "citation": {
             "type": "string"
           },
+          "url": {
+            "type": "string"
+          },
           "operator": {
             "type": "string",
-            "default": "and",
             "enum": [
               "and",
               "or"
             ]
           },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "running",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
           "queries": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "property"
+                "id"
               ],
               "properties": {
                 "id": {
+                  "type": "string"
+                },
+                "name": {
                   "type": "string"
                 },
                 "property": {
@@ -9720,12 +9792,6 @@
                 "value": {
                   "type": "string"
                 },
-                "combinator": {
-                  "type": "string"
-                },
-                "field": {
-                  "type": "string"
-                },
                 "state": {
                   "type": "string"
                 },
@@ -9734,6 +9800,12 @@
                 },
                 "state_at": {
                   "type": "datetime"
+                },
+                "field": {
+                  "type": "string"
+                },
+                "combinator": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -9748,8 +9820,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -9785,17 +9856,11 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
                 "topics": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "old_identifier": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -9816,11 +9881,8 @@
                 "id": {
                   "type": "string"
                 },
-                "dataset": {
+                "name": {
                   "type": "string"
-                },
-                "properties": {
-                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -9835,6 +9897,9 @@
                   "type": "string"
                 },
                 "url": {
+                  "type": "string"
+                },
+                "keywords": {
                   "type": "string"
                 },
                 "latitude": {
@@ -9852,8 +9917,8 @@
                 "text_date": {
                   "type": "string"
                 },
-                "keywords": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "combinators": {
                   "type": "array",
@@ -9867,11 +9932,8 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -9884,8 +9946,7 @@
           },
           "dataset": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -9903,7 +9964,7 @@
               "citation": {
                 "type": "string"
               },
-              "link": {
+              "url": {
                 "type": "string"
               },
               "image": {
@@ -9923,6 +9984,15 @@
               },
               "link_layout": {
                 "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
               },
               "category": {
                 "type": "string"
@@ -9945,27 +10015,6 @@
                   "type": "string"
                 }
               },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -9973,22 +10022,6 @@
                 "type": "string"
               }
             }
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "running",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -10081,9 +10114,6 @@
         }
       },
       "NewCombinator": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -10097,13 +10127,31 @@
           "citation": {
             "type": "string"
           },
+          "url": {
+            "type": "string"
+          },
           "operator": {
             "type": "string",
-            "default": "and",
             "enum": [
               "and",
               "or"
             ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "running",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "queries": {
             "type": "array",
@@ -10126,31 +10174,6 @@
           "dataset": {
             "type": "string"
           },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "running",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
-          },
-          "old_user_id": {
-            "type": "integer"
-          },
           "created_by": {
             "type": "string"
           },
@@ -10161,8 +10184,7 @@
       },
       "Concept": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -10200,8 +10222,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -10219,8 +10240,20 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "queries": {
                   "type": "array",
@@ -10243,24 +10276,6 @@
                 "dataset": {
                   "type": "string"
                 },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -10280,11 +10295,8 @@
                 "id": {
                   "type": "string"
                 },
-                "dataset": {
+                "name": {
                   "type": "string"
-                },
-                "properties": {
-                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -10299,6 +10311,9 @@
                   "type": "string"
                 },
                 "url": {
+                  "type": "string"
+                },
+                "keywords": {
                   "type": "string"
                 },
                 "latitude": {
@@ -10316,8 +10331,8 @@
                 "text_date": {
                   "type": "string"
                 },
-                "keywords": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "combinators": {
                   "type": "array",
@@ -10331,11 +10346,8 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -10350,9 +10362,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title",
-                "identifier"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -10364,6 +10374,15 @@
                 "title": {
                   "type": "string"
                 },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
                 "identifier": {
                   "type": "string"
                 },
@@ -10373,9 +10392,6 @@
                 "topic_map": {
                   "type": "string"
                 },
-                "old_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -10384,9 +10400,6 @@
                 }
               }
             }
-          },
-          "old_identifier": {
-            "type": "string"
           },
           "created_by": {
             "required": [
@@ -10479,9 +10492,6 @@
         }
       },
       "NewConcept": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -10523,17 +10533,11 @@
               "type": "string"
             }
           },
-          "old_id": {
-            "type": "integer"
-          },
           "topics": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "old_identifier": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -10545,105 +10549,11 @@
       },
       "Dataset-field": {
         "required": [
-          "id",
-          "title",
-          "type"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
-          },
-          "dataset": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
           },
           "name": {
             "type": "string"
@@ -10652,6 +10562,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "path": {
@@ -10676,7 +10592,6 @@
           },
           "state": {
             "type": "string",
-            "default": "pending",
             "enum": [
               "pending",
               "missing",
@@ -10688,6 +10603,85 @@
           },
           "state_at": {
             "type": "datetime"
+          },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "category": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -10780,14 +10774,7 @@
         }
       },
       "NewDataset-field": {
-        "required": [
-          "title",
-          "type"
-        ],
         "properties": {
-          "dataset": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
@@ -10795,6 +10782,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "path": {
@@ -10819,7 +10812,6 @@
           },
           "state": {
             "type": "string",
-            "default": "pending",
             "enum": [
               "pending",
               "missing",
@@ -10832,11 +10824,8 @@
           "state_at": {
             "type": "datetime"
           },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
+          "dataset": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -10848,8 +10837,7 @@
       },
       "Dataset": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -10867,7 +10855,7 @@
           "citation": {
             "type": "string"
           },
-          "link": {
+          "url": {
             "type": "string"
           },
           "image": {
@@ -11016,10 +11004,26 @@
           "link_layout": {
             "type": "string"
           },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
           "category": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -11034,6 +11038,12 @@
               "description": {
                 "type": "string"
               },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
               "color": {
                 "type": "string"
               },
@@ -11042,9 +11052,6 @@
                 "items": {
                   "type": "string"
                 }
-              },
-              "old_id": {
-                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -11058,8 +11065,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -11077,8 +11083,20 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "queries": {
                   "type": "array",
@@ -11101,24 +11119,6 @@
                 "dataset": {
                   "type": "string"
                 },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -11132,15 +11132,10 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title",
-                "type"
+                "id"
               ],
               "properties": {
                 "id": {
-                  "type": "string"
-                },
-                "dataset": {
                   "type": "string"
                 },
                 "name": {
@@ -11150,6 +11145,12 @@
                   "type": "string"
                 },
                 "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
                   "type": "string"
                 },
                 "path": {
@@ -11170,11 +11171,8 @@
                 "state_at": {
                   "type": "datetime"
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -11195,11 +11193,8 @@
                 "id": {
                   "type": "string"
                 },
-                "dataset": {
+                "name": {
                   "type": "string"
-                },
-                "properties": {
-                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -11214,6 +11209,9 @@
                   "type": "string"
                 },
                 "url": {
+                  "type": "string"
+                },
+                "keywords": {
                   "type": "string"
                 },
                 "latitude": {
@@ -11231,8 +11229,8 @@
                 "text_date": {
                   "type": "string"
                 },
-                "keywords": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "combinators": {
                   "type": "array",
@@ -11246,11 +11244,8 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -11260,23 +11255,6 @@
                 }
               }
             }
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -11369,9 +11347,6 @@
         }
       },
       "NewDataset": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -11385,7 +11360,7 @@
           "citation": {
             "type": "string"
           },
-          "link": {
+          "url": {
             "type": "string"
           },
           "title_layout": {
@@ -11399,6 +11374,23 @@
           },
           "link_layout": {
             "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "category": {
             "type": "string"
@@ -11421,35 +11413,6 @@
               "type": "string"
             }
           },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_name": {
-            "type": "string"
-          },
-          "old_user_id": {
-            "type": "integer"
-          },
-          "old_category_id": {
-            "type": "integer"
-          },
           "created_by": {
             "type": "string"
           },
@@ -11466,6 +11429,9 @@
           "id": {
             "type": "string"
           },
+          "type": {
+            "type": "string"
+          },
           "action": {
             "type": "string",
             "enum": [
@@ -11477,9 +11443,6 @@
             ]
           },
           "item": {
-            "type": "string"
-          },
-          "name": {
             "type": "string"
           },
           "details": {
@@ -11519,14 +11482,14 @@
               "blocked": {
                 "type": "boolean"
               },
-              "loginAt": {
-                "type": "datetime"
-              },
               "role": {
                 "type": "string"
               },
-              "old_id": {
-                "type": "integer"
+              "searches": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -11628,6 +11591,9 @@
       },
       "NewEvent": {
         "properties": {
+          "type": {
+            "type": "string"
+          },
           "action": {
             "type": "string",
             "enum": [
@@ -11639,9 +11605,6 @@
             ]
           },
           "item": {
-            "type": "string"
-          },
-          "name": {
             "type": "string"
           },
           "details": {
@@ -11669,100 +11632,8 @@
           "id": {
             "type": "string"
           },
-          "dataset": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "properties": {
-            "type": "object"
+          "name": {
+            "type": "string"
           },
           "title": {
             "type": "string"
@@ -11777,6 +11648,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "keywords": {
             "type": "string"
           },
           "latitude": {
@@ -11794,15 +11668,14 @@
           "text_date": {
             "type": "string"
           },
-          "keywords": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "combinators": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -11820,8 +11693,20 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "queries": {
                   "type": "array",
@@ -11844,24 +11729,6 @@
                 "dataset": {
                   "type": "string"
                 },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -11875,8 +11742,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -11912,17 +11778,11 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
                 "topics": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "old_identifier": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -11930,6 +11790,85 @@
                 "updated_by": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "category": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -12025,11 +11964,8 @@
       },
       "NewFeature": {
         "properties": {
-          "dataset": {
+          "name": {
             "type": "string"
-          },
-          "properties": {
-            "type": "object"
           },
           "title": {
             "type": "string"
@@ -12044,6 +11980,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "keywords": {
             "type": "string"
           },
           "latitude": {
@@ -12061,8 +12000,8 @@
           "text_date": {
             "type": "string"
           },
-          "keywords": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "combinators": {
             "type": "array",
@@ -12076,11 +12015,8 @@
               "type": "string"
             }
           },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
+          "dataset": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -12092,8 +12028,7 @@
       },
       "Map-layer": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -12106,6 +12041,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "source": {
@@ -12266,9 +12207,6 @@
         }
       },
       "NewMap-layer": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -12277,6 +12215,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "created_by": {
@@ -12289,8 +12233,7 @@
       },
       "Search": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -12305,11 +12248,65 @@
           "description": {
             "type": "string"
           },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
           "filters": {
             "type": "object"
           },
           "results": {
             "type": "object"
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "searches": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -12402,9 +12399,6 @@
         }
       },
       "NewSearch": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -12415,11 +12409,20 @@
           "description": {
             "type": "string"
           },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
           "filters": {
             "type": "object"
           },
           "results": {
             "type": "object"
+          },
+          "user": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -12431,8 +12434,7 @@
       },
       "Temporal-coverage": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -12450,10 +12452,13 @@
           "citation": {
             "type": "string"
           },
-          "start": {
+          "url": {
+            "type": "string"
+          },
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
           },
           "created_by": {
@@ -12547,9 +12552,6 @@
         }
       },
       "NewTemporal-coverage": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -12563,10 +12565,13 @@
           "citation": {
             "type": "string"
           },
-          "start": {
+          "url": {
+            "type": "string"
+          },
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
           },
           "created_by": {
@@ -12579,8 +12584,7 @@
       },
       "Topic-map": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -12678,9 +12682,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title",
-                "identifier"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -12692,6 +12694,15 @@
                 "title": {
                   "type": "string"
                 },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
                 "identifier": {
                   "type": "string"
                 },
@@ -12700,9 +12711,6 @@
                 },
                 "topic_map": {
                   "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -12804,9 +12812,6 @@
         }
       },
       "NewTopic-map": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -12845,9 +12850,7 @@
       },
       "Topic": {
         "required": [
-          "id",
-          "title",
-          "identifier"
+          "id"
         ],
         "properties": {
           "id": {
@@ -12859,13 +12862,21 @@
           "title": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
           "identifier": {
             "type": "string"
           },
           "concept": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -12901,17 +12912,11 @@
                   "type": "string"
                 }
               },
-              "old_id": {
-                "type": "integer"
-              },
               "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "old_identifier": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -12923,8 +12928,7 @@
           },
           "topic_map": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -12967,9 +12971,6 @@
                 "type": "string"
               }
             }
-          },
-          "old_id": {
-            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -13062,15 +13063,20 @@
         }
       },
       "NewTopic": {
-        "required": [
-          "title",
-          "identifier"
-        ],
         "properties": {
           "name": {
             "type": "string"
           },
           "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "identifier": {
@@ -13081,9 +13087,6 @@
           },
           "topic_map": {
             "type": "string"
-          },
-          "old_id": {
-            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -13186,14 +13189,14 @@
                 "blocked": {
                   "type": "boolean"
                 },
-                "loginAt": {
-                  "type": "datetime"
-                },
                 "role": {
                   "type": "string"
                 },
-                "old_id": {
-                  "type": "integer"
+                "searches": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "created_by": {
                   "type": "string"
@@ -13358,9 +13361,6 @@
             "type": "boolean",
             "default": false
           },
-          "loginAt": {
-            "type": "datetime"
-          },
           "role": {
             "required": [
               "id",
@@ -13396,6 +13396,49 @@
               },
               "updated_by": {
                 "type": "string"
+              }
+            }
+          },
+          "searches": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "filters": {
+                  "type": "object"
+                },
+                "results": {
+                  "type": "object"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -13521,14 +13564,14 @@
             "type": "boolean",
             "default": false
           },
-          "loginAt": {
-            "type": "datetime"
-          },
           "role": {
             "type": "string"
           },
-          "old_id": {
-            "type": "integer"
+          "searches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

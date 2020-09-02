@@ -3,6 +3,22 @@
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
+  results: async (ctx) => {
+    const { id } = ctx.params;
+
+    let entity;
+    try {
+      entity = await strapi.services['combinator'].query({ id });
+    } catch (err) {
+      return ctx.response.badData(err.message);
+    }
+
+    let entry = sanitizeEntity(entity, {
+      model: strapi.models['combinator'],
+    });
+
+    return entry;
+  },
   refresh: async (ctx) => {
     const { id } = ctx.params;
 

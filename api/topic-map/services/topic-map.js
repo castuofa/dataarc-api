@@ -1,11 +1,6 @@
 'use strict';
 
 module.exports = {
-  /**
-   * Promise to process a record
-   *
-   * @return {Promise}
-   */
   process: async (params) => {
     const entry = await strapi.query('topic-map').findOne(params);
 

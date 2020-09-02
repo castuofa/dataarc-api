@@ -13,12 +13,19 @@
       "type": "string"
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
     },
     "identifier": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "concept": {
       "model": "concept",
@@ -27,9 +34,6 @@
     "topic_map": {
       "model": "topic-map",
       "via": "topics"
-    },
-    "old_id": {
-      "type": "integer"
     }
   }
 }

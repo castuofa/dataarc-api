@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * `helper` service.
+ */
+
 const _ = require('lodash');
 const fs = require('fs');
 const zlib = require('zlib');
@@ -96,8 +100,8 @@ module.exports = {
   // log an event
   log_event: async (
     action,
+    type,
     item,
-    name,
     user,
     payload = null,
     details = null
@@ -105,15 +109,15 @@ module.exports = {
     // let { result, params, data }
     strapi.services.event
       .create({
+        type,
         action,
         item,
-        name,
         details,
         payload,
         user,
       })
       .catch(function (err) {
-        strapi.log.warn(`${err.status}: event log error for ${item}:${action}`);
+        strapi.log.warn(`${err.status}: event log error for ${type}:${action}`);
       });
   },
 

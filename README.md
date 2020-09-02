@@ -23,9 +23,9 @@ Copy the `.env.example` file to `.env` and add the database information.
 
 Variable definitions
 
-- `ADMIN_JWT_SECRET` Token to secure the admin login for strapi
 - `HOST` Where the API server will run
 - `PORT` Port for the API server
+- `URL` Url that will be used to access the api
 - `DATABASE_HOST` - localhost
 - `DATABASE_SRV` - false for local dev
 - `DATABASE_SSL` - false for local dev
@@ -34,12 +34,7 @@ Variable definitions
 - `DATABASE_USERNAME` - database username
 - `DATABASE_PASSWORD` - database password
 - `AUTHENTICATION_DATABASE` - maybe 'admin' or blank depending on mongodb instance
-
-The following are used in setting up a new/blank database. It will not hurt to leave them configured after the initial setup since there are checks in place to make sure duplicate entries are not created.
-
-- `SEED_DATA` - (eg: ../dataarc-data) relative to the project root, data is pulled from dataarc-data git repo
-  - _IMPORTANT_: If you decided to put the data repo within the project folder make sure you add it to .gitignore
-- `SEED` - true only if you want to add data from the data folder
+- `ADMIN_JWT_SECRET` Token to secure the admin login for strapi
 
 #### Installing node modules and launch application
 
@@ -49,11 +44,15 @@ Install node packages
 
 Build
 
-`yarn develop`
+`yarn build`
 
 Or if it's built already, use:
 
 `yarn start`
+
+For development use:
+
+`yarn develop`
 
 #### Using the graphql/rest interface
 

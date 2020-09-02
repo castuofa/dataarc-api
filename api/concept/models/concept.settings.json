@@ -10,13 +10,10 @@
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "unique": true
+      "type": "string"
     },
     "title": {
-      "type": "string",
-      "required": true,
-      "unique": true
+      "type": "string"
     },
     "description": {
       "type": "text"
@@ -42,23 +39,16 @@
     },
     "combinators": {
       "collection": "combinator",
-      "via": "concepts",
-      "dominant": true
+      "via": "concepts"
     },
     "features": {
+      "collection": "feature",
       "via": "concepts",
-      "collection": "feature"
-    },
-    "old_id": {
-      "type": "integer",
-      "private": true
+      "dominant": true
     },
     "topics": {
       "via": "concept",
       "collection": "topic"
-    },
-    "old_identifier": {
-      "type": "string"
     }
   }
 }

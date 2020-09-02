@@ -9,13 +9,8 @@
     "timestamps": true
   },
   "attributes": {
-    "dataset": {
-      "model": "dataset",
-      "via": "features"
-    },
-    "properties": {
-      "type": "json",
-      "required": false
+    "name": {
+      "type": "string"
     },
     "title": {
       "type": "string"
@@ -32,6 +27,9 @@
     "url": {
       "type": "string"
     },
+    "keywords": {
+      "type": "text"
+    },
     "latitude": {
       "type": "float"
     },
@@ -47,27 +45,20 @@
     "text_date": {
       "type": "string"
     },
-    "keywords": {
-      "type": "text"
+    "properties": {
+      "type": "json"
     },
     "combinators": {
-      "autoPopulate": false,
-      "collection": "combinator",
       "via": "features",
-      "dominant": true
+      "collection": "combinator"
     },
     "concepts": {
-      "collection": "concept",
       "via": "features",
-      "dominant": true
+      "collection": "concept"
     },
-    "old_id": {
-      "type": "integer",
-      "private": true
-    },
-    "old_dataset_id": {
-      "type": "integer",
-      "private": true
+    "dataset": {
+      "via": "features",
+      "model": "dataset"
     }
   }
 }

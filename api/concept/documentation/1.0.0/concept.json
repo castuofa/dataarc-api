@@ -516,8 +516,7 @@
     "schemas": {
       "Concept": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -555,8 +554,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -574,8 +572,20 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "queries": {
                   "type": "array",
@@ -598,24 +608,6 @@
                 "dataset": {
                   "type": "string"
                 },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -635,11 +627,8 @@
                 "id": {
                   "type": "string"
                 },
-                "dataset": {
+                "name": {
                   "type": "string"
-                },
-                "properties": {
-                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -654,6 +643,9 @@
                   "type": "string"
                 },
                 "url": {
+                  "type": "string"
+                },
+                "keywords": {
                   "type": "string"
                 },
                 "latitude": {
@@ -671,8 +663,8 @@
                 "text_date": {
                   "type": "string"
                 },
-                "keywords": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "combinators": {
                   "type": "array",
@@ -686,11 +678,8 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -705,9 +694,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title",
-                "identifier"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -719,6 +706,15 @@
                 "title": {
                   "type": "string"
                 },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
                 "identifier": {
                   "type": "string"
                 },
@@ -728,9 +724,6 @@
                 "topic_map": {
                   "type": "string"
                 },
-                "old_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -739,9 +732,6 @@
                 }
               }
             }
-          },
-          "old_identifier": {
-            "type": "string"
           },
           "created_by": {
             "required": [
@@ -834,9 +824,6 @@
         }
       },
       "NewConcept": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -878,17 +865,11 @@
               "type": "string"
             }
           },
-          "old_id": {
-            "type": "integer"
-          },
           "topics": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "old_identifier": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"

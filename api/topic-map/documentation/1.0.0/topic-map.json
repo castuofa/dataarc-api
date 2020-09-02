@@ -597,8 +597,7 @@
     "schemas": {
       "Topic-map": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -696,9 +695,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title",
-                "identifier"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -710,6 +707,15 @@
                 "title": {
                   "type": "string"
                 },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
                 "identifier": {
                   "type": "string"
                 },
@@ -718,9 +724,6 @@
                 },
                 "topic_map": {
                   "type": "string"
-                },
-                "old_id": {
-                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -822,9 +825,6 @@
         }
       },
       "NewTopic-map": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"

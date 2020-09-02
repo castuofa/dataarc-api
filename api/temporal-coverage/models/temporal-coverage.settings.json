@@ -13,8 +13,7 @@
       "type": "string"
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
       "type": "text"
@@ -22,10 +21,13 @@
     "citation": {
       "type": "text"
     },
-    "start": {
+    "url": {
+      "type": "string"
+    },
+    "start_date": {
       "type": "integer"
     },
-    "end": {
+    "end_date": {
       "type": "integer"
     }
   }

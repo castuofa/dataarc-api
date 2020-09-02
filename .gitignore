@@ -1,4 +1,7 @@
-# macos
+############################
+# OS X
+############################
+
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -7,10 +10,18 @@ Icon
 .Trashes
 ._*
 
-# linux
+
+############################
+# Linux
+############################
+
 *~
 
-# windows
+
+############################
+# Windows
+############################
+
 Thumbs.db
 ehthumbs.db
 Desktop.ini
@@ -20,28 +31,66 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# editor
-.idea
-.vscode
-nbproject
 
-# logs, databases, env
+############################
+# Packages
+############################
+
+*.7z
+*.csv
+*.dat
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.seed
+*.so
+*.swo
+*.swp
+*.swn
+*.swm
+*.out
+*.pid
+
+
+############################
+# Logs and databases
+############################
+
 .tmp
 *.log
 *.sql
 *.sqlite
 *.sqlite3
-*.env
-*.ignore
-/db
-ssl
-*#
 
-# uploads
+
+############################
+# Misc.
+############################
+
+*#
+ssl
+.idea
+.vscode
+.env
+*.ignore
+nbproject
 public/uploads/*
 !public/uploads/.gitkeep
 
-# node.js
+
+############################
+# Node.js
+############################
+
 lib-cov
 lcov.info
 pids
@@ -50,11 +99,20 @@ results
 node_modules
 .node_history
 
-# tests
+
+############################
+# Tests
+############################
+
 testApp
 coverage
 
-# strapi
+############################
+# Strapi
+############################
+
+.env
+license.txt
 exports
 .cache
 build

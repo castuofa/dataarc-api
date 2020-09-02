@@ -1213,9 +1213,6 @@
             "type": "boolean",
             "default": false
           },
-          "loginAt": {
-            "type": "datetime"
-          },
           "role": {
             "required": [
               "id",
@@ -1251,6 +1248,49 @@
               },
               "updated_by": {
                 "type": "string"
+              }
+            }
+          },
+          "searches": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "filters": {
+                  "type": "object"
+                },
+                "results": {
+                  "type": "object"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -1376,14 +1416,14 @@
             "type": "boolean",
             "default": false
           },
-          "loginAt": {
-            "type": "datetime"
-          },
           "role": {
             "type": "string"
           },
-          "old_id": {
-            "type": "integer"
+          "searches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
