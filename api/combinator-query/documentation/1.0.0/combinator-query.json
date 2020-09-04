@@ -541,6 +541,9 @@
           "property": {
             "type": "string"
           },
+          "property_type": {
+            "type": "string"
+          },
           "operator": {
             "type": "string",
             "enum": [
@@ -781,6 +784,9 @@
             "type": "string"
           },
           "property": {
+            "type": "string"
+          },
+          "property_type": {
             "type": "string"
           },
           "operator": {

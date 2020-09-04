@@ -50,8 +50,8 @@
       "type": "datetime"
     },
     "queries": {
-      "collection": "combinator-query",
-      "via": "combinator"
+      "via": "combinator",
+      "collection": "combinator-query"
     },
     "concepts": {
       "collection": "concept",

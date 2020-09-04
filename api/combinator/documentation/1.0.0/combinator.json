@@ -712,6 +712,9 @@
                 "property": {
                   "type": "string"
                 },
+                "property_type": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
                 },

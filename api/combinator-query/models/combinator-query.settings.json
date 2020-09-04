@@ -17,6 +17,9 @@
     "property": {
       "type": "string"
     },
+    "property_type": {
+      "type": "string"
+    },
     "operator": {
       "type": "enumeration",
       "enum": [
@@ -46,8 +49,8 @@
       "model": "dataset-field"
     },
     "combinator": {
-      "via": "queries",
-      "model": "combinator"
+      "model": "combinator",
+      "via": "queries"
     }
   }
 }

@@ -11,6 +11,15 @@ module.exports = {
           field: 'name',
           value: data.property + '_' + data.operator + '_' + data.value,
         });
+      if (data.field) {
+        const field = await strapi
+          .query('dataset-field')
+          .findOne({ id: data.field });
+        if (field) {
+          data.property = field.path;
+          data.property_type = field.type;
+        }
+      }
     },
     beforeUpdate: async (params, data) => {
       if (data.property && data.operator && data.value && !data.name)
@@ -19,6 +28,15 @@ module.exports = {
           field: 'name',
           value: data.property + '_' + data.operator + '_' + data.value,
         });
+      if (data.field) {
+        const field = await strapi
+          .query('dataset-field')
+          .findOne({ id: data.field });
+        if (field) {
+          data.property = field.path;
+          data.property_type = field.type;
+        }
+      }
     },
     afterCreate: async (result, data) => {
       if (result == null) return;
