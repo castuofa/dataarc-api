@@ -10,7 +10,9 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
     },
     "title": {
       "type": "string"
@@ -38,8 +40,8 @@
       ]
     },
     "combinators": {
-      "collection": "combinator",
-      "via": "concepts"
+      "via": "concepts",
+      "collection": "combinator"
     },
     "features": {
       "collection": "feature",

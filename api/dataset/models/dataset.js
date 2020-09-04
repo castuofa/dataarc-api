@@ -5,14 +5,20 @@ const _ = require('lodash');
 module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
-      if (data.title && !data.name) {
-        data.name = strapi.services.helper.get_name(data.title);
-      }
+      if (data.title && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'dataset',
+          field: 'name',
+          value: data.title,
+        });
     },
     beforeUpdate: async (params, data) => {
-      if (data.title && !data.name) {
-        data.name = strapi.services.helper.get_name(data.title);
-      }
+      if (data.title && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'dataset',
+          field: 'name',
+          value: data.title,
+        });
     },
     afterCreate: async (result, data) => {
       if (result == null) return;

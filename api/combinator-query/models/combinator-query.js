@@ -4,6 +4,22 @@ const _ = require('lodash');
 
 module.exports = {
   lifecycles: {
+    beforeCreate: async (data) => {
+      if (data.property && data.operator && data.value && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'combinator-query',
+          field: 'name',
+          value: data.property + '_' + data.operator + '_' + data.value,
+        });
+    },
+    beforeUpdate: async (params, data) => {
+      if (data.property && data.operator && data.value && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'combinator-query',
+          field: 'name',
+          value: data.property + '_' + data.operator + '_' + data.value,
+        });
+    },
     afterCreate: async (result, data) => {
       if (result == null) return;
       strapi.services.helper.log_event(

@@ -3,20 +3,26 @@
 module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
-      if (data.title && !data.name) {
-        data.name = strapi.services.helper.get_name(data.title);
-      }
+      if (data.title && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'map-layer',
+          field: 'name',
+          value: data.title,
+        });
     },
     beforeUpdate: async (params, data) => {
-      if (data.title && !data.name) {
-        data.name = strapi.services.helper.get_name(data.title);
-      }
+      if (data.title && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'map-layer',
+          field: 'name',
+          value: data.title,
+        });
     },
     afterCreate: async (result, data) => {
       if (result == null) return;
       strapi.services.helper.log_event(
         'create',
-        'may-layer',
+        'map-layer',
         result.name,
         result.updated_by == null ? null : result.updated_by.id,
         { data }
@@ -26,7 +32,7 @@ module.exports = {
       if (result == null) return;
       strapi.services.helper.log_event(
         'update',
-        'may-layer',
+        'map-layer',
         result.name,
         result.updated_by == null ? null : result.updated_by.id,
         { params, data }
@@ -36,7 +42,7 @@ module.exports = {
       if (result == null) return;
       strapi.services.helper.log_event(
         'delete',
-        'may-layer',
+        'map-layer',
         result.name,
         result.updated_by == null ? null : result.updated_by.id,
         { params }

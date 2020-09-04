@@ -10,7 +10,9 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "unique": true
     },
     "title": {
       "type": "string"
@@ -48,12 +50,12 @@
       "type": "datetime"
     },
     "queries": {
-      "via": "combinator",
-      "collection": "combinator-query"
+      "collection": "combinator-query",
+      "via": "combinator"
     },
     "concepts": {
-      "via": "combinators",
       "collection": "concept",
+      "via": "combinators",
       "dominant": true
     },
     "features": {
@@ -62,8 +64,8 @@
       "dominant": true
     },
     "dataset": {
-      "via": "combinators",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "combinators"
     }
   }
 }

@@ -10,7 +10,9 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
     },
     "title": {
       "type": "string"
@@ -46,11 +48,7 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "missing",
-        "done"
-      ]
+      "enum": ["pending", "missing", "done"]
     },
     "state_msg": {
       "type": "string"

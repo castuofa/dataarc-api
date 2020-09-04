@@ -10,7 +10,9 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
     },
     "title": {
       "type": "string"
@@ -28,8 +30,8 @@
       "type": "string"
     },
     "datasets": {
-      "via": "category",
-      "collection": "dataset"
+      "collection": "dataset",
+      "via": "category"
     }
   }
 }
