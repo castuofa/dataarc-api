@@ -22,10 +22,11 @@ module.exports = {
       );
 
       // read file
-      const path = `${strapi.dir}/public${entry.source.url}`;
       let source;
       try {
-        source = JSON.parse(fs.readFileSync(path, 'utf8'));
+        source = JSON.parse(
+          fs.readFileSync(`${strapi.dir}/public${entry.source.url}`, 'utf8')
+        );
         source = turf.featureCollection(source.features);
       } catch (e) {
         throw new Error(
