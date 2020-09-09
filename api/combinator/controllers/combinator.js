@@ -8,7 +8,7 @@ module.exports = {
 
     let entity;
     try {
-      entity = await strapi.services['combinator'].query({ id });
+      entity = await strapi.services['combinator'].results({ id });
     } catch (err) {
       return ctx.response.badData(err.message);
     }
