@@ -30,8 +30,6 @@ module.exports = {
         let value = Number(query.value);
         if (isNaN(value)) value = query.value;
 
-        strapi.log.info(`VALUE: ${value}`);
-
         // if value is null, empty, undefined, etc, skip this query
         if (!value) return;
 
