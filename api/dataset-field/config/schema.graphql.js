@@ -1,15 +1,17 @@
 module.exports = {
   query: `
-    datasetFieldsCount(where: JSON): Int!
+    countDatasetFields(where: JSON): Int!
+    randomDatasetField(where: JSON): DatasetField
   `,
   resolver: {
     Query: {
-      datasetFieldsCount: {
+      countDatasetFields: {
         description: 'Return the count of dataset fields',
-        resolverOf: 'application::dataset-field.dataset-field.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('dataset-field').count(options.where || {});
-        },
+        resolver: 'application::dataset-field.dataset-field.count',
+      },
+      randomDatasetField: {
+        description: 'Return a random dataset field',
+        resolver: 'application::dataset-field.dataset-field.random',
       },
     },
   },

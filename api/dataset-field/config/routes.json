@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/dataset-fields/random",
+      "handler": "dataset-field.random",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/dataset-fields/:id",
       "handler": "dataset-field.findOne",
       "config": {
