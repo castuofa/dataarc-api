@@ -606,10 +606,14 @@
             "enum": [
               "equals",
               "not_equals",
+              "less_than",
+              "greater_than",
+              "less_than_or_equal_to",
+              "greater_than_or_equal_to",
               "contains",
               "not_contains",
-              "greater_than",
-              "less_than"
+              "starts_with",
+              "ends_with"
             ]
           },
           "value": {
@@ -851,10 +855,14 @@
             "enum": [
               "equals",
               "not_equals",
+              "less_than",
+              "greater_than",
+              "less_than_or_equal_to",
+              "greater_than_or_equal_to",
               "contains",
               "not_contains",
-              "greater_than",
-              "less_than"
+              "starts_with",
+              "ends_with"
             ]
           },
           "value": {
