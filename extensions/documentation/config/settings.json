@@ -3,10 +3,12 @@
   "info": {
     "version": "2.2.1",
     "title": "DataARC API",
-    "description": "DataARC REST API Documentation",
+    "description": "DataARC API REST Documentation",
+    "termsOfService": "",
     "contact": {
       "name": "DataARC",
-      "url": "data-arc.org"
+      "url": "",
+      "email": ""
     },
     "license": {
       "name": "Apache 2.0",
@@ -15,10 +17,14 @@
   },
   "x-strapi-config": {
     "path": "/documentation",
-    "showGeneratedFiles": true,
+    "showGeneratedFiles": false,
     "pluginsForWhichToGenerateDoc": []
   },
   "servers": [
+    {
+      "url": "https://api.data-arc.org",
+      "description": "DataARC API"
+    },
     {
       "url": "https://api.data-arc.org",
       "description": "DataARC API"
@@ -28,6 +34,10 @@
       "description": "Development"
     }
   ],
+  "externalDocs": {
+    "description": "GraphQL API",
+    "url": "https://api.data-arc.org/graphql"
+  },
   "security": [
     {
       "bearerAuth": []

@@ -3,42 +3,42 @@
   "info": {
     "version": "2.2.1",
     "title": "DataARC API",
-    "description": "",
+    "description": "DataARC API REST Documentation",
     "termsOfService": "",
     "contact": {
       "name": "DataARC",
-      "email": "admin@data-arc.org",
-      "url": "data-arc.org"
+      "email": "",
+      "url": ""
     },
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "09/10/2020 4:08:29 PM"
+    "x-generation-date": "09/10/2020 5:00:39 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
-    "showGeneratedFiles": true,
+    "showGeneratedFiles": false,
     "generateDefaultResponse": true,
     "pluginsForWhichToGenerateDoc": []
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "description": "Development server"
+      "url": "https://api.data-arc.org",
+      "description": "DataARC API"
     },
     {
       "url": "https://api.data-arc.org",
-      "description": "Production server"
+      "description": "DataARC API"
     },
     {
-      "url": "YOUR_PRODUCTION_SERVER",
-      "description": "Production server"
+      "url": "http://localhost:3000",
+      "description": "Development"
     }
   ],
   "externalDocs": {
-    "description": "Find out more",
-    "url": "https://data-arc.org"
+    "description": "GraphQL API",
+    "url": "https://api.data-arc.org/graphql"
   },
   "security": [
     {
@@ -7807,10 +7807,14 @@
             "enum": [
               "equals",
               "not_equals",
+              "less_than",
+              "greater_than",
+              "less_than_or_equal_to",
+              "greater_than_or_equal_to",
               "contains",
               "not_contains",
-              "greater_than",
-              "less_than"
+              "starts_with",
+              "ends_with"
             ]
           },
           "value": {
@@ -8052,10 +8056,14 @@
             "enum": [
               "equals",
               "not_equals",
+              "less_than",
+              "greater_than",
+              "less_than_or_equal_to",
+              "greater_than_or_equal_to",
               "contains",
               "not_contains",
-              "greater_than",
-              "less_than"
+              "starts_with",
+              "ends_with"
             ]
           },
           "value": {
@@ -8116,7 +8124,9 @@
             "type": "string",
             "enum": [
               "and",
-              "or"
+              "or",
+              "nor",
+              "not"
             ]
           },
           "state": {
@@ -8502,7 +8512,9 @@
             "type": "string",
             "enum": [
               "and",
-              "or"
+              "or",
+              "nor",
+              "not"
             ]
           },
           "state": {
