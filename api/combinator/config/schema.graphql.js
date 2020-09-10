@@ -5,10 +5,17 @@ module.exports = {
       concepts_count: Int
       features_count: Int
     }
+    type CombinatorResults {
+      combinator: Combinator
+      features: [Feature]
+      matched_count: Int
+      total_count: Int
+    }
   `,
   query: `
     countCombinators(where: JSON): Int!
     randomCombinator(where: JSON): Combinator
+    combinatorResults(id: ID): CombinatorResults
   `,
   resolver: {
     Query: {
@@ -19,6 +26,10 @@ module.exports = {
       randomCombinator: {
         description: 'Return a random combinator',
         resolver: 'application::combinator.combinator.random',
+      },
+      combinatorResults: {
+        description: 'Execute and return the results of the combinator',
+        resolver: 'application::combinator.combinator.results',
       },
       combinators: {
         resolverOf: 'application::combinator.combinator.find',

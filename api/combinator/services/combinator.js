@@ -7,10 +7,8 @@ module.exports = {
     let result = {
       combinator: null,
       features: [],
-      count: {
-        matched: 0,
-        total: 0,
-      },
+      matched_count: 0,
+      total_count: 0,
     };
 
     // find the entry
@@ -118,8 +116,8 @@ module.exports = {
 
       // find the features and set the counts
       result.features = await strapi.query('feature').model.find(where);
-      result.count.matched = result.features.length;
-      result.count.total = await strapi
+      result.matched_count = result.features.length;
+      result.total_count = await strapi
         .query('feature')
         .count({ dataset: entry.dataset.id });
     }
