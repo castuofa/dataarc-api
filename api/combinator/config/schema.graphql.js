@@ -7,16 +7,18 @@ module.exports = {
     }
   `,
   query: `
-    combinatorsCount(where: JSON): Int!
+    countCombinators(where: JSON): Int!
+    randomCombinator(where: JSON): Combinator
   `,
   resolver: {
     Query: {
-      combinatorsCount: {
+      countCombinators: {
         description: 'Return the count of combinators',
-        resolverOf: 'application::combinator.combinator.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('combinator').count(options.where || {});
-        },
+        resolver: 'application::combinator.combinator.count',
+      },
+      randomCombinator: {
+        description: 'Return a random combinator',
+        resolver: 'application::combinator.combinator.random',
       },
       combinators: {
         resolverOf: 'application::combinator.combinator.find',
