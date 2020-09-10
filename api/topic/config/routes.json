@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/topics/random",
+      "handler": "topic.random",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/topics/:id",
       "handler": "topic.findOne",
       "config": {

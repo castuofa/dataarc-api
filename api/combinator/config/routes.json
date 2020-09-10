@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/combinators/random",
+      "handler": "combinator.random",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/combinators/:id",
       "handler": "combinator.findOne",
       "config": {

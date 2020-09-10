@@ -6,16 +6,18 @@ module.exports = {
     }
   `,
   query: `
-    featuresCount(where: JSON): Int!
+    countFeatures(where: JSON): Int!
+    randomFeature(where: JSON): Feature
   `,
   resolver: {
     Query: {
-      featuresCount: {
+      countFeatures: {
         description: 'Return the count of features',
-        resolverOf: 'application::feature.feature.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('feature').count(options.where || {});
-        },
+        resolver: 'application::feature.feature.count',
+      },
+      randomFeature: {
+        description: 'Return a random feature',
+        resolver: 'application::feature.feature.random',
       },
       features: {
         resolverOf: 'application::feature.feature.find',

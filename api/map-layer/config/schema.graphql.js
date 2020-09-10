@@ -1,15 +1,12 @@
 module.exports = {
   query: `
-    mapLayersCount(where: JSON): Int!
+    countMapLayers(where: JSON): Int!
   `,
   resolver: {
     Query: {
-      mapLayersCount: {
+      countMapLayers: {
         description: 'Return the count of map layers',
-        resolverOf: 'application::map-layer.map-layer.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('map-layer').count(options.where || {});
-        },
+        resolver: 'application::map-layer.map-layer.count',
       },
     },
   },

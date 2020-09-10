@@ -6,16 +6,18 @@ module.exports = {
     }
   `,
   query: `
-    conceptsCount(where: JSON): Int!
+    countConcepts(where: JSON): Int!
+    randomConcept(where: JSON): Concept
   `,
   resolver: {
     Query: {
-      conceptsCount: {
+      countConcepts: {
         description: 'Return the count of concepts',
-        resolverOf: 'application::concept.concept.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('concept').count(options.where || {});
-        },
+        resolver: 'application::concept.concept.count',
+      },
+      randomConcept: {
+        description: 'Return a random concept',
+        resolver: 'application::concept.concept.random',
       },
       concepts: {
         resolverOf: 'application::concept.concept.find',

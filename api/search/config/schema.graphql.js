@@ -1,15 +1,17 @@
 module.exports = {
   query: `
-    searchesCount(where: JSON): Int!
+    countSearches(where: JSON): Int!
+    randomSearch(where: JSON): Search
   `,
   resolver: {
     Query: {
-      searchesCount: {
+      countSearches: {
         description: 'Return the count of searches',
-        resolverOf: 'application::search.search.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('search').count(options.where || {});
-        },
+        resolver: 'application::search.search.count',
+      },
+      randomSearch: {
+        description: 'Return a random search',
+        resolver: 'application::search.search.random',
       },
     },
   },
