@@ -1,15 +1,17 @@
 module.exports = {
   query: `
-    topicsCount(where: JSON): Int!
+    countTopics(where: JSON): Int!
+    randomTopic(where: JSON): Topic
   `,
   resolver: {
     Query: {
-      topicsCount: {
+      countTopics: {
         description: 'Return the count of topics',
-        resolverOf: 'application::topic.topic.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('topic').count(options.where || {});
-        },
+        resolver: 'application::topic.topic.count',
+      },
+      randomTopic: {
+        description: 'Return a random topic',
+        resolver: 'application::topic.topic.random',
       },
     },
   },
