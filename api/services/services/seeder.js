@@ -119,16 +119,20 @@ module.exports = {
         }),
       fs
         .createReadStream(
-          `${strapi.dir}/${process.env.SEED_PATH}/data/${collection}.json.gz`
+          `${strapi.dir}/${process.env.SEED_PATH}/data/${collection}.json`
         )
         .on('error', (err) => {
           strapi.log.error(`${collection} unable to load data file`);
         }),
-      zlib.createGunzip(),
+      // zlib.createGunzip(),
       parser(),
       streamArray(),
       (data) => {
-        strapi.query(collection).create(data.value);
+        try {
+          strapi.query(collection).create(data.value);
+        } catch (err) {
+          strapi.log.error(`[${collection}] Error creating entry`);
+        }
         return data;
       },
     ]);

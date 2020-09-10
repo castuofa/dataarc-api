@@ -10,9 +10,7 @@
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "required": false,
-      "unique": true
+      "type": "string"
     },
     "title": {
       "type": "string"
@@ -28,19 +26,11 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": [
-        "and",
-        "or"
-      ]
+      "enum": ["and", "or"]
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "running",
-        "failed",
-        "done"
-      ],
+      "enum": ["pending", "running", "failed", "done"],
       "default": "pending"
     },
     "state_msg": {

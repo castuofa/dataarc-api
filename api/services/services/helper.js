@@ -19,8 +19,6 @@ module.exports = {
     });
     if (!exists) return name;
 
-    strapi.log.info(`name doesn't exist`);
-
     // find possible colisions
     const possibleColisions = await strapi
       .query(content_type)
