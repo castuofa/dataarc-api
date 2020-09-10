@@ -7,16 +7,18 @@ module.exports = {
     }
   `,
   query: `
-    datasetsCount(where: JSON): Int!
+    countDatasets(where: JSON): Int!
+    randomDataset(where: JSON): Dataset
   `,
   resolver: {
     Query: {
-      datasetsCount: {
+      countDatasets: {
         description: 'Return the count of datasets',
-        resolverOf: 'application::dataset.dataset.count',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.query('dataset').count(options.where || {});
-        },
+        resolver: 'application::dataset.dataset.count',
+      },
+      randomDataset: {
+        description: 'Return a random dataset',
+        resolver: 'application::dataset.dataset.random',
       },
       datasets: {
         resolverOf: 'application::dataset.dataset.find',
