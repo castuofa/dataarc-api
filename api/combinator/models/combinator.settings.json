@@ -26,11 +26,21 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["and", "or"]
+      "enum": [
+        "and",
+        "or",
+        "nor",
+        "not"
+      ]
     },
     "state": {
       "type": "enumeration",
-      "enum": ["pending", "running", "failed", "done"],
+      "enum": [
+        "pending",
+        "running",
+        "failed",
+        "done"
+      ],
       "default": "pending"
     },
     "state_msg": {

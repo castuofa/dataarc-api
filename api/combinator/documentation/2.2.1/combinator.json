@@ -734,7 +734,9 @@
             "type": "string",
             "enum": [
               "and",
-              "or"
+              "or",
+              "nor",
+              "not"
             ]
           },
           "state": {
@@ -1120,7 +1122,9 @@
             "type": "string",
             "enum": [
               "and",
-              "or"
+              "or",
+              "nor",
+              "not"
             ]
           },
           "state": {
