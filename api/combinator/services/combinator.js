@@ -69,6 +69,16 @@ module.exports = {
               [field]: { $not: { $regex: value, $options: 'i' } },
             });
             break;
+          case 'starts_with':
+            conditions.push({
+              [field]: { $regex: '^' + value, $options: 'i' },
+            });
+            break;
+          case 'ends_with':
+            conditions.push({
+              [field]: { $regex: value + '$', $options: 'i' },
+            });
+            break;
           default:
             // default to equals
             conditions.push({ [field]: { $eq: value } });
@@ -105,7 +115,6 @@ module.exports = {
         dataset: entry.dataset.id,
         [op]: conditions,
       };
-      // console.log(`${JSON.stringify(where, null, 2)}`);
 
       // find the features and set the counts
       result.features = await strapi.query('feature').model.find(where);
