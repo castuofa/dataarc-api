@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/combinator-queries/random",
+      "handler": "combinator-query.random",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/combinator-queries/:id",
       "handler": "combinator-query.findOne",
       "config": {
