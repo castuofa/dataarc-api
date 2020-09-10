@@ -529,14 +529,19 @@
     "schemas": {
       "Combinator-query": {
         "required": [
-          "id",
-          "property"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "property": {
+            "type": "string"
+          },
+          "property_type": {
             "type": "string"
           },
           "operator": {
@@ -553,10 +558,23 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
+          "field": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -574,8 +592,72 @@
               "citation": {
                 "type": "string"
               },
+              "url": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "combinator": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
               "operator": {
                 "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
               },
               "queries": {
                 "type": "array",
@@ -598,24 +680,6 @@
               "dataset": {
                 "type": "string"
               },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -623,74 +687,6 @@
                 "type": "string"
               }
             }
-          },
-          "field": {
-            "required": [
-              "id",
-              "title",
-              "type"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "path": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_dataset_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -783,11 +779,14 @@
         }
       },
       "NewCombinator-query": {
-        "required": [
-          "property"
-        ],
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "property": {
+            "type": "string"
+          },
+          "property_type": {
             "type": "string"
           },
           "operator": {
@@ -804,12 +803,6 @@
           "value": {
             "type": "string"
           },
-          "combinator": {
-            "type": "string"
-          },
-          "field": {
-            "type": "string"
-          },
           "state": {
             "type": "string",
             "default": "pending",
@@ -823,6 +816,12 @@
           },
           "state_at": {
             "type": "datetime"
+          },
+          "field": {
+            "type": "string"
+          },
+          "combinator": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

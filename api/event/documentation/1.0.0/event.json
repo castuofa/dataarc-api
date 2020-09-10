@@ -522,6 +522,9 @@
           "id": {
             "type": "string"
           },
+          "type": {
+            "type": "string"
+          },
           "action": {
             "type": "string",
             "enum": [
@@ -533,9 +536,6 @@
             ]
           },
           "item": {
-            "type": "string"
-          },
-          "name": {
             "type": "string"
           },
           "details": {
@@ -575,14 +575,14 @@
               "blocked": {
                 "type": "boolean"
               },
-              "loginAt": {
-                "type": "datetime"
-              },
               "role": {
                 "type": "string"
               },
-              "old_id": {
-                "type": "integer"
+              "searches": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -684,6 +684,9 @@
       },
       "NewEvent": {
         "properties": {
+          "type": {
+            "type": "string"
+          },
           "action": {
             "type": "string",
             "enum": [
@@ -695,9 +698,6 @@
             ]
           },
           "item": {
-            "type": "string"
-          },
-          "name": {
             "type": "string"
           },
           "details": {

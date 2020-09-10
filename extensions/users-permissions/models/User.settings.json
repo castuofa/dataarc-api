@@ -47,19 +47,15 @@
       "default": false,
       "configurable": false
     },
-    "loginAt": {
-      "type": "datetime",
-      "configurable": false
-    },
     "role": {
       "model": "role",
       "via": "users",
       "plugin": "users-permissions",
       "configurable": false
     },
-    "old_id": {
-      "type": "integer",
-      "private": true
+    "searches": {
+      "via": "user",
+      "collection": "search"
     }
   }
 }

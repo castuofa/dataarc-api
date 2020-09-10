@@ -9,9 +9,16 @@
     "timestamps": true
   },
   "attributes": {
-    "property": {
+    "name": {
       "type": "string",
-      "required": true
+      "unique": true,
+      "required": false
+    },
+    "property": {
+      "type": "string"
+    },
+    "property_type": {
+      "type": "string"
     },
     "operator": {
       "type": "enumeration",
@@ -27,13 +34,6 @@
     "value": {
       "type": "string"
     },
-    "combinator": {
-      "via": "queries",
-      "model": "combinator"
-    },
-    "field": {
-      "model": "dataset-field"
-    },
     "state": {
       "type": "enumeration",
       "enum": ["pending", "done"],
@@ -44,6 +44,13 @@
     },
     "state_at": {
       "type": "datetime"
+    },
+    "field": {
+      "model": "dataset-field"
+    },
+    "combinator": {
+      "model": "combinator",
+      "via": "queries"
     }
   }
 }

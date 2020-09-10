@@ -529,8 +529,7 @@
     "schemas": {
       "Temporal-coverage": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -548,10 +547,13 @@
           "citation": {
             "type": "string"
           },
-          "start": {
+          "url": {
+            "type": "string"
+          },
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
           },
           "created_by": {
@@ -645,9 +647,6 @@
         }
       },
       "NewTemporal-coverage": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -661,10 +660,13 @@
           "citation": {
             "type": "string"
           },
-          "start": {
+          "url": {
+            "type": "string"
+          },
+          "start_date": {
             "type": "integer"
           },
-          "end": {
+          "end_date": {
             "type": "integer"
           },
           "created_by": {

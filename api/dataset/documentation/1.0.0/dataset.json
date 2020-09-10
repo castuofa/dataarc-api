@@ -652,8 +652,7 @@
     "schemas": {
       "Dataset": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -671,7 +670,7 @@
           "citation": {
             "type": "string"
           },
-          "link": {
+          "url": {
             "type": "string"
           },
           "image": {
@@ -820,10 +819,26 @@
           "link_layout": {
             "type": "string"
           },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
           "category": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -838,6 +853,12 @@
               "description": {
                 "type": "string"
               },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
               "color": {
                 "type": "string"
               },
@@ -846,9 +867,6 @@
                 "items": {
                   "type": "string"
                 }
-              },
-              "old_id": {
-                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -862,8 +880,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -881,8 +898,20 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "queries": {
                   "type": "array",
@@ -905,24 +934,6 @@
                 "dataset": {
                   "type": "string"
                 },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -936,15 +947,10 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title",
-                "type"
+                "id"
               ],
               "properties": {
                 "id": {
-                  "type": "string"
-                },
-                "dataset": {
                   "type": "string"
                 },
                 "name": {
@@ -954,6 +960,12 @@
                   "type": "string"
                 },
                 "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
                   "type": "string"
                 },
                 "path": {
@@ -974,11 +986,8 @@
                 "state_at": {
                   "type": "datetime"
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -999,11 +1008,8 @@
                 "id": {
                   "type": "string"
                 },
-                "dataset": {
+                "name": {
                   "type": "string"
-                },
-                "properties": {
-                  "type": "object"
                 },
                 "title": {
                   "type": "string"
@@ -1018,6 +1024,9 @@
                   "type": "string"
                 },
                 "url": {
+                  "type": "string"
+                },
+                "keywords": {
                   "type": "string"
                 },
                 "latitude": {
@@ -1035,8 +1044,8 @@
                 "text_date": {
                   "type": "string"
                 },
-                "keywords": {
-                  "type": "string"
+                "properties": {
+                  "type": "object"
                 },
                 "combinators": {
                   "type": "array",
@@ -1050,11 +1059,8 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -1064,23 +1070,6 @@
                 }
               }
             }
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "created_by": {
             "required": [
@@ -1173,9 +1162,6 @@
         }
       },
       "NewDataset": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -1189,7 +1175,7 @@
           "citation": {
             "type": "string"
           },
-          "link": {
+          "url": {
             "type": "string"
           },
           "title_layout": {
@@ -1203,6 +1189,23 @@
           },
           "link_layout": {
             "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
           },
           "category": {
             "type": "string"
@@ -1224,35 +1227,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
-          },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_name": {
-            "type": "string"
-          },
-          "old_user_id": {
-            "type": "integer"
-          },
-          "old_category_id": {
-            "type": "integer"
           },
           "created_by": {
             "type": "string"

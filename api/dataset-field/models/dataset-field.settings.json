@@ -9,19 +9,22 @@
     "timestamps": true
   },
   "attributes": {
-    "dataset": {
-      "via": "fields",
-      "model": "dataset"
-    },
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
       "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
     },
     "path": {
       "type": "string"
@@ -41,7 +44,6 @@
         "end_date",
         "text_date"
       ],
-      "required": true,
       "default": "string"
     },
     "state": {
@@ -50,8 +52,7 @@
         "pending",
         "missing",
         "done"
-      ],
-      "default": "pending"
+      ]
     },
     "state_msg": {
       "type": "string"
@@ -59,13 +60,9 @@
     "state_at": {
       "type": "datetime"
     },
-    "old_id": {
-      "type": "integer",
-      "private": true
-    },
-    "old_dataset_id": {
-      "type": "integer",
-      "private": true
+    "dataset": {
+      "via": "fields",
+      "model": "dataset"
     }
   }
 }

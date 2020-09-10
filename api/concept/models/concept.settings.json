@@ -11,12 +11,11 @@
   "attributes": {
     "name": {
       "type": "string",
-      "unique": true
+      "unique": true,
+      "required": false
     },
     "title": {
-      "type": "string",
-      "required": true,
-      "unique": true
+      "type": "string"
     },
     "description": {
       "type": "text"
@@ -41,24 +40,17 @@
       ]
     },
     "combinators": {
-      "collection": "combinator",
       "via": "concepts",
-      "dominant": true
+      "collection": "combinator"
     },
     "features": {
+      "collection": "feature",
       "via": "concepts",
-      "collection": "feature"
-    },
-    "old_id": {
-      "type": "integer",
-      "private": true
+      "dominant": true
     },
     "topics": {
       "via": "concept",
       "collection": "topic"
-    },
-    "old_identifier": {
-      "type": "string"
     }
   }
 }

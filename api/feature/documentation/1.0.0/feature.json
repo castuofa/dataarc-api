@@ -522,100 +522,8 @@
           "id": {
             "type": "string"
           },
-          "dataset": {
-            "required": [
-              "id",
-              "title"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "old_id": {
-                "type": "integer"
-              },
-              "old_name": {
-                "type": "string"
-              },
-              "old_user_id": {
-                "type": "integer"
-              },
-              "old_category_id": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "properties": {
-            "type": "object"
+          "name": {
+            "type": "string"
           },
           "title": {
             "type": "string"
@@ -630,6 +538,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "keywords": {
             "type": "string"
           },
           "latitude": {
@@ -647,15 +558,14 @@
           "text_date": {
             "type": "string"
           },
-          "keywords": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "combinators": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -673,8 +583,20 @@
                 "citation": {
                   "type": "string"
                 },
+                "url": {
+                  "type": "string"
+                },
                 "operator": {
                   "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
                 },
                 "queries": {
                   "type": "array",
@@ -697,24 +619,6 @@
                 "dataset": {
                   "type": "string"
                 },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "old_id": {
-                  "type": "integer"
-                },
-                "old_dataset_id": {
-                  "type": "integer"
-                },
-                "old_user_id": {
-                  "type": "integer"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -728,8 +632,7 @@
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "title"
+                "id"
               ],
               "properties": {
                 "id": {
@@ -765,17 +668,11 @@
                     "type": "string"
                   }
                 },
-                "old_id": {
-                  "type": "integer"
-                },
                 "topics": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "old_identifier": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -783,6 +680,85 @@
                 "updated_by": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "category": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -878,11 +854,8 @@
       },
       "NewFeature": {
         "properties": {
-          "dataset": {
+          "name": {
             "type": "string"
-          },
-          "properties": {
-            "type": "object"
           },
           "title": {
             "type": "string"
@@ -897,6 +870,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "keywords": {
             "type": "string"
           },
           "latitude": {
@@ -914,8 +890,8 @@
           "text_date": {
             "type": "string"
           },
-          "keywords": {
-            "type": "string"
+          "properties": {
+            "type": "object"
           },
           "combinators": {
             "type": "array",
@@ -929,11 +905,8 @@
               "type": "string"
             }
           },
-          "old_id": {
-            "type": "integer"
-          },
-          "old_dataset_id": {
-            "type": "integer"
+          "dataset": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

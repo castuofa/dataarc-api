@@ -4,6 +4,56 @@ const _ = require('lodash');
 
 module.exports = {
   lifecycles: {
+    beforeCreate: async (data) => {
+      if (data.property && data.operator && data.value && !data.name) {
+        let title = data.property + '_' + data.operator + '_' + data.value;
+        if (data.combinator) {
+          const combinator = await strapi
+            .query('combinator')
+            .findOne({ id: data.combinator });
+          if (combinator) title = combinator.name + '_' + title;
+        }
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'combinator-query',
+          field: 'name',
+          value: title,
+        });
+      }
+      if (data.field) {
+        const field = await strapi
+          .query('dataset-field')
+          .findOne({ id: data.field });
+        if (field) {
+          data.property = field.path;
+          data.property_type = field.type;
+        }
+      }
+    },
+    beforeUpdate: async (params, data) => {
+      if (data.property && data.operator && data.value && !data.name) {
+        let title = data.property + '_' + data.operator + '_' + data.value;
+        if (data.combinator) {
+          const combinator = await strapi
+            .query('combinator')
+            .findOne({ id: data.combinator });
+          if (combinator) title = combinator.name + '_' + title;
+        }
+        data.name = await strapi.services.helper.find_unique({
+          content_type: 'combinator-query',
+          field: 'name',
+          value: title,
+        });
+      }
+      if (data.field) {
+        const field = await strapi
+          .query('dataset-field')
+          .findOne({ id: data.field });
+        if (field) {
+          data.property = field.path;
+          data.property_type = field.type;
+        }
+      }
+    },
     afterCreate: async (result, data) => {
       if (result == null) return;
       strapi.services.helper.log_event(

@@ -7,7 +7,7 @@ module.exports = ({ env }) => ({
     serveAdminPanel: env.bool('ADMIN_PANEL', false),
     autoOpen: false,
     auth: {
-      secret: env('ADMIN_JWT_SECRET', undefined),
+      secret: env('ADMIN_JWT_SECRET', ''),
     },
   },
 });

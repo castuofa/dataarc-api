@@ -529,8 +529,7 @@
     "schemas": {
       "Map-layer": {
         "required": [
-          "id",
-          "title"
+          "id"
         ],
         "properties": {
           "id": {
@@ -543,6 +542,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "source": {
@@ -703,9 +708,6 @@
         }
       },
       "NewMap-layer": {
-        "required": [
-          "title"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -714,6 +716,12 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "created_by": {

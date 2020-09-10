@@ -516,9 +516,7 @@
     "schemas": {
       "Topic": {
         "required": [
-          "id",
-          "title",
-          "identifier"
+          "id"
         ],
         "properties": {
           "id": {
@@ -530,13 +528,21 @@
           "title": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
           "identifier": {
             "type": "string"
           },
           "concept": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -572,17 +578,11 @@
                   "type": "string"
                 }
               },
-              "old_id": {
-                "type": "integer"
-              },
               "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "old_identifier": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -594,8 +594,7 @@
           },
           "topic_map": {
             "required": [
-              "id",
-              "title"
+              "id"
             ],
             "properties": {
               "id": {
@@ -638,9 +637,6 @@
                 "type": "string"
               }
             }
-          },
-          "old_id": {
-            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -733,15 +729,20 @@
         }
       },
       "NewTopic": {
-        "required": [
-          "title",
-          "identifier"
-        ],
         "properties": {
           "name": {
             "type": "string"
           },
           "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "citation": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           },
           "identifier": {
@@ -752,9 +753,6 @@
           },
           "topic_map": {
             "type": "string"
-          },
-          "old_id": {
-            "type": "integer"
           },
           "created_by": {
             "type": "string"

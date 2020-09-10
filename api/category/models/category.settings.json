@@ -10,25 +10,28 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
       "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
     },
     "color": {
       "type": "string"
     },
     "datasets": {
-      "via": "category",
-      "collection": "dataset"
-    },
-    "old_id": {
-      "type": "integer",
-      "private": true
+      "collection": "dataset",
+      "via": "category"
     }
   }
 }

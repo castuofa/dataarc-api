@@ -10,11 +10,12 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "unique": true
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
       "type": "text"
@@ -22,29 +23,15 @@
     "citation": {
       "type": "text"
     },
+    "url": {
+      "type": "string"
+    },
     "operator": {
       "type": "enumeration",
       "enum": [
         "and",
         "or"
-      ],
-      "default": "and"
-    },
-    "queries": {
-      "collection": "combinator-query",
-      "via": "combinator"
-    },
-    "concepts": {
-      "via": "combinators",
-      "collection": "concept"
-    },
-    "features": {
-      "via": "combinators",
-      "collection": "feature"
-    },
-    "dataset": {
-      "model": "dataset",
-      "via": "combinators"
+      ]
     },
     "state": {
       "type": "enumeration",
@@ -62,17 +49,23 @@
     "state_at": {
       "type": "datetime"
     },
-    "old_id": {
-      "type": "integer",
-      "private": true
+    "queries": {
+      "via": "combinator",
+      "collection": "combinator-query"
     },
-    "old_dataset_id": {
-      "type": "integer",
-      "private": true
+    "concepts": {
+      "collection": "concept",
+      "via": "combinators",
+      "dominant": true
     },
-    "old_user_id": {
-      "type": "integer",
-      "private": true
+    "features": {
+      "collection": "feature",
+      "via": "combinators",
+      "dominant": true
+    },
+    "dataset": {
+      "model": "dataset",
+      "via": "combinators"
     }
   }
 }

@@ -33,6 +33,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/combinators/:id/results",
+      "handler": "combinator.results",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/combinators",
       "handler": "combinator.create",

@@ -10,21 +10,32 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
       "type": "text"
     },
+    "citation": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
     "filters": {
-      "type": "json",
-      "required": false
+      "type": "json"
     },
     "results": {
       "type": "json"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "searches"
     }
   }
 }

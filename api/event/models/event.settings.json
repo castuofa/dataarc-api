@@ -9,20 +9,14 @@
     "timestamps": true
   },
   "attributes": {
-    "action": {
-      "type": "enumeration",
-      "enum": [
-        "create",
-        "update",
-        "delete",
-        "process",
-        "refresh"
-      ]
-    },
-    "item": {
+    "type": {
       "type": "string"
     },
-    "name": {
+    "action": {
+      "type": "enumeration",
+      "enum": ["create", "update", "delete", "process", "refresh"]
+    },
+    "item": {
       "type": "string"
     },
     "details": {
