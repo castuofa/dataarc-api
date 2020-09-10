@@ -1,23 +1,27 @@
 'use strict';
 
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
+const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
   results: async (ctx) => {
     const { id } = ctx.params;
 
-    let entity;
+    let results;
     try {
-      entity = await strapi.services['combinator'].results({ id });
+      results = await strapi.services['combinator'].results({ id });
     } catch (err) {
       return ctx.response.badData(err.message);
     }
 
-    let entry = sanitizeEntity(entity, {
+    // santitize the results
+    results.combinator = sanitizeEntity(results.combinator, {
       model: strapi.models['combinator'],
     });
+    results.features = results.features.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models['feature'] })
+    );
 
-    return entry;
+    return results;
   },
   refresh: async (ctx) => {
     const { id } = ctx.params;
