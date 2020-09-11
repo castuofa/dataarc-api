@@ -110,7 +110,7 @@ module.exports = {
 
       // build the query conditions and get our features
       let where = {
-        dataset: entry.dataset.id,
+        dataset: entry.dataset,
         [op]: conditions,
       };
 
@@ -119,7 +119,7 @@ module.exports = {
       result.matched_count = result.features.length;
       result.total_count = await strapi
         .query('feature')
-        .count({ dataset: entry.dataset.id });
+        .count({ dataset: entry.dataset });
     }
 
     return result;
@@ -131,7 +131,18 @@ module.exports = {
 
     // only proceed if we found an entry
     if (entry != null) {
-      // refresh the entry
+      // run the combinator and get the results
+      const results = await strapi.services['combinator'].results(params);
+
+      // connect the combinator to the matching features
+      strapi
+        .query('combinator')
+        .update({ id: entry.id }, { features: results.features });
+
+      // connect the concepts to the matching features
+      _.each(entry.concepts, async (id) => {
+        strapi.query('concept').update({ id }, { features: results.features });
+      });
     }
 
     return entry;
