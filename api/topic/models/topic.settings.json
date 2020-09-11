@@ -29,7 +29,8 @@
     },
     "concept": {
       "model": "concept",
-      "via": "topics"
+      "via": "topics",
+      "autoPopulate": false
     },
     "topic_map": {
       "model": "topic-map",

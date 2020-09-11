@@ -726,6 +726,9 @@
                   "type": "string"
                 }
               },
+              "dataset": {
+                "type": "string"
+              },
               "concepts": {
                 "type": "array",
                 "items": {
@@ -737,9 +740,6 @@
                 "items": {
                   "type": "string"
                 }
-              },
-              "dataset": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"

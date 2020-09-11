@@ -26,21 +26,11 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": [
-        "and",
-        "or",
-        "nor",
-        "not"
-      ]
+      "enum": ["and", "or", "nor", "not"]
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "running",
-        "failed",
-        "done"
-      ],
+      "enum": ["pending", "running", "failed", "done"],
       "default": "pending"
     },
     "state_msg": {
@@ -53,19 +43,22 @@
       "via": "combinator",
       "collection": "combinator-query"
     },
+    "dataset": {
+      "model": "dataset",
+      "via": "combinators",
+      "autoPopulate": false
+    },
     "concepts": {
       "collection": "concept",
       "via": "combinators",
-      "dominant": true
+      "dominant": true,
+      "autoPopulate": false
     },
     "features": {
       "collection": "feature",
       "via": "combinators",
-      "dominant": true
-    },
-    "dataset": {
-      "model": "dataset",
-      "via": "combinators"
+      "dominant": true,
+      "autoPopulate": false
     }
   }
 }

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "09/10/2020 5:00:39 PM"
+    "x-generation-date": "09/11/2020 3:57:32 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7927,6 +7927,9 @@
                   "type": "string"
                 }
               },
+              "dataset": {
+                "type": "string"
+              },
               "concepts": {
                 "type": "array",
                 "items": {
@@ -7938,9 +7941,6 @@
                 "items": {
                   "type": "string"
                 }
-              },
-              "dataset": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -8194,6 +8194,85 @@
               }
             }
           },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "category": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "concepts": {
             "type": "array",
             "items": {
@@ -8319,85 +8398,6 @@
                 "updated_by": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "dataset": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -8539,6 +8539,9 @@
               "type": "string"
             }
           },
+          "dataset": {
+            "type": "string"
+          },
           "concepts": {
             "type": "array",
             "items": {
@@ -8550,9 +8553,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "dataset": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -8641,6 +8641,9 @@
                     "type": "string"
                   }
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "concepts": {
                   "type": "array",
                   "items": {
@@ -8652,9 +8655,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "dataset": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -9484,6 +9484,9 @@
                     "type": "string"
                   }
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "concepts": {
                   "type": "array",
                   "items": {
@@ -9495,9 +9498,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "dataset": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -10094,6 +10094,9 @@
                     "type": "string"
                   }
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "concepts": {
                   "type": "array",
                   "items": {
@@ -10105,9 +10108,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "dataset": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
