@@ -156,6 +156,15 @@ module.exports = {
       });
   },
 
+  // convert graphql parameters to rest equivilent
+  prefix_graphql_params: async (params) => {
+    let fixed = {};
+    _.each(params, (value, key) => {
+      fixed['_' + key] = value;
+    });
+    return fixed;
+  },
+
   // directly access the mongoose model to perform bulk actions
   delete_many: async (collection, filter, options, callback) => {
     return strapi.query(collection).model.deleteMany(filter, options, callback);

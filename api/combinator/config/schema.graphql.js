@@ -34,9 +34,10 @@ module.exports = {
       combinators: {
         resolverOf: 'application::combinator.combinator.find',
         resolver: async (obj, options, ctx) => {
-          const results = await strapi
-            .query('combinator')
-            .find(options.where || {});
+          const params = await strapi.services.helper.prefix_graphql_params(
+            options
+          );
+          const results = await strapi.query('combinator').find(params);
           results.map((doc) => {
             doc.queries_count = strapi
               .query('combinator-query')

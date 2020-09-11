@@ -13,15 +13,19 @@ module.exports = {
         description: 'Return the count of topic maps',
         resolverOf: 'application::topic-map.topic-map.count',
         resolver: async (obj, options, ctx) => {
-          return await strapi.query('topic-map').count(options.where || {});
+          const params = await strapi.services.helper.prefix_graphql_params(
+            options
+          );
+          return await strapi.query('topic-map').count(params);
         },
       },
       topicMaps: {
         resolverOf: 'application::topic-map.topic-map.find',
         resolver: async (obj, options, ctx) => {
-          const results = await strapi
-            .query('topic-map')
-            .find(options.where || {});
+          const params = await strapi.services.helper.prefix_graphql_params(
+            options
+          );
+          const results = await strapi.query('topic-map').find(params);
           results.map((doc) => {
             doc.topics_count = strapi
               .query('topics')
