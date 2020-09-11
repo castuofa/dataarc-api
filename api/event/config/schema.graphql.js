@@ -8,7 +8,10 @@ module.exports = {
         description: 'Return the count of events',
         resolverOf: 'application::event.event.count',
         resolver: async (obj, options, ctx) => {
-          return await strapi.query('event').count(options.where || {});
+          const params = await strapi.services.helper.prefix_graphql_params(
+            options
+          );
+          return await strapi.query('event').count(params);
         },
       },
     },

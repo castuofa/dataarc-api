@@ -50,15 +50,18 @@
     },
     "combinators": {
       "via": "features",
-      "collection": "combinator"
+      "collection": "combinator",
+      "autoPopulate": false
     },
     "concepts": {
       "via": "features",
-      "collection": "concept"
+      "collection": "concept",
+      "autoPopulate": false
     },
     "dataset": {
       "via": "features",
-      "model": "dataset"
+      "model": "dataset",
+      "autoPopulate": false
     }
   }
 }

@@ -67,8 +67,8 @@
     },
     "combinators": {
       "via": "dataset",
-      "collection": "combinator",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "combinator"
     },
     "fields": {
       "collection": "dataset-field",

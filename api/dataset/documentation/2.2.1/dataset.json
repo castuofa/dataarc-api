@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/combinators": {
+    "/datasets": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Combinator"
+                    "$ref": "#/components/schemas/Dataset"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "$ref": "#/components/schemas/Dataset"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCombinator"
+                "$ref": "#/components/schemas/NewDataset"
               }
             }
           }
         }
       }
     },
-    "/combinators/count": {
+    "/datasets/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": []
       }
     },
-    "/combinators/random": {
+    "/datasets/random": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,12 +363,12 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": []
       }
     },
-    "/combinators/{id}": {
+    "/datasets/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -378,7 +378,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "$ref": "#/components/schemas/Dataset"
                 }
               }
             }
@@ -416,7 +416,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": [
           {
@@ -440,7 +440,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "$ref": "#/components/schemas/Dataset"
                 }
               }
             }
@@ -478,7 +478,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "requestBody": {
           "description": "",
@@ -486,7 +486,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCombinator"
+                "$ref": "#/components/schemas/NewDataset"
               }
             }
           }
@@ -552,7 +552,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": [
           {
@@ -568,7 +568,7 @@
         ]
       }
     },
-    "/combinators/{id}/refresh": {
+    "/datasets/{id}/process": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -620,7 +620,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": [
           {
@@ -636,7 +636,7 @@
         ]
       }
     },
-    "/combinators/{id}/results": {
+    "/datasets/{id}/refresh": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -688,7 +688,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Dataset"
         ],
         "parameters": [
           {
@@ -707,7 +707,7 @@
   },
   "components": {
     "schemas": {
-      "Combinator": {
+      "Dataset": {
         "required": [
           "id"
         ],
@@ -730,19 +730,159 @@
           "url": {
             "type": "string"
           },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "and",
-              "or"
-            ]
+          "image": {
+            "required": [
+              "id",
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "alternativeText": {
+                "type": "string"
+              },
+              "caption": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
+                "type": "string"
+              },
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "url": {
+                "type": "string"
+              },
+              "previewUrl": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "provider_metadata": {
+                "type": "object"
+              },
+              "related": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "source": {
+            "required": [
+              "id",
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "alternativeText": {
+                "type": "string"
+              },
+              "caption": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
+                "type": "string"
+              },
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "url": {
+                "type": "string"
+              },
+              "previewUrl": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "provider_metadata": {
+                "type": "object"
+              },
+              "related": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "title_layout": {
+            "type": "string"
+          },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
           },
           "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "running",
+              "processing",
+              "updating",
               "failed",
               "done"
             ]
@@ -753,56 +893,47 @@
           "state_at": {
             "type": "datetime"
           },
-          "queries": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "property": {
-                  "type": "string"
-                },
-                "property_type": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "field": {
-                  "type": "string"
-                },
-                "combinator": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "category": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
-          "concepts": {
+          "combinators": {
             "type": "array",
             "items": {
               "required": [
@@ -827,10 +958,28 @@
                 "url": {
                   "type": "string"
                 },
-                "group": {
+                "operator": {
                   "type": "string"
                 },
-                "combinators": {
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
+                },
+                "queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "concepts": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -842,11 +991,60 @@
                     "type": "string"
                   }
                 },
-                "topics": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "state_msg": {
+                  "type": "string"
+                },
+                "state_at": {
+                  "type": "datetime"
+                },
+                "dataset": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -930,85 +1128,6 @@
               }
             }
           },
-          "dataset": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "created_by": {
             "required": [
               "id",
@@ -1099,7 +1218,7 @@
           }
         }
       },
-      "NewCombinator": {
+      "NewDataset": {
         "properties": {
           "name": {
             "type": "string"
@@ -1116,19 +1235,25 @@
           "url": {
             "type": "string"
           },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "and",
-              "or"
-            ]
+          "title_layout": {
+            "type": "string"
+          },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
           },
           "state": {
             "type": "string",
             "default": "pending",
             "enum": [
               "pending",
-              "running",
+              "processing",
+              "updating",
               "failed",
               "done"
             ]
@@ -1139,13 +1264,16 @@
           "state_at": {
             "type": "datetime"
           },
-          "queries": {
+          "category": {
+            "type": "string"
+          },
+          "combinators": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "concepts": {
+          "fields": {
             "type": "array",
             "items": {
               "type": "string"
@@ -1156,9 +1284,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "dataset": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -1172,7 +1297,7 @@
   },
   "tags": [
     {
-      "name": "Combinator"
+      "name": "Dataset"
     }
   ]
 }

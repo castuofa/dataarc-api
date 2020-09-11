@@ -22,9 +22,10 @@ module.exports = {
       concepts: {
         resolverOf: 'application::concept.concept.find',
         resolver: async (obj, options, ctx) => {
-          const results = await strapi
-            .query('concept')
-            .find(options.where || {});
+          const params = await strapi.services.helper.prefix_graphql_params(
+            options
+          );
+          const results = await strapi.query('concept').find(params);
           results.map((doc) => {
             doc.combinators_count = strapi
               .query('combinator')

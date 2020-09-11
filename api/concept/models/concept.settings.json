@@ -39,16 +39,19 @@
     },
     "combinators": {
       "via": "concepts",
-      "collection": "combinator"
+      "collection": "combinator",
+      "autoPopulate": false
     },
     "features": {
       "collection": "feature",
       "via": "concepts",
-      "dominant": true
+      "dominant": true,
+      "autoPopulate": false
     },
     "topics": {
       "via": "concept",
-      "collection": "topic"
+      "collection": "topic",
+      "autoPopulate": false
     }
   }
 }

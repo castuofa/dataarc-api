@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/concepts": {
+    "/combinator-queries": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Concept"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept"
+          "Combinator-query"
         ],
         "parameters": [
           {
@@ -201,72 +202,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Concept"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Concept"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewConcept"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/concepts/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +244,22 @@
         },
         "summary": "",
         "tags": [
-          "Concept"
+          "Combinator-query"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCombinator-query"
+              }
+            }
+          }
+        }
       }
     },
-    "/concepts/random": {
+    "/combinator-queries/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Concept"
+          "Combinator-query"
         ],
         "parameters": []
       }
     },
-    "/concepts/{id}": {
+    "/combinator-queries/random": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -378,7 +326,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Concept"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -416,7 +368,64 @@
         },
         "summary": "",
         "tags": [
-          "Concept"
+          "Combinator-query"
+        ],
+        "parameters": []
+      }
+    },
+    "/combinator-queries/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Combinator-query"
         ],
         "parameters": [
           {
@@ -440,7 +449,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Concept"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -478,7 +491,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept"
+          "Combinator-query"
         ],
         "requestBody": {
           "description": "",
@@ -486,7 +499,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewConcept"
+                "$ref": "#/components/schemas/NewCombinator-query"
               }
             }
           }
@@ -552,7 +565,7 @@
         },
         "summary": "",
         "tags": [
-          "Concept"
+          "Combinator-query"
         ],
         "parameters": [
           {
@@ -571,7 +584,7 @@
   },
   "components": {
     "schemas": {
-      "Concept": {
+      "Combinator-query": {
         "required": [
           "id"
         ],
@@ -582,211 +595,157 @@
           "name": {
             "type": "string"
           },
-          "title": {
+          "property": {
             "type": "string"
           },
-          "description": {
+          "property_type": {
             "type": "string"
           },
-          "citation": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "group": {
+          "operator": {
             "type": "string",
             "enum": [
-              "activities",
-              "actors",
-              "community_places",
-              "events",
-              "ideas",
-              "imaginary_landscape",
-              "physical_landscape",
-              "physical_processes"
+              "equals",
+              "not_equals",
+              "less_than",
+              "greater_than",
+              "less_than_or_equal_to",
+              "greater_than_or_equal_to",
+              "contains",
+              "not_contains",
+              "starts_with",
+              "ends_with"
             ]
           },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
+          "value": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
+          "field": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
-          "features": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "summary": {
-                  "type": "string"
-                },
-                "details": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "keywords": {
-                  "type": "string"
-                },
-                "latitude": {
-                  "type": "number"
-                },
-                "longitude": {
-                  "type": "number"
-                },
-                "start_date": {
-                  "type": "integer"
-                },
-                "end_date": {
-                  "type": "integer"
-                },
-                "text_date": {
-                  "type": "string"
-                },
-                "properties": {
-                  "type": "object"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "combinator": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "state_msg": {
+                "type": "string"
+              },
+              "state_at": {
+                "type": "datetime"
+              },
+              "queries": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "topics": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "identifier": {
-                  "type": "string"
-                },
-                "concept": {
-                  "type": "string"
-                },
-                "topic_map": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "concepts": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -880,53 +839,54 @@
           }
         }
       },
-      "NewConcept": {
+      "NewCombinator-query": {
         "properties": {
           "name": {
             "type": "string"
           },
-          "title": {
+          "property": {
             "type": "string"
           },
-          "description": {
+          "property_type": {
             "type": "string"
           },
-          "citation": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "group": {
+          "operator": {
             "type": "string",
             "enum": [
-              "activities",
-              "actors",
-              "community_places",
-              "events",
-              "ideas",
-              "imaginary_landscape",
-              "physical_landscape",
-              "physical_processes"
+              "equals",
+              "not_equals",
+              "less_than",
+              "greater_than",
+              "less_than_or_equal_to",
+              "greater_than_or_equal_to",
+              "contains",
+              "not_contains",
+              "starts_with",
+              "ends_with"
             ]
           },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "value": {
+            "type": "string"
           },
-          "features": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "done"
+            ]
           },
-          "topics": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
+          "field": {
+            "type": "string"
+          },
+          "combinator": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -938,9 +898,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Concept"
-    }
-  ]
+  "tags": []
 }

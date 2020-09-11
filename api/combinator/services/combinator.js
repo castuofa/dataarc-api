@@ -7,10 +7,8 @@ module.exports = {
     let result = {
       combinator: null,
       features: [],
-      count: {
-        matched: 0,
-        total: 0,
-      },
+      matched_count: 0,
+      total_count: 0,
     };
 
     // find the entry
@@ -69,6 +67,16 @@ module.exports = {
               [field]: { $not: { $regex: value, $options: 'i' } },
             });
             break;
+          case 'starts_with':
+            conditions.push({
+              [field]: { $regex: '^' + value, $options: 'i' },
+            });
+            break;
+          case 'ends_with':
+            conditions.push({
+              [field]: { $regex: value + '$', $options: 'i' },
+            });
+            break;
           default:
             // default to equals
             conditions.push({ [field]: { $eq: value } });
@@ -102,17 +110,16 @@ module.exports = {
 
       // build the query conditions and get our features
       let where = {
-        dataset: entry.dataset.id,
+        dataset: entry.dataset,
         [op]: conditions,
       };
-      // console.log(`${JSON.stringify(where, null, 2)}`);
 
       // find the features and set the counts
       result.features = await strapi.query('feature').model.find(where);
-      result.count.matched = result.features.length;
-      result.count.total = await strapi
+      result.matched_count = result.features.length;
+      result.total_count = await strapi
         .query('feature')
-        .count({ dataset: entry.dataset.id });
+        .count({ dataset: entry.dataset });
     }
 
     return result;
@@ -124,7 +131,18 @@ module.exports = {
 
     // only proceed if we found an entry
     if (entry != null) {
-      // refresh the entry
+      // run the combinator and get the results
+      const results = await strapi.services['combinator'].results(params);
+
+      // connect the combinator to the matching features
+      strapi
+        .query('combinator')
+        .update({ id: entry.id }, { features: results.features });
+
+      // connect the concepts to the matching features
+      _.each(entry.concepts, async (id) => {
+        strapi.query('concept').update({ id }, { features: results.features });
+      });
     }
 
     return entry;

@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/datasets": {
+    "/concepts": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Dataset"
+                    "$ref": "#/components/schemas/Concept"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
+          "Concept"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Dataset"
+                  "$ref": "#/components/schemas/Concept"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
+          "Concept"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewDataset"
+                "$ref": "#/components/schemas/NewConcept"
               }
             }
           }
         }
       }
     },
-    "/datasets/count": {
+    "/concepts/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
+          "Concept"
         ],
         "parameters": []
       }
     },
-    "/datasets/random": {
+    "/concepts/random": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,12 +363,12 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
+          "Concept"
         ],
         "parameters": []
       }
     },
-    "/datasets/{id}": {
+    "/concepts/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -378,7 +378,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Dataset"
+                  "$ref": "#/components/schemas/Concept"
                 }
               }
             }
@@ -416,7 +416,7 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
+          "Concept"
         ],
         "parameters": [
           {
@@ -440,7 +440,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Dataset"
+                  "$ref": "#/components/schemas/Concept"
                 }
               }
             }
@@ -478,7 +478,7 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
+          "Concept"
         ],
         "requestBody": {
           "description": "",
@@ -486,7 +486,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewDataset"
+                "$ref": "#/components/schemas/NewConcept"
               }
             }
           }
@@ -552,143 +552,7 @@
         },
         "summary": "",
         "tags": [
-          "Dataset"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/datasets/{id}/process": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/datasets/{id}/refresh": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset"
+          "Concept"
         ],
         "parameters": [
           {
@@ -707,7 +571,7 @@
   },
   "components": {
     "schemas": {
-      "Dataset": {
+      "Concept": {
         "required": [
           "id"
         ],
@@ -730,208 +594,18 @@
           "url": {
             "type": "string"
           },
-          "image": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "source": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "title_layout": {
-            "type": "string"
-          },
-          "summary_layout": {
-            "type": "string"
-          },
-          "details_layout": {
-            "type": "string"
-          },
-          "link_layout": {
-            "type": "string"
-          },
-          "state": {
+          "group": {
             "type": "string",
-            "default": "pending",
             "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
+              "activities",
+              "actors",
+              "community_places",
+              "events",
+              "ideas",
+              "imaginary_landscape",
+              "physical_landscape",
+              "physical_processes"
             ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
-          },
-          "category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
           },
           "combinators": {
             "type": "array",
@@ -976,6 +650,9 @@
                     "type": "string"
                   }
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "concepts": {
                   "type": "array",
                   "items": {
@@ -987,64 +664,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "fields": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "path": {
-                  "type": "string"
-                },
-                "source": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "dataset": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -1128,6 +747,49 @@
               }
             }
           },
+          "topics": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "string"
+                },
+                "concept": {
+                  "type": "string"
+                },
+                "topic_map": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -1218,7 +880,7 @@
           }
         }
       },
-      "NewDataset": {
+      "NewConcept": {
         "properties": {
           "name": {
             "type": "string"
@@ -1235,37 +897,18 @@
           "url": {
             "type": "string"
           },
-          "title_layout": {
-            "type": "string"
-          },
-          "summary_layout": {
-            "type": "string"
-          },
-          "details_layout": {
-            "type": "string"
-          },
-          "link_layout": {
-            "type": "string"
-          },
-          "state": {
+          "group": {
             "type": "string",
-            "default": "pending",
             "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
+              "activities",
+              "actors",
+              "community_places",
+              "events",
+              "ideas",
+              "imaginary_landscape",
+              "physical_landscape",
+              "physical_processes"
             ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
-          },
-          "category": {
-            "type": "string"
           },
           "combinators": {
             "type": "array",
@@ -1273,13 +916,13 @@
               "type": "string"
             }
           },
-          "fields": {
+          "features": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "features": {
+          "topics": {
             "type": "array",
             "items": {
               "type": "string"
@@ -1297,7 +940,7 @@
   },
   "tags": [
     {
-      "name": "Dataset"
+      "name": "Concept"
     }
   ]
 }

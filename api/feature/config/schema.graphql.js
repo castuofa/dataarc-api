@@ -22,9 +22,10 @@ module.exports = {
       features: {
         resolverOf: 'application::feature.feature.find',
         resolver: async (obj, options, ctx) => {
-          const results = await strapi
-            .query('feature')
-            .find(options.where || {});
+          const params = await strapi.services.helper.prefix_graphql_params(
+            options
+          );
+          const results = await strapi.query('feature').find(params);
           results.map((doc) => {
             doc.combinators_count = strapi
               .query('combinator')

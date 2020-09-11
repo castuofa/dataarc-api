@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/features": {
+    "/combinators": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Feature"
+                    "$ref": "#/components/schemas/Combinator"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Feature"
+                  "$ref": "#/components/schemas/Combinator"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewFeature"
+                "$ref": "#/components/schemas/NewCombinator"
               }
             }
           }
         }
       }
     },
-    "/features/count": {
+    "/combinators/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
         ],
         "parameters": []
       }
     },
-    "/features/random": {
+    "/combinators/random": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,12 +363,12 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
         ],
         "parameters": []
       }
     },
-    "/features/{id}": {
+    "/combinators/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -378,7 +378,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Feature"
+                  "$ref": "#/components/schemas/Combinator"
                 }
               }
             }
@@ -416,7 +416,7 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
         ],
         "parameters": [
           {
@@ -440,7 +440,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Feature"
+                  "$ref": "#/components/schemas/Combinator"
                 }
               }
             }
@@ -478,7 +478,7 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
         ],
         "requestBody": {
           "description": "",
@@ -486,7 +486,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewFeature"
+                "$ref": "#/components/schemas/NewCombinator"
               }
             }
           }
@@ -552,7 +552,143 @@
         },
         "summary": "",
         "tags": [
-          "Feature"
+          "Combinator"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/combinators/{id}/refresh": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Combinator"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/combinators/{id}/results": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Combinator"
         ],
         "parameters": [
           {
@@ -571,7 +707,7 @@
   },
   "components": {
     "schemas": {
-      "Feature": {
+      "Combinator": {
         "required": [
           "id"
         ],
@@ -585,40 +721,41 @@
           "title": {
             "type": "string"
           },
-          "summary": {
+          "description": {
             "type": "string"
           },
-          "details": {
-            "type": "string"
-          },
-          "link": {
+          "citation": {
             "type": "string"
           },
           "url": {
             "type": "string"
           },
-          "keywords": {
+          "operator": {
+            "type": "string",
+            "enum": [
+              "and",
+              "or",
+              "nor",
+              "not"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "running",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
             "type": "string"
           },
-          "latitude": {
-            "type": "number"
+          "state_at": {
+            "type": "datetime"
           },
-          "longitude": {
-            "type": "number"
-          },
-          "start_date": {
-            "type": "integer"
-          },
-          "end_date": {
-            "type": "integer"
-          },
-          "text_date": {
-            "type": "string"
-          },
-          "properties": {
-            "type": "object"
-          },
-          "combinators": {
+          "queries": {
             "type": "array",
             "items": {
               "required": [
@@ -631,19 +768,16 @@
                 "name": {
                   "type": "string"
                 },
-                "title": {
+                "property": {
                   "type": "string"
                 },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
+                "property_type": {
                   "type": "string"
                 },
                 "operator": {
+                  "type": "string"
+                },
+                "value": {
                   "type": "string"
                 },
                 "state": {
@@ -655,81 +789,11 @@
                 "state_at": {
                   "type": "datetime"
                 },
-                "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "dataset": {
+                "field": {
                   "type": "string"
                 },
-                "created_by": {
+                "combinator": {
                   "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "concepts": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "group": {
-                  "type": "string"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "topics": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "created_by": {
                   "type": "string"
@@ -819,6 +883,134 @@
               }
             }
           },
+          "concepts": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "topics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "keywords": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "start_date": {
+                  "type": "integer"
+                },
+                "end_date": {
+                  "type": "integer"
+                },
+                "text_date": {
+                  "type": "string"
+                },
+                "properties": {
+                  "type": "object"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -909,7 +1101,7 @@
           }
         }
       },
-      "NewFeature": {
+      "NewCombinator": {
         "properties": {
           "name": {
             "type": "string"
@@ -917,46 +1109,41 @@
           "title": {
             "type": "string"
           },
-          "summary": {
+          "description": {
             "type": "string"
           },
-          "details": {
-            "type": "string"
-          },
-          "link": {
+          "citation": {
             "type": "string"
           },
           "url": {
             "type": "string"
           },
-          "keywords": {
+          "operator": {
+            "type": "string",
+            "enum": [
+              "and",
+              "or",
+              "nor",
+              "not"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "running",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
             "type": "string"
           },
-          "latitude": {
-            "type": "number"
+          "state_at": {
+            "type": "datetime"
           },
-          "longitude": {
-            "type": "number"
-          },
-          "start_date": {
-            "type": "integer"
-          },
-          "end_date": {
-            "type": "integer"
-          },
-          "text_date": {
-            "type": "string"
-          },
-          "properties": {
-            "type": "object"
-          },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "concepts": {
+          "queries": {
             "type": "array",
             "items": {
               "type": "string"
@@ -964,6 +1151,18 @@
           },
           "dataset": {
             "type": "string"
+          },
+          "concepts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
@@ -977,7 +1176,7 @@
   },
   "tags": [
     {
-      "name": "Feature"
+      "name": "Combinator"
     }
   ]
 }
