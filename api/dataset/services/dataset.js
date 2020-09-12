@@ -21,14 +21,17 @@ module.exports = {
         'Dataset processing in progress'
       );
 
-      // read file
+      // read source file
       let source;
       try {
-        source = JSON.parse(
-          fs.readFileSync(`${strapi.dir}/public${entry.source.url}`, 'utf8')
-        );
-        source = turf.featureCollection(source.features);
-      } catch (e) {
+        let contents = fs.readFileSync(
+          `${strapi.dir}/public${entry.source.url}`,
+          'utf8'
+        ); // read the file syncronously
+        contents = contents.trim(); // remove strange characters
+        source = JSON.parse(contents); // parse json
+        source = turf.featureCollection(source.features); // pull out valid geojson features
+      } catch (err) {
         throw new Error(
           `There was a problem parsing the JSON file in ${entry.name}`
         );
