@@ -56,6 +56,15 @@ module.exports = {
       .toLowerCase();
   },
 
+  // parse string value to primitive
+  parse_primitive: (value) => {
+    try {
+      return JSON.parse(value);
+    } catch (err) {
+      return value.toString();
+    }
+  },
+
   // get an seo friendly keyword
   get_keyword: (value) => {
     return strapi.services.helper

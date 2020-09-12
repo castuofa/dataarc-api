@@ -19,17 +19,39 @@ module.exports = {
       let conditions = [];
       result.combinator = entry;
 
+      // define our allowed arrays
+      let allowed_types = ['string', 'number', 'boolean', 'array'];
+      let allowed_arrays = ['in', 'not_in'];
+
       // loop through the queries getting results
       _.each(entry.queries, async (query) => {
         // set field name
         let field = 'properties.' + query.property;
 
-        // set the value
-        let value = Number(query.value);
-        if (isNaN(value)) value = query.value;
+        // get the primitive of the value
+        let value = strapi.services.helper.parse_primitive(query.value);
 
-        // if value is null, empty, undefined, etc, skip this query
-        if (!value) return;
+        // get the type of value
+        let type = strapi.services.helper.get_type(value);
+
+        // don't allowed if not an expected type
+        let allowed = _.indexOf(allowed_types, type) !== -1;
+
+        // don't allowed empty strings
+        if (type === 'string') allowed = value.trim() !== '';
+
+        // only allowed arrays for in, not_in query
+        if (type === 'array')
+          allowed = _.indexOf(allowed_arrays, query.operator) !== -1;
+
+        // console.log(
+        //   `${field}: [${query.operator}] ${value} (${type}) -- ${
+        //     allowed ? 'keep' : 'reject'
+        //   }`
+        // );
+
+        // only continue if the query is allowed
+        if (!allowed) return;
 
         // add the query that matches the operator
         switch (query.operator) {
