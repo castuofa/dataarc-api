@@ -1025,6 +1025,9 @@
                 "url": {
                   "type": "string"
                 },
+                "parent": {
+                  "type": "string"
+                },
                 "path": {
                   "type": "string"
                 },
