@@ -24,6 +24,9 @@
     "url": {
       "type": "string"
     },
+    "parent": {
+      "type": "string"
+    },
     "path": {
       "type": "string"
     },
@@ -46,11 +49,7 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "missing",
-        "done"
-      ]
+      "enum": ["pending", "missing", "done"]
     },
     "state_msg": {
       "type": "string"
@@ -59,8 +58,8 @@
       "type": "datetime"
     },
     "dataset": {
-      "via": "fields",
-      "model": "dataset"
+      "model": "dataset",
+      "via": "fields"
     }
   }
 }
