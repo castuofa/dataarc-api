@@ -104,6 +104,7 @@ module.exports = {
             let field = {
               name: name,
               title: title,
+              parent: parent === '' ? null : parent,
               path: path,
               source: source,
               type: type,
