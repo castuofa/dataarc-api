@@ -51,7 +51,8 @@
     "concepts": {
       "collection": "concept",
       "via": "combinators",
-      "dominant": true
+      "dominant": true,
+      "autoPopulate": false
     },
     "features": {
       "collection": "feature",
