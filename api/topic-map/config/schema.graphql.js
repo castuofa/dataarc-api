@@ -28,7 +28,7 @@ module.exports = {
           const results = await strapi.query('topic-map').find(params);
           results.map((doc) => {
             doc.topics_count = strapi
-              .query('topics')
+              .query('topic')
               .count({ topic_map: doc.id });
           });
           return results;
