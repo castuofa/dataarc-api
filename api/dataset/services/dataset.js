@@ -282,10 +282,13 @@ module.exports = {
 
           // render title
           try {
-            feature.title = pug.render(
-              'span. \n  ' + feature.dataset.title_layout,
-              feature.properties
-            );
+            feature.title = pug
+              .render(
+                'span ' + feature.dataset.title_layout,
+                feature.properties
+              )
+              .replace('<span>', '')
+              .replace('</span>', '');
           } catch (err) {
             feature.title = 'Invalid layout';
           }
