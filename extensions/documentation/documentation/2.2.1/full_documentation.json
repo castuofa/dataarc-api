@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "09/12/2020 11:42:38 PM"
+    "x-generation-date": "09/24/2020 6:39:22 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3359,6 +3359,63 @@
         "parameters": []
       }
     },
+    "/datasets/refresh": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": []
+      }
+    },
     "/datasets/{id}": {
       "get": {
         "deprecated": false,
@@ -5866,6 +5923,148 @@
         ]
       }
     },
+    "/services/api": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Services"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/legacy/api": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Unclassified"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/temporal-coverages": {
       "get": {
         "deprecated": false,
@@ -7661,6 +7860,82 @@
               }
             }
           },
+          "feature": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "details": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "keywords": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "start_date": {
+                "type": "integer"
+              },
+              "end_date": {
+                "type": "integer"
+              },
+              "text_date": {
+                "type": "string"
+              },
+              "properties": {
+                "type": "object"
+              },
+              "facets": {
+                "type": "object"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "concepts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -7776,6 +8051,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "feature": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -8380,6 +8658,9 @@
                 "properties": {
                   "type": "object"
                 },
+                "facets": {
+                  "type": "object"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -8393,6 +8674,9 @@
                   }
                 },
                 "dataset": {
+                  "type": "string"
+                },
+                "category": {
                   "type": "string"
                 },
                 "created_by": {
@@ -8717,6 +9001,9 @@
                 "properties": {
                   "type": "object"
                 },
+                "facets": {
+                  "type": "object"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -8730,6 +9017,9 @@
                   }
                 },
                 "dataset": {
+                  "type": "string"
+                },
+                "category": {
                   "type": "string"
                 },
                 "created_by": {
@@ -9442,6 +9732,9 @@
                   "type": "string"
                 }
               },
+              "feature": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -9624,6 +9917,9 @@
                 "properties": {
                   "type": "object"
                 },
+                "facets": {
+                  "type": "object"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -9637,6 +9933,9 @@
                   }
                 },
                 "dataset": {
+                  "type": "string"
+                },
+                "category": {
                   "type": "string"
                 },
                 "created_by": {
@@ -10063,6 +10362,9 @@
           "properties": {
             "type": "object"
           },
+          "facets": {
+            "type": "object"
+          },
           "combinators": {
             "type": "array",
             "items": {
@@ -10264,6 +10566,49 @@
               }
             }
           },
+          "category": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "feature": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -10395,6 +10740,9 @@
           "properties": {
             "type": "object"
           },
+          "facets": {
+            "type": "object"
+          },
           "combinators": {
             "type": "array",
             "items": {
@@ -10408,6 +10756,9 @@
             }
           },
           "dataset": {
+            "type": "string"
+          },
+          "category": {
             "type": "string"
           },
           "created_by": {
@@ -11533,6 +11884,12 @@
     },
     {
       "name": "Search"
+    },
+    {
+      "name": "Services"
+    },
+    {
+      "name": "Unclassified"
     },
     {
       "name": "Topic"
