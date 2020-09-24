@@ -26,6 +26,14 @@
     },
     {
       "method": "GET",
+      "path": "/datasets/refresh",
+      "handler": "dataset.refreshAll",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/datasets/:id",
       "handler": "dataset.findOne",
       "config": {

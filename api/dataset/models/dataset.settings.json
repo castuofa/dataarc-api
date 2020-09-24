@@ -86,9 +86,9 @@
       "collection": "dataset-field"
     },
     "features": {
-      "collection": "feature",
       "via": "dataset",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "feature"
     }
   }
 }

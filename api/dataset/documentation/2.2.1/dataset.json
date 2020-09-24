@@ -368,6 +368,63 @@
         "parameters": []
       }
     },
+    "/datasets/refresh": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": []
+      }
+    },
     "/datasets/{id}": {
       "get": {
         "deprecated": false,
@@ -925,6 +982,9 @@
                   "type": "string"
                 }
               },
+              "feature": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -1107,6 +1167,9 @@
                 "properties": {
                   "type": "object"
                 },
+                "facets": {
+                  "type": "object"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -1120,6 +1183,9 @@
                   }
                 },
                 "dataset": {
+                  "type": "string"
+                },
+                "category": {
                   "type": "string"
                 },
                 "created_by": {
