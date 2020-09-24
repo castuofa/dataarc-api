@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/legacy/api",
+      "handler": "legacy.api",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
