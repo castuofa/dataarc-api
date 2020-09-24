@@ -43,10 +43,10 @@
       "autoPopulate": false
     },
     "features": {
-      "collection": "feature",
       "via": "concepts",
-      "dominant": true,
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "feature",
+      "dominant": true
     },
     "topics": {
       "via": "concept",

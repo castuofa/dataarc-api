@@ -723,6 +723,9 @@
                 "properties": {
                   "type": "object"
                 },
+                "facets": {
+                  "type": "object"
+                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -736,6 +739,9 @@
                   }
                 },
                 "dataset": {
+                  "type": "string"
+                },
+                "category": {
                   "type": "string"
                 },
                 "created_by": {
