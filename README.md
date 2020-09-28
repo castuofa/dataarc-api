@@ -1,6 +1,6 @@
 # DataARC Admin API
 
-This api is based off Strapi.
+This api is based off of Strapi.
 
 ## Getting Started
 
