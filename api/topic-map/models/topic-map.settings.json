@@ -38,8 +38,12 @@
       "required": false
     },
     "topics": {
-      "via": "topic_map",
-      "collection": "topic"
+      "collection": "topic",
+      "via": "topic_map"
+    },
+    "active": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

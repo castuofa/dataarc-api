@@ -42,7 +42,7 @@ module.exports = {
     if (_.isArray(filter.indicators) && !_.isEmpty(filter.indicators))
       where['combinators_in'] = filter.indicators;
     if (_.isArray(filter.keywords) && !_.isEmpty(filter.keywords))
-      where['_q'] = filter.keywords.join(' ');
+      params['_q'] = filter.keywords.join(' ');
     if (_.isArray(filter.topicIds) && !_.isEmpty(filter.topicIds)) {
       // topicIds
     }
@@ -59,14 +59,14 @@ module.exports = {
     // *spatial filter after the query below
 
     // add where as a param
-    params['_where'] = where;
+    if (!_.isEmpty(where)) params['_where'] = where;
 
     strapi.log.info(`Params:`);
     console.log(`${JSON.stringify(params, null, 2)}`);
 
     // //// switch query to directly use mongoose
     // query the features
-    const matched_features = await strapi.query('feature').find({ _limit: -1 });
+    const matched_features = await strapi.query('feature').search(params);
 
     // format as a geojson feature to match legacy api and get related info
     let collection = turf.featureCollection(
@@ -139,11 +139,11 @@ module.exports = {
     // *** FACET COUNTS ***
     out.facets['category'] = _.countBy(
       collection.features,
-      'properties.facets.category'
+      'properties.category'
     );
     out.facets['dataset'] = _.countBy(
       collection.features,
-      'properties.facets.dataset'
+      'properties.dataset'
     );
     out.facets['region'] = _.countBy(
       collection.features,
@@ -167,11 +167,11 @@ module.exports = {
     );
     out.facets['concepts'] = _.countBy(
       collection.features,
-      'properties.facets.concepts'
+      'properties.concepts'
     );
     out.facets['combinators'] = _.countBy(
       collection.features,
-      'properties.facets.combinators'
+      'properties.combinators'
     );
 
     // idList

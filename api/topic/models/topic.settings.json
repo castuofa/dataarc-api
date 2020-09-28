@@ -33,8 +33,8 @@
       "autoPopulate": false
     },
     "topic_map": {
-      "model": "topic-map",
-      "via": "topics"
+      "via": "topics",
+      "model": "topic-map"
     }
   }
 }
