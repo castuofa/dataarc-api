@@ -734,6 +734,10 @@
               }
             }
           },
+          "active": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -852,6 +856,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

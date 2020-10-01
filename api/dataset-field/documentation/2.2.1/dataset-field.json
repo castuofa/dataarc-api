@@ -607,6 +607,9 @@
           "url": {
             "type": "string"
           },
+          "parent": {
+            "type": "string"
+          },
           "path": {
             "type": "string"
           },
@@ -825,6 +828,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "parent": {
             "type": "string"
           },
           "path": {

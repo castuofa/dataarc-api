@@ -28,8 +28,14 @@
       "type": "string"
     },
     "datasets": {
+      "autoPopulate": false,
       "collection": "dataset",
       "via": "category"
+    },
+    "feature": {
+      "autoPopulate": false,
+      "via": "category",
+      "model": "feature"
     }
   }
 }

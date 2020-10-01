@@ -622,6 +622,82 @@
               }
             }
           },
+          "feature": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "details": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "keywords": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "start_date": {
+                "type": "integer"
+              },
+              "end_date": {
+                "type": "integer"
+              },
+              "text_date": {
+                "type": "string"
+              },
+              "properties": {
+                "type": "object"
+              },
+              "facets": {
+                "type": "object"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "concepts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -737,6 +813,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "feature": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

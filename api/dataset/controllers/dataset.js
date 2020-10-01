@@ -68,4 +68,13 @@ module.exports = {
 
     return entry;
   },
+
+  refreshAll: async (ctx) => {
+    let entities = await strapi.services['dataset'].find();
+    _.each(entities, (dataset) => {
+      ctx.params = { id: dataset.id };
+      strapi.controllers['dataset'].refresh(ctx);
+    });
+    return true;
+  },
 };

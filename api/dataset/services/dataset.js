@@ -104,6 +104,7 @@ module.exports = {
             let field = {
               name: name,
               title: title,
+              parent: parent === '' ? null : parent,
               path: path,
               source: source,
               type: type,
@@ -231,6 +232,10 @@ module.exports = {
         'Updating dataset features'
       );
 
+      const category = await strapi
+        .query('category')
+        .findOne({ id: entry.category });
+
       // pull the dataset fields
       const fields = await strapi
         .query('dataset-field')
@@ -281,10 +286,13 @@ module.exports = {
 
           // render title
           try {
-            feature.title = pug.render(
-              'span. \n  ' + feature.dataset.title_layout,
-              feature.properties
-            );
+            feature.title = pug
+              .render(
+                'span ' + feature.dataset.title_layout,
+                feature.properties
+              )
+              .replace('<span>', '')
+              .replace('</span>', '');
           } catch (err) {
             feature.title = 'Invalid layout';
           }
@@ -308,6 +316,41 @@ module.exports = {
           } catch (err) {
             feature.details = 'Invalid layout';
           }
+
+          // set facets
+          feature.facets = {};
+          feature.facets['dataset'] = entry.id;
+          feature.facets['category'] = category.id;
+          feature.facets['combinators'] = [];
+          feature.facets['concepts'] = [];
+          if (
+            strapi.helper.get_type(feature.start_date) === 'number' &&
+            strapi.helper.get_type(feature.end_date) === 'number'
+          ) {
+            feature.facets['decades'] = _.range(
+              Math.floor(feature.start_date / 10) * 10,
+              Math.ceil(feature.end_date / 10) * 10,
+              10
+            );
+            feature.facets['centuries'] = _.range(
+              Math.floor(feature.start_date / 100) * 100,
+              Math.ceil(feature.end_date / 100) * 100,
+              100
+            );
+            feature.facets['millenia'] = _.range(
+              Math.floor(feature.start_date / 1000) * 1000,
+              Math.ceil(feature.end_date / 1000) * 1000,
+              1000
+            );
+          }
+          let tc = strapi.query('temporal-coverage').find({
+            start_date_lte: feature.start_date,
+            end_date_gte: feature.end_date,
+          });
+          feature.facets['temporal-coverages'] = _.map(tc, 'id');
+
+          feature.facets['region'] = '';
+          feature.facets['country'] = '';
 
           // update the feature
           strapi.query('feature').update({ id: feature.id }, feature);

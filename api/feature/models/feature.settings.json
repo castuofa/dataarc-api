@@ -48,20 +48,28 @@
     "properties": {
       "type": "json"
     },
+    "facets": {
+      "type": "json"
+    },
     "combinators": {
-      "via": "features",
+      "autoPopulate": false,
       "collection": "combinator",
-      "autoPopulate": false
+      "via": "features"
     },
     "concepts": {
-      "via": "features",
+      "autoPopulate": false,
       "collection": "concept",
-      "autoPopulate": false
+      "via": "features"
     },
     "dataset": {
-      "via": "features",
+      "autoPopulate": false,
       "model": "dataset",
-      "autoPopulate": false
+      "via": "features"
+    },
+    "category": {
+      "autoPopulate": false,
+      "model": "category",
+      "via": "feature"
     }
   }
 }

@@ -26,11 +26,21 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["and", "or", "nor", "not"]
+      "enum": [
+        "and",
+        "or",
+        "nor",
+        "not"
+      ]
     },
     "state": {
       "type": "enumeration",
-      "enum": ["pending", "running", "failed", "done"],
+      "enum": [
+        "pending",
+        "running",
+        "failed",
+        "done"
+      ],
       "default": "pending"
     },
     "state_msg": {
@@ -51,13 +61,14 @@
     "concepts": {
       "collection": "concept",
       "via": "combinators",
-      "dominant": true
-    },
-    "features": {
-      "collection": "feature",
-      "via": "combinators",
       "dominant": true,
       "autoPopulate": false
+    },
+    "features": {
+      "via": "combinators",
+      "autoPopulate": false,
+      "collection": "feature",
+      "dominant": true
     }
   }
 }
