@@ -28,9 +28,9 @@
       "type": "string"
     },
     "concept": {
-      "model": "concept",
       "via": "topics",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "model": "concept"
     },
     "topic_map": {
       "via": "topics",

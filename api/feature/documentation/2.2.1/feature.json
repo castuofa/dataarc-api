@@ -734,6 +734,12 @@
                     "type": "string"
                   }
                 },
+                "related_concepts": {
+                  "type": "string"
+                },
+                "contextual_concepts": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

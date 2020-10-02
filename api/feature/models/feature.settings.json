@@ -57,9 +57,9 @@
       "via": "features"
     },
     "concepts": {
+      "via": "features",
       "autoPopulate": false,
-      "collection": "concept",
-      "via": "features"
+      "collection": "concept"
     },
     "dataset": {
       "autoPopulate": false,

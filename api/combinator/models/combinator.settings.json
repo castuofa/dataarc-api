@@ -59,10 +59,10 @@
       "autoPopulate": false
     },
     "concepts": {
-      "collection": "concept",
       "via": "combinators",
-      "dominant": true,
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "concept",
+      "dominant": true
     },
     "features": {
       "via": "combinators",

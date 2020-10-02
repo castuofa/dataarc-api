@@ -38,20 +38,26 @@
       ]
     },
     "combinators": {
-      "via": "concepts",
+      "autoPopulate": false,
       "collection": "combinator",
-      "autoPopulate": false
+      "via": "concepts"
     },
     "features": {
-      "via": "concepts",
       "autoPopulate": false,
       "collection": "feature",
+      "via": "concepts",
       "dominant": true
     },
     "topics": {
-      "via": "concept",
+      "autoPopulate": false,
       "collection": "topic",
-      "autoPopulate": false
+      "via": "concept"
+    },
+    "related_concepts": {
+      "collection": "concept"
+    },
+    "contextual_concepts": {
+      "collection": "concept"
     }
   }
 }
