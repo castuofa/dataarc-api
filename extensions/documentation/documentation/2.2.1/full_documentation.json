@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/02/2020 4:50:32 PM"
+    "x-generation-date": "10/02/2020 4:54:43 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8600,10 +8600,10 @@
                     "type": "string"
                   }
                 },
-                "related_concepts": {
+                "related": {
                   "type": "string"
                 },
-                "contextual_concepts": {
+                "contextual": {
                   "type": "string"
                 },
                 "created_by": {
@@ -9080,7 +9080,7 @@
               }
             }
           },
-          "related_concepts": {
+          "related": {
             "required": [
               "id"
             ],
@@ -9124,10 +9124,10 @@
                   "type": "string"
                 }
               },
-              "related_concepts": {
+              "related": {
                 "type": "string"
               },
-              "contextual_concepts": {
+              "contextual": {
                 "type": "string"
               },
               "created_by": {
@@ -9138,7 +9138,7 @@
               }
             }
           },
-          "contextual_concepts": {
+          "contextual": {
             "required": [
               "id"
             ],
@@ -9182,10 +9182,10 @@
                   "type": "string"
                 }
               },
-              "related_concepts": {
+              "related": {
                 "type": "string"
               },
-              "contextual_concepts": {
+              "contextual": {
                 "type": "string"
               },
               "created_by": {
@@ -9334,10 +9334,10 @@
               "type": "string"
             }
           },
-          "related_concepts": {
+          "related": {
             "type": "string"
           },
-          "contextual_concepts": {
+          "contextual": {
             "type": "string"
           },
           "created_by": {
@@ -10606,10 +10606,10 @@
                     "type": "string"
                   }
                 },
-                "related_concepts": {
+                "related": {
                   "type": "string"
                 },
-                "contextual_concepts": {
+                "contextual": {
                   "type": "string"
                 },
                 "created_by": {
@@ -11803,10 +11803,10 @@
                   "type": "string"
                 }
               },
-              "related_concepts": {
+              "related": {
                 "type": "string"
               },
-              "contextual_concepts": {
+              "contextual": {
                 "type": "string"
               },
               "created_by": {

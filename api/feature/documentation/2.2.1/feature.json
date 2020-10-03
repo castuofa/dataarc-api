@@ -734,10 +734,10 @@
                     "type": "string"
                   }
                 },
-                "related_concepts": {
+                "related": {
                   "type": "string"
                 },
-                "contextual_concepts": {
+                "contextual": {
                   "type": "string"
                 },
                 "created_by": {

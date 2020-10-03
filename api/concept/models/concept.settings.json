@@ -53,10 +53,10 @@
       "collection": "topic",
       "via": "concept"
     },
-    "related_concepts": {
+    "related": {
       "collection": "concept"
     },
-    "contextual_concepts": {
+    "contextual": {
       "collection": "concept"
     }
   }

@@ -796,7 +796,7 @@
               }
             }
           },
-          "related_concepts": {
+          "related": {
             "required": [
               "id"
             ],
@@ -840,10 +840,10 @@
                   "type": "string"
                 }
               },
-              "related_concepts": {
+              "related": {
                 "type": "string"
               },
-              "contextual_concepts": {
+              "contextual": {
                 "type": "string"
               },
               "created_by": {
@@ -854,7 +854,7 @@
               }
             }
           },
-          "contextual_concepts": {
+          "contextual": {
             "required": [
               "id"
             ],
@@ -898,10 +898,10 @@
                   "type": "string"
                 }
               },
-              "related_concepts": {
+              "related": {
                 "type": "string"
               },
-              "contextual_concepts": {
+              "contextual": {
                 "type": "string"
               },
               "created_by": {
@@ -1050,10 +1050,10 @@
               "type": "string"
             }
           },
-          "related_concepts": {
+          "related": {
             "type": "string"
           },
-          "contextual_concepts": {
+          "contextual": {
             "type": "string"
           },
           "created_by": {
