@@ -30,23 +30,29 @@
     "edges": {
       "type": "json"
     },
-    "topic_nodes": {
+    "source_nodes": {
       "type": "json"
     },
-    "topic_edges": {
+    "source_edges": {
       "type": "json"
     },
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false
     },
     "topics": {
       "collection": "topic"
+    },
+    "concepts": {
+      "collection": "concept"
+    },
+    "active": {
+      "type": "boolean",
+      "default": false,
+      "required": false
     }
   }
 }
