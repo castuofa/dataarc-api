@@ -9,32 +9,19 @@
     "timestamps": true
   },
   "attributes": {
-    "name": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "citation": {
-      "type": "text"
-    },
-    "url": {
-      "type": "string"
-    },
     "identifier": {
       "type": "string"
     },
+    "name": {
+      "type": "string"
+    },
     "concept": {
-      "via": "topics",
       "autoPopulate": false,
       "model": "concept"
     },
     "topic_map": {
-      "via": "topics",
-      "model": "topic-map"
+      "model": "topic-map",
+      "via": "topics"
     }
   }
 }

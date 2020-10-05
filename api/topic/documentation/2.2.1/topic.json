@@ -311,63 +311,6 @@
         "parameters": []
       }
     },
-    "/topics/random": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Topic"
-        ],
-        "parameters": []
-      }
-    },
     "/topics/{id}": {
       "get": {
         "deprecated": false,
@@ -579,22 +522,10 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "citation": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
           "identifier": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "concept": {
@@ -630,12 +561,6 @@
                 }
               },
               "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -796,22 +721,10 @@
       },
       "NewTopic": {
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "citation": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
           "identifier": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "concept": {
