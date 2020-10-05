@@ -112,6 +112,17 @@ module.exports = {
       });
   },
 
+  // load a json file
+  load_json: (path) => {
+    // read the file syncronously
+    let contents = fs.readFileSync(path, 'utf8');
+    // remove strange characters
+    contents = contents.trim();
+    // parse json
+    source = JSON.parse(contents);
+    return source;
+  },
+
   // set the state for a collection based on params
   set_state: async (params, collection, state, msg = '') => {
     if (!params || !collection || !state) return null;

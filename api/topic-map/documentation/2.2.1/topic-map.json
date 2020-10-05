@@ -701,22 +701,10 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
                 "identifier": {
+                  "type": "string"
+                },
+                "name": {
                   "type": "string"
                 },
                 "concept": {

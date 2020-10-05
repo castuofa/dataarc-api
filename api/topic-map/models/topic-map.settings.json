@@ -33,13 +33,15 @@
     "source": {
       "model": "file",
       "via": "related",
-      "allowedTypes": ["files"],
+      "allowedTypes": [
+        "files"
+      ],
       "plugin": "upload",
       "required": false
     },
     "topics": {
-      "collection": "topic",
-      "via": "topic_map"
+      "via": "topic_map",
+      "collection": "topic"
     },
     "active": {
       "type": "boolean",

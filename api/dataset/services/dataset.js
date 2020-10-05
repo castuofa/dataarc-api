@@ -24,13 +24,11 @@ module.exports = {
       // read source file
       let source;
       try {
-        let contents = fs.readFileSync(
-          `${strapi.dir}/public${entry.source.url}`,
-          'utf8'
-        ); // read the file syncronously
-        contents = contents.trim(); // remove strange characters
-        source = JSON.parse(contents); // parse json
-        source = turf.featureCollection(source.features); // pull out valid geojson features
+        source = strapi.services.helper.load_json(
+          `${strapi.dir}/public${entry.source.url}`
+        );
+        // pull out valid geojson features
+        source = turf.featureCollection(source.features);
       } catch (err) {
         throw new Error(
           `There was a problem parsing the JSON file in ${entry.name}`

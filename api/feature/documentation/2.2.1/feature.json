@@ -728,12 +728,6 @@
                     "type": "string"
                   }
                 },
-                "topics": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "related": {
                   "type": "string"
                 },
