@@ -48,11 +48,6 @@
       "via": "concepts",
       "dominant": true
     },
-    "topics": {
-      "autoPopulate": false,
-      "collection": "topic",
-      "via": "concept"
-    },
     "related": {
       "collection": "concept"
     },

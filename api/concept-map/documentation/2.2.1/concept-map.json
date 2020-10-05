@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/combinators": {
+    "/concept-maps": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Combinator"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Concept-map"
         ],
         "parameters": [
           {
@@ -201,72 +202,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Combinator"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewCombinator"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/combinators/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +244,22 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Concept-map"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewConcept-map"
+              }
+            }
+          }
+        }
       }
     },
-    "/combinators/random": {
+    "/concept-maps/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Concept-map"
         ],
         "parameters": []
       }
     },
-    "/combinators/{id}": {
+    "/concept-maps/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -378,7 +326,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -416,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Concept-map"
         ],
         "parameters": [
           {
@@ -440,7 +392,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Combinator"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -478,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
+          "Concept-map"
         ],
         "requestBody": {
           "description": "",
@@ -486,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCombinator"
+                "$ref": "#/components/schemas/NewConcept-map"
               }
             }
           }
@@ -552,143 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Combinator"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/combinators/{id}/refresh": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Combinator"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/combinators/{id}/results": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Combinator"
+          "Concept-map"
         ],
         "parameters": [
           {
@@ -707,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Combinator": {
+      "Concept-map": {
         "required": [
           "id"
         ],
@@ -730,83 +550,27 @@
           "url": {
             "type": "string"
           },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "and",
-              "or",
-              "nor",
-              "not"
-            ]
+          "nodes": {
+            "type": "object"
           },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "running",
-              "failed",
-              "done"
-            ]
+          "edges": {
+            "type": "object"
           },
-          "state_msg": {
-            "type": "string"
+          "topic_nodes": {
+            "type": "object"
           },
-          "state_at": {
-            "type": "datetime"
+          "topic_edges": {
+            "type": "object"
           },
-          "queries": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "property": {
-                  "type": "string"
-                },
-                "property_type": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "string"
-                },
-                "state_msg": {
-                  "type": "string"
-                },
-                "state_at": {
-                  "type": "datetime"
-                },
-                "field": {
-                  "type": "string"
-                },
-                "combinator": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "dataset": {
+          "source": {
             "required": [
-              "id"
+              "id",
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
             ],
             "properties": {
               "id": {
@@ -815,65 +579,47 @@
               "name": {
                 "type": "string"
               },
-              "title": {
+              "alternativeText": {
                 "type": "string"
               },
-              "description": {
+              "caption": {
                 "type": "string"
               },
-              "citation": {
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
                 "type": "string"
+              },
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
               },
               "url": {
                 "type": "string"
               },
-              "image": {
+              "previewUrl": {
                 "type": "string"
               },
-              "source": {
+              "provider": {
                 "type": "string"
               },
-              "title_layout": {
+              "provider_metadata": {
+                "type": "object"
+              },
+              "related": {
                 "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "state_msg": {
-                "type": "string"
-              },
-              "state_at": {
-                "type": "datetime"
-              },
-              "category": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "created_by": {
                 "type": "string"
@@ -883,137 +629,31 @@
               }
             }
           },
-          "concepts": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "group": {
-                  "type": "string"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "related": {
-                  "type": "string"
-                },
-                "contextual": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "features": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "summary": {
-                  "type": "string"
-                },
-                "details": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "keywords": {
-                  "type": "string"
-                },
-                "latitude": {
-                  "type": "number"
-                },
-                "longitude": {
-                  "type": "number"
-                },
-                "start_date": {
-                  "type": "integer"
-                },
-                "end_date": {
-                  "type": "integer"
-                },
-                "text_date": {
-                  "type": "string"
-                },
-                "properties": {
-                  "type": "object"
-                },
-                "facets": {
-                  "type": "object"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "category": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
+          "topics": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "identifier": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "concept": {
+                "type": "string"
+              },
+              "topic_map": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -1107,7 +747,7 @@
           }
         }
       },
-      "NewCombinator": {
+      "NewConcept-map": {
         "properties": {
           "name": {
             "type": "string"
@@ -1124,51 +764,20 @@
           "url": {
             "type": "string"
           },
-          "operator": {
-            "type": "string",
-            "enum": [
-              "and",
-              "or",
-              "nor",
-              "not"
-            ]
+          "nodes": {
+            "type": "object"
           },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "running",
-              "failed",
-              "done"
-            ]
+          "edges": {
+            "type": "object"
           },
-          "state_msg": {
+          "topic_nodes": {
+            "type": "object"
+          },
+          "topic_edges": {
+            "type": "object"
+          },
+          "topics": {
             "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
-          },
-          "queries": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "dataset": {
-            "type": "string"
-          },
-          "concepts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "features": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "created_by": {
             "type": "string"
@@ -1180,9 +789,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Combinator"
-    }
-  ]
+  "tags": []
 }

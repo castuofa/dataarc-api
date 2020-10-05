@@ -753,49 +753,6 @@
               }
             }
           },
-          "topics": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "identifier": {
-                  "type": "string"
-                },
-                "concept": {
-                  "type": "string"
-                },
-                "topic_map": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "related": {
             "required": [
               "id"
@@ -829,12 +786,6 @@
                 }
               },
               "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -887,12 +838,6 @@
                 }
               },
               "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -1039,12 +984,6 @@
             }
           },
           "features": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "topics": {
             "type": "array",
             "items": {
               "type": "string"

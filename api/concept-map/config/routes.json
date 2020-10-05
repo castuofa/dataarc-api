@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/concept-maps",
+      "handler": "concept-map.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/concept-maps/count",
+      "handler": "concept-map.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/concept-maps/:id",
+      "handler": "concept-map.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/concept-maps",
+      "handler": "concept-map.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/concept-maps/:id",
+      "handler": "concept-map.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/concept-maps/:id",
+      "handler": "concept-map.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
