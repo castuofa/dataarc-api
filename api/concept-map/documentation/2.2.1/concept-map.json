@@ -523,6 +523,74 @@
           }
         ]
       }
+    },
+    "/concept-maps/{id}/process": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Concept-map"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -556,10 +624,10 @@
           "edges": {
             "type": "object"
           },
-          "topic_nodes": {
+          "source_nodes": {
             "type": "object"
           },
-          "topic_edges": {
+          "source_edges": {
             "type": "object"
           },
           "source": {
@@ -656,6 +724,62 @@
                 "type": "string"
               }
             }
+          },
+          "concepts": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "group": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "related": {
+                "type": "string"
+              },
+              "contextual": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "required": [
@@ -770,14 +894,21 @@
           "edges": {
             "type": "object"
           },
-          "topic_nodes": {
+          "source_nodes": {
             "type": "object"
           },
-          "topic_edges": {
+          "source_edges": {
             "type": "object"
           },
           "topics": {
             "type": "string"
+          },
+          "concepts": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
