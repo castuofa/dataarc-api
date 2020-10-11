@@ -24,13 +24,13 @@
     "url": {
       "type": "string"
     },
-    "source_url": {
+    "image": {
       "type": "string"
     },
-    "metadata_url": {
+    "metadata": {
       "type": "string"
     },
-    "image_url": {
+    "source": {
       "type": "string"
     },
     "title_layout": {
@@ -55,20 +55,6 @@
     },
     "state_at": {
       "type": "datetime"
-    },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": ["images"],
-      "plugin": "upload",
-      "required": false
-    },
-    "source": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": ["files"],
-      "plugin": "upload",
-      "required": false
     },
     "category": {
       "model": "category",

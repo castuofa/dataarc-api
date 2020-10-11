@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/08/2020 3:53:42 PM"
+    "x-generation-date": "10/11/2020 12:48:25 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8338,13 +8338,13 @@
                 "url": {
                   "type": "string"
                 },
-                "source_url": {
+                "image": {
                   "type": "string"
                 },
-                "metadata_url": {
+                "metadata": {
                   "type": "string"
                 },
-                "image_url": {
+                "source": {
                   "type": "string"
                 },
                 "title_layout": {
@@ -8367,12 +8367,6 @@
                 },
                 "state_at": {
                   "type": "datetime"
-                },
-                "image": {
-                  "type": "string"
-                },
-                "source": {
-                  "type": "string"
                 },
                 "category": {
                   "type": "string"
@@ -9042,13 +9036,13 @@
               "url": {
                 "type": "string"
               },
-              "source_url": {
+              "image": {
                 "type": "string"
               },
-              "metadata_url": {
+              "metadata": {
                 "type": "string"
               },
-              "image_url": {
+              "source": {
                 "type": "string"
               },
               "title_layout": {
@@ -9071,12 +9065,6 @@
               },
               "state_at": {
                 "type": "datetime"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
               },
               "category": {
                 "type": "string"
@@ -10240,13 +10228,13 @@
               "url": {
                 "type": "string"
               },
-              "source_url": {
+              "image": {
                 "type": "string"
               },
-              "metadata_url": {
+              "metadata": {
                 "type": "string"
               },
-              "image_url": {
+              "source": {
                 "type": "string"
               },
               "title_layout": {
@@ -10269,12 +10257,6 @@
               },
               "state_at": {
                 "type": "datetime"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
               },
               "category": {
                 "type": "string"
@@ -10483,13 +10465,13 @@
           "url": {
             "type": "string"
           },
-          "source_url": {
+          "image": {
             "type": "string"
           },
-          "metadata_url": {
+          "metadata": {
             "type": "string"
           },
-          "image_url": {
+          "source": {
             "type": "string"
           },
           "title_layout": {
@@ -10520,140 +10502,6 @@
           },
           "state_at": {
             "type": "datetime"
-          },
-          "image": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "source": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
           },
           "category": {
             "required": [
@@ -11009,13 +10857,13 @@
           "url": {
             "type": "string"
           },
-          "source_url": {
+          "image": {
             "type": "string"
           },
-          "metadata_url": {
+          "metadata": {
             "type": "string"
           },
-          "image_url": {
+          "source": {
             "type": "string"
           },
           "title_layout": {
@@ -11474,13 +11322,13 @@
               "url": {
                 "type": "string"
               },
-              "source_url": {
+              "image": {
                 "type": "string"
               },
-              "metadata_url": {
+              "metadata": {
                 "type": "string"
               },
-              "image_url": {
+              "source": {
                 "type": "string"
               },
               "title_layout": {
@@ -11503,12 +11351,6 @@
               },
               "state_at": {
                 "type": "datetime"
-              },
-              "image": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
               },
               "category": {
                 "type": "string"

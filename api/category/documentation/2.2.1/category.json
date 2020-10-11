@@ -565,13 +565,13 @@
                 "url": {
                   "type": "string"
                 },
-                "source_url": {
+                "image": {
                   "type": "string"
                 },
-                "metadata_url": {
+                "metadata": {
                   "type": "string"
                 },
-                "image_url": {
+                "source": {
                   "type": "string"
                 },
                 "title_layout": {
@@ -594,12 +594,6 @@
                 },
                 "state_at": {
                   "type": "datetime"
-                },
-                "image": {
-                  "type": "string"
-                },
-                "source": {
-                  "type": "string"
                 },
                 "category": {
                   "type": "string"
