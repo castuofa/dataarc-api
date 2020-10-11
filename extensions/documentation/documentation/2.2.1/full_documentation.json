@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/05/2020 1:54:58 PM"
+    "x-generation-date": "10/08/2020 3:53:42 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8338,10 +8338,13 @@
                 "url": {
                   "type": "string"
                 },
-                "image": {
+                "source_url": {
                   "type": "string"
                 },
-                "source": {
+                "metadata_url": {
+                  "type": "string"
+                },
+                "image_url": {
                   "type": "string"
                 },
                 "title_layout": {
@@ -8364,6 +8367,12 @@
                 },
                 "state_at": {
                   "type": "datetime"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
                 },
                 "category": {
                   "type": "string"
@@ -9033,10 +9042,13 @@
               "url": {
                 "type": "string"
               },
-              "image": {
+              "source_url": {
                 "type": "string"
               },
-              "source": {
+              "metadata_url": {
+                "type": "string"
+              },
+              "image_url": {
                 "type": "string"
               },
               "title_layout": {
@@ -9059,6 +9071,12 @@
               },
               "state_at": {
                 "type": "datetime"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
               },
               "category": {
                 "type": "string"
@@ -10222,10 +10240,13 @@
               "url": {
                 "type": "string"
               },
-              "image": {
+              "source_url": {
                 "type": "string"
               },
-              "source": {
+              "metadata_url": {
+                "type": "string"
+              },
+              "image_url": {
                 "type": "string"
               },
               "title_layout": {
@@ -10248,6 +10269,12 @@
               },
               "state_at": {
                 "type": "datetime"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
               },
               "category": {
                 "type": "string"
@@ -10456,6 +10483,44 @@
           "url": {
             "type": "string"
           },
+          "source_url": {
+            "type": "string"
+          },
+          "metadata_url": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "title_layout": {
+            "type": "string"
+          },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
           "image": {
             "required": [
               "id",
@@ -10589,35 +10654,6 @@
                 "type": "string"
               }
             }
-          },
-          "title_layout": {
-            "type": "string"
-          },
-          "summary_layout": {
-            "type": "string"
-          },
-          "details_layout": {
-            "type": "string"
-          },
-          "link_layout": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "category": {
             "required": [
@@ -10971,6 +11007,15 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string"
+          },
+          "metadata_url": {
+            "type": "string"
+          },
+          "image_url": {
             "type": "string"
           },
           "title_layout": {
@@ -11429,10 +11474,13 @@
               "url": {
                 "type": "string"
               },
-              "image": {
+              "source_url": {
                 "type": "string"
               },
-              "source": {
+              "metadata_url": {
+                "type": "string"
+              },
+              "image_url": {
                 "type": "string"
               },
               "title_layout": {
@@ -11455,6 +11503,12 @@
               },
               "state_at": {
                 "type": "datetime"
+              },
+              "image": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
               },
               "category": {
                 "type": "string"

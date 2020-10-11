@@ -49,7 +49,11 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": ["pending", "missing", "done"]
+      "enum": [
+        "pending",
+        "missing",
+        "done"
+      ]
     },
     "state_msg": {
       "type": "string"
@@ -58,8 +62,8 @@
       "type": "datetime"
     },
     "dataset": {
-      "model": "dataset",
-      "via": "fields"
+      "via": "fields",
+      "model": "dataset"
     }
   }
 }

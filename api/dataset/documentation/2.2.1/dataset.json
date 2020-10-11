@@ -787,6 +787,44 @@
           "url": {
             "type": "string"
           },
+          "source_url": {
+            "type": "string"
+          },
+          "metadata_url": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "title_layout": {
+            "type": "string"
+          },
+          "summary_layout": {
+            "type": "string"
+          },
+          "details_layout": {
+            "type": "string"
+          },
+          "link_layout": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "pending",
+              "processing",
+              "updating",
+              "failed",
+              "done"
+            ]
+          },
+          "state_msg": {
+            "type": "string"
+          },
+          "state_at": {
+            "type": "datetime"
+          },
           "image": {
             "required": [
               "id",
@@ -920,35 +958,6 @@
                 "type": "string"
               }
             }
-          },
-          "title_layout": {
-            "type": "string"
-          },
-          "summary_layout": {
-            "type": "string"
-          },
-          "details_layout": {
-            "type": "string"
-          },
-          "link_layout": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string",
-            "default": "pending",
-            "enum": [
-              "pending",
-              "processing",
-              "updating",
-              "failed",
-              "done"
-            ]
-          },
-          "state_msg": {
-            "type": "string"
-          },
-          "state_at": {
-            "type": "datetime"
           },
           "category": {
             "required": [
@@ -1302,6 +1311,15 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string"
+          },
+          "metadata_url": {
+            "type": "string"
+          },
+          "image_url": {
             "type": "string"
           },
           "title_layout": {

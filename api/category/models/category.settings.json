@@ -28,9 +28,9 @@
       "type": "string"
     },
     "datasets": {
+      "via": "category",
       "autoPopulate": false,
-      "collection": "dataset",
-      "via": "category"
+      "collection": "dataset"
     },
     "feature": {
       "autoPopulate": false,

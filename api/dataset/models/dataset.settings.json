@@ -24,23 +24,14 @@
     "url": {
       "type": "string"
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
-      "required": false
+    "source_url": {
+      "type": "string"
     },
-    "source": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
-      "plugin": "upload",
-      "required": false
+    "metadata_url": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
     },
     "title_layout": {
       "type": "text"
@@ -56,13 +47,7 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "processing",
-        "updating",
-        "failed",
-        "done"
-      ],
+      "enum": ["pending", "processing", "updating", "failed", "done"],
       "default": "pending"
     },
     "state_msg": {
@@ -71,24 +56,38 @@
     "state_at": {
       "type": "datetime"
     },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["images"],
+      "plugin": "upload",
+      "required": false
+    },
+    "source": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["files"],
+      "plugin": "upload",
+      "required": false
+    },
     "category": {
-      "via": "datasets",
-      "model": "category"
+      "model": "category",
+      "via": "datasets"
     },
     "combinators": {
-      "via": "dataset",
       "autoPopulate": false,
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "dataset"
     },
     "fields": {
-      "via": "dataset",
       "autoPopulate": false,
-      "collection": "dataset-field"
+      "collection": "dataset-field",
+      "via": "dataset"
     },
     "features": {
-      "via": "dataset",
       "autoPopulate": false,
-      "collection": "feature"
+      "collection": "feature",
+      "via": "dataset"
     }
   }
 }
