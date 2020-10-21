@@ -523,13 +523,25 @@
             "type": "string"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "info",
+              "warning",
+              "error"
+            ]
           },
           "controller": {
             "type": "string"
           },
           "action": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete",
+              "process",
+              "refresh"
+            ]
           },
           "item": {
             "type": "string"
@@ -590,13 +602,25 @@
       "NewEvent": {
         "properties": {
           "type": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "info",
+              "warning",
+              "error"
+            ]
           },
           "controller": {
             "type": "string"
           },
           "action": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete",
+              "process",
+              "refresh"
+            ]
           },
           "item": {
             "type": "string"

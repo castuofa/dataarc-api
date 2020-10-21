@@ -12,13 +12,15 @@
   },
   "attributes": {
     "type": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": ["info", "warning", "error"]
     },
     "controller": {
       "type": "string"
     },
     "action": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": ["create", "update", "delete", "process", "refresh"]
     },
     "item": {
       "type": "string"
