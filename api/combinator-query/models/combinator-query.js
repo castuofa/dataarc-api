@@ -19,7 +19,7 @@ module.exports = {
       if (result == null) return;
       event.action = 'update';
       event.item = result.name;
-      event.payload = { data };
+      event.payload = { params, data };
       event.user = result.updated_by == null ? null : result.updated_by.id;
       strapi.services.helper.log(info);
     },
@@ -27,7 +27,7 @@ module.exports = {
       if (result == null) return;
       event.action = 'delete';
       event.item = result.name;
-      event.payload = { data };
+      event.payload = { params };
       event.user = result.updated_by == null ? null : result.updated_by.id;
       strapi.services.helper.log(info);
     },
