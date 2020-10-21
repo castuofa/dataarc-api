@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "categories",
   "info": {
-    "name": "Category"
+    "name": "Category",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -18,24 +20,11 @@
     "description": {
       "type": "text"
     },
-    "citation": {
-      "type": "text"
-    },
-    "url": {
-      "type": "string"
-    },
     "color": {
       "type": "string"
     },
     "datasets": {
-      "via": "category",
-      "autoPopulate": false,
       "collection": "dataset"
-    },
-    "feature": {
-      "autoPopulate": false,
-      "via": "category",
-      "model": "feature"
     }
   }
 }

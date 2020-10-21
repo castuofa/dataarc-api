@@ -18,40 +18,8 @@
     },
     {
       "method": "GET",
-      "path": "/datasets/random",
-      "handler": "dataset.random",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/datasets/refresh",
-      "handler": "dataset.refreshAll",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
       "path": "/datasets/:id",
       "handler": "dataset.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/datasets/:id/process",
-      "handler": "dataset.process",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/datasets/:id/refresh",
-      "handler": "dataset.refresh",
       "config": {
         "policies": []
       }

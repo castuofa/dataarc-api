@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "datasets",
   "info": {
-    "name": "Dataset"
+    "name": "Dataset",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -36,44 +38,30 @@
     "title_layout": {
       "type": "text"
     },
+    "link_layout": {
+      "type": "text"
+    },
     "summary_layout": {
       "type": "text"
     },
     "details_layout": {
       "type": "text"
     },
-    "link_layout": {
-      "type": "text"
-    },
-    "state": {
-      "type": "enumeration",
-      "enum": ["pending", "processing", "updating", "failed", "done"],
-      "default": "pending"
-    },
-    "state_msg": {
-      "type": "string"
-    },
-    "state_at": {
+    "processed_at": {
       "type": "datetime"
     },
-    "category": {
-      "model": "category",
-      "via": "datasets"
+    "fields": {
+      "collection": "dataset-field"
+    },
+    "features": {
+      "collection": "feature"
     },
     "combinators": {
-      "autoPopulate": false,
       "collection": "combinator",
       "via": "dataset"
     },
-    "fields": {
-      "autoPopulate": false,
-      "collection": "dataset-field",
-      "via": "dataset"
-    },
-    "features": {
-      "autoPopulate": false,
-      "collection": "feature",
-      "via": "dataset"
+    "category": {
+      "model": "category"
     }
   }
 }

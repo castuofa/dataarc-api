@@ -1,8 +1,8 @@
 {
-  "name": "dataarc-api",
+  "name": "api",
   "private": true,
-  "version": "2.2.1",
-  "description": "DataARC API",
+  "version": "0.1.0",
+  "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -11,30 +11,23 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@turf/turf": "^5.1.6",
-    "flat": "^5.0.2",
-    "pug": "^3.0.0",
-    "slugify": "^1.4.5",
-    "strapi": "3.1.4",
-    "strapi-admin": "3.1.4",
-    "strapi-connector-mongoose": "3.1.4",
-    "strapi-plugin-content-manager": "3.1.4",
-    "strapi-plugin-content-type-builder": "3.1.4",
-    "strapi-plugin-documentation": "3.1.4",
-    "strapi-plugin-email": "3.1.4",
-    "strapi-plugin-graphql": "3.1.4",
-    "strapi-plugin-upload": "3.1.4",
-    "strapi-plugin-users-permissions": "3.1.4",
-    "strapi-utils": "3.1.4",
-    "stream-json": "^1.7.1",
-    "xlsx": "^0.16.6",
-    "zlib": "^1.0.5"
+    "strapi": "3.2.4",
+    "strapi-admin": "3.2.4",
+    "strapi-connector-mongoose": "3.2.4",
+    "strapi-plugin-content-manager": "3.2.4",
+    "strapi-plugin-content-type-builder": "3.2.4",
+    "strapi-plugin-documentation": "3.2.4",
+    "strapi-plugin-email": "3.2.4",
+    "strapi-plugin-graphql": "3.2.4",
+    "strapi-plugin-upload": "3.2.4",
+    "strapi-plugin-users-permissions": "3.2.4",
+    "strapi-utils": "3.2.4"
   },
   "author": {
-    "name": "Timothy Sexton"
+    "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "46b64129-0036-4701-ba82-c51d8f459d32"
+    "uuid": "3687befe-7f64-4be3-87ab-74a207c8ccef"
   },
   "engines": {
     "node": ">=10.0.0",

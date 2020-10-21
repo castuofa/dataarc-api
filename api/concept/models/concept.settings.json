@@ -2,15 +2,18 @@
   "kind": "collectionType",
   "collectionName": "concepts",
   "info": {
-    "name": "Concept"
+    "name": "Concept",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": false
     },
     "title": {
       "type": "string"
@@ -37,16 +40,8 @@
         "physical_processes"
       ]
     },
-    "combinators": {
-      "autoPopulate": false,
-      "collection": "combinator",
-      "via": "concepts"
-    },
-    "features": {
-      "autoPopulate": false,
-      "collection": "feature",
-      "via": "concepts",
-      "dominant": true
+    "keywords": {
+      "type": "json"
     },
     "related": {
       "collection": "concept"

@@ -18,32 +18,8 @@
     },
     {
       "method": "GET",
-      "path": "/combinators/random",
-      "handler": "combinator.random",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
       "path": "/combinators/:id",
       "handler": "combinator.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/combinators/:id/refresh",
-      "handler": "combinator.refresh",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/combinators/:id/results",
-      "handler": "combinator.results",
       "config": {
         "policies": []
       }

@@ -16,15 +16,6 @@
         "policies": []
       }
     },
-
-    {
-      "method": "GET",
-      "path": "/searches/random",
-      "handler": "search.random",
-      "config": {
-        "policies": []
-      }
-    },
     {
       "method": "GET",
       "path": "/searches/:id",

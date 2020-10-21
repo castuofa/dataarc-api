@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "topics",
   "info": {
-    "name": "Topic"
+    "name": "Topic",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "identifier": {
@@ -16,11 +18,10 @@
       "type": "string"
     },
     "concept": {
-      "autoPopulate": false,
       "model": "concept"
     },
-    "topic_map": {
-      "model": "topic-map",
+    "map": {
+      "model": "concept-map",
       "via": "topics"
     }
   }

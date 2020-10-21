@@ -6,13 +6,12 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "unique": true,
-      "required": false
+      "type": "string"
     },
     "title": {
       "type": "string"
@@ -26,10 +25,10 @@
     "url": {
       "type": "string"
     },
-    "start_date": {
+    "begin": {
       "type": "integer"
     },
-    "end_date": {
+    "end": {
       "type": "integer"
     }
   }

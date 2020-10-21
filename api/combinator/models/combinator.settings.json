@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "combinators",
   "info": {
-    "name": "Combinator"
+    "name": "Combinator",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -31,44 +33,23 @@
         "or",
         "nor",
         "not"
-      ]
-    },
-    "state": {
-      "type": "enumeration",
-      "enum": [
-        "pending",
-        "running",
-        "failed",
-        "done"
       ],
-      "default": "pending"
+      "default": "or"
     },
-    "state_msg": {
-      "type": "string"
-    },
-    "state_at": {
-      "type": "datetime"
-    },
-    "queries": {
-      "via": "combinator",
-      "collection": "combinator-query"
+    "review": {
+      "type": "boolean",
+      "default": false
     },
     "dataset": {
       "via": "combinators",
-      "autoPopulate": false,
       "model": "dataset"
     },
-    "concepts": {
-      "via": "combinators",
-      "autoPopulate": false,
-      "collection": "concept",
-      "dominant": true
+    "queries": {
+      "collection": "combinator-query",
+      "via": "combinator"
     },
-    "features": {
-      "via": "combinators",
-      "autoPopulate": false,
-      "collection": "feature",
-      "dominant": true
+    "concepts": {
+      "collection": "concept"
     }
   }
 }

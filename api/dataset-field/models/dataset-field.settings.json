@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "dataset_fields",
   "info": {
-    "name": "DatasetField"
+    "name": "DatasetField",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -24,12 +26,6 @@
     "url": {
       "type": "string"
     },
-    "parent": {
-      "type": "string"
-    },
-    "path": {
-      "type": "string"
-    },
     "source": {
       "type": "string"
     },
@@ -41,28 +37,25 @@
         "boolean",
         "array",
         "url",
-        "start_date",
-        "end_date",
-        "text_date"
+        "latitude",
+        "longitude",
+        "begin_date",
+        "end_date"
       ],
       "default": "string"
     },
-    "state": {
-      "type": "enumeration",
-      "enum": [
-        "pending",
-        "missing",
-        "done"
-      ]
-    },
-    "state_msg": {
+    "parent": {
       "type": "string"
     },
-    "state_at": {
-      "type": "datetime"
+    "review": {
+      "type": "boolean",
+      "default": true
+    },
+    "missing": {
+      "type": "boolean",
+      "default": false
     },
     "dataset": {
-      "via": "fields",
       "model": "dataset"
     }
   }
