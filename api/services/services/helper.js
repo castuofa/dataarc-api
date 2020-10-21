@@ -215,29 +215,17 @@ module.exports = {
   },
 
   // log an event
-  log_event: async (
-    type,
-    controller,
-    action,
-    item,
-    user,
-    payload = null,
-    details = null
-  ) => {
-    // let { result, params, data }
-    strapi.services.event
-      .create({
-        type,
-        controller,
-        action,
-        item,
-        details,
-        payload,
-        user,
-      })
-      .catch(function (err) {
-        strapi.log.warn(`${err.status}: event log error for ${type}:${action}`);
-      });
+  log: async (event = {}) => {
+    //   type,
+    //   controller,
+    //   action,
+    //   item,
+    //   details,
+    //   payload,
+    //   user,
+    strapi.services.event.create(event).catch(function (err) {
+      strapi.log.warn(`${err.status}: event log error for ${type}:${action}`);
+    });
   },
 
   // convert graphql parameters to rest equivilent
