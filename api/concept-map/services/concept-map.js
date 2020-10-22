@@ -7,10 +7,7 @@ module.exports = {
     if (entry != null) {
       // remove existing topics for this map
       strapi.log.info(`Removing existing topics for this map`);
-      await strapi.query('topic').delete({
-        topic_map: entry.id,
-        _limit: 999999,
-      });
+      await strapi.query('topic').model.deleteMany({ map: entry.id });
 
       // read file
       const path = `${strapi.dir}/public${entry.source.url}`;
@@ -29,7 +26,7 @@ module.exports = {
           identifier: node.id.toString(),
           name: node.title,
           concept: concept.id,
-          topic_map: entry.id,
+          map: entry.id,
         };
       });
 
