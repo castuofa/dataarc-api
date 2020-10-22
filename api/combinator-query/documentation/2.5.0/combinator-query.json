@@ -611,6 +611,76 @@
                 "type": "string"
               }
             }
+          },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "processed_at": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "features": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "category": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -645,6 +715,9 @@
             "type": "boolean"
           },
           "combinator": {
+            "type": "string"
+          },
+          "dataset": {
             "type": "string"
           },
           "created_by": {

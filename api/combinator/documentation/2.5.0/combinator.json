@@ -717,6 +717,9 @@
                 "combinator": {
                   "type": "string"
                 },
+                "dataset": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

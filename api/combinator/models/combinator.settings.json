@@ -28,7 +28,12 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["and", "or", "nor", "not"],
+      "enum": [
+        "and",
+        "or",
+        "nor",
+        "not"
+      ],
       "default": "or"
     },
     "review": {
@@ -41,9 +46,9 @@
       "autoPopulate": false
     },
     "queries": {
-      "collection": "combinator-query",
       "via": "combinator",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "combinator-query"
     },
     "concepts": {
       "collection": "concept",

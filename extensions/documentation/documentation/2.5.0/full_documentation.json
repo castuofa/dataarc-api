@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/21/2020 9:00:20 PM"
+    "x-generation-date": "10/21/2020 10:11:59 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7287,6 +7287,76 @@
                 "type": "string"
               }
             }
+          },
+          "dataset": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "title_layout": {
+                "type": "string"
+              },
+              "link_layout": {
+                "type": "string"
+              },
+              "summary_layout": {
+                "type": "string"
+              },
+              "details_layout": {
+                "type": "string"
+              },
+              "processed_at": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "features": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "category": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -7321,6 +7391,9 @@
             "type": "boolean"
           },
           "combinator": {
+            "type": "string"
+          },
+          "dataset": {
             "type": "string"
           },
           "created_by": {
@@ -7464,6 +7537,9 @@
                   "type": "boolean"
                 },
                 "combinator": {
+                  "type": "string"
+                },
+                "dataset": {
                   "type": "string"
                 },
                 "created_by": {
