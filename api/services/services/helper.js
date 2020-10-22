@@ -113,6 +113,11 @@ module.exports = {
       });
   },
 
+  // check if any of the fields are in the data
+  has_fields: (fields, data) => {
+    return _.intersection(_.keys(data), fields).length > 0;
+  },
+
   // clean up old files from uploads
   clean_uploads: () => {
     let dir = `${strapi.dir}/public/uploads`;
