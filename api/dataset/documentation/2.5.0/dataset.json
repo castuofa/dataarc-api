@@ -908,7 +908,10 @@
                 "type": "string"
               },
               "datasets": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"

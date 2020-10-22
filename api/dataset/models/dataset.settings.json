@@ -51,21 +51,22 @@
       "type": "datetime"
     },
     "fields": {
-      "collection": "dataset-field",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "dataset-field"
     },
     "features": {
-      "collection": "feature",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "feature"
     },
     "combinators": {
+      "autoPopulate": false,
       "collection": "combinator",
-      "via": "dataset",
-      "autoPopulate": false
+      "via": "dataset"
     },
     "category": {
+      "autoPopulate": false,
       "model": "category",
-      "autoPopulate": false
+      "via": "datasets"
     }
   }
 }

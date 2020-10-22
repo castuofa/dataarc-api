@@ -42,8 +42,8 @@
     },
     "dataset": {
       "via": "combinators",
-      "model": "dataset",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "model": "dataset"
     },
     "queries": {
       "via": "combinator",

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/21/2020 10:40:12 PM"
+    "x-generation-date": "10/22/2020 1:09:39 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7107,72 +7107,75 @@
             "type": "string"
           },
           "datasets": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "metadata": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "title_layout": {
-                "type": "string"
-              },
-              "link_layout": {
-                "type": "string"
-              },
-              "summary_layout": {
-                "type": "string"
-              },
-              "details_layout": {
-                "type": "string"
-              },
-              "processed_at": {
-                "type": "string"
-              },
-              "fields": {
-                "type": "string"
-              },
-              "features": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "metadata": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "title_layout": {
+                  "type": "string"
+                },
+                "link_layout": {
+                  "type": "string"
+                },
+                "summary_layout": {
+                  "type": "string"
+                },
+                "details_layout": {
+                  "type": "string"
+                },
+                "processed_at": {
+                  "type": "string"
+                },
+                "fields": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "category": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "category": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           }
@@ -7193,7 +7196,10 @@
             "type": "string"
           },
           "datasets": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
@@ -8372,7 +8378,10 @@
                 "type": "string"
               },
               "datasets": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -8873,7 +8882,10 @@
                 "type": "string"
               },
               "datasets": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"

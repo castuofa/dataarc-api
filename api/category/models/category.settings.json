@@ -24,6 +24,7 @@
       "type": "string"
     },
     "datasets": {
+      "via": "category",
       "collection": "dataset",
       "autoPopulate": false
     }
