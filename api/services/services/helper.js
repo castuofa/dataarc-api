@@ -190,44 +190,8 @@ module.exports = {
     // return source;
   },
 
-  // set the state for a collection based on params
-  set_state: async (params, collection, state, msg = '') => {
-    if (!params || !collection || !state) return null;
-    if (strapi.services.helper.get_type(params) != 'object') {
-      params = { id: params };
-    }
-    return strapi
-      .query(collection)
-      .update(params, {
-        state: state,
-        state_msg: msg,
-        state_at: Date.now(),
-      })
-      .catch(function (err) {
-        switch (err.status) {
-          case 404:
-            strapi.log.warn(
-              `${collection} state not updated, no matching results`
-            );
-            break;
-          default:
-            strapi.log.warn(
-              `${collection} state not updated, error ${err.status}`
-            );
-            break;
-        }
-      });
-  },
-
   // log an event
   log: async (event = {}) => {
-    //   type,
-    //   controller,
-    //   action,
-    //   item,
-    //   details,
-    //   payload,
-    //   user,
     strapi.services.event.create(event).catch(function (err) {
       strapi.log.warn(`${err.status}: event log error for ${type}:${action}`);
     });

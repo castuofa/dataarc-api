@@ -15,7 +15,12 @@ module.exports = {
     try {
       entity = await strapi.services['dataset'].process({ id });
     } catch (err) {
-      strapi.services.helper.set_state(id, 'dataset', 'failed', err.message);
+      event.type = 'error';
+      event.action = 'process';
+      event.item = id;
+      event.details = err.message;
+      if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
+      strapi.services.helper.log(event);
       return ctx.response.badData(err.message);
     }
 
@@ -41,7 +46,12 @@ module.exports = {
     try {
       entity = await strapi.services['dataset'].refresh({ id });
     } catch (err) {
-      strapi.services.helper.set_state(id, 'dataset', 'failed', err.message);
+      event.type = 'error';
+      event.action = 'refresh';
+      event.item = id;
+      event.details = err.message;
+      if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
+      strapi.services.helper.log(event);
       return ctx.response.badData(err.message);
     }
 

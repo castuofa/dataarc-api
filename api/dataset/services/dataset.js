@@ -12,13 +12,8 @@ module.exports = {
     // find the entry
     const entry = await strapi.query('dataset').findOne(params);
     if (entry != null) {
-      // set process to active and start processing
-      strapi.services.helper.set_state(
-        entry.id,
-        'dataset',
-        'processing',
-        'Dataset processing in progress'
-      );
+      // set processed_at
+      strapi.query('dataset').update({ id: entry.id }, { processed_at: null });
 
       // read source file
       let source;
@@ -180,29 +175,21 @@ module.exports = {
             if (result.status != 'fulfilled') {
               // have to set the state here instaed of throw an error
               // since these contine to run after the function returns
-              strapi.services.helper.set_state(
-                entry.id,
-                'dataset',
-                'failed',
-                'Something went wrong, please try again'
-              );
+              let event = {
+                type: 'error',
+                action: 'process',
+                item: entry.id,
+                details: 'Something went wrong, please try again',
+              };
+              strapi.services.helper.log(event);
               return entry;
             }
           });
 
-          // after dataset has been processed, refresh the features
-          strapi.services.dataset.refresh({ id: entry.id });
-
-          // set processs to complete
-          strapi.services.helper.set_state(entry.id, 'dataset', 'done');
-
-          // set state to pending for related combinaotors
-          strapi.services.helper.set_state(
-            { dataset: entry.id },
-            'combinator',
-            'pending',
-            'Dataset has been updated, please verify all combinator settings'
-          );
+          // set processed
+          strapi
+            .query('dataset')
+            .update({ id: entry.id }, { processed_at: Date.now() });
 
           // show information about processed dataset
           strapi.log.info(
@@ -219,14 +206,6 @@ module.exports = {
     // find the entry
     const entry = await strapi.query('dataset').findOne(params);
     if (entry != null) {
-      // set refresh to active
-      strapi.services.helper.set_state(
-        entry.id,
-        'dataset',
-        'updating',
-        'Updating dataset features'
-      );
-
       const category = await strapi
         .query('category')
         .findOne({ id: entry.category });
@@ -351,9 +330,6 @@ module.exports = {
           strapi.query('feature').update({ id: feature.id }, feature);
         });
       }
-
-      // set refresh to complete
-      strapi.services.helper.set_state(entry.id, 'dataset', 'done');
     }
 
     return entry;

@@ -39,7 +39,7 @@ module.exports = {
       if (result.updated_by != null) event.user = result.updated_by.id;
       strapi.services.helper.log(event);
 
-      // watch for changes to specific fields
+      // refresh dataset if layouts have changed
       if (
         strapi.services.helper.has_fields(
           ['title_layout', 'summary_layout', 'details_layout', 'link_layout'],
@@ -47,6 +47,12 @@ module.exports = {
         )
       ) {
         strapi.services.dataset.refresh({ id: result.id });
+      }
+
+      // refresh dataset if it has been processed
+      if (strapi.services.helper.has_fields(['processed_at'], data)) {
+        if (result.processed_at != null)
+          strapi.services.dataset.refresh({ id: result.id });
       }
     },
     afterDelete: async (result, params) => {
