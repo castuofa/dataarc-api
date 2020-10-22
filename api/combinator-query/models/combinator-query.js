@@ -22,6 +22,14 @@ module.exports = {
       event.payload = { params, data };
       if (result.updated_by != null) event.user = result.updated_by.id;
       strapi.services.helper.log(event);
+
+      // if query was set to review, mark combinator to review
+      if (strapi.services.helper.has_fields(['review'], data)) {
+        if (data.review)
+          strapi
+            .query('combinator')
+            .update({ id: result.combinator }, { review: true });
+      }
     },
     afterDelete: async (result, params) => {
       if (result == null) return;

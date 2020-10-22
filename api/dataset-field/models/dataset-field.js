@@ -24,14 +24,14 @@ module.exports = {
       strapi.services.helper.log(event);
 
       // watch for changes to specific fields, trigger refresh and set related to review
-      if (_.intersection(_.keys(data), ['type']).length) {
+      if (strapi.services.helper.has_fields(['type'], data)) {
         strapi.services.dataset.refresh({ id: result.dataset.id });
         strapi
-          .query('combinator')
-          .update({ dataset: result.dataset.id }, { review: true });
-        strapi
           .query('combinator-query')
-          .update({ field: result.name }, { review: true });
+          .update(
+            { dataset: result.dataset, field: result.name },
+            { review: true }
+          );
       }
     },
     afterDelete: async (result, params) => {
@@ -41,6 +41,14 @@ module.exports = {
       event.payload = { params };
       if (result.updated_by != null) event.user = result.updated_by.id;
       strapi.services.helper.log(event);
+
+      // mark any combinator query that uses the deleted field for review
+      strapi
+        .query('combinator-query')
+        .update(
+          { dataset: result.dataset, field: result.name },
+          { review: true }
+        );
     },
   },
 };
