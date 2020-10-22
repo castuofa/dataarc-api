@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/features/random",
+      "handler": "feature.random",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/features/:id",
       "handler": "feature.findOne",
       "config": {
