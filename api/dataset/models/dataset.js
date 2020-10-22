@@ -40,20 +40,11 @@ module.exports = {
       strapi.services.helper.log(event);
 
       // watch for changes to specific fields
-      if (_.intersection(_.keys(data), ['source']).length) {
-        strapi.services.helper.set_state(
-          result.id,
-          'dataset',
-          'pending',
-          'Dataset source has been updated, processing required'
-        );
-      } else if (
-        _.intersection(_.keys(data), [
-          'title_layout',
-          'summary_layout',
-          'details_layout',
-          'link_layout',
-        ]).length
+      if (
+        strapi.services.helper.has_fields(
+          ['title_layout', 'summary_layout', 'details_layout', 'link_layout'],
+          data
+        )
       ) {
         strapi.services.dataset.refresh({ id: result.id });
       }
