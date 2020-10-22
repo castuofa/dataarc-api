@@ -522,9 +522,6 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },
@@ -586,9 +583,6 @@
       },
       "NewSearch": {
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },

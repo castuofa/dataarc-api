@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/21/2020 8:36:08 PM"
+    "x-generation-date": "10/21/2020 8:52:33 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -4756,6 +4756,63 @@
         "parameters": []
       }
     },
+    "/features/random": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Feature"
+        ],
+        "parameters": []
+      }
+    },
     "/features/{id}": {
       "get": {
         "deprecated": false,
@@ -8869,9 +8926,6 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },
@@ -8933,9 +8987,6 @@
       },
       "NewSearch": {
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },
