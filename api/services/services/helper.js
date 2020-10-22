@@ -242,16 +242,6 @@ module.exports = {
     return fixed;
   },
 
-  // directly access the mongoose model to perform bulk actions
-  delete_many: async (collection, filter, options, callback) => {
-    return strapi.query(collection).model.deleteMany(filter, options, callback);
-  },
-
-  // directly access the mongoose model to perform bulk actions
-  insert_many: async (collection, docs, options, callback) => {
-    return strapi.query(collection).model.insertMany(docs, options, callback);
-  },
-
   // get a role based given a type {string}
   get_role: async (type) => {
     const service = await strapi.plugins['users-permissions'].services

@@ -168,16 +168,12 @@ module.exports = {
 
       // remove existing fields and features for this dataset then create new
       Promise.allSettled([
-        strapi.services.helper.delete_many('dataset-field', {
-          dataset: entry.id,
-        }),
-        strapi.services.helper.delete_many('feature', {
-          dataset: entry.id,
-        }),
+        strapi.query('dataset-field').model.deleteMany({ dataset: entry.id }),
+        strapi.query('feature').model.deleteMany({ dataset: entry.id }),
       ]).then(
         Promise.allSettled([
-          strapi.services.helper.insert_many('dataset-field', fields),
-          strapi.services.helper.insert_many('feature', features),
+          strapi.query('dataset-field').model.insertMany(fields),
+          strapi.query('feature').model.insertMany(features),
         ]).then((results) => {
           // check to make sure all promises were fulfilled
           _.each(results, (result) => {
