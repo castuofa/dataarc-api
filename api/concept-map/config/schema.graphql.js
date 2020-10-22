@@ -13,7 +13,7 @@ module.exports = {
         description: 'Return the count of concept maps',
         resolver: 'application::concept-map.concept-map.count',
       },
-      combinators: {
+      conceptMaps: {
         resolverOf: 'application::concept-map.concept-map.find',
         resolver: async (obj, options, ctx) => {
           const params = await strapi.services.helper.prefix_graphql_params(
@@ -21,7 +21,7 @@ module.exports = {
           );
           const results = await strapi.query('concept-map').find(params);
           results.map((doc) => {
-            doc.topics_count = doc.topics.length;
+            doc.topics_count = doc.topics.length ? doc.topics.length : 0;
           });
           return results;
         },
