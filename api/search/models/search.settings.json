@@ -11,9 +11,6 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "name": {
-      "type": "string"
-    },
     "title": {
       "type": "string"
     },
@@ -28,7 +25,8 @@
     },
     "user": {
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "autoPopulate": false
     }
   }
 }
