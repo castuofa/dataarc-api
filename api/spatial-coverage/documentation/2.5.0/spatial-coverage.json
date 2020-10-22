@@ -535,9 +535,6 @@
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },
@@ -557,9 +554,6 @@
       },
       "NewSpatial-coverage": {
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },
