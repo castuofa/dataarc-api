@@ -25,6 +25,22 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/datasets/:id/process",
+      "handler": "dataset.process",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/datasets/:id/refresh",
+      "handler": "dataset.refresh",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/datasets",
       "handler": "dataset.create",
