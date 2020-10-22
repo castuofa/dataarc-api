@@ -21,7 +21,7 @@ module.exports = {
           );
           const results = await strapi.query('concept-map').find(params);
           results.map((doc) => {
-            doc.topics_count = doc.topics.length ? doc.topics.length : 0;
+            doc.topics_count = doc.topics ? doc.topics.length : 0;
           });
           return results;
         },
