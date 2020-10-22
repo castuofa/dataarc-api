@@ -1,6 +1,6 @@
 module.exports = {
   definition: /* GraphQL */ `
-    extend type ConceptMaps {
+    extend type ConceptMap {
       topics_count: Int
     }
   `,
