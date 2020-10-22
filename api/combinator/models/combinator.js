@@ -46,6 +46,9 @@ module.exports = {
       event.payload = { params };
       if (result.updated_by != null) event.user = result.updated_by.id;
       strapi.services.helper.log(event);
+
+      // delete related data
+      strapi.query('combinator-query').delete({ combinator: result.id });
     },
   },
 };
