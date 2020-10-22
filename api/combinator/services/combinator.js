@@ -26,7 +26,7 @@ module.exports = {
       // loop through the queries getting results
       _.each(entry.queries, async (query) => {
         // set field name
-        let field = 'properties.' + query.property;
+        let field = 'properties.' + query.field;
 
         // get the primitive of the value
         let value = strapi.services.helper.parse_primitive(query.value);
