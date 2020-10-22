@@ -698,143 +698,6 @@
             "type": "string",
             "format": "date-time"
           },
-          "fields": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "source": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "parent": {
-                "type": "string"
-              },
-              "review": {
-                "type": "boolean"
-              },
-              "missing": {
-                "type": "boolean"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "features": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "summary": {
-                "type": "string"
-              },
-              "details": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "source": {
-                "type": "object"
-              },
-              "properties": {
-                "type": "object"
-              },
-              "keywords": {
-                "type": "string"
-              },
-              "location": {
-                "type": "object"
-              },
-              "radius": {
-                "type": "number"
-              },
-              "spatial_coverages": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "region": {
-                "type": "string"
-              },
-              "begin": {
-                "type": "integer"
-              },
-              "end": {
-                "type": "integer"
-              },
-              "temporal_keywords": {
-                "type": "string"
-              },
-              "temporal_coverages": {
-                "type": "string"
-              },
-              "millennia": {
-                "type": "object"
-              },
-              "centuries": {
-                "type": "object"
-              },
-              "decades": {
-                "type": "object"
-              },
-              "combinators": {
-                "type": "string"
-              },
-              "concepts": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "combinators": {
             "type": "array",
             "items": {
@@ -920,6 +783,149 @@
                 "type": "string"
               }
             }
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "parent": {
+                  "type": "string"
+                },
+                "review": {
+                  "type": "boolean"
+                },
+                "missing": {
+                  "type": "boolean"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "object"
+                },
+                "properties": {
+                  "type": "object"
+                },
+                "keywords": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "object"
+                },
+                "radius": {
+                  "type": "number"
+                },
+                "spatial_coverages": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "begin": {
+                  "type": "integer"
+                },
+                "end": {
+                  "type": "integer"
+                },
+                "temporal_keywords": {
+                  "type": "string"
+                },
+                "temporal_coverages": {
+                  "type": "string"
+                },
+                "millennia": {
+                  "type": "object"
+                },
+                "centuries": {
+                  "type": "object"
+                },
+                "decades": {
+                  "type": "object"
+                },
+                "combinators": {
+                  "type": "string"
+                },
+                "concepts": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -965,12 +971,6 @@
             "type": "string",
             "format": "date-time"
           },
-          "fields": {
-            "type": "string"
-          },
-          "features": {
-            "type": "string"
-          },
           "combinators": {
             "type": "array",
             "items": {
@@ -979,6 +979,18 @@
           },
           "category": {
             "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

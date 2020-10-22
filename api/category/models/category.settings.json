@@ -25,8 +25,8 @@
     },
     "datasets": {
       "via": "category",
-      "collection": "dataset",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "dataset"
     }
   }
 }

@@ -50,23 +50,25 @@
     "processed_at": {
       "type": "datetime"
     },
-    "fields": {
-      "autoPopulate": false,
-      "collection": "dataset-field"
-    },
-    "features": {
-      "autoPopulate": false,
-      "collection": "feature"
-    },
     "combinators": {
-      "autoPopulate": false,
       "collection": "combinator",
-      "via": "dataset"
+      "via": "dataset",
+      "autoPopulate": false
     },
     "category": {
-      "autoPopulate": false,
       "model": "category",
-      "via": "datasets"
+      "via": "datasets",
+      "autoPopulate": false
+    },
+    "fields": {
+      "via": "dataset",
+      "collection": "dataset-field",
+      "autoPopulate": false
+    },
+    "features": {
+      "via": "dataset",
+      "collection": "feature",
+      "autoPopulate": false
     }
   }
 }

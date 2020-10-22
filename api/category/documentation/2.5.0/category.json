@@ -583,12 +583,6 @@
                 "processed_at": {
                   "type": "string"
                 },
-                "fields": {
-                  "type": "string"
-                },
-                "features": {
-                  "type": "string"
-                },
                 "combinators": {
                   "type": "array",
                   "items": {
@@ -597,6 +591,18 @@
                 },
                 "category": {
                   "type": "string"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "created_by": {
                   "type": "string"
