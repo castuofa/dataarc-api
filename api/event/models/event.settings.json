@@ -19,8 +19,7 @@
       "type": "string"
     },
     "action": {
-      "type": "enumeration",
-      "enum": ["create", "update", "delete", "process", "refresh"]
+      "type": "string"
     },
     "item": {
       "type": "string"
@@ -33,7 +32,8 @@
     },
     "user": {
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "autoPopulate": false
     }
   }
 }

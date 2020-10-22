@@ -534,14 +534,7 @@
             "type": "string"
           },
           "action": {
-            "type": "string",
-            "enum": [
-              "create",
-              "update",
-              "delete",
-              "process",
-              "refresh"
-            ]
+            "type": "string"
           },
           "item": {
             "type": "string"
@@ -613,14 +606,7 @@
             "type": "string"
           },
           "action": {
-            "type": "string",
-            "enum": [
-              "create",
-              "update",
-              "delete",
-              "process",
-              "refresh"
-            ]
+            "type": "string"
           },
           "item": {
             "type": "string"
