@@ -23,15 +23,11 @@ module.exports = {
           );
           const results = await strapi.query('dataset').find(params);
           results.map((doc) => {
-            doc.fields_count = strapi
-              .query('dataset-field')
-              .count({ dataset: doc.id });
-            doc.features_count = strapi
-              .query('feature')
-              .count({ dataset: doc.id });
-            doc.combinators_count = strapi
-              .query('combinator')
-              .count({ dataset: doc.id });
+            doc.fields_count = doc.fields ? doc.fields.length : 0;
+            doc.features_count = doc.features ? doc.features.length : 0;
+            doc.combinators_count = doc.combinators
+              ? doc.combinators.length
+              : 0;
           });
           return results;
         },

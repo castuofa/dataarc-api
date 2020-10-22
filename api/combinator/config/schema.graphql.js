@@ -33,8 +33,8 @@ module.exports = {
           );
           const results = await strapi.query('combinator').find(params);
           results.map((doc) => {
-            doc.queries_count = doc.queries.length;
-            doc.concepts_count = doc.concepts.length;
+            doc.queries_count = doc.queries ? doc.queries.length : 0;
+            doc.concepts_count = doc.concepts ? doc.concepts.length : 0;
           });
           return results;
         },

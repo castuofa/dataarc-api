@@ -27,8 +27,10 @@ module.exports = {
           );
           const results = await strapi.query('feature').find(params);
           results.map((doc) => {
-            doc.combinators_count = doc.combinators.length;
-            doc.concepts_count = doc.concepts.length;
+            doc.combinators_count = doc.combinators
+              ? doc.combinators.length
+              : 0;
+            doc.concepts_count = doc.concepts ? doc.concepts.length : 0;
           });
           return results;
         },

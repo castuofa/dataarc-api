@@ -21,9 +21,7 @@ module.exports = {
           );
           const results = await strapi.query('category').find(params);
           results.map((doc) => {
-            doc.datasets_count = strapi
-              .query('dataset')
-              .count({ category: doc.id });
+            doc.datasets_count = doc.datasets ? doc.datasets.length : 0;
           });
           return results;
         },
