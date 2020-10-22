@@ -50,7 +50,8 @@
     },
     "topics": {
       "via": "map",
-      "collection": "topic"
+      "collection": "topic",
+      "autoPopulate": false
     }
   }
 }

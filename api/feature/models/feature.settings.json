@@ -42,7 +42,8 @@
       "type": "decimal"
     },
     "spatial_coverages": {
-      "collection": "spatial-coverage"
+      "collection": "spatial-coverage",
+      "autoPopulate": false
     },
     "country": {
       "type": "string"
@@ -60,7 +61,8 @@
       "type": "string"
     },
     "temporal_coverages": {
-      "collection": "temporal-coverage"
+      "collection": "temporal-coverage",
+      "autoPopulate": false
     },
     "millennia": {
       "type": "json"
@@ -72,16 +74,20 @@
       "type": "json"
     },
     "combinators": {
-      "collection": "combinator"
+      "collection": "combinator",
+      "autoPopulate": false
     },
     "concepts": {
-      "collection": "concept"
+      "collection": "concept",
+      "autoPopulate": false
     },
     "dataset": {
-      "model": "dataset"
+      "model": "dataset",
+      "autoPopulate": false
     },
     "category": {
-      "model": "category"
+      "model": "category",
+      "autoPopulate": false
     }
   }
 }

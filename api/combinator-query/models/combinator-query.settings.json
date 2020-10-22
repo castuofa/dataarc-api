@@ -40,7 +40,8 @@
     },
     "combinator": {
       "via": "queries",
-      "model": "combinator"
+      "model": "combinator",
+      "autoPopulate": false
     }
   }
 }
