@@ -39,14 +39,14 @@
     "review": {
       "type": "boolean"
     },
+    "dataset_field": {
+      "model": "dataset-field",
+      "autoPopulate": false
+    },
     "combinator": {
       "autoPopulate": false,
       "model": "combinator",
       "via": "queries"
-    },
-    "dataset": {
-      "autoPopulate": false,
-      "model": "dataset"
     }
   }
 }

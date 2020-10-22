@@ -714,10 +714,10 @@
                 "review": {
                   "type": "boolean"
                 },
-                "combinator": {
+                "dataset_field": {
                   "type": "string"
                 },
-                "dataset": {
+                "combinator": {
                   "type": "string"
                 },
                 "created_by": {

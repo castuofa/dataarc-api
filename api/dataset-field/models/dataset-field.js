@@ -28,10 +28,7 @@ module.exports = {
         strapi.services.dataset.refresh({ id: result.dataset.id });
         strapi
           .query('combinator-query')
-          .update(
-            { dataset: result.dataset, field: result.name },
-            { review: true }
-          );
+          .update({ dataset_field: result.id }, { review: true });
       }
     },
     afterDelete: async (result, params) => {
@@ -45,10 +42,7 @@ module.exports = {
       // mark any combinator query that uses the deleted field for review
       strapi
         .query('combinator-query')
-        .update(
-          { dataset: result.dataset, field: result.name },
-          { review: true }
-        );
+        .update({ dataset_field: result.id }, { review: true });
     },
   },
 };
