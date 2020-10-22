@@ -13,7 +13,7 @@ module.exports = {
       event.item = result.name;
       event.payload = { data };
       event.user = result.updated_by == null ? null : result.updated_by.id;
-      strapi.services.helper.log(info);
+      strapi.services.helper.log(event);
     },
     afterUpdate: async (result, params, data) => {
       if (result == null) return;
@@ -21,7 +21,7 @@ module.exports = {
       event.item = result.name;
       event.payload = { params, data };
       event.user = result.updated_by == null ? null : result.updated_by.id;
-      strapi.services.helper.log(info);
+      strapi.services.helper.log(event);
     },
     afterDelete: async (result, params) => {
       if (result == null) return;
@@ -29,7 +29,7 @@ module.exports = {
       event.item = result.name;
       event.payload = { params };
       event.user = result.updated_by == null ? null : result.updated_by.id;
-      strapi.services.helper.log(info);
+      strapi.services.helper.log(event);
     },
   },
 };

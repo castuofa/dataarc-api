@@ -44,10 +44,12 @@
       "type": "json"
     },
     "related": {
-      "collection": "concept"
+      "collection": "concept",
+      "autoPopulate": false
     },
     "contextual": {
-      "collection": "concept"
+      "collection": "concept",
+      "autoPopulate": false
     }
   }
 }
