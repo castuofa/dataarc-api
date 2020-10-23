@@ -40,16 +40,13 @@
         "physical_processes"
       ]
     },
-    "keywords": {
-      "type": "json"
-    },
     "related": {
-      "collection": "concept",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "concept"
     },
     "contextual": {
-      "collection": "concept",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "concept"
     }
   }
 }

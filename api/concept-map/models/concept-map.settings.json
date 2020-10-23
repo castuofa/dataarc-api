@@ -35,12 +35,6 @@
     "edges": {
       "type": "json"
     },
-    "source_nodes": {
-      "type": "json"
-    },
-    "source_edges": {
-      "type": "json"
-    },
     "active": {
       "type": "boolean",
       "default": false
@@ -50,8 +44,7 @@
     },
     "topics": {
       "via": "map",
-      "collection": "topic",
-      "autoPopulate": false
+      "collection": "concept-topic"
     }
   }
 }

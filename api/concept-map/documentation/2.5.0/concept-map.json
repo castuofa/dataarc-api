@@ -627,12 +627,6 @@
           "edges": {
             "type": "object"
           },
-          "source_nodes": {
-            "type": "object"
-          },
-          "source_edges": {
-            "type": "object"
-          },
           "active": {
             "type": "boolean",
             "default": false
@@ -698,12 +692,6 @@
             "type": "object"
           },
           "edges": {
-            "type": "object"
-          },
-          "source_nodes": {
-            "type": "object"
-          },
-          "source_edges": {
             "type": "object"
           },
           "active": {

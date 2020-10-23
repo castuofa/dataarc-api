@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "topics",
+  "collectionName": "concept_topics",
   "info": {
-    "name": "Topic",
+    "name": "ConceptTopic",
     "description": ""
   },
   "options": {
@@ -18,13 +18,11 @@
       "type": "string"
     },
     "concept": {
-      "model": "concept",
-      "autoPopulate": false
+      "model": "concept"
     },
     "map": {
       "model": "concept-map",
-      "via": "topics",
-      "autoPopulate": false
+      "via": "topics"
     }
   }
 }

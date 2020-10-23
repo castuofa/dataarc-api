@@ -761,9 +761,6 @@
               "group": {
                 "type": "string"
               },
-              "keywords": {
-                "type": "object"
-              },
               "related": {
                 "type": "string"
               },

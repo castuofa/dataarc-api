@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/topics",
-      "handler": "topic.find",
+      "path": "/concept-topics",
+      "handler": "concept-topic.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/topics/count",
-      "handler": "topic.count",
+      "path": "/concept-topics/count",
+      "handler": "concept-topic.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/topics/:id",
-      "handler": "topic.findOne",
+      "path": "/concept-topics/:id",
+      "handler": "concept-topic.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/topics",
-      "handler": "topic.create",
+      "path": "/concept-topics",
+      "handler": "concept-topic.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/topics/:id",
-      "handler": "topic.update",
+      "path": "/concept-topics/:id",
+      "handler": "concept-topic.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/topics/:id",
-      "handler": "topic.delete",
+      "path": "/concept-topics/:id",
+      "handler": "concept-topic.delete",
       "config": {
         "policies": []
       }

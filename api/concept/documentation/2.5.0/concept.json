@@ -550,9 +550,6 @@
               "physical_processes"
             ]
           },
-          "keywords": {
-            "type": "object"
-          },
           "related": {
             "required": [
               "id"
@@ -578,9 +575,6 @@
               },
               "group": {
                 "type": "string"
-              },
-              "keywords": {
-                "type": "object"
               },
               "related": {
                 "type": "string"
@@ -621,9 +615,6 @@
               },
               "group": {
                 "type": "string"
-              },
-              "keywords": {
-                "type": "object"
               },
               "related": {
                 "type": "string"
@@ -670,9 +661,6 @@
               "physical_landscape",
               "physical_processes"
             ]
-          },
-          "keywords": {
-            "type": "object"
           },
           "related": {
             "type": "string"

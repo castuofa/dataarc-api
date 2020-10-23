@@ -2,7 +2,7 @@
 
 let event = {
   type: 'info',
-  controller: 'topic',
+  controller: 'concept-topic',
 };
 
 module.exports = {
