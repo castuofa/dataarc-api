@@ -20,7 +20,7 @@ module.exports = {
       event.item = id;
       event.details = err.message;
       if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.log(event);
       return ctx.response.badData(err.message);
     }
 
@@ -33,7 +33,7 @@ module.exports = {
       event.action = 'process';
       event.item = entry.name;
       if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.log(event);
     }
 
     return entry;
@@ -51,7 +51,7 @@ module.exports = {
       event.item = id;
       event.details = err.message;
       if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.log(event);
       return ctx.response.badData(err.message);
     }
 
@@ -64,7 +64,7 @@ module.exports = {
       event.action = 'refresh';
       event.item = entry.name;
       if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.log(event);
     }
 
     return entry;

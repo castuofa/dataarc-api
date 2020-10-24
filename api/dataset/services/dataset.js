@@ -181,7 +181,7 @@ module.exports = {
                 item: entry.id,
                 details: 'Something went wrong, please try again',
               };
-              strapi.services.helper.log(event);
+              strapi.services.event.log(event);
               return entry;
             }
           });
