@@ -5,8 +5,21 @@
  */
 
 const _ = require('lodash');
-const fs = require('fs');
 const slugify = require('slugify');
+const chalk = require('chalk');
+const pluralize = require('pluralize');
+
+const codeToColor = (code) => {
+  return code >= 500
+    ? chalk.red(code)
+    : code >= 400
+    ? chalk.yellow(code)
+    : code >= 300
+    ? chalk.cyan(code)
+    : code >= 200
+    ? chalk.green(code)
+    : code;
+};
 
 module.exports = {
   find_unique: async ({ content_type, field, value }) => {
@@ -118,83 +131,95 @@ module.exports = {
     return _.intersection(_.keys(data), fields).length > 0;
   },
 
-  // clean up old files from uploads
-  clean_uploads: () => {
-    let dir = `${strapi.dir}/public/uploads`;
-    let path = require('path');
-    fs.readdir(dir, function (err, files) {
-      files.forEach(function (file, index) {
-        fs.stat(path.join(dir, file), function (err, stat) {
-          var endTime, now;
-          if (err) strapi.log.error(err);
-          now = new Date().getTime();
-          endTime = new Date(stat.ctime).getTime() + 60000;
-          if (now > endTime) {
-            fs.unlink(path.join(dir, file), (err) => {
-              if (err) strapi.log.error(err);
-              strapi.log.debug(`Expired file removed from uploads: ${file}`);
-            });
-          }
-        });
-      });
-    });
-  },
+  // stream source, parse json, run function
+  stream_json: async ({ source, pattern, process, after, error }) => {
+    const fetch = require('node-fetch');
+    const JSONStream = require('JSONStream');
 
-  // load a json file
-  load_json: (path) => {
-    request({
-      url:
-        'https://raw.githubusercontent.com/castuofa/dataarc-source/main/datasets/test/test_large_dataset.json',
-    })
-      .pipe(JSONStream.parse('*'))
-      .pipe(
-        es.mapSync((data) => {
-          console.log(data);
-          return data;
-        })
+    let url = `https://raw.githubusercontent.com/castuofa/dataarc-source/main/${source}`;
+    // url = `https://raw.githubusercontent.com/zemirco/sf-city-lots-json/master/citylots.json`;
+    let start = Date.now();
+    let count = 0;
+
+    if (!pattern) pattern = '*';
+    if (!process)
+      process = (data) => {
+        return data;
+      };
+    if (!after) after = () => {};
+    if (!error)
+      error = (err) => {
+        strapi.log.error(err.message);
+      };
+
+    // validate our results are OK or throw an error
+    let validate = (res) => {
+      let delta = Math.ceil(Date.now() - start);
+      strapi.log.debug(
+        `REQUEST ${source} (${delta} ms) ${codeToColor(res.status)}`
       );
-    return;
-    // const https = require('follow-redirects').https;
-    // let options = {
-    //   host: 'raw.githubusercontent.com',
-    //   port: 443,
-    //   path: `/castuofa/dataarc-source/main/${path}`,
-    //   method: 'GET',
-    //   rejectUnauthorized: false,
-    //   requestCert: true,
-    //   agent: false,
-    // };
-    // let random = [...Array(16)]
-    //   .map((i) => (~~(Math.random() * 36)).toString(36))
-    //   .join('');
-    // let extension = /(?:\.([^.]+))?$/.exec(options.path)[1];
-    // let filename = `${random}.${extension}`;
-    // let file = fs.createWriteStream(`${strapi.dir}/public/uploads/${filename}`);
-    // let request = https.get(options, function (response) {
-    //   response.pipe(file);
-    //   file.on('finish', function () {
-    //     file.close();
-    //   });
-    // });
-    // request.end();
-    // strapi.services.helper.clean_uploads();
-    // request.on('error', function (err) {
-    //   throw err;
-    // });
-    // // read the file syncronously
-    // let contents = fs.readFileSync(path, 'utf8');
-    // // remove strange characters
-    // contents = contents.trim();
-    // // parse json
-    // source = JSON.parse(contents);
-    // return source;
+      if (res.ok) return res;
+      else throw new Error(res.status);
+    };
+
+    // track stream progress
+    let track = (data) => {
+      count++;
+      return data;
+    };
+
+    // wrap things up
+    let end = (data) => {
+      let delta = Math.ceil(Date.now() - start);
+      let items = chalk.cyan(`${count} items`);
+      strapi.log.debug(
+        `PROCESS ${source} ${items} (${delta} ms) ${chalk.green('DONE')}`
+      );
+    };
+
+    // fetch, validate, process
+    return fetch(url)
+      .then(validate)
+      .then((res) => {
+        res.body.pipe(
+          JSONStream.parse(pattern)
+            .on('error', error)
+            .on('data', track)
+            .on('data', process)
+            .on('end', end)
+            .on('end', after)
+        );
+      });
   },
 
-  // log an event
-  log: async (event = {}) => {
-    strapi.services.event.create(event).catch(function (err) {
-      strapi.log.warn(`${err.status}: event log error for ${type}:${action}`);
-    });
+  // get user out of ctx
+  ctx_userid: (ctx) => {
+    if (ctx.state.user) return ctx.state.user.id;
+    return null;
+  },
+
+  // get id name out of ctx params
+  ctx_id: (ctx) => {
+    if (ctx.params) if (ctx.params.id) return ctx.params.id;
+    return null;
+  },
+
+  // get controller name out of ctx
+  ctx_controller: (ctx) => {
+    if (ctx.params) {
+      let path = ctx.params[0].split('/');
+      if (path.length > 0) return pluralize.singular(path[0]);
+    }
+    return null;
+  },
+
+  // get action name out of ctx
+  ctx_action: (ctx) => {
+    if (ctx.params) {
+      let path = ctx.params[0].split('/');
+      if (path.length > 2) return path[2];
+    }
+    return null;
   },
 
   // convert graphql parameters to rest equivilent

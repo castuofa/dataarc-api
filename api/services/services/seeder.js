@@ -6,10 +6,6 @@
 
 const _ = require('lodash');
 const fs = require('fs');
-const zlib = require('zlib');
-const { chain } = require('stream-chain');
-const { parser } = require('stream-json');
-const { streamArray } = require('stream-json/streamers/StreamArray');
 
 module.exports = {
   // load json from a file
