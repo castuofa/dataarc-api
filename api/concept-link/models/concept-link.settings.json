@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "concept_links",
+  "info": {
+    "name": "ConceptLink"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "source_topic": {
+      "type": "string"
+    },
+    "target_topic": {
+      "type": "string"
+    },
+    "source_concept": {
+      "model": "concept"
+    },
+    "target_concept": {
+      "model": "concept"
+    },
+    "map": {
+      "model": "concept-map",
+      "via": "links"
+    }
+  }
+}

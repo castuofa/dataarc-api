@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/concept-links",
+      "handler": "concept-link.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/concept-links/count",
+      "handler": "concept-link.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/concept-links/:id",
+      "handler": "concept-link.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/concept-links",
+      "handler": "concept-link.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/concept-links/:id",
+      "handler": "concept-link.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/concept-links/:id",
+      "handler": "concept-link.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
