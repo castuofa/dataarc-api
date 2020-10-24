@@ -13,20 +13,23 @@
   "attributes": {
     "type": {
       "type": "enumeration",
-      "enum": ["info", "warning", "error"],
-      "index": true
-    },
-    "controller": {
-      "type": "string",
+      "enum": ["info", "warn", "error"],
       "index": true
     },
     "action": {
       "type": "string",
       "index": true
     },
-    "item": {
+    "controller": {
       "type": "string",
       "index": true
+    },
+    "document": {
+      "type": "string",
+      "index": true
+    },
+    "name": {
+      "type": "string"
     },
     "details": {
       "type": "text"

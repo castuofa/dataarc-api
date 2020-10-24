@@ -1,27 +1,33 @@
 'use strict';
 
-let event = {
-  type: 'info',
-  controller: 'combinator-query',
+const info = {
+  name: 'combinator-query',
+  field: 'name',
 };
 
 module.exports = {
   lifecycles: {
+    beforeCreate: async (data) => {
+      if (data.title && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: info.name,
+          field: info.field,
+          value: data.title,
+        });
+    },
+    beforeUpdate: async (params, data) => {
+      if (data.title && !data.name)
+        data.name = await strapi.services.helper.find_unique({
+          content_type: info.name,
+          field: info.field,
+          value: data.title,
+        });
+    },
     afterCreate: async (result, data) => {
-      if (result == null) return;
-      event.action = 'create';
-      event.item = result.name;
-      event.payload = { data };
-      if (result.updated_by != null) event.user = result.updated_by.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.lifecycle_create({ info, result, data });
     },
     afterUpdate: async (result, params, data) => {
-      if (result == null) return;
-      event.action = 'update';
-      event.item = result.name;
-      event.payload = { params, data };
-      if (result.updated_by != null) event.user = result.updated_by.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.lifecycle_update({ info, result, params, data });
 
       // if query was set to review, mark combinator to review
       if (strapi.services.helper.has_fields(['review'], data)) {
@@ -32,12 +38,7 @@ module.exports = {
       }
     },
     afterDelete: async (result, params) => {
-      if (result == null) return;
-      event.action = 'delete';
-      event.item = result.name;
-      event.payload = { params };
-      if (result.updated_by != null) event.user = result.updated_by.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.lifecycle_delete({ info, result, params });
     },
   },
 };

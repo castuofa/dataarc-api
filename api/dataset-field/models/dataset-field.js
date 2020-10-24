@@ -1,43 +1,27 @@
 'use strict';
 
-let event = {
-  type: 'info',
-  controller: 'dataset-field',
+const info = {
+  name: 'dataset-field',
+  field: 'name',
 };
 
 module.exports = {
   lifecycles: {
     afterCreate: async (result, data) => {
-      if (result == null) return;
-      event.action = 'create';
-      event.item = result.name;
-      event.payload = { data };
-      if (result.updated_by != null) event.user = result.updated_by.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.lifecycle_create({ info, result, data });
     },
     afterUpdate: async (result, params, data) => {
-      if (result == null) return;
-      event.action = 'update';
-      event.item = result.name;
-      event.payload = { params, data };
-      if (result.updated_by != null) event.user = result.updated_by.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.lifecycle_update({ info, result, params, data });
 
       // watch for changes to specific fields, trigger refresh and set related to review
-      if (strapi.services.helper.has_fields(['type'], data)) {
+      if (strapi.services.helper.has_fields(['type'], data))
         strapi.services.dataset.refresh({ id: result.dataset.id });
-        strapi
-          .query('combinator-query')
-          .update({ dataset_field: result.id }, { review: true });
-      }
+      strapi
+        .query('combinator-query')
+        .update({ dataset_field: result.id }, { review: true });
     },
     afterDelete: async (result, params) => {
-      if (result == null) return;
-      event.action = 'delete';
-      event.item = result.name;
-      event.payload = { params };
-      if (result.updated_by != null) event.user = result.updated_by.id;
-      strapi.services.helper.log(event);
+      strapi.services.event.lifecycle_delete({ info, result, params });
 
       // mark any combinator query that uses the deleted field for review
       strapi
