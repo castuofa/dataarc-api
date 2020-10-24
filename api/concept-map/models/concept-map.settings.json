@@ -45,6 +45,10 @@
     "topics": {
       "via": "map",
       "collection": "concept-topic"
+    },
+    "links": {
+      "via": "map",
+      "collection": "concept-link"
     }
   }
 }

@@ -33,6 +33,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/concept-maps/:id/activate",
+      "handler": "concept-map.activate",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/concept-maps",
       "handler": "concept-map.create",

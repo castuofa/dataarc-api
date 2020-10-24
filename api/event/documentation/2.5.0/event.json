@@ -526,17 +526,20 @@
             "type": "string",
             "enum": [
               "info",
-              "warning",
+              "warn",
               "error"
             ]
-          },
-          "controller": {
-            "type": "string"
           },
           "action": {
             "type": "string"
           },
-          "item": {
+          "controller": {
+            "type": "string"
+          },
+          "document": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "details": {
@@ -598,17 +601,20 @@
             "type": "string",
             "enum": [
               "info",
-              "warning",
+              "warn",
               "error"
             ]
-          },
-          "controller": {
-            "type": "string"
           },
           "action": {
             "type": "string"
           },
-          "item": {
+          "controller": {
+            "type": "string"
+          },
+          "document": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "details": {

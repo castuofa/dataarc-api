@@ -625,6 +625,12 @@
                   "type": "string"
                 }
               },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },

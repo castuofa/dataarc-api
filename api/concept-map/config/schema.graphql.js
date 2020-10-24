@@ -2,6 +2,7 @@ module.exports = {
   definition: /* GraphQL */ `
     extend type ConceptMap {
       topics_count: Int
+      links_count: Int
     }
   `,
   query: `
@@ -22,6 +23,7 @@ module.exports = {
           const results = await strapi.query('concept-map').find(params);
           results.map((doc) => {
             doc.topics_count = doc.topics ? doc.topics.length : 0;
+            doc.links_count = doc.links ? doc.links.length : 0;
           });
           return results;
         },

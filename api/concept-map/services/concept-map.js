@@ -1,41 +1,88 @@
 'use strict';
 
+const _ = require('lodash');
+
 module.exports = {
-  process: async (params) => {
-    const entry = await strapi.query('concept-map').findOne(params);
+  remove_topics: async (map) => {
+    // remove topics from the concept mapp
+    strapi.log.debug(`Removing existing topics for this map`);
+    return strapi.query('concept-topic').model.deleteMany({ map: map.id });
+  },
 
-    if (entry != null) {
-      // remove existing topics for this map
-      strapi.log.info(`Removing existing topics for this map`);
-      await strapi.query('topic').model.deleteMany({ map: entry.id });
+  remove_links: async (map) => {
+    // remove topics from the concept mapp
+    strapi.log.debug(`Removing all existing links`);
+    return strapi.query('concept-link').model.deleteMany({});
+  },
 
-      // read file
-      const path = `${strapi.dir}/public${entry.source.url}`;
-      const source = strapi.services.helper.load_json(path);
+  process_node: async (map, node) => {
+    let topic = {
+      identifier: node.id.toString(),
+      name: node.title,
+      map: map.id,
+    };
 
-      // get the nodes and edges
-      const nodes = source.nodes;
-      const edges = source.edges;
-
-      console.log(` ### Looping Nodes ### `);
-
-      // map nodes to the correct format
-      let topics = nodes.map((node) => {
-        let concept = strapi.query('concept').findOne({ name: node.title });
-        return {
-          identifier: node.id.toString(),
-          name: node.title,
-          concept: concept.id,
-          map: entry.id,
-        };
-      });
-
-      // create new topics
-      strapi.log.info(`Creating ${nodes.length} topics`);
-      // if (Array.isArray(topics))
-      //   await Promise.all(topics.map(strapi.query('topic').create));
+    let concept = await strapi.query('concept').findOne({ name: node.title });
+    if (concept != null) {
+      strapi.log.debug(`Found matching concept ${concept.title}`);
+      topic.concept = concept.id;
     }
 
-    return entry;
+    strapi.query('concept-topic').create(topic);
+  },
+
+  process_edge: async (map, edge) => {
+    let link = {
+      source_topic: edge.source.toString(),
+      target_topic: edge.target.toString(),
+      title: edge.title,
+      map: map.id,
+    };
+
+    let source = await strapi
+      .query('concept-topic')
+      .findOne({ identifier: link.source_topic });
+    if (source && source.concept) link.source_concept = source.concept.id;
+
+    let target = await strapi
+      .query('concept-topic')
+      .findOne({ identifier: link.target_topic });
+    if (target && target.concept) link.target_concept = target.concept.id;
+
+    if (link.source_concept && link.target_concept)
+      await strapi.query('concept-link').create(link);
+  },
+
+  activate_map: async (map) => {
+    // create nodes and edges objects and store them in the map
+    let topics = await strapi.query('concept-topic').find({ map: map.id });
+    let nodes = [];
+    _.each(topics, (topic) => {
+      if (topic.concept)
+        nodes.push({
+          id: topic.concept.id,
+          title: topic.concept.title,
+        });
+    });
+    map.nodes = nodes;
+
+    let links = await strapi.query('concept-link').find({ map: map.id });
+    let edges = [];
+    _.each(links, (link) => {
+      if (link.source_concept && link.target_concept)
+        edges.push({
+          source: link.source_concept.id,
+          target: link.target_concept.id,
+          title: link.name,
+        });
+    });
+    map.edges = edges;
+
+    // deactivate any maps
+    await strapi.query('concept-map').model.updateMany({}, { active: false });
+
+    // activate the map and update
+    map.active = true;
+    await strapi.query('concept-map').update({ id: map.id }, map);
   },
 };
