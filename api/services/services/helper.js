@@ -137,7 +137,6 @@ module.exports = {
     const JSONStream = require('JSONStream');
 
     let url = `https://raw.githubusercontent.com/castuofa/dataarc-source/main/${source}`;
-    // url = `https://raw.githubusercontent.com/zemirco/sf-city-lots-json/master/citylots.json`;
     let start = Date.now();
     let count = 0;
 
