@@ -7,7 +7,6 @@
 const _ = require('lodash');
 const slugify = require('slugify');
 const chalk = require('chalk');
-const pluralize = require('pluralize');
 
 const codeToColor = (code) => {
   return code >= 500
@@ -189,36 +188,6 @@ module.exports = {
             .on('end', after)
         );
       });
-  },
-
-  // get user out of ctx
-  ctx_userid: (ctx) => {
-    if (ctx.state.user) return ctx.state.user.id;
-    return null;
-  },
-
-  // get id name out of ctx params
-  ctx_id: (ctx) => {
-    if (ctx.params) if (ctx.params.id) return ctx.params.id;
-    return null;
-  },
-
-  // get controller name out of ctx
-  ctx_controller: (ctx) => {
-    if (ctx.params) {
-      let path = ctx.params[0].split('/');
-      if (path.length > 0) return pluralize.singular(path[0]);
-    }
-    return null;
-  },
-
-  // get action name out of ctx
-  ctx_action: (ctx) => {
-    if (ctx.params) {
-      let path = ctx.params[0].split('/');
-      if (path.length > 2) return path[2];
-    }
-    return null;
   },
 
   // convert graphql parameters to rest equivilent
