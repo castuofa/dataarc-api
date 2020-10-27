@@ -9,7 +9,7 @@ module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services['helper'].find_unique({
+        data.name = await strapi.services['helper'].findUnique({
           content_type: info.name,
           field: info.field,
           value: data.title,
@@ -17,7 +17,7 @@ module.exports = {
     },
     beforeUpdate: async (params, data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services['helper'].find_unique({
+        data.name = await strapi.services['helper'].findUnique({
           content_type: info.name,
           field: info.field,
           value: data.title,
@@ -32,13 +32,13 @@ module.exports = {
       strapi.services['event'].lifecycle('update', info, result, {
         payload: { params, data },
       });
-      strapi.services['dataset'].after_update(result.id, data);
+      strapi.services['dataset'].afterUpdate(result.id, data);
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {
         payload: { params },
       });
-      strapi.services['dataset'].after_remove(result.id);
+      strapi.services['dataset'].afterDelete(result.id);
     },
   },
 };

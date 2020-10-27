@@ -29,10 +29,10 @@ module.exports = {
         let field = 'properties.' + query.field;
 
         // get the primitive of the value
-        let value = strapi.services['helper'].parse_primitive(query.value);
+        let value = strapi.services['helper'].parsePrimitive(query.value);
 
         // get the type of value
-        let type = strapi.services['helper'].get_type(value);
+        let type = strapi.services['helper'].getType(value);
 
         // don't allowed if not an expected type
         let allowed = _.indexOf(allowed_types, type) !== -1;

@@ -74,7 +74,7 @@ module.exports = {
 
         // stream and process the features
         strapi.services['helper']
-          .stream_json({
+          .getSource({
             source: entity.source,
             pattern: 'features.*',
             process,

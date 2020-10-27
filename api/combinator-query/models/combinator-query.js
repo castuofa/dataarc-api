@@ -9,7 +9,7 @@ module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services['helper'].find_unique({
+        data.name = await strapi.services['helper'].findUnique({
           content_type: info.name,
           field: info.field,
           value: data.title,
@@ -17,7 +17,7 @@ module.exports = {
     },
     beforeUpdate: async (params, data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services['helper'].find_unique({
+        data.name = await strapi.services['helper'].findUnique({
           content_type: info.name,
           field: info.field,
           value: data.title,
@@ -34,7 +34,7 @@ module.exports = {
       });
 
       // if query was set to review, mark combinator to review
-      if (strapi.services['helper'].has_fields(['review'], data)) {
+      if (strapi.services['helper'].hasFields(['review'], data)) {
         if (data.review)
           strapi
             .query('combinator')

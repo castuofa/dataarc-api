@@ -3,19 +3,25 @@
 const _ = require('lodash');
 
 module.exports = {
-  remove_topics: async (map) => {
+  removeTopics: async (id) => {
     // remove topics from the concept mapp
     strapi.log.debug(`Removing existing topics for this map`);
-    return strapi.query('concept-topic').model.deleteMany({ map: map.id });
+    return strapi.query('concept-topic').model.deleteMany({ map: id });
   },
 
-  remove_links: async (map) => {
+  removeLinks: async (id) => {
     // remove topics from the concept mapp
     strapi.log.debug(`Removing all existing links`);
     return strapi.query('concept-link').model.deleteMany({});
   },
 
-  process_node: async (map, node) => {
+  afterDelete: async (id) => {
+    // delete related data
+    strapi.services['concept-map'].removeTopics(id);
+    strapi.services['concept-map'].removeLinks(id);
+  },
+
+  processNode: async (map, node) => {
     let topic = {
       identifier: node.id.toString(),
       name: node.title,
@@ -31,7 +37,7 @@ module.exports = {
     strapi.query('concept-topic').create(topic);
   },
 
-  process_edge: async (map, edge) => {
+  processEdge: async (map, edge) => {
     let link = {
       source_topic: edge.source.toString(),
       target_topic: edge.target.toString(),
@@ -53,7 +59,7 @@ module.exports = {
       await strapi.query('concept-link').create(link);
   },
 
-  activate_map: async (map) => {
+  activateMap: async (map) => {
     // create nodes and edges objects and store them in the map
     let topics = await strapi.query('concept-topic').find({ map: map.id });
     let nodes = [];

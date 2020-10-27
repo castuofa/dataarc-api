@@ -18,9 +18,7 @@ module.exports = {
       datasets: {
         resolverOf: 'application::dataset.dataset.find',
         resolver: async (obj, options, ctx) => {
-          const params = await strapi.services['helper'].prefix_graphql_params(
-            options
-          );
+          const params = await strapi.services['helper'].getParams(options);
           const results = await strapi.query('dataset').find(params);
           results.map((doc) => {
             doc.fields_count = doc.fields ? doc.fields.length : 0;

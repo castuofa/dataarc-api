@@ -18,11 +18,11 @@ module.exports = {
       strapi.services['event'].controller(info, entity, ctx);
 
       // remove existing topics
-      strapi.services[info.name].remove_topics(entity);
+      strapi.services[info.name].removeTopics(entity.id);
 
       // helper functions
       let process = (data) => {
-        strapi.services[info.name].process_node(entity, data);
+        strapi.services[info.name].processNode(entity, data);
         return data;
       };
       let error = (e) => {
@@ -35,7 +35,7 @@ module.exports = {
 
       // stream and process the nodes
       strapi.services['helper']
-        .stream_json({
+        .getSource({
           source: entity.source,
           pattern: 'nodes.*',
           process,
@@ -56,11 +56,11 @@ module.exports = {
       strapi.services['event'].controller(info, entity, ctx);
 
       // remove all existing links
-      strapi.services[info.name].remove_links(entity);
+      strapi.services[info.name].removeLinks(entity.id);
 
       // helper functions
       let process = (data) => {
-        strapi.services[info.name].process_edge(entity, data);
+        strapi.services[info.name].processEdge(entity, data);
         return data;
       };
       let error = (e) => {
@@ -70,12 +70,12 @@ module.exports = {
         });
       };
       let after = () => {
-        strapi.services[info.name].activate_map(entity);
+        strapi.services[info.name].activateMap(entity);
       };
 
       // stream and process the nodes
       strapi.services['helper']
-        .stream_json({
+        .getSource({
           source: entity.source,
           pattern: 'links.*',
           process,

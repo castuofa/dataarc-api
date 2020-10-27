@@ -21,11 +21,11 @@ const codeToColor = (code) => {
 };
 
 module.exports = {
-  find_unique: async ({ content_type, field, value }) => {
-    let name = await strapi.services['helper'].get_name(value);
+  findUnique: async ({ content_type, field, value }) => {
+    let name = await strapi.services['helper'].getName(value);
 
     // if it doesn't exist we found one
-    const exists = await strapi.services['helper'].check_availability({
+    const exists = await strapi.services['helper'].checkAvailability({
       content_type: content_type,
       field: field,
       value: name,
@@ -53,7 +53,7 @@ module.exports = {
   },
 
   // check the content type for a field that matches the value given
-  check_availability: ({ content_type, field, value }) => {
+  checkAvailability: ({ content_type, field, value }) => {
     let count = strapi.query(content_type).count({
       [field]: value,
     });
@@ -62,7 +62,7 @@ module.exports = {
   },
 
   // get the type of the property
-  get_type: (prop) => {
+  getType: (prop) => {
     return Object.prototype.toString
       .call(prop)
       .match(/\s([a-zA-Z]+)/)[1]
@@ -70,7 +70,7 @@ module.exports = {
   },
 
   // parse string value to primitive
-  parse_primitive: (value) => {
+  parsePrimitive: (value) => {
     try {
       return JSON.parse(value);
     } catch (err) {
@@ -79,9 +79,9 @@ module.exports = {
   },
 
   // get an seo friendly keyword
-  get_keyword: (value) => {
+  getKeyword: (value) => {
     return strapi.services['helper']
-      .get_name(
+      .getName(
         value
           .replace(/https?:\/\/(www\.)?/g, '')
           .replace(
@@ -96,7 +96,7 @@ module.exports = {
   },
 
   // get an seo friendly name
-  get_name: (
+  getName: (
     words,
     wordSeparator = '_',
     pathSeparator = '_',
@@ -116,7 +116,7 @@ module.exports = {
   },
 
   // get a clean title
-  get_title: (path) => {
+  getTitle: (path) => {
     return path
       .replace(/[\[\]-_.]/g, ' ')
       .replace(/\s+/g, ' ')
@@ -126,12 +126,12 @@ module.exports = {
   },
 
   // check if any of the fields are in the data
-  has_fields: (fields, data) => {
+  hasFields: (fields, data) => {
     return _.intersection(_.keys(data), fields).length > 0;
   },
 
   // stream source, parse json, run function
-  stream_json: async ({ source, pattern, process, after, error }) => {
+  getSource: async ({ source, pattern, process, after, error }) => {
     const fetch = require('node-fetch');
     const JSONStream = require('JSONStream');
 
@@ -191,7 +191,7 @@ module.exports = {
   },
 
   // convert graphql parameters to rest equivilent
-  prefix_graphql_params: async (params) => {
+  getParams: async (params) => {
     let fixed = {};
     _.each(params, (value, key) => {
       fixed['_' + key] = value;
@@ -200,7 +200,7 @@ module.exports = {
   },
 
   // get a role based given a type {string}
-  get_role: async (type) => {
+  getRole: async (type) => {
     const service = await strapi.plugins['users-permissions'].services
       .userspermissions;
     const plugins = await service.getPlugins('en');
@@ -214,20 +214,20 @@ module.exports = {
   },
 
   // get or create the role if its missing
-  get_or_create_role: async (params) => {
-    let role = await strapi.services['helper'].get_role(params.type);
+  getCreateRole: async (params) => {
+    let role = await strapi.services['helper'].getRole(params.type);
     if (!role) {
       strapi.log.warn(`Creating ${params.name} role.`);
       await strapi.query('role', 'users-permissions').create(params);
-      role = await strapi.services['helper'].get_role(params.type);
+      role = await strapi.services['helper'].getRole(params.type);
     }
     return role;
   },
 
   // set permission for given: role,type,controller,action
-  set_permission: async (role, type, controller, action, enabled) => {
+  setPermission: async (role, type, controller, action, enabled) => {
     try {
-      // const role = await strapi.services['helper'].get_role(role);
+      // const role = await strapi.services['helper'].getRole(role);
       role.permissions[type].controllers[controller][action].enabled = enabled;
     } catch (err) {
       console.log(`${err}`);
@@ -238,8 +238,8 @@ module.exports = {
   },
 
   // enable permissions
-  enable_permissions: async (role_type, type, controller, actions) => {
-    let role = await strapi.services['helper'].get_role(role_type);
+  enablePermissions: async (role_type, type, controller, actions) => {
+    let role = await strapi.services['helper'].getRole(role_type);
     if (!role) return;
 
     // get target permissions for object

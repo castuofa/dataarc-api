@@ -16,9 +16,7 @@ module.exports = {
       categories: {
         resolverOf: 'application::category.category.find',
         resolver: async (obj, options, ctx) => {
-          const params = await strapi.services['helper'].prefix_graphql_params(
-            options
-          );
+          const params = await strapi.services['helper'].getParams(options);
           const results = await strapi.query('category').find(params);
           results.map((doc) => {
             doc.datasets_count = doc.datasets ? doc.datasets.length : 0;

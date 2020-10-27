@@ -5,65 +5,63 @@ const pug = require('pug');
 
 module.exports = {
   // before processing
-  before_process: async (dataset) => {
+  beforeProcess: async (id) => {
     // clear processed_at field
-    strapi.query('dataset').update({ id: dataset }, { processed_at: null });
+    strapi.query('dataset').update({ id: id }, { processed_at: null });
 
     // remove existing features
-    strapi.services['dataset'].remove_features(dataset);
+    strapi.services['dataset'].removeFeatures(id);
 
     // set existing fields to missing and mark for review
     strapi
       .query('dataset-field')
-      .update({ dataset: dataset }, { missing: true, review: true });
+      .update({ dataset: id }, { missing: true, review: true });
   },
 
   // after processing
-  after_process: async (dataset) => {
+  afterProcess: async (id) => {
     // set processed_at
-    strapi
-      .query('dataset')
-      .update({ id: dataset }, { processed_at: Date.now() });
+    strapi.query('dataset').update({ id: id }, { processed_at: Date.now() });
   },
 
   // refresh after update if certain fields have changed
-  after_update: async (dataset, data) => {
+  afterUpdate: async (id, data) => {
     // refresh dataset if layouts have changed
     if (
-      strapi.services['helper'].has_fields(
+      strapi.services['helper'].hasFields(
         ['title_layout', 'summary_layout', 'details_layout', 'link_layout'],
         data
       )
     )
-      strapi.services['dataset'].refresh({ id: dataset });
+      strapi.services['dataset'].refresh({ id: id });
 
     // refresh dataset if it has been processed
-    if (strapi.services['helper'].has_fields(['processed_at'], data))
+    if (strapi.services['helper'].hasFields(['processed_at'], data))
       if (result.processed_at != null)
-        strapi.services['dataset'].refresh({ id: dataset });
+        strapi.services['dataset'].refresh({ id: id });
   },
 
   // cleanup after a dataset is removed
-  after_remove: async (dataset, data) => {
+  afterDelete: async (id) => {
     // delete related data
-    strapi.services['dataset'].remove_features(dataset);
-    strapi.services['dataset'].remove_fields(dataset);
-    strapi.services['dataset'].remove_combinators(dataset);
+    strapi.services['dataset'].removeFeatures(id);
+    strapi.services['dataset'].removeFields(id);
+    strapi.services['dataset'].removeCombinators(id);
   },
 
   // remove all related features
-  remove_features: async (dataset) => {
-    return strapi.query('feature').model.deleteMany({ dataset: dataset });
+  removeFeatures: async (id) => {
+    return strapi.query('feature').model.deleteMany({ dataset: id });
   },
 
   // remove all related fields
-  remove_fields: async (dataset) => {
-    return strapi.query('dataset-field').model.deleteMany({ dataset: dataset });
+  removeFields: async (id) => {
+    return strapi.query('dataset-field').model.deleteMany({ dataset: id });
   },
 
   // remove all related combinators
-  remove_combinators: async (dataset) => {
-    return strapi.query('combinator').model.deleteMany({ dataset: dataset });
+  removeCombinators: async (id) => {
+    return strapi.query('combinator').model.deleteMany({ dataset: id });
   },
 
   // process: async (params) => {
@@ -107,10 +105,10 @@ module.exports = {
   //   // loop through the properties
   //   _.forOwn(props, function (value, key) {
   //     let source = (parent ? parent + nestedIndicator : '') + key;
-  //     let type = strapi.services['helper'].get_type(value);
-  //     let path = strapi.services['helper'].get_name(source);
-  //     let title = strapi.services['helper'].get_title(entry.name + ' ' + path);
-  //     let name = strapi.services['helper'].get_name(title);
+  //     let type = strapi.services['helper'].getType(value);
+  //     let path = strapi.services['helper'].getName(source);
+  //     let title = strapi.services['helper'].getTitle(entry.name + ' ' + path);
+  //     let name = strapi.services['helper'].getName(title);
   //     let store_property = false;
 
   //     // process based on the type
@@ -130,7 +128,7 @@ module.exports = {
   //         if (_.isEmpty(value)) break;
   //         let values = [];
   //         for (var i = value.length; i--; ) {
-  //           let item_type = strapi.services['helper'].get_type(value[i]);
+  //           let item_type = strapi.services['helper'].getType(value[i]);
   //           if (item_type === 'object') {
   //             let p = {};
   //             extract_properties(value[i], keys, fields, p, words, path);
@@ -168,7 +166,7 @@ module.exports = {
 
   //       // build keywords
   //       if (type === 'string' && isNaN(value)) {
-  //         words.push(strapi.services['helper'].get_keyword(value));
+  //         words.push(strapi.services['helper'].getKeyword(value));
   //       }
 
   //       // add to keys/fields if its new
@@ -356,8 +354,9 @@ module.exports = {
           feature.facets['combinators'] = [];
           feature.facets['concepts'] = [];
           if (
-            strapi.helper.get_type(feature.start_date) === 'number' &&
-            strapi.helper.get_type(feature.end_date) === 'number'
+            strapi.services['helper'].getType(feature.start_date) ===
+              'number' &&
+            strapi.services['helper'].getType(feature.end_date) === 'number'
           ) {
             feature.facets['decades'] = _.range(
               Math.floor(feature.start_date / 10) * 10,

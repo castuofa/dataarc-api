@@ -18,7 +18,7 @@ module.exports = {
       });
 
       // watch for changes to specific fields, trigger refresh and set related to review
-      if (strapi.services['helper'].has_fields(['type'], data))
+      if (strapi.services['helper'].hasFields(['type'], data))
         strapi.services['dataset'].refresh({ id: result.dataset.id });
       strapi
         .query('combinator-query')
