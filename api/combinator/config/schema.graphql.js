@@ -28,7 +28,7 @@ module.exports = {
       combinators: {
         resolverOf: 'application::combinator.combinator.find',
         resolver: async (obj, options, ctx) => {
-          const params = await strapi.services.helper.prefix_graphql_params(
+          const params = await strapi.services['helper'].prefix_graphql_params(
             options
           );
           const results = await strapi.query('combinator').find(params);

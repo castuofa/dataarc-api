@@ -11,6 +11,6 @@
  */
 
 module.exports = async () => {
-  if (process.env.SEED_DATA == 'true') strapi.services.seeder.seed();
+  if (process.env.SEED_DATA == 'true') strapi.services['seeder'].seed();
   return;
 };

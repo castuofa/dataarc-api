@@ -22,7 +22,7 @@ const extract = (target, opts) => {
     Object.keys(object).forEach((key) => {
       let value = object[key];
       if (value === undefined || value === null) return;
-      let type = strapi.services.helper.get_type(value);
+      let type = strapi.services['helper'].get_type(value);
       let isobject = type === 'object' || type === 'array';
       let isarray = opts.safe && type === 'array';
       let newkey = prev ? `${prev}${delimiter}${key}` : key;
@@ -46,7 +46,7 @@ const extract = (target, opts) => {
 
       // define field
       let field = {
-        name: strapi.services.helper.get_name(source),
+        name: strapi.services['helper'].get_name(source),
         source: source,
         type: type,
         parent: parent,
@@ -64,7 +64,7 @@ const extract = (target, opts) => {
           let values = [];
           Object.keys(value).forEach((i) => {
             if (value[i] === undefined || value[i] === null) return;
-            let item_type = strapi.services.helper.get_type(value[i]);
+            let item_type = strapi.services['helper'].get_type(value[i]);
             if (item_type === 'object') {
               let result = extract(value[i], {
                 ...opts,
@@ -143,7 +143,7 @@ module.exports = {
     });
 
     // clean the keywords
-    words = strapi.services.helper.get_keyword(words);
+    words = strapi.services['helper'].get_keyword(words);
 
     // get unique words only to reduce the stored size
     words = _.join(_.uniq(_.words(words)), ' ');
@@ -220,7 +220,7 @@ module.exports = {
     });
     if (begin_field) {
       let begin_value = feature.properties[begin_field.name];
-      if (strapi.services.helper.get_type(begin_value) === 'number') {
+      if (strapi.services['helper'].get_type(begin_value) === 'number') {
         valid_begin = true;
         feature.begin = begin_value;
       }
@@ -232,7 +232,7 @@ module.exports = {
     });
     if (end_field) {
       let end_value = feature.properties[end_field.name];
-      if (strapi.services.helper.get_type(end_value) === 'number') {
+      if (strapi.services['helper'].get_type(end_value) === 'number') {
         valid_end = true;
         feature.end = end_value;
       }

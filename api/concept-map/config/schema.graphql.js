@@ -17,7 +17,7 @@ module.exports = {
       conceptMaps: {
         resolverOf: 'application::concept-map.concept-map.find',
         resolver: async (obj, options, ctx) => {
-          const params = await strapi.services.helper.prefix_graphql_params(
+          const params = await strapi.services['helper'].prefix_graphql_params(
             options
           );
           const results = await strapi.query('concept-map').find(params);

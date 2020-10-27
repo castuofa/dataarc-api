@@ -22,10 +22,10 @@ const codeToColor = (code) => {
 
 module.exports = {
   find_unique: async ({ content_type, field, value }) => {
-    let name = await strapi.services.helper.get_name(value);
+    let name = await strapi.services['helper'].get_name(value);
 
     // if it doesn't exist we found one
-    const exists = await strapi.services.helper.check_availability({
+    const exists = await strapi.services['helper'].check_availability({
       content_type: content_type,
       field: field,
       value: name,
@@ -80,7 +80,7 @@ module.exports = {
 
   // get an seo friendly keyword
   get_keyword: (value) => {
-    return strapi.services.helper
+    return strapi.services['helper']
       .get_name(
         value
           .replace(/https?:\/\/(www\.)?/g, '')
@@ -215,11 +215,11 @@ module.exports = {
 
   // get or create the role if its missing
   get_or_create_role: async (params) => {
-    let role = await strapi.services.helper.get_role(params.type);
+    let role = await strapi.services['helper'].get_role(params.type);
     if (!role) {
       strapi.log.warn(`Creating ${params.name} role.`);
       await strapi.query('role', 'users-permissions').create(params);
-      role = await strapi.services.helper.get_role(params.type);
+      role = await strapi.services['helper'].get_role(params.type);
     }
     return role;
   },
@@ -227,7 +227,7 @@ module.exports = {
   // set permission for given: role,type,controller,action
   set_permission: async (role, type, controller, action, enabled) => {
     try {
-      // const role = await strapi.services.helper.get_role(role);
+      // const role = await strapi.services['helper'].get_role(role);
       role.permissions[type].controllers[controller][action].enabled = enabled;
     } catch (err) {
       console.log(`${err}`);
@@ -239,7 +239,7 @@ module.exports = {
 
   // enable permissions
   enable_permissions: async (role_type, type, controller, actions) => {
-    let role = await strapi.services.helper.get_role(role_type);
+    let role = await strapi.services['helper'].get_role(role_type);
     if (!role) return;
 
     // get target permissions for object

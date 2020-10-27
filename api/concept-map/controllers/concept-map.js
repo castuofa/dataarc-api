@@ -15,7 +15,7 @@ module.exports = {
     // make sure the entity was found
     if (entity != null) {
       // log the event
-      strapi.services.event.controller(info, entity, ctx);
+      strapi.services['event'].controller(info, entity, ctx);
 
       // remove existing topics
       strapi.services[info.name].remove_topics(entity);
@@ -26,7 +26,7 @@ module.exports = {
         return data;
       };
       let error = (e) => {
-        strapi.services.event.controller(info, entity, ctx, {
+        strapi.services['event'].controller(info, entity, ctx, {
           type: 'error',
           details: e.message,
         });
@@ -34,7 +34,7 @@ module.exports = {
       };
 
       // stream and process the nodes
-      strapi.services.helper
+      strapi.services['helper']
         .stream_json({
           source: entity.source,
           pattern: 'nodes.*',
@@ -53,7 +53,7 @@ module.exports = {
     // make sure the entity was found
     if (entity != null) {
       // log the event
-      strapi.services.event.controller(info, entity, ctx);
+      strapi.services['event'].controller(info, entity, ctx);
 
       // remove all existing links
       strapi.services[info.name].remove_links(entity);
@@ -64,7 +64,7 @@ module.exports = {
         return data;
       };
       let error = (e) => {
-        strapi.services.event.controller(info, entity, ctx, {
+        strapi.services['event'].controller(info, entity, ctx, {
           type: 'error',
           details: e.message,
         });
@@ -74,7 +74,7 @@ module.exports = {
       };
 
       // stream and process the nodes
-      strapi.services.helper
+      strapi.services['helper']
         .stream_json({
           source: entity.source,
           pattern: 'links.*',
@@ -83,7 +83,7 @@ module.exports = {
           after,
         })
         .catch((e) => {
-          strapi.services.event.controller(info, entity, ctx, {
+          strapi.services['event'].controller(info, entity, ctx, {
             type: 'error',
             details: e.message,
           });

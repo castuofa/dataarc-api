@@ -4,17 +4,17 @@ const chalk = require('chalk');
 const pluralize = require('pluralize');
 
 const actionToColor = (action) => {
-  return action == 'CREATE'
+  return action.match(/create/i)
     ? chalk.green(action)
-    : action == 'UPDATE'
-    ? chalk.blue(action)
-    : action == 'DELETE'
-    ? chalk.red(action)
-    : action == 'PROCESS'
+    : action.match(/update/i)
     ? chalk.yellow(action)
-    : action == 'REFRESH'
+    : action.match(/delete/i)
+    ? chalk.red(action)
+    : action.match(/process/i)
     ? chalk.cyan(action)
-    : action;
+    : action.match(/refresh/i)
+    ? chalk.magenta(action)
+    : chalk.white(action);
 };
 
 module.exports = {
@@ -54,7 +54,9 @@ module.exports = {
       return;
     event.controller = pluralize.plural(event.controller);
     strapi.log[event.type === 'info' ? 'debug' : event.type](
-      `${actionToColor(event.action)} /${event.controller}/${event.document}`
+      `${actionToColor(event.action)} /${event.controller}/${event.document} (${
+        event.name
+      })`
     );
   },
 
@@ -62,6 +64,7 @@ module.exports = {
   controller: async (info, entity, ctx, opts) => {
     if (!info || !entity || !ctx) return;
     opts = opts || {};
+    opts.store = opts.store || true;
     let event = {};
     event.type = opts.type || 'info';
     if (ctx.params) {
@@ -76,10 +79,10 @@ module.exports = {
     if (ctx.state && ctx.state.user) event.user = ctx.state.user.id;
 
     // log the event
-    strapi.services.event.log(event);
+    strapi.services['event'].log(event);
 
     // store the event
-    if (opts.store) strapi.services.event.store(event);
+    if (opts.store) strapi.services['event'].store(event);
   },
 
   // shortcut to log lifecycle events
@@ -101,9 +104,9 @@ module.exports = {
     }
 
     // log the event
-    strapi.services.event.log(event);
+    strapi.services['event'].log(event);
 
     // store the event
-    if (opts.store) strapi.services.event.store(event);
+    if (opts.store) strapi.services['event'].store(event);
   },
 };

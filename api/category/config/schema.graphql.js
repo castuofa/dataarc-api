@@ -16,7 +16,7 @@ module.exports = {
       categories: {
         resolverOf: 'application::category.category.find',
         resolver: async (obj, options, ctx) => {
-          const params = await strapi.services.helper.prefix_graphql_params(
+          const params = await strapi.services['helper'].prefix_graphql_params(
             options
           );
           const results = await strapi.query('category').find(params);

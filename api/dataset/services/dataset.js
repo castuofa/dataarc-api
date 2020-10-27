@@ -7,9 +7,7 @@ module.exports = {
   // before processing
   pre_process: async (dataset) => {
     // clear processed_at field
-    strapi
-      .query('dataset')
-      .update({ id: dataset }, { processed_at: undefined });
+    strapi.query('dataset').update({ id: dataset }, { processed_at: null });
 
     // remove existing features
     strapi.services['dataset'].remove_features(dataset);
@@ -53,7 +51,7 @@ module.exports = {
   //     // read source file
   //     let source;
   //     // try {
-  //     source = strapi.services.helper.load_json(
+  //     source = strapi.services['helper'].load_json(
   //       `${strapi.dir}/public${entry.source.url}`
   //     );
   //     // pull out valid geojson features
@@ -84,10 +82,10 @@ module.exports = {
   //   // loop through the properties
   //   _.forOwn(props, function (value, key) {
   //     let source = (parent ? parent + nestedIndicator : '') + key;
-  //     let type = strapi.services.helper.get_type(value);
-  //     let path = strapi.services.helper.get_name(source);
-  //     let title = strapi.services.helper.get_title(entry.name + ' ' + path);
-  //     let name = strapi.services.helper.get_name(title);
+  //     let type = strapi.services['helper'].get_type(value);
+  //     let path = strapi.services['helper'].get_name(source);
+  //     let title = strapi.services['helper'].get_title(entry.name + ' ' + path);
+  //     let name = strapi.services['helper'].get_name(title);
   //     let store_property = false;
 
   //     // process based on the type
@@ -107,7 +105,7 @@ module.exports = {
   //         if (_.isEmpty(value)) break;
   //         let values = [];
   //         for (var i = value.length; i--; ) {
-  //           let item_type = strapi.services.helper.get_type(value[i]);
+  //           let item_type = strapi.services['helper'].get_type(value[i]);
   //           if (item_type === 'object') {
   //             let p = {};
   //             extract_properties(value[i], keys, fields, p, words, path);
@@ -145,7 +143,7 @@ module.exports = {
 
   //       // build keywords
   //       if (type === 'string' && isNaN(value)) {
-  //         words.push(strapi.services.helper.get_keyword(value));
+  //         words.push(strapi.services['helper'].get_keyword(value));
   //       }
 
   //       // add to keys/fields if its new
@@ -216,7 +214,7 @@ module.exports = {
   //             item: entry.id,
   //             details: 'Something went wrong, please try again',
   //           };
-  //           strapi.services.event.log(event);
+  //           strapi.services['event'].log(event);
   //           return entry;
   //         }
   //       });

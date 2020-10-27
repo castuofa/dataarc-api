@@ -9,7 +9,7 @@ module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services.helper.find_unique({
+        data.name = await strapi.services['helper'].find_unique({
           content_type: info.name,
           field: info.field,
           value: data.title,
@@ -17,24 +17,24 @@ module.exports = {
     },
     beforeUpdate: async (params, data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services.helper.find_unique({
+        data.name = await strapi.services['helper'].find_unique({
           content_type: info.name,
           field: info.field,
           value: data.title,
         });
     },
     afterCreate: async (result, data) => {
-      strapi.services.event.lifecycle('create', info, result, {
+      strapi.services['event'].lifecycle('create', info, result, {
         payload: { data },
       });
     },
     afterUpdate: async (result, params, data) => {
-      strapi.services.event.lifecycle('update', info, result, {
+      strapi.services['event'].lifecycle('update', info, result, {
         payload: { params, data },
       });
 
       // if query was set to review, mark combinator to review
-      if (strapi.services.helper.has_fields(['review'], data)) {
+      if (strapi.services['helper'].has_fields(['review'], data)) {
         if (data.review)
           strapi
             .query('combinator')
@@ -42,7 +42,7 @@ module.exports = {
       }
     },
     afterDelete: async (result, params) => {
-      strapi.services.event.lifecycle('delete', info, result, {
+      strapi.services['event'].lifecycle('delete', info, result, {
         payload: { params },
       });
     },
