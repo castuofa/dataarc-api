@@ -37,7 +37,10 @@ module.exports = {
       strapi.services['event'].lifecycle('delete', info, result, {
         payload: { params },
       });
-      strapi.services[info.name].afterDelete(result.id);
+
+      // delete related data
+      strapi.services['concept-map'].removeTopics(result.id);
+      strapi.services['concept-map'].removeLinks(result.id);
     },
   },
 };

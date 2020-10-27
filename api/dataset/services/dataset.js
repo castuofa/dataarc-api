@@ -24,31 +24,6 @@ module.exports = {
     strapi.query('dataset').update({ id: id }, { processed_at: Date.now() });
   },
 
-  // refresh after update if certain fields have changed
-  afterUpdate: async (id, data) => {
-    // refresh dataset if layouts have changed
-    if (
-      strapi.services['helper'].hasFields(
-        ['title_layout', 'summary_layout', 'details_layout', 'link_layout'],
-        data
-      )
-    )
-      strapi.services['dataset'].refresh({ id: id });
-
-    // refresh dataset if it has been processed
-    if (strapi.services['helper'].hasFields(['processed_at'], data))
-      if (result.processed_at != null)
-        strapi.services['dataset'].refresh({ id: id });
-  },
-
-  // cleanup after a dataset is removed
-  afterDelete: async (id) => {
-    // delete related data
-    strapi.services['dataset'].removeFeatures(id);
-    strapi.services['dataset'].removeFields(id);
-    strapi.services['dataset'].removeCombinators(id);
-  },
-
   // remove all related features
   removeFeatures: async (id) => {
     return strapi.query('feature').model.deleteMany({ dataset: id });

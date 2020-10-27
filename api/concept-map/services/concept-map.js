@@ -15,12 +15,6 @@ module.exports = {
     return strapi.query('concept-link').model.deleteMany({});
   },
 
-  afterDelete: async (id) => {
-    // delete related data
-    strapi.services['concept-map'].removeTopics(id);
-    strapi.services['concept-map'].removeLinks(id);
-  },
-
   processNode: async (map, node) => {
     let topic = {
       identifier: node.id.toString(),

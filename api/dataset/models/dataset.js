@@ -32,13 +32,30 @@ module.exports = {
       strapi.services['event'].lifecycle('update', info, result, {
         payload: { params, data },
       });
-      strapi.services['dataset'].afterUpdate(result.id, data);
+
+      // refresh dataset if layouts have changed
+      if (
+        strapi.services['helper'].hasFields(
+          ['title_layout', 'summary_layout', 'details_layout', 'link_layout'],
+          data
+        )
+      )
+        strapi.services['dataset'].refresh({ id: result.id });
+
+      // refresh dataset if it has been processed
+      if (strapi.services['helper'].hasFields(['processed_at'], data))
+        if (result.processed_at != null)
+          strapi.services['dataset'].refresh({ id: result.id });
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {
         payload: { params },
       });
-      strapi.services['dataset'].afterDelete(result.id);
+
+      // delete related
+      strapi.services['dataset'].removeFeatures(result.id);
+      strapi.services['dataset'].removeFields(result.id);
+      strapi.services['dataset'].removeCombinators(result.id);
     },
   },
 };

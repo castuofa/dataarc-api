@@ -38,10 +38,8 @@ module.exports = {
         payload: { params },
       });
 
-      // delete related data
-      strapi
-        .query('combinator-query')
-        .model.deleteMany({ combinator: result.id });
+      // remove related
+      strapi.services['combinator'].removeQueries(result.id);
     },
   },
 };

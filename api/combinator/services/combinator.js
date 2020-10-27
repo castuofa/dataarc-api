@@ -3,6 +3,14 @@
 const _ = require('lodash');
 
 module.exports = {
+  removeQueries: async (id) => {
+    strapi.query('combinator-query').model.deleteMany({ combinator: id });
+  },
+
+  markReview: async (id) => {
+    strapi.query('combinator').update({ id }, { review: true });
+  },
+
   results: async (params) => {
     let result = {
       combinator: null,
