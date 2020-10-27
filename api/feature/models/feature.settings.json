@@ -29,14 +29,19 @@
     "source": {
       "type": "json"
     },
+    "fields": {
+      "type": "json"
+    },
     "properties": {
       "type": "json"
     },
     "keywords": {
-      "type": "text"
+      "type": "text",
+      "index": "text"
     },
     "location": {
-      "type": "json"
+      "type": "json",
+      "index": "2dsphere"
     },
     "radius": {
       "type": "decimal"
