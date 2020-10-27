@@ -15,7 +15,7 @@ module.exports = {
     // make sure the entity was found
     if (entity != null) {
       // log the event
-      strapi.services.event.info({ info, ctx });
+      strapi.services.event.controller(info, entity, ctx);
 
       // remove existing topics
       strapi.services[info.name].remove_topics(entity);
@@ -26,7 +26,10 @@ module.exports = {
         return data;
       };
       let error = (e) => {
-        strapi.services.event.error({ info, ctx, details: e.message });
+        strapi.services.event.controller(info, entity, ctx, {
+          type: 'error',
+          details: e.message,
+        });
         return ctx.response.badData(err.message);
       };
 
@@ -50,7 +53,7 @@ module.exports = {
     // make sure the entity was found
     if (entity != null) {
       // log the event
-      strapi.services.event.info({ info, ctx });
+      strapi.services.event.controller(info, entity, ctx);
 
       // remove all existing links
       strapi.services[info.name].remove_links(entity);
@@ -61,7 +64,10 @@ module.exports = {
         return data;
       };
       let error = (e) => {
-        strapi.services.event.error({ info, ctx, details: e.message });
+        strapi.services.event.controller(info, entity, ctx, {
+          type: 'error',
+          details: e.message,
+        });
       };
       let after = () => {
         strapi.services[info.name].activate_map(entity);
@@ -77,7 +83,10 @@ module.exports = {
           after,
         })
         .catch((e) => {
-          strapi.services.event.error({ info, ctx, details: e.message });
+          strapi.services.event.controller(info, entity, ctx, {
+            type: 'error',
+            details: e.message,
+          });
         });
     }
     return sanitizeEntity(entity, { model: strapi.models[info.name] });
