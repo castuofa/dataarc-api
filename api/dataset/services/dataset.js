@@ -5,7 +5,7 @@ const pug = require('pug');
 
 module.exports = {
   // before processing
-  pre_process: async (dataset) => {
+  before_process: async (dataset) => {
     // clear processed_at field
     strapi.query('dataset').update({ id: dataset }, { processed_at: null });
 
@@ -19,11 +19,36 @@ module.exports = {
   },
 
   // after processing
-  post_process: async (dataset) => {
+  after_process: async (dataset) => {
     // set processed_at
     strapi
       .query('dataset')
       .update({ id: dataset }, { processed_at: Date.now() });
+  },
+
+  // refresh after update if certain fields have changed
+  after_update: async (dataset, data) => {
+    // refresh dataset if layouts have changed
+    if (
+      strapi.services['helper'].has_fields(
+        ['title_layout', 'summary_layout', 'details_layout', 'link_layout'],
+        data
+      )
+    )
+      strapi.services['dataset'].refresh({ id: dataset });
+
+    // refresh dataset if it has been processed
+    if (strapi.services['helper'].has_fields(['processed_at'], data))
+      if (result.processed_at != null)
+        strapi.services['dataset'].refresh({ id: dataset });
+  },
+
+  // cleanup after a dataset is removed
+  after_remove: async (dataset, data) => {
+    // delete related data
+    strapi.services['dataset'].remove_features(dataset);
+    strapi.services['dataset'].remove_fields(dataset);
+    strapi.services['dataset'].remove_combinators(dataset);
   },
 
   // remove all related features

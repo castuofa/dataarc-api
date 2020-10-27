@@ -22,7 +22,7 @@ module.exports = {
         strapi.services['event'].controller(info, entity, ctx);
 
         // run any pre process tasks
-        strapi.services[info.name].pre_process(entity.id);
+        strapi.services[info.name].before_process(entity.id);
 
         // helper functions
         let process = (data) => {
@@ -69,7 +69,7 @@ module.exports = {
         };
         let after = () => {
           strapi.services['event'].controller(info, entity, ctx);
-          strapi.services[info.name].post_process(entity.id);
+          strapi.services[info.name].after_process(entity.id);
         };
 
         // stream and process the features
