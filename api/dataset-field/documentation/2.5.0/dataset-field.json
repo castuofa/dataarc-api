@@ -562,10 +562,8 @@
               "boolean",
               "array",
               "url",
-              "latitude",
-              "longitude",
-              "begin_date",
-              "end_date"
+              "begin",
+              "end"
             ]
           },
           "parent": {
@@ -686,10 +684,8 @@
               "boolean",
               "array",
               "url",
-              "latitude",
-              "longitude",
-              "begin_date",
-              "end_date"
+              "begin",
+              "end"
             ]
           },
           "parent": {

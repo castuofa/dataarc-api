@@ -24,10 +24,14 @@ module.exports = {
         });
     },
     afterCreate: async (result, data) => {
-      strapi.services.event.lifecycle_create({ info, result, data });
+      strapi.services.event.lifecycle('create', info, result, {
+        payload: { data },
+      });
     },
     afterUpdate: async (result, params, data) => {
-      strapi.services.event.lifecycle_update({ info, result, params, data });
+      strapi.services.event.lifecycle('update', info, result, {
+        payload: { params, data },
+      });
 
       // refresh dataset if layouts have changed
       if (
@@ -44,12 +48,14 @@ module.exports = {
           strapi.services.dataset.refresh({ id: result.id });
     },
     afterDelete: async (result, params) => {
-      strapi.services.event.lifecycle_delete({ info, result, params });
+      strapi.services.event.lifecycle('delete', info, result, {
+        payload: { params },
+      });
 
       // delete related data
-      strapi.query('combinator').delete({ dataset: result.id });
-      strapi.query('dataset-field').delete({ dataset: result.id });
-      strapi.query('feature').delete({ dataset: result.id });
+      strapi.query('combinator').model.deleteMany({ dataset: result.id });
+      strapi.query('dataset-field').model.deleteMany({ dataset: result.id });
+      strapi.query('feature').model.deleteMany({ dataset: result.id });
     },
   },
 };

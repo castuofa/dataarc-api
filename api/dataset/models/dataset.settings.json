@@ -62,8 +62,8 @@
     },
     "fields": {
       "via": "dataset",
-      "collection": "dataset-field",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "dataset-field"
     },
     "features": {
       "via": "dataset",

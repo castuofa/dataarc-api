@@ -18,14 +18,20 @@ const actionToColor = (action) => {
 };
 
 module.exports = {
-  // log an event
-  log: async (event) => {
-    let msg = `${actionToColor(event.action.toUpperCase())} /${pluralize.plural(
-      event.controller
-    )}/${event.document}`;
-    if (event.type == 'info') strapi.log.debug(msg);
-    else strapi.log[event.type](msg);
-    strapi
+  // store an event
+  store: async (event) => {
+    event = event || {};
+    if (
+      !event.type ||
+      !event.action ||
+      !event.controller ||
+      !event.document ||
+      !event.name
+    )
+      return;
+
+    // store event
+    return strapi
       .query('event')
       .create(event)
       .catch((err) => {
@@ -35,77 +41,69 @@ module.exports = {
       });
   },
 
-  // log an event with ctx
-  log_ctx: async ({ type, info, ctx, details }) => {
+  // log an event to the console
+  log: async (event) => {
+    event = event || {};
+    if (
+      !event.type ||
+      !event.action ||
+      !event.controller ||
+      !event.document ||
+      !event.name
+    )
+      return;
+    event.controller = pluralize.plural(event.controller);
+    strapi.log[event.type === 'info' ? 'debug' : event.type](
+      `${actionToColor(event.action)} /${event.controller}/${event.document}`
+    );
+  },
+
+  // shortcut to log controller events
+  controller: async (info, entity, ctx, opts) => {
+    if (!info || !entity || !ctx) return;
+    opts = opts || {};
     let event = {};
-    event.type = type;
-    event.controller = strapi.services.helper.ctx_controller(ctx);
-    event.action = strapi.services.helper.ctx_action(ctx);
-    event.document = strapi.services.helper.ctx_id(ctx);
-    event.user = strapi.services.helper.ctx_userid(ctx);
-    let entity = await strapi
-      .query(event.controller)
-      .findOne({ id: event.document });
+    event.type = opts.type || 'info';
+    if (ctx.params) {
+      let path = ctx.params[0].split('/');
+      if (path.length >= 2) event.action = path[1];
+      if (path.length >= 1) event.controller = path[0];
+    }
+    event.document = entity.id;
     event.name = entity[info.field];
-    event.details = details;
+    if (opts.details) event.details = opts.details;
+    if (opts.payload) event.payload = opts.payload;
+    if (ctx.state && ctx.state.user) event.user = ctx.state.user.id;
+
+    // log the event
     strapi.services.event.log(event);
+
+    // store the event
+    if (opts.store) strapi.services.event.store(event);
   },
 
-  // shortcut to log an info event using ctx
-  info: async ({ info, ctx, details }) => {
-    strapi.services.event.log_ctx({ type: 'info', info, ctx, details });
-  },
-
-  // shortcut to log an warn event using ctx
-  warn: async ({ info, ctx, details }) => {
-    strapi.services.event.log_ctx({ type: 'warn', info, ctx, details });
-  },
-
-  // shortcut to log an error event using ctx
-  error: async ({ info, ctx, details }) => {
-    strapi.services.event.log_ctx({ type: 'error', info, ctx, details });
-  },
-
-  // shortcut to log a create event for lifecycles
-  lifecycle_create: async ({ info, result, data }) => {
-    if (result == null) return;
+  // shortcut to log lifecycle events
+  lifecycle: async (action, info, entity, opts) => {
+    if (!action || !info || !entity) return;
+    opts = opts || {};
+    opts.store = opts.store || true;
     let event = {};
-    event.type = 'info';
+    event.type = opts.type || 'info';
+    event.action = action;
     event.controller = info.name;
-    event.action = 'create';
-    event.document = result.id;
-    event.name = result[info.field];
-    if (data.updated_by) event.user = data.updated_by;
-    event.payload = { data };
-    strapi.services.event.log(event);
-  },
+    event.document = entity.id;
+    event.name = entity[info.field];
+    if (opts.details) event.details = opts.details;
+    if (opts.payload) {
+      event.payload = opts.payload;
+      if (opts.payload.data && opts.payload.data.updated_by)
+        event.user = opts.payload.data.updated_by;
+    }
 
-  // shortcut to log an update event for lifecycles
-  lifecycle_update: async ({ info, result, params, data }) => {
-    if (result == null) return;
-    let event = {};
-    event.type = 'info';
-    event.controller = info.name;
-    event.action = 'update';
-    event.document = result.id;
-    event.name = result[info.field];
-    if (data.updated_by) event.user = data.updated_by;
-    event.payload = { params, data };
+    // log the event
     strapi.services.event.log(event);
-  },
 
-  // shortcut to log a delete event for lifecycles
-  lifecycle_delete: async ({ info, result, params }) => {
-    if (result == null) return;
-    let event = {};
-    event.type = 'info';
-    event.controller = info.name;
-    event.action = 'delete';
-    event.document = result.id;
-    event.name = result[info.field];
-    if (result.updated_by) event.user = result.updated_by.id;
-    console.log(result);
-    event.payload = { params };
-    strapi.services.event.log(event);
+    // store the event
+    if (opts.store) strapi.services.event.store(event);
   },
 };

@@ -8,10 +8,14 @@ const info = {
 module.exports = {
   lifecycles: {
     afterCreate: async (result, data) => {
-      strapi.services.event.lifecycle_create({ info, result, data });
+      strapi.services.event.lifecycle('create', info, result, {
+        payload: { data },
+      });
     },
     afterUpdate: async (result, params, data) => {
-      strapi.services.event.lifecycle_update({ info, result, params, data });
+      strapi.services.event.lifecycle('update', info, result, {
+        payload: { params, data },
+      });
 
       // watch for changes to specific fields, trigger refresh and set related to review
       if (strapi.services.helper.has_fields(['type'], data))
@@ -21,7 +25,9 @@ module.exports = {
         .update({ dataset_field: result.id }, { review: true });
     },
     afterDelete: async (result, params) => {
-      strapi.services.event.lifecycle_delete({ info, result, params });
+      strapi.services.event.lifecycle('delete', info, result, {
+        payload: { params },
+      });
 
       // mark any combinator query that uses the deleted field for review
       strapi

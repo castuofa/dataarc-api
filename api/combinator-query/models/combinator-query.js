@@ -24,10 +24,14 @@ module.exports = {
         });
     },
     afterCreate: async (result, data) => {
-      strapi.services.event.lifecycle_create({ info, result, data });
+      strapi.services.event.lifecycle('create', info, result, {
+        payload: { data },
+      });
     },
     afterUpdate: async (result, params, data) => {
-      strapi.services.event.lifecycle_update({ info, result, params, data });
+      strapi.services.event.lifecycle('update', info, result, {
+        payload: { params, data },
+      });
 
       // if query was set to review, mark combinator to review
       if (strapi.services.helper.has_fields(['review'], data)) {
@@ -38,7 +42,9 @@ module.exports = {
       }
     },
     afterDelete: async (result, params) => {
-      strapi.services.event.lifecycle_delete({ info, result, params });
+      strapi.services.event.lifecycle('delete', info, result, {
+        payload: { params },
+      });
     },
   },
 };

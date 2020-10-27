@@ -37,10 +37,8 @@
         "boolean",
         "array",
         "url",
-        "latitude",
-        "longitude",
-        "begin_date",
-        "end_date"
+        "begin",
+        "end"
       ],
       "default": "string"
     },

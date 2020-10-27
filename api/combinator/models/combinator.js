@@ -24,16 +24,24 @@ module.exports = {
         });
     },
     afterCreate: async (result, data) => {
-      strapi.services.event.lifecycle_create({ info, result, data });
+      strapi.services.event.lifecycle('create', info, result, {
+        payload: { data },
+      });
     },
     afterUpdate: async (result, params, data) => {
-      strapi.services.event.lifecycle_update({ info, result, params, data });
+      strapi.services.event.lifecycle('update', info, result, {
+        payload: { params, data },
+      });
     },
     afterDelete: async (result, params) => {
-      strapi.services.event.lifecycle_delete({ info, result, params });
+      strapi.services.event.lifecycle('delete', info, result, {
+        payload: { params },
+      });
 
       // delete related data
-      strapi.query('combinator-query').delete({ combinator: result.id });
+      strapi
+        .query('combinator-query')
+        .model.deleteMany({ combinator: result.id });
     },
   },
 };
