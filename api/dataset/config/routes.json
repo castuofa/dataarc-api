@@ -18,24 +18,25 @@
     },
     {
       "method": "GET",
-      "path": "/datasets/:id",
-      "handler": "dataset.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/datasets/:id/process",
+      "path": "/datasets/process",
       "handler": "dataset.process",
       "config": {
         "policies": []
       }
     },
+
     {
       "method": "GET",
-      "path": "/datasets/:id/refresh",
+      "path": "/datasets/refresh",
       "handler": "dataset.refresh",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/datasets/:id",
+      "handler": "dataset.findOne",
       "config": {
         "policies": []
       }

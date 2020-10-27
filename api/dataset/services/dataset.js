@@ -1,138 +1,46 @@
 'use strict';
 
-const nestedIndicator = ' --> ';
-
 const _ = require('lodash');
-const turf = require('@turf/turf');
 const pug = require('pug');
-const chalk = require('chalk');
-
-const process_properties = (target, opts) => {
-  opts = opts || {};
-  const delimiter = opts.delimiter || ' --> ';
-  const maxDepth = opts.maxDepth;
-  const prefix = opts.prefix || null;
-  const parent = opts.parent || null;
-  let fields = [];
-  const properties = {};
-
-  const save = (key, field, property) => {
-    if (field) fields.push(field);
-    if (property) properties[key] = property;
-  };
-
-  const step = (object, prev, depth) => {
-    depth = depth || 1;
-    Object.keys(object).forEach((key) => {
-      let value = object[key];
-      if (value === undefined || value === null) return;
-      let type = strapi.services.helper.get_type(value);
-      let isobject = type === 'object' || type === 'array';
-      let isarray = opts.safe && type === 'array';
-      let newkey = prev ? `${prev}${delimiter}${key}` : key;
-      let source = prefix ? `${prefix}${delimiter}${newkey}` : newkey;
-      let allowed_types = ['string', 'number', 'boolean', 'array'];
-      let allowed = _.indexOf(allowed_types, type) !== -1;
-
-      // validate strings
-      if (type === 'string') {
-        value = value.trim();
-
-        // check if string is empty or null
-        if (value === '') allowed = false;
-
-        // check if its a number
-        if (allowed && !isNaN(value)) {
-          type = 'number';
-          value *= 1;
-        }
-      }
-
-      // define field
-      let field = {
-        name: strapi.services.helper.get_name(source),
-        source: source,
-        type: type,
-        parent: parent,
-        review: true,
-      };
-
-      // if object or array we need further processing
-      if (
-        isobject &&
-        Object.keys(value).length &&
-        (!opts.maxDepth || depth < maxDepth)
-      ) {
-        if (!isarray) {
-          return step(value, newkey, depth + 1);
-        } else {
-          let values = [];
-          Object.keys(value).forEach((i) => {
-            if (value[i] === undefined || value[i] === null) return;
-            let item_type = strapi.services.helper.get_type(value[i]);
-            if (item_type === 'object') {
-              let result = process_properties(value[i], {
-                ...opts,
-                prefix: field.source,
-                parent: field.name,
-              });
-              fields = _.unionBy(result.fields, fields, 'name');
-              values.push(result.properties);
-            } else values.push(value[i]);
-          });
-          value = values;
-        }
-      }
-
-      // only store wanted values for each type
-      if (allowed) save(field.name, field, value);
-    });
-  };
-  step(target);
-
-  return { fields, properties };
-};
 
 module.exports = {
-  remove_features: async (dataset) => {
-    // remove features from the dataset
-    strapi.log.debug(`Removing existing features for this dataset`);
-    return strapi.query('feature').model.deleteMany({ dataset: dataset.id });
+  // before processing
+  pre_process: async (dataset) => {
+    // clear processed_at field
+    strapi
+      .query('dataset')
+      .update({ id: dataset }, { processed_at: undefined });
+
+    // remove existing features
+    strapi.services['dataset'].remove_features(dataset);
+
+    // set existing fields to missing and mark for review
+    strapi
+      .query('dataset-field')
+      .update({ dataset: dataset }, { missing: true, review: true });
   },
 
-  clear_processed_at: async (dataset) => {
-    // clear processed_at
-    strapi.query('dataset').update({ id: dataset.id }, { processed_at: null });
-  },
-
-  set_processed_at: async (dataset) => {
+  // after processing
+  post_process: async (dataset) => {
     // set processed_at
     strapi
       .query('dataset')
-      .update({ id: dataset.id }, { processed_at: Date.now() });
+      .update({ id: dataset }, { processed_at: Date.now() });
   },
 
-  process_feature: async (dataset, source) => {
-    // make sure source is a valid feature
-    try {
-      if (source.type.toLowerCase() != 'feature') return;
-      if (!source.geometry) return;
-      if (!source.properties) return;
-    } catch (e) {
-      throw new Error(`This feature cannot be processed`);
-    }
+  // remove all related features
+  remove_features: async (dataset) => {
+    return strapi.query('feature').model.deleteMany({ dataset: dataset });
+  },
 
-    let { properties, fields } = process_properties(source.properties, {
-      safe: true,
-    });
+  // remove all related fields
+  remove_fields: async (dataset) => {
+    return strapi.query('dataset-field').model.deleteMany({ dataset: dataset });
+  },
 
-    let feature = {
-      dataset: dataset.id,
-      source: source,
-      properties: properties,
-    };
-
-    strapi.query('feature').create(feature);
+  // remove all related combinators
+  remove_combinators: async (dataset) => {
+    return strapi.query('combinator').model.deleteMany({ dataset: dataset });
   },
 
   // process: async (params) => {
