@@ -22,6 +22,7 @@ module.exports = {
   afterProcess: async (id) => {
     // set processed_at
     strapi.query('dataset').update({ id: id }, { processed_at: Date.now() });
+    strapi.services['dataset'].extractFields(id);
   },
 
   // remove all related features
@@ -37,6 +38,15 @@ module.exports = {
   // remove all related combinators
   removeCombinators: async (id) => {
     return strapi.query('combinator').model.deleteMany({ dataset: id });
+  },
+
+  // extract all fields from the features
+  extractFields: async (id) => {
+    strapi.log.debug(`Extracting fields`);
+    const features = await strapi
+      .query('feature')
+      .find({ dataset: id, _limit: 999999 });
+    console.log(features.length);
   },
 
   // process: async (params) => {

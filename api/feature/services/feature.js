@@ -89,7 +89,7 @@ const extract = (target, opts) => {
 };
 
 module.exports = {
-  add: async (dataset, source) => {
+  add: (dataset, source) => {
     // make sure source is a valid feature
     try {
       if (source.type.toLowerCase() != 'feature') return;
@@ -102,7 +102,7 @@ module.exports = {
     return strapi.query('feature').create({ dataset, source });
   },
 
-  process: async (feature) => {
+  process: (feature) => {
     let { properties, fields } = extract(feature.source.properties, {
       safe: true,
     });

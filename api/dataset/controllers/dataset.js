@@ -22,43 +22,37 @@ module.exports = {
         strapi.services['event'].controller(info, entity, ctx);
 
         // run any pre process tasks
-        strapi.services[info.name].before_process(entity.id);
+        strapi.services[info.name].beforeProcess(entity.id);
 
         // helper functions
-        let process = (data) => {
-          strapi.services['feature']
+        let process = async (data) => {
+          let added = await strapi.services['feature']
             .add(entity.id, data)
-            .then((feature) => {
-              strapi.services['feature']
-                .process(feature)
-                .then((feature) => {
-                  strapi.services['feature']
-                    .refresh(feature)
-                    .then((feature) => {
-                      strapi.log.debug(`Feature loaded successfully`);
-                    })
-                    .catch((error) => {
-                      strapi.services['event'].controller(info, entity, ctx, {
-                        type: 'error',
-                        details: `Error refreshing feature ${e.message}`,
-                      });
-                    });
-                })
-                .catch((e) => {
-                  strapi.services['event'].controller(info, entity, ctx, {
-                    type: 'error',
-                    details: `Error processing feature ${e.message}`,
-                  });
-                });
-            })
             .catch((e) => {
               strapi.services['event'].controller(info, entity, ctx, {
                 type: 'error',
                 details: `Error creating feature ${e.message}`,
               });
             });
-
-          return data;
+          let processed = await strapi.services['feature']
+            .process(added)
+            .catch((e) => {
+              strapi.services['event'].controller(info, entity, ctx, {
+                type: 'error',
+                details: `Error processing feature ${e.message}`,
+              });
+            });
+          let refreshed = await strapi.services['feature']
+            .refresh(processed)
+            .catch((e) => {
+              strapi.services['event'].controller(info, entity, ctx, {
+                type: 'error',
+                details: `Error refreshing feature ${e.message}`,
+              });
+            });
+          if (refreshed) {
+            // console.log(`Feature loaded successfully`);
+          }
         };
         let error = (e) => {
           strapi.services['event'].controller(info, entity, ctx, {
@@ -69,19 +63,18 @@ module.exports = {
         };
         let after = () => {
           strapi.services['event'].controller(info, entity, ctx);
-          strapi.services[info.name].after_process(entity.id);
+          strapi.services[info.name].afterProcess(entity.id);
+          console.log('after');
         };
 
         // stream and process the features
-        strapi.services['helper']
-          .getSource({
-            source: entity.source,
-            pattern: 'features.*',
-            process,
-            error,
-            after,
-          })
-          .catch((e) => error);
+        strapi.services['helper'].getSource({
+          source: entity.source,
+          pattern: 'features.*',
+          process,
+          error,
+          after,
+        });
       }
     });
 

@@ -4,6 +4,7 @@
  * `helper` service.
  */
 
+const util = require('util');
 const _ = require('lodash');
 const slugify = require('slugify');
 const chalk = require('chalk');
@@ -130,14 +131,14 @@ module.exports = {
     return _.intersection(_.keys(data), fields).length > 0;
   },
 
-  // stream source, parse json, run function
+  // stream source, parse json, process each object
   getSource: async ({ source, pattern, process, after, error }) => {
     const fetch = require('node-fetch');
     const JSONStream = require('JSONStream');
 
     let url = `https://raw.githubusercontent.com/castuofa/dataarc-source/main/${source}`;
     let start = Date.now();
-    let count = 0;
+    let streamed = 0;
 
     if (!pattern) pattern = '*';
     if (!process)
@@ -160,34 +161,49 @@ module.exports = {
       else throw new Error(res.status);
     };
 
-    // track stream progress
-    let track = (data) => {
-      count++;
-      return data;
-    };
-
-    // wrap things up
-    let end = (data) => {
+    // handle promises for each stream handler
+    let processes = [];
+    let end_processing = (res) => {
       let delta = Math.ceil(Date.now() - start);
-      let items = chalk.cyan(`${count} items`);
+      let results = _.groupBy(res, 'status');
+      let fulfilled = results.fulfilled ? results.fulfilled.length : 0;
+      let rejected = results.rejected ? results.rejected.length : 0;
       strapi.log.debug(
-        `PROCESS ${source} ${items} (${delta} ms) ${chalk.green('DONE')}`
+        `PROCESS ${chalk.cyan(streamed)} items (${delta} ms) ${chalk.green(
+          'DONE'
+        )}`
       );
+      strapi.log.debug(`FULFILLED ${chalk.green(fulfilled)} items`);
+      strapi.log.debug(`REJECTED ${chalk.red(rejected)} items`);
+      after(results);
+    };
+    let end_stream = () => {
+      let delta = Math.ceil(Date.now() - start);
+      strapi.log.debug(
+        `STREAM ${chalk.cyan(streamed)} items (${delta} ms) ${chalk.green(
+          'DONE'
+        )}`
+      );
+      Promise.allSettled(processes).then(end_processing);
     };
 
-    // fetch, validate, process
-    return fetch(url)
+    // define our json stream handler
+    let stream = JSONStream.parse(pattern)
+      .on('data', (data) => {
+        streamed++;
+        processes.push(process(data));
+        return data;
+      })
+      .on('error', error)
+      .on('end', end_stream);
+
+    // fetch, validate, and pipe the stream
+    fetch(url)
       .then(validate)
       .then((res) => {
-        res.body.pipe(
-          JSONStream.parse(pattern)
-            .on('error', error)
-            .on('data', track)
-            .on('data', process)
-            .on('end', end)
-            .on('end', after)
-        );
-      });
+        res.body.pipe(stream);
+      })
+      .catch((e) => error);
   },
 
   // convert graphql parameters to rest equivilent
