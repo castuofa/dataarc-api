@@ -87,12 +87,10 @@
       "collection": "concept"
     },
     "dataset": {
-      "model": "dataset",
-      "autoPopulate": false
+      "model": "dataset"
     },
     "category": {
-      "model": "category",
-      "autoPopulate": false
+      "model": "category"
     }
   }
 }

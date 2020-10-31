@@ -21,11 +21,9 @@ module.exports = {
         // log the event
         strapi.services['event'].controller(info, entity, ctx);
 
-        // run any pre process tasks
-        strapi.services[info.name].beforeProcess(entity.id);
-
         // helper functions
         let process = async (data) => {
+          // add the feature
           let added = await strapi.services['feature']
             .add(entity.id, data)
             .catch((e) => {
@@ -34,6 +32,7 @@ module.exports = {
                 details: `Error creating feature ${e.message}`,
               });
             });
+          // process the feature
           let processed = await strapi.services['feature']
             .process(added)
             .catch((e) => {
@@ -42,6 +41,7 @@ module.exports = {
                 details: `Error processing feature ${e.message}`,
               });
             });
+          // refresh the feature
           let refreshed = await strapi.services['feature']
             .refresh(processed)
             .catch((e) => {
@@ -54,24 +54,37 @@ module.exports = {
             // console.log(`Feature loaded successfully`);
           }
         };
-        let error = (e) => {
+        let error = async (e) => {
           strapi.services['event'].controller(info, entity, ctx, {
             type: 'error',
             details: e.message,
           });
           return ctx.response.badData(err.message);
         };
-        let after = () => {
+        let before = async () => {
+          // clear processed_at field
+          strapi.services[info.name].setProcessedAt(entity.id, null);
+
+          // remove existing features
+          // strapi.services[info.name].removeFeatures(entity.id);
+
+          // set existing fields to missing and mark for review
+          strapi.services[info.name].setFieldsMissing(entity.id);
+        };
+        let after = async () => {
           strapi.services['event'].controller(info, entity, ctx);
-          strapi.services[info.name].afterProcess(entity.id);
-          console.log('after');
+          await strapi.services[info.name].extractFields(entity);
+
+          // set processed_at field
+          strapi.services[info.name].setProcessedAt(entity.id, Date.now());
         };
 
         // stream and process the features
+        before();
         strapi.services['helper'].getSource({
           source: entity.source,
           pattern: 'features.*',
-          process,
+          undefined, //process,
           error,
           after,
         });
@@ -88,7 +101,7 @@ module.exports = {
 
     let entity;
     // try {
-    //   entity = await strapi.services['dataset'].refresh({ id });
+    //   entity = await strapi.services[info.name].refresh({ id });
     // } catch (err) {
     //   event.type = 'error';
     //   event.action = 'refresh';
@@ -100,7 +113,7 @@ module.exports = {
     // }
 
     // let entry = sanitizeEntity(entity, {
-    //   model: strapi.models['dataset'],
+    //   model: strapi.models[info.name],
     // });
 
     // // log the event

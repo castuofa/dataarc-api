@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const validate = require('jsonschema').validate;
+const pug = require('pug');
 
 const extract = (target, opts) => {
   opts = opts || {};
@@ -130,6 +131,18 @@ module.exports = {
     if (!_.isEmpty(feature.dataset.category))
       feature.category = feature.dataset.category;
 
+    // *****************
+    // *** URL FIELD ***
+    // *****************
+
+    // set the url
+    let url_field = _.find(fields, {
+      type: 'url',
+    });
+    if (url_field) {
+      feature.url = feature.properties[url_field.name];
+    }
+
     // ****************
     // *** KEYWORDS ***
     // ****************
@@ -204,7 +217,7 @@ module.exports = {
       // set the location
       feature.location = loc;
 
-      // location, radius, spatial_coverages, country, region
+      // radius, spatial_coverages, country, region
     }
 
     // ****************
@@ -257,7 +270,15 @@ module.exports = {
       );
     }
 
-    // begin, end, temporal_keywords, temporal_coverages, millennia, centuries, decades
+    // get associated temporal coverages
+    if (valid_begin && valid_end) {
+      let tcvgs = await strapi
+        .query('temporal-coverage')
+        .find({ begin_lte: feature.end, end_gte: feature.begin });
+      feature.temporal_coverages = _.map(tcvgs, 'id');
+    }
+
+    // ? temporal_keywords
 
     // ******************************
     // *** COMBINATORS & CONCEPTS ***
@@ -265,67 +286,53 @@ module.exports = {
 
     // combinators, concepts
 
-    return strapi.query('feature').update({ id: feature.id }, feature);
+    // ***************
+    // *** LAYOUTS ***
+    // ***************
 
-    // pull the datasets features
-    const features = await strapi.query('feature').find({ dataset: entry.id });
-
-    if (fields && features) {
-      _.each(features, function (feature) {
-        // set url and render link
-        let url = _.find(fields, {
-          type: 'url',
-        });
-        if (url) {
-          feature.url = feature.properties[url.path];
-          try {
-            feature.link = pug.render(
-              `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
-              feature.properties
-            );
-          } catch (err) {
-            feature.link = 'Invalid layout';
-          }
-        }
-
-        // render title
-        try {
-          feature.title = pug
-            .render('span ' + feature.dataset.title_layout, feature.properties)
-            .replace('<span>', '')
-            .replace('</span>', '');
-        } catch (err) {
-          feature.title = 'Invalid layout';
-        }
-
-        // render summary
-        try {
-          feature.summary = pug.render(
-            feature.dataset.summary_layout,
-            feature.properties
-          );
-        } catch (err) {
-          feature.summary = 'Invalid layout';
-        }
-
-        // render details
-        try {
-          feature.details = pug.render(
-            feature.dataset.details_layout,
-            feature.properties
-          );
-        } catch (err) {
-          feature.details = 'Invalid layout';
-        }
-
-        // set facets
-        feature.facets = {};
-        let tc = strapi.query('temporal-coverage').find({
-          start_date_lte: feature.start_date,
-          end_date_gte: feature.end_date,
-        });
-        feature.facets['temporal-coverages'] = _.map(tc, 'id');
-      });
+    // set the link using the url
+    if (feature.url) {
+      try {
+        feature.link = pug.render(
+          `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
+          feature.properties
+        );
+      } catch (err) {
+        feature.link = null;
+      }
     }
+
+    // render title
+    try {
+      feature.title = pug
+        .render('span ' + feature.dataset.title_layout, feature.properties)
+        .replace('<span>', '')
+        .replace('</span>', '');
+    } catch (err) {
+      feature.title = null;
+    }
+
+    // render summary
+    try {
+      feature.summary = pug.render(
+        feature.dataset.summary_layout,
+        feature.properties
+      );
+    } catch (err) {
+      feature.summary = null;
+    }
+
+    // render details
+    try {
+      feature.details = pug.render(
+        feature.dataset.details_layout,
+        feature.properties
+      );
+    } catch (err) {
+      feature.details = null;
+    }
+
+    // update the feature
+    return strapi.query('feature').update({ id: feature.id }, feature);
   },
 };
