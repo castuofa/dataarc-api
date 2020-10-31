@@ -19,7 +19,7 @@ module.exports = {
 
       // watch for changes to specific fields, trigger refresh and set related to review
       if (strapi.services['helper'].hasFields(['type'], data))
-        strapi.services['dataset'].refresh({ id: result.dataset.id });
+        strapi.services['dataset'].refreshFeatures(result.dataset.id);
       strapi.services['combinator-query'].markReviewByField(result.id);
     },
     afterDelete: async (result, params) => {
