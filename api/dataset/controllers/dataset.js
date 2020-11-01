@@ -66,7 +66,7 @@ module.exports = {
           strapi.services[info.name].setProcessedAt(entity.id, null);
 
           // remove existing features
-          // strapi.services[info.name].removeFeatures(entity.id);
+          strapi.services[info.name].removeFeatures(entity.id);
 
           // set existing fields to missing and mark for review
           strapi.services[info.name].setFieldsMissing(entity.id);
@@ -84,7 +84,7 @@ module.exports = {
         strapi.services['helper'].getSource({
           source: entity.source,
           pattern: 'features.*',
-          undefined, //process,
+          process,
           error,
           after,
         });

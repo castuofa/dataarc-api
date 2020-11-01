@@ -700,10 +700,31 @@
               }
             }
           },
+          "continent": {
+            "type": "string"
+          },
+          "region_un": {
+            "type": "string"
+          },
+          "region_wb": {
+            "type": "string"
+          },
+          "subregion": {
+            "type": "string"
+          },
           "country": {
             "type": "string"
           },
-          "region": {
+          "subdivision": {
+            "type": "string"
+          },
+          "subdivision_type": {
+            "type": "string"
+          },
+          "marine": {
+            "type": "string"
+          },
+          "marine_type": {
             "type": "string"
           },
           "begin": {
@@ -997,10 +1018,31 @@
           "spatial_coverages": {
             "type": "string"
           },
+          "continent": {
+            "type": "string"
+          },
+          "region_un": {
+            "type": "string"
+          },
+          "region_wb": {
+            "type": "string"
+          },
+          "subregion": {
+            "type": "string"
+          },
           "country": {
             "type": "string"
           },
-          "region": {
+          "subdivision": {
+            "type": "string"
+          },
+          "subdivision_type": {
+            "type": "string"
+          },
+          "marine": {
+            "type": "string"
+          },
+          "marine_type": {
             "type": "string"
           },
           "begin": {

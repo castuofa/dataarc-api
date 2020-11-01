@@ -17,6 +17,7 @@
     "flat": "^5.0.2",
     "jsonschema": "^1.4.0",
     "pug": "^3.0.0",
+    "shapefile": "^0.6.6",
     "slugify": "^1.4.5",
     "strapi": "3.2.5",
     "strapi-admin": "3.2.5",
@@ -28,7 +29,8 @@
     "strapi-plugin-graphql": "3.2.5",
     "strapi-plugin-upload": "3.2.5",
     "strapi-plugin-users-permissions": "3.2.5",
-    "strapi-utils": "3.2.5"
+    "strapi-utils": "3.2.5",
+    "which-polygon": "^2.2.0"
   },
   "author": {
     "name": "Timothy Sexton"

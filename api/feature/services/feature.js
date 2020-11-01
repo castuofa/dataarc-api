@@ -114,6 +114,8 @@ module.exports = {
   },
 
   refresh: async (feature) => {
+    let promises = [];
+
     // make sure feature.properties is set
     if (_.isEmpty(feature.properties))
       throw new Error(`Feature properties are not defined, cannot refresh`);
@@ -164,9 +166,9 @@ module.exports = {
     // set the keywords
     if (!_.isEmpty(words.trim())) feature.keywords = words;
 
-    // ****************
-    // *** LOCATION ***
-    // ****************
+    // ***************
+    // *** SPATIAL ***
+    // ***************
 
     // define our location schema to validate geometry
     const location_schema = {
@@ -217,7 +219,52 @@ module.exports = {
       // set the location
       feature.location = loc;
 
-      // radius, spatial_coverages, country, region
+      // radius
+      if (feature.properties.radius) feature.radius = feature.properties.radius;
+
+      // continent, region_un, subregion, region_wb, country, state/province
+      const shapefile = require('shapefile');
+      const whichPolygon = require('which-polygon');
+
+      let data_path = `${strapi.dir}/data`;
+      let spatial_config = require(`${data_path}/spatial.config.json`);
+      if (spatial_config) {
+        _.each(spatial_config, async (spatial) => {
+          promises.push(
+            shapefile
+              .read(`${data_path}/${spatial.file}`)
+              .then((geojson) => {
+                let query = whichPolygon(geojson);
+                let found = query([loc.coordinates[0], loc.coordinates[1]]);
+                if (found) {
+                  _.each(spatial.fields, (field) => {
+                    if (found[field.source])
+                      feature[field.target] = found[field.source];
+                  });
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+              })
+          );
+        });
+      }
+
+      // spatial_coverages
+      promises.push(
+        strapi
+          .query('spatial-coverage')
+          .model.find({
+            geometry: {
+              $geoIntersects: {
+                $geometry: feature.location,
+              },
+            },
+          })
+          .then((results) => {
+            feature.spatial_coverages = _.map(results, 'id');
+          })
+      );
     }
 
     // ****************
@@ -268,14 +315,16 @@ module.exports = {
         Math.ceil(feature.end / 1000) * 1000,
         1000
       );
-    }
 
-    // get associated temporal coverages
-    if (valid_begin && valid_end) {
-      let tcvgs = await strapi
-        .query('temporal-coverage')
-        .find({ begin_lte: feature.end, end_gte: feature.begin });
-      feature.temporal_coverages = _.map(tcvgs, 'id');
+      // get associated temporal coverages
+      promises.push(
+        strapi
+          .query('temporal-coverage')
+          .find({ begin_lte: feature.end, end_gte: feature.begin })
+          .then((results) => {
+            feature.temporal_coverages = _.map(results, 'id');
+          })
+      );
     }
 
     // ? temporal_keywords
@@ -332,7 +381,14 @@ module.exports = {
       feature.details = null;
     }
 
-    // update the feature
-    return strapi.query('feature').update({ id: feature.id }, feature);
+    // **************
+    // *** FINISH ***
+    // **************
+
+    // make sure all promises have been settled
+    Promise.allSettled(promises).then((res) => {
+      // update the feature
+      return strapi.query('feature').update({ id: feature.id }, feature);
+    });
   },
 };

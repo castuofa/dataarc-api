@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/27/2020 10:22:11 AM"
+    "x-generation-date": "11/01/2020 2:45:14 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9343,10 +9343,31 @@
                 "spatial_coverages": {
                   "type": "string"
                 },
+                "continent": {
+                  "type": "string"
+                },
+                "region_un": {
+                  "type": "string"
+                },
+                "region_wb": {
+                  "type": "string"
+                },
+                "subregion": {
+                  "type": "string"
+                },
                 "country": {
                   "type": "string"
                 },
-                "region": {
+                "subdivision": {
+                  "type": "string"
+                },
+                "subdivision_type": {
+                  "type": "string"
+                },
+                "marine": {
+                  "type": "string"
+                },
+                "marine_type": {
                   "type": "string"
                 },
                 "begin": {
@@ -9656,10 +9677,31 @@
               }
             }
           },
+          "continent": {
+            "type": "string"
+          },
+          "region_un": {
+            "type": "string"
+          },
+          "region_wb": {
+            "type": "string"
+          },
+          "subregion": {
+            "type": "string"
+          },
           "country": {
             "type": "string"
           },
-          "region": {
+          "subdivision": {
+            "type": "string"
+          },
+          "subdivision_type": {
+            "type": "string"
+          },
+          "marine": {
+            "type": "string"
+          },
+          "marine_type": {
             "type": "string"
           },
           "begin": {
@@ -9953,10 +9995,31 @@
           "spatial_coverages": {
             "type": "string"
           },
+          "continent": {
+            "type": "string"
+          },
+          "region_un": {
+            "type": "string"
+          },
+          "region_wb": {
+            "type": "string"
+          },
+          "subregion": {
+            "type": "string"
+          },
           "country": {
             "type": "string"
           },
-          "region": {
+          "subdivision": {
+            "type": "string"
+          },
+          "subdivision_type": {
+            "type": "string"
+          },
+          "marine": {
+            "type": "string"
+          },
+          "marine_type": {
             "type": "string"
           },
           "begin": {
