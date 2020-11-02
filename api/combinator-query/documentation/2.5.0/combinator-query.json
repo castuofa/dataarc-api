@@ -561,7 +561,8 @@
             "type": "string"
           },
           "review": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
           },
           "dataset_field": {
             "required": [
@@ -691,7 +692,8 @@
             "type": "string"
           },
           "review": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
           },
           "dataset_field": {
             "type": "string"
