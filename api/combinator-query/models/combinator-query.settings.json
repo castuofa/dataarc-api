@@ -37,11 +37,12 @@
       "type": "string"
     },
     "review": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "dataset_field": {
-      "model": "dataset-field",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "model": "dataset-field"
     },
     "combinator": {
       "autoPopulate": false,
