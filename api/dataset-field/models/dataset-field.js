@@ -20,7 +20,8 @@ module.exports = {
       // watch for changes to specific fields, trigger refresh and set related to review
       if (strapi.services['helper'].hasFields(['type'], data))
         strapi.services['dataset'].refreshFeatures(result.dataset.id);
-      strapi.services['combinator-query'].markReviewByField(result.id);
+      if (result)
+        strapi.services['combinator-query'].markReviewByField(result.id);
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {
@@ -28,7 +29,8 @@ module.exports = {
       });
 
       // mark any combinator query that uses the deleted field for review
-      strapi.services['combinator-query'].markReviewByField(result.id);
+      if (result)
+        strapi.services['combinator-query'].markReviewByField(result.id);
     },
   },
 };
