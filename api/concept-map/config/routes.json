@@ -26,7 +26,7 @@
     },
     {
       "method": "GET",
-      "path": "/concept-maps/:id/process",
+      "path": "/concept-maps/process/:id",
       "handler": "concept-map.process",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "GET",
-      "path": "/concept-maps/:id/activate",
+      "path": "/concept-maps/activate/:id",
       "handler": "concept-map.activate",
       "config": {
         "policies": []

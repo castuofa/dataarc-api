@@ -538,7 +538,7 @@
           "identifier": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "concept": {
@@ -646,7 +646,7 @@
           "identifier": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "concept": {

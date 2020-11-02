@@ -524,7 +524,7 @@
         ]
       }
     },
-    "/concept-maps/{id}/process": {
+    "/concept-maps/process/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -592,7 +592,7 @@
         ]
       }
     },
-    "/concept-maps/{id}/activate": {
+    "/concept-maps/activate/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -716,7 +716,7 @@
                 "identifier": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "concept": {
@@ -744,7 +744,7 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "source_topic": {

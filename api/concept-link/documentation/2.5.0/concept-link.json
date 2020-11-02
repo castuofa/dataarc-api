@@ -535,7 +535,7 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "source_topic": {
@@ -686,7 +686,7 @@
       },
       "NewConcept-link": {
         "properties": {
-          "name": {
+          "title": {
             "type": "string"
           },
           "source_topic": {

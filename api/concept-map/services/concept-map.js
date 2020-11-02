@@ -18,7 +18,7 @@ module.exports = {
   processNode: async (map, node) => {
     let topic = {
       identifier: node.id.toString(),
-      name: node.title,
+      title: node.title,
       map: map.id,
     };
 
@@ -73,7 +73,7 @@ module.exports = {
         edges.push({
           source: link.source_concept.id,
           target: link.target_concept.id,
-          title: link.name,
+          title: link.title,
         });
     });
     map.edges = edges;
