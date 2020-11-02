@@ -18,7 +18,15 @@
     },
     {
       "method": "GET",
-      "path": "/datasets/process",
+      "path": "/datasets/:id",
+      "handler": "dataset.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/datasets/process/:id",
       "handler": "dataset.process",
       "config": {
         "policies": []
@@ -27,16 +35,8 @@
 
     {
       "method": "GET",
-      "path": "/datasets/refresh",
+      "path": "/datasets/refresh/:id",
       "handler": "dataset.refresh",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/datasets/:id",
-      "handler": "dataset.findOne",
       "config": {
         "policies": []
       }
