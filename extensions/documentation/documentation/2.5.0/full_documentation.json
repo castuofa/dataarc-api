@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/02/2020 1:04:57 PM"
+    "x-generation-date": "11/02/2020 4:03:06 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2708,7 +2708,7 @@
         ]
       }
     },
-    "/concept-maps/{id}/process": {
+    "/concept-maps/process/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -2776,7 +2776,7 @@
         ]
       }
     },
-    "/concept-maps/{id}/activate": {
+    "/concept-maps/activate/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -4714,120 +4714,6 @@
         "parameters": []
       }
     },
-    "/datasets/process": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset"
-        ],
-        "parameters": []
-      }
-    },
-    "/datasets/refresh": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Dataset"
-        ],
-        "parameters": []
-      }
-    },
     "/datasets/{id}": {
       "get": {
         "deprecated": false,
@@ -4975,6 +4861,142 @@
                 "schema": {
                   "type": "integer",
                   "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/datasets/process/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/datasets/refresh/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -7889,7 +7911,8 @@
             "type": "string"
           },
           "review": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
           },
           "dataset_field": {
             "required": [
@@ -8019,7 +8042,8 @@
             "type": "string"
           },
           "review": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
           },
           "dataset_field": {
             "type": "string"
@@ -8289,7 +8313,7 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "source_topic": {
@@ -8440,7 +8464,7 @@
       },
       "NewConcept-link": {
         "properties": {
-          "name": {
+          "title": {
             "type": "string"
           },
           "source_topic": {
@@ -8519,7 +8543,7 @@
                 "identifier": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "concept": {
@@ -8547,7 +8571,7 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "title": {
                   "type": "string"
                 },
                 "source_topic": {
@@ -8641,7 +8665,7 @@
           "identifier": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "concept": {
@@ -8749,7 +8773,7 @@
           "identifier": {
             "type": "string"
           },
-          "name": {
+          "title": {
             "type": "string"
           },
           "concept": {

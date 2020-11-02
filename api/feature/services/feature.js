@@ -89,7 +89,7 @@ const extract = (target, opts) => {
 };
 
 module.exports = {
-  add: (dataset, source) => {
+  add: async (dataset, source) => {
     // make sure source is a valid feature
     try {
       if (source.type.toLowerCase() != 'feature') return;
@@ -104,6 +104,7 @@ module.exports = {
 
   process: (feature) => {
     let promises = [];
+    if (!feature || !feature.source) return;
     let { properties, fields } = extract(feature.source.properties, {
       safe: true,
     });
@@ -313,7 +314,7 @@ module.exports = {
     // ***************
 
     // set the link using the url
-    if (feature.url) {
+    if (feature.dataset.link_layout && feature.url) {
       try {
         feature.link = pug.render(
           `a(href='${feature.url}'). \n  ` + feature.dataset.link_layout,
@@ -325,41 +326,47 @@ module.exports = {
     }
 
     // render title
-    try {
-      feature.title = pug
-        .render('span ' + feature.dataset.title_layout, feature.properties)
-        .replace('<span>', '')
-        .replace('</span>', '');
-    } catch (err) {
-      feature.title = null;
+    if (feature.dataset.title_layout) {
+      try {
+        feature.title = pug
+          .render('span ' + feature.dataset.title_layout, feature.properties)
+          .replace('<span>', '')
+          .replace('</span>', '');
+      } catch (err) {
+        feature.title = null;
+      }
     }
 
     // render summary
-    try {
-      feature.summary = pug.render(
-        feature.dataset.summary_layout,
-        feature.properties
-      );
-    } catch (err) {
-      feature.summary = null;
+    if (feature.dataset.summary_layout) {
+      try {
+        feature.summary = pug.render(
+          feature.dataset.summary_layout,
+          feature.properties
+        );
+      } catch (err) {
+        feature.summary = null;
+      }
     }
 
     // render details
-    try {
-      feature.details = pug.render(
-        feature.dataset.details_layout,
-        feature.properties
-      );
-    } catch (err) {
-      feature.details = null;
+    if (feature.dataset.details_layout) {
+      try {
+        feature.details = pug.render(
+          feature.dataset.details_layout,
+          feature.properties
+        );
+      } catch (err) {
+        feature.details = null;
+      }
     }
 
     // **************
     // *** FINISH ***
     // **************
     // make sure all promises have been settled
-    Promise.allSettled(promises).then((res) => {
-      strapi.log.debug(`Refresh complete`);
+    await Promise.allSettled(promises).then((res) => {
+      // strapi.log.debug(`Feature refreshed ${feature.id}`);
       // update the feature
       return strapi.query('feature').update({ id: feature.id }, feature);
     });

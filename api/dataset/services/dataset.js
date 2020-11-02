@@ -21,12 +21,12 @@ module.exports = {
 
   // set processed_at
   setProcessedAt: async (id, value) => {
-    strapi.query('dataset').update({ id: id }, { processed_at: value });
+    return strapi.query('dataset').update({ id: id }, { processed_at: value });
   },
 
   // set fields as missing and mark for review
   setFieldsMissing: async (id) => {
-    strapi
+    return strapi
       .query('dataset-field')
       .update({ dataset: id }, { missing: true, review: true });
   },
@@ -40,14 +40,14 @@ module.exports = {
       .query('feature')
       .find({ dataset: id, _limit: 999999999 });
 
-    // continent, region_un, subregion, region_wb, country, state/province
-    const shapefile = require('shapefile');
-    const whichPolygon = require('which-polygon');
-
     let data_path = `${strapi.dir}/data`;
     let spatial_config = require(`${data_path}/spatial.config.json`);
 
     if (spatial_config) {
+      const shapefile = require('shapefile');
+      const whichPolygon = require('which-polygon');
+
+      // loop through each shapefile
       _.each(spatial_config, async (spatial) => {
         promises.push(
           shapefile
@@ -58,21 +58,23 @@ module.exports = {
 
               // loop through our features to find matching polygon
               _.each(features, (feature) => {
-                let found = query([
-                  feature.location.coordinates[0],
-                  feature.location.coordinates[1],
-                ]);
-                if (found) {
-                  // check for the fields
-                  _.each(spatial.fields, (field) => {
-                    if (found[field.source])
-                      update[field.target] = found[field.source];
-                  });
+                if (feature.location) {
+                  let found = query([
+                    feature.location.coordinates[0],
+                    feature.location.coordinates[1],
+                  ]);
+                  if (found) {
+                    // check for the fields
+                    _.each(spatial.fields, (field) => {
+                      if (found[field.source])
+                        update[field.target] = found[field.source];
+                    });
 
-                  // update the feature
-                  promises.push(
-                    strapi.query('feature').update({ id: feature.id }, update)
-                  );
+                    // update the feature
+                    promises.push(
+                      strapi.query('feature').update({ id: feature.id }, update)
+                    );
+                  }
                 }
               });
             })
@@ -86,14 +88,14 @@ module.exports = {
     // make sure all promises have been settled
     Promise.allSettled(promises).then((res) => {
       // update the feature
-      console.log(res);
+      // console.log(res);
       strapi.log.debug(`Feature spatial refresh complete`);
     });
   },
 
   // refresh features
   refreshFeatures: async (id) => {
-    strapi.log.debug(`Refreshing features`);
+    strapi.log.debug(`Refreshing all features`);
     let promises = [];
 
     strapi
@@ -108,13 +110,15 @@ module.exports = {
     // make sure all promises have been settled
     Promise.allSettled(promises).then((res) => {
       // update the feature
-      strapi.log.debug(`Feature refresh complete`);
+      // console.log(res);
+      strapi.log.debug(`All features refreshed`);
     });
   },
 
   // extract all fields from the features
   extractFields: async (dataset) => {
     strapi.log.debug(`Extracting fields`);
+    let promises = [];
     const features = await strapi
       .query('feature')
       .find({ dataset: dataset.id, _limit: 999999999 });
@@ -135,20 +139,31 @@ module.exports = {
           if (exists) {
             delete field.type;
             delete field.title;
-            strapi
-              .query('dataset-field')
-              .update({ id: exists.id }, field)
-              .catch((e) => {});
+            promises.push(
+              strapi
+                .query('dataset-field')
+                .update({ id: exists.id }, field)
+                .catch((e) => {})
+            );
           } else {
             field.title = strapi.services['helper'].getTitle(field.name);
-            strapi
-              .query('dataset-field')
-              .create(field)
-              .catch((e) => {});
+            promises.push(
+              strapi
+                .query('dataset-field')
+                .create(field)
+                .catch((e) => {})
+            );
           }
           fields[field.name] = field;
         }
       });
+    });
+
+    // make sure all promises have been settled
+    Promise.allSettled(promises).then((res) => {
+      // update the feature
+      // console.log(res);
+      strapi.log.debug(`Fields extracted`);
     });
   },
 };
