@@ -7,4 +7,17 @@ module.exports = {
     depthLimit: 7,
     amountLimit: 100,
   },
+  email: {
+    provider: 'smtp',
+    providerOptions: {
+      host: 'smtp-relay.gmail.com',
+      port: 465,
+      secure: true,
+      requireTLS: true,
+      connectionTimeout: 1,
+    },
+    settings: {
+      from: 'mail@cast.uark.edu',
+    },
+  },
 };
