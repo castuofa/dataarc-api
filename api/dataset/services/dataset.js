@@ -33,14 +33,23 @@ module.exports = {
 
   // refresh features
   refreshFeatures: async (id) => {
+    strapi.log.debug(`Refreshing features`);
+    let promises = [];
+
     strapi
       .query('feature')
       .find({ dataset: id, _limit: 999999999 })
       .then((features) => {
         _.each(features, (feature) => {
-          strapi.services['feature'].refresh(feature);
+          promises.push(strapi.services['feature'].refresh(feature));
         });
       });
+
+    // make sure all promises have been settled
+    Promise.allSettled(promises).then((res) => {
+      // update the feature
+      strapi.log.debug(`Feature refresh complete`);
+    });
   },
 
   // extract all fields from the features

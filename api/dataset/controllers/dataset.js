@@ -97,32 +97,26 @@ module.exports = {
   },
 
   refresh: async (ctx) => {
-    const { id } = ctx.params;
+    let entities;
+    if (ctx.query._q) {
+      entities = await strapi.services[info.name].search(ctx.query);
+    } else {
+      entities = await strapi.services[info.name].find(ctx.query);
+    }
+    entities.map((entity) => {
+      // make sure the entity is not null
+      if (entity != null) {
+        // log the event
+        strapi.services['event'].controller(info, entity, ctx);
 
-    let entity;
-    // try {
-    //   entity = await strapi.services[info.name].refresh({ id });
-    // } catch (err) {
-    //   event.type = 'error';
-    //   event.action = 'refresh';
-    //   event.item = id;
-    //   event.details = err.message;
-    //   if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
-    //   strapi.services['event'].log(event);
-    //   return ctx.response.badData(err.message);
-    // }
+        // refresh the features
+        strapi.services[info.name].refreshFeatures(entity.id);
+      }
+    });
 
-    // let entry = sanitizeEntity(entity, {
-    //   model: strapi.models[info.name],
-    // });
-
-    // // log the event
-    // if (entry != null) {
-    //   event.action = 'refresh';
-    //   event.item = entry.name;
-    //   if (typeof ctx.state.user !== 'undefined') event.user = ctx.state.user.id;
-    //   strapi.services['event'].log(event);
-    // }
+    return entities.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models[info.name] })
+    );
 
     return entry;
   },
