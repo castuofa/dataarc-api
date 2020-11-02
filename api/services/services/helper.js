@@ -169,21 +169,15 @@ module.exports = {
       let fulfilled = results.fulfilled ? results.fulfilled.length : 0;
       let rejected = results.rejected ? results.rejected.length : 0;
       strapi.log.debug(
-        `PROCESS ${chalk.cyan(streamed)} items (${delta} ms) ${chalk.green(
-          'DONE'
-        )}`
+        `${chalk.green(fulfilled)} FULFILLED, ${chalk.red(
+          rejected
+        )} REJECTED (${delta} ms)`
       );
-      strapi.log.debug(`FULFILLED ${chalk.green(fulfilled)} items`);
-      strapi.log.debug(`REJECTED ${chalk.red(rejected)} items`);
       after(results);
     };
     let end_stream = () => {
       let delta = Math.ceil(Date.now() - start);
-      strapi.log.debug(
-        `STREAM ${chalk.cyan(streamed)} items (${delta} ms) ${chalk.green(
-          'DONE'
-        )}`
-      );
+      strapi.log.debug(`PROCESS ${chalk.cyan(streamed)} items (${delta} ms)`);
       Promise.allSettled(processes).then(end_processing);
     };
 
