@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/spatial-coverages",
+      "handler": "spatial-coverage.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/spatial-coverages/count",
+      "handler": "spatial-coverage.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/spatial-coverages/:id",
+      "handler": "spatial-coverage.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/spatial-coverages",
+      "handler": "spatial-coverage.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/spatial-coverages/:id",
+      "handler": "spatial-coverage.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/spatial-coverages/:id",
+      "handler": "spatial-coverage.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

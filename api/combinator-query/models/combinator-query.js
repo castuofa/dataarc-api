@@ -1,101 +1,48 @@
 'use strict';
 
-const _ = require('lodash');
+const info = {
+  name: 'combinator-query',
+  field: 'name',
+};
 
 module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
-      if (data.property && data.operator && data.value && !data.name) {
-        let title = data.property + '_' + data.operator + '_' + data.value;
-        if (data.combinator) {
-          const combinator = await strapi
-            .query('combinator')
-            .findOne({ id: data.combinator });
-          if (combinator) title = combinator.name + '_' + title;
-        }
-        data.name = await strapi.services.helper.find_unique({
-          content_type: 'combinator-query',
-          field: 'name',
-          value: title,
+      if (data.title && !data.name)
+        data.name = await strapi.services['helper'].findUnique({
+          content_type: info.name,
+          field: info.field,
+          value: data.title,
         });
-      }
-      if (data.field) {
-        const field = await strapi
-          .query('dataset-field')
-          .findOne({ id: data.field });
-        if (field) {
-          data.property = field.path;
-          data.property_type = field.type;
-        }
-      }
     },
     beforeUpdate: async (params, data) => {
-      if (data.property && data.operator && data.value && !data.name) {
-        let title = data.property + '_' + data.operator + '_' + data.value;
-        if (data.combinator) {
-          const combinator = await strapi
-            .query('combinator')
-            .findOne({ id: data.combinator });
-          if (combinator) title = combinator.name + '_' + title;
-        }
-        data.name = await strapi.services.helper.find_unique({
-          content_type: 'combinator-query',
-          field: 'name',
-          value: title,
+      if (data.title && !data.name)
+        data.name = await strapi.services['helper'].findUnique({
+          content_type: info.name,
+          field: info.field,
+          value: data.title,
         });
-      }
-      if (data.field) {
-        const field = await strapi
-          .query('dataset-field')
-          .findOne({ id: data.field });
-        if (field) {
-          data.property = field.path;
-          data.property_type = field.type;
-        }
-      }
     },
     afterCreate: async (result, data) => {
-      if (result == null) return;
-      strapi.services.helper.log_event(
-        'create',
-        'combinator-query',
-        result.name,
-        result.updated_by == null ? null : result.updated_by.id,
-        { data }
-      );
+      strapi.services['event'].lifecycle('create', info, result, {
+        payload: { data },
+      });
     },
     afterUpdate: async (result, params, data) => {
-      if (result == null) return;
-      strapi.services.helper.log_event(
-        'update',
-        'combinator-query',
-        result.name,
-        result.updated_by == null ? null : result.updated_by.id,
-        { params, data }
-      );
+      strapi.services['event'].lifecycle('update', info, result, {
+        payload: { params, data },
+      });
 
-      // watch for changes to specific fields and set state
-      if (
-        _.intersection(_.keys(data), ['property', 'operator', 'value', 'field'])
-          .length
-      ) {
-        strapi.services.helper.set_state(
-          { dataset: result.combinator.id },
-          'combinator',
-          'pending',
-          'Related field(s) have changed, please verify queries'
-        );
+      // if query was set to review, mark combinator to review
+      if (strapi.services['helper'].hasFields(['review'], data)) {
+        if (data.review)
+          strapi.services['combinator'].markReview(data.combinator.id);
       }
     },
     afterDelete: async (result, params) => {
-      if (result == null) return;
-      strapi.services.helper.log_event(
-        'delete',
-        'combinator-query',
-        result.name,
-        result.updated_by == null ? null : result.updated_by.id,
-        { params }
-      );
+      strapi.services['event'].lifecycle('delete', info, result, {
+        payload: { params },
+      });
     },
   },
 };

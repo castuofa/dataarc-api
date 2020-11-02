@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spatial_coverages",
+  "info": {
+    "name": "SpatialCoverage",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "geometry": {
+      "type": "json"
+    }
+  }
+}

@@ -2,20 +2,19 @@
   "kind": "collectionType",
   "collectionName": "combinator_queries",
   "info": {
-    "name": "CombinatorQuery"
+    "name": "CombinatorQuery",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
-    "name": {
+    "field": {
       "type": "string"
     },
-    "property": {
-      "type": "string"
-    },
-    "property_type": {
+    "type": {
       "type": "string"
     },
     "operator": {
@@ -31,29 +30,21 @@
         "not_contains",
         "starts_with",
         "ends_with"
-      ]
+      ],
+      "default": "equals"
     },
     "value": {
       "type": "string"
     },
-    "state": {
-      "type": "enumeration",
-      "enum": [
-        "pending",
-        "done"
-      ],
-      "default": "pending"
+    "review": {
+      "type": "boolean"
     },
-    "state_msg": {
-      "type": "string"
-    },
-    "state_at": {
-      "type": "datetime"
-    },
-    "field": {
-      "model": "dataset-field"
+    "dataset_field": {
+      "model": "dataset-field",
+      "autoPopulate": false
     },
     "combinator": {
+      "autoPopulate": false,
       "model": "combinator",
       "via": "queries"
     }

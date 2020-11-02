@@ -22,17 +22,13 @@ module.exports = {
       features: {
         resolverOf: 'application::feature.feature.find',
         resolver: async (obj, options, ctx) => {
-          const params = await strapi.services.helper.prefix_graphql_params(
-            options
-          );
+          const params = await strapi.services['helper'].getParams(options);
           const results = await strapi.query('feature').find(params);
           results.map((doc) => {
-            doc.combinators_count = strapi
-              .query('combinator')
-              .count({ features: doc.id });
-            doc.concepts_count = strapi
-              .query('concept')
-              .count({ features: doc.id });
+            doc.combinators_count = doc.combinators
+              ? doc.combinators.length
+              : 0;
+            doc.concepts_count = doc.concepts ? doc.concepts.length : 0;
           });
           return results;
         },

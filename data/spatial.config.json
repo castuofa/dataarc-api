@@ -1,0 +1,26 @@
+[
+  {
+    "file": "spatial/ne_10m_admin_1_states_provinces/ne_10m_admin_1_states_provinces.shp",
+    "fields": [
+      { "source": "name", "target": "subdivision" },
+      { "source": "type_en", "target": "subdivision_type" }
+    ]
+  },
+  {
+    "file": "spatial/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp",
+    "fields": [
+      { "source": "ADMIN", "target": "country" },
+      { "source": "CONTINENT", "target": "continent" },
+      { "source": "REGION_UN", "target": "region_un" },
+      { "source": "REGION_WB", "target": "region_wb" },
+      { "source": "SUBREGION", "target": "subregion" }
+    ]
+  },
+  {
+    "file": "spatial/ne_10m_geography_marine_polys/ne_10m_geography_marine_polys.shp",
+    "fields": [
+      { "source": "name", "target": "marine" },
+      { "source": "featurecla", "target": "marine_type" }
+    ]
+  }
+]

@@ -6,10 +6,6 @@
 
 const _ = require('lodash');
 const fs = require('fs');
-const zlib = require('zlib');
-const { chain } = require('stream-chain');
-const { parser } = require('stream-json');
-const { streamArray } = require('stream-json/streamers/StreamArray');
 
 module.exports = {
   // load json from a file
@@ -30,12 +26,12 @@ module.exports = {
   },
 
   // seed user roles
-  seed_roles: async () => {
-    let roles = strapi.services.seeder.load('data', 'role');
+  seedRoles: async () => {
+    let roles = strapi.services['seeder'].load('data', 'role');
 
     // loop through our roles making sure they exist
     _.each(roles, async (r) => {
-      let role = await strapi.services.helper.get_or_create_role({
+      let role = await strapi.services['helper'].getCreateRole({
         name: r.name,
         type: r.type,
         description: r.description,
@@ -44,7 +40,7 @@ module.exports = {
 
       // loop through and enable permissions for this role
       _.each(r.permissions, (permission) =>
-        strapi.services.helper.enable_permissions(
+        strapi.services['helper'].enablePermissions(
           role.type,
           permission.type,
           permission.controller,
@@ -55,8 +51,8 @@ module.exports = {
   },
 
   // seed users
-  seed_users: async () => {
-    let users = strapi.services.seeder.load('data', 'user');
+  seedUsers: async () => {
+    let users = strapi.services['seeder'].load('data', 'user');
     if (!users) return;
 
     _.each(users, async (user) => {
@@ -71,12 +67,12 @@ module.exports = {
   },
 
   // seed collection permissions
-  seed_permissions: async (collection) => {
-    let roles = await strapi.services.seeder.load('permissions', collection);
+  seedPermissions: async (collection) => {
+    let roles = await strapi.services['seeder'].load('permissions', collection);
     if (!roles) return;
 
     roles.map((role) => {
-      strapi.services.helper.enable_permissions(
+      strapi.services['helper'].enablePermissions(
         role.name,
         role.type,
         collection,
@@ -86,9 +82,9 @@ module.exports = {
   },
 
   // seed a collection
-  seed_collection: async (collection) => {
+  seedCollection: async (collection) => {
     // set permissions
-    // strapi.services.seeder.seed_permissions(collection);
+    // strapi.services['seeder'].seedPermissions(collection);
 
     // clear docs
     // await strapi
@@ -105,7 +101,7 @@ module.exports = {
 
     // create relationships
     const pipeline = chain([
-      await strapi.services.seeder.seed_permissions(collection),
+      await strapi.services['seeder'].seedPermissions(collection),
       await strapi
         .query(collection)
         .model.deleteMany({})
@@ -148,17 +144,17 @@ module.exports = {
   },
 
   // seed collection array
-  seed_collections: async (collections) => {
+  seedCollections: async (collections) => {
     _.each(collections, (collection) => {
-      strapi.services.seeder.seed_collection(collection);
+      strapi.services['seeder'].seedCollection(collection);
     });
   },
 
   // seed data
   seed: async () => {
     strapi.log.info(`Seeding data`);
-    await strapi.services.seeder.seed_roles();
-    // await strapi.services.seeder.seed_users();
+    await strapi.services['seeder'].seedRoles();
+    // await strapi.services['seeder'].seedUsers();
 
     let first = [
       'category',
@@ -169,24 +165,24 @@ module.exports = {
       'temporal-coverage',
       'topic-map',
     ];
-    await strapi.services.seeder.seed_collections(first);
+    await strapi.services['seeder'].seedCollections(first);
 
     let second = [
       'dataset', // after category
       'topic', // after topic-map & concept
     ];
-    await strapi.services.seeder.seed_collections(second);
+    await strapi.services['seeder'].seedCollections(second);
 
     let third = [
       'dataset-field', // after dataset
       'combinator', // after dataset & concept
     ];
-    await strapi.services.seeder.seed_collections(third);
+    await strapi.services['seeder'].seedCollections(third);
 
     let fourth = [
       'combinator-query', // after combinator
       'feature', // after concept, dataset, combinator
     ];
-    await strapi.services.seeder.seed_collections(fourth);
+    await strapi.services['seeder'].seedCollections(fourth);
   },
 };

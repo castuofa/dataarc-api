@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "concept_topics",
+  "info": {
+    "name": "ConceptTopic",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "identifier": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "concept": {
+      "model": "concept"
+    },
+    "map": {
+      "model": "concept-map",
+      "via": "topics"
+    }
+  }
+}

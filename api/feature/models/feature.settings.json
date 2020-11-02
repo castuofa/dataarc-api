@@ -2,16 +2,15 @@
   "kind": "collectionType",
   "collectionName": "features",
   "info": {
-    "name": "Feature"
+    "name": "Feature",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
-    "name": {
-      "type": "string"
-    },
     "title": {
       "type": "string"
     },
@@ -27,49 +26,92 @@
     "url": {
       "type": "string"
     },
-    "keywords": {
-      "type": "text"
+    "source": {
+      "type": "json"
     },
-    "latitude": {
-      "type": "float"
-    },
-    "longitude": {
-      "type": "float"
-    },
-    "start_date": {
-      "type": "integer"
-    },
-    "end_date": {
-      "type": "integer"
-    },
-    "text_date": {
-      "type": "string"
+    "fields": {
+      "type": "json"
     },
     "properties": {
       "type": "json"
     },
-    "facets": {
+    "keywords": {
+      "type": "text",
+      "index": "text"
+    },
+    "location": {
+      "type": "json",
+      "index": "2dsphere"
+    },
+    "radius": {
+      "type": "decimal"
+    },
+    "spatial_coverages": {
+      "autoPopulate": false,
+      "collection": "spatial-coverage"
+    },
+    "continent": {
+      "type": "string"
+    },
+    "region_un": {
+      "type": "string"
+    },
+    "region_wb": {
+      "type": "string"
+    },
+    "subregion": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "subdivision": {
+      "type": "string"
+    },
+    "subdivision_type": {
+      "type": "string"
+    },
+    "marine": {
+      "type": "string"
+    },
+    "marine_type": {
+      "type": "string"
+    },
+    "begin": {
+      "type": "integer"
+    },
+    "end": {
+      "type": "integer"
+    },
+    "temporal_keywords": {
+      "type": "string"
+    },
+    "temporal_coverages": {
+      "autoPopulate": false,
+      "collection": "temporal-coverage"
+    },
+    "millennia": {
+      "type": "json"
+    },
+    "centuries": {
+      "type": "json"
+    },
+    "decades": {
       "type": "json"
     },
     "combinators": {
       "autoPopulate": false,
-      "collection": "combinator",
-      "via": "features"
+      "collection": "combinator"
     },
     "concepts": {
       "autoPopulate": false,
-      "collection": "concept",
-      "via": "features"
+      "collection": "concept"
     },
     "dataset": {
-      "autoPopulate": false,
-      "model": "dataset",
-      "via": "features"
+      "model": "dataset"
     },
     "category": {
-      "autoPopulate": false,
-      "model": "category",
-      "via": "feature"
+      "model": "category"
     }
   }
 }

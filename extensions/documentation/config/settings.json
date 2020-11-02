@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "2.2.1",
+    "version": "2.5.0",
     "title": "DataARC API",
     "description": "DataARC API REST Documentation",
     "termsOfService": "",
@@ -30,7 +30,7 @@
       "description": "DataARC API"
     },
     {
-      "url": "http://localhost:3000",
+      "url": "http://localhost:1337",
       "description": "Development"
     }
   ],

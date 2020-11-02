@@ -1,52 +1,45 @@
 'use strict';
 
+const info = {
+  name: 'combinator',
+  field: 'name',
+};
+
 module.exports = {
   lifecycles: {
     beforeCreate: async (data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services.helper.find_unique({
-          content_type: 'combinator',
-          field: 'name',
+        data.name = await strapi.services['helper'].findUnique({
+          content_type: info.name,
+          field: info.field,
           value: data.title,
         });
     },
     beforeUpdate: async (params, data) => {
       if (data.title && !data.name)
-        data.name = await strapi.services.helper.find_unique({
-          content_type: 'combinator',
-          field: 'name',
+        data.name = await strapi.services['helper'].findUnique({
+          content_type: info.name,
+          field: info.field,
           value: data.title,
         });
     },
     afterCreate: async (result, data) => {
-      if (result == null) return;
-      strapi.services.helper.log_event(
-        'create',
-        'combinator',
-        result.name,
-        result.updated_by == null ? null : result.updated_by.id,
-        { data }
-      );
+      strapi.services['event'].lifecycle('create', info, result, {
+        payload: { data },
+      });
     },
     afterUpdate: async (result, params, data) => {
-      if (result == null) return;
-      strapi.services.helper.log_event(
-        'update',
-        'combinator',
-        result.name,
-        result.updated_by == null ? null : result.updated_by.id,
-        { params, data }
-      );
+      strapi.services['event'].lifecycle('update', info, result, {
+        payload: { params, data },
+      });
     },
     afterDelete: async (result, params) => {
-      if (result == null) return;
-      strapi.services.helper.log_event(
-        'delete',
-        'combinator',
-        result.name,
-        result.updated_by == null ? null : result.updated_by.id,
-        { params }
-      );
+      strapi.services['event'].lifecycle('delete', info, result, {
+        payload: { params },
+      });
+
+      // remove related
+      strapi.services['combinator'].removeQueries(result.id);
     },
   },
 };

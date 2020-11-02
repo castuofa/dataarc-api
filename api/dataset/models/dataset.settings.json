@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "datasets",
   "info": {
-    "name": "Dataset"
+    "name": "Dataset",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -25,24 +27,18 @@
       "type": "string"
     },
     "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
-      "required": false
+      "type": "string"
+    },
+    "metadata": {
+      "type": "string"
     },
     "source": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
-      "plugin": "upload",
-      "required": false
+      "type": "string"
     },
     "title_layout": {
+      "type": "text"
+    },
+    "link_layout": {
       "type": "text"
     },
     "summary_layout": {
@@ -51,34 +47,18 @@
     "details_layout": {
       "type": "text"
     },
-    "link_layout": {
-      "type": "text"
-    },
-    "state": {
-      "type": "enumeration",
-      "enum": [
-        "pending",
-        "processing",
-        "updating",
-        "failed",
-        "done"
-      ],
-      "default": "pending"
-    },
-    "state_msg": {
-      "type": "string"
-    },
-    "state_at": {
+    "processed_at": {
       "type": "datetime"
     },
-    "category": {
-      "via": "datasets",
-      "model": "category"
-    },
     "combinators": {
+      "collection": "combinator",
       "via": "dataset",
-      "autoPopulate": false,
-      "collection": "combinator"
+      "autoPopulate": false
+    },
+    "category": {
+      "model": "category",
+      "via": "datasets",
+      "autoPopulate": false
     },
     "fields": {
       "via": "dataset",
@@ -87,8 +67,8 @@
     },
     "features": {
       "via": "dataset",
-      "autoPopulate": false,
-      "collection": "feature"
+      "collection": "feature",
+      "autoPopulate": false
     }
   }
 }

@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "concept_maps",
+  "info": {
+    "name": "ConceptMap",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "json"
+    },
+    "edges": {
+      "type": "json"
+    },
+    "active": {
+      "type": "boolean",
+      "default": false
+    },
+    "processed_at": {
+      "type": "datetime"
+    },
+    "topics": {
+      "via": "map",
+      "collection": "concept-topic"
+    },
+    "links": {
+      "via": "map",
+      "collection": "concept-link"
+    }
+  }
+}

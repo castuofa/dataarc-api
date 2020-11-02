@@ -2,27 +2,20 @@
   "kind": "collectionType",
   "collectionName": "searches",
   "info": {
-    "name": "Search"
+    "name": "Search",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
-    "name": {
-      "type": "string"
-    },
     "title": {
       "type": "string"
     },
     "description": {
       "type": "text"
-    },
-    "citation": {
-      "type": "text"
-    },
-    "url": {
-      "type": "string"
     },
     "filters": {
       "type": "json"
@@ -33,7 +26,7 @@
     "user": {
       "plugin": "users-permissions",
       "model": "user",
-      "via": "searches"
+      "autoPopulate": false
     }
   }
 }

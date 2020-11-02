@@ -1,18 +1,12 @@
 module.exports = {
   query: `
-    temporalCoveragesCount(where: JSON): Int!
+    countTemporalCoverages(where: JSON): Int!
   `,
   resolver: {
     Query: {
-      temporalCoveragesCount: {
+      countTemporalCoverages: {
         description: 'Return the count of temporal coverages',
-        resolverOf: 'application::temporal-coverage.temporal-coverage.count',
-        resolver: async (obj, options, ctx) => {
-          const params = await strapi.services.helper.prefix_graphql_params(
-            options
-          );
-          return await strapi.query('temporal-coverage').count(params);
-        },
+        resolver: 'application::temporal-coverage.temporal-coverage.count',
       },
     },
   },

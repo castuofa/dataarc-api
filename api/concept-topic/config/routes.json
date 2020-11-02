@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/concept-topics",
+      "handler": "concept-topic.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/concept-topics/count",
+      "handler": "concept-topic.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/concept-topics/:id",
+      "handler": "concept-topic.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/concept-topics",
+      "handler": "concept-topic.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/concept-topics/:id",
+      "handler": "concept-topic.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/concept-topics/:id",
+      "handler": "concept-topic.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

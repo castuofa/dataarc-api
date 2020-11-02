@@ -2,21 +2,33 @@
   "kind": "collectionType",
   "collectionName": "events",
   "info": {
-    "name": "Event"
+    "name": "Event",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "type": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": ["info", "warn", "error"],
+      "index": true
     },
     "action": {
-      "type": "enumeration",
-      "enum": ["create", "update", "delete", "process", "refresh"]
+      "type": "string",
+      "index": true
     },
-    "item": {
+    "controller": {
+      "type": "string",
+      "index": true
+    },
+    "document": {
+      "type": "string",
+      "index": true
+    },
+    "name": {
       "type": "string"
     },
     "details": {

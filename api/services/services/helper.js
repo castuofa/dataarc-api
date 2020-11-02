@@ -4,15 +4,29 @@
  * `helper` service.
  */
 
+const util = require('util');
 const _ = require('lodash');
 const slugify = require('slugify');
+const chalk = require('chalk');
+
+const codeToColor = (code) => {
+  return code >= 500
+    ? chalk.red(code)
+    : code >= 400
+    ? chalk.yellow(code)
+    : code >= 300
+    ? chalk.cyan(code)
+    : code >= 200
+    ? chalk.green(code)
+    : code;
+};
 
 module.exports = {
-  find_unique: async ({ content_type, field, value }) => {
-    let name = await strapi.services.helper.get_name(value);
+  findUnique: async ({ content_type, field, value }) => {
+    let name = await strapi.services['helper'].getName(value);
 
     // if it doesn't exist we found one
-    const exists = await strapi.services.helper.check_availability({
+    const exists = await strapi.services['helper'].checkAvailability({
       content_type: content_type,
       field: field,
       value: name,
@@ -40,7 +54,7 @@ module.exports = {
   },
 
   // check the content type for a field that matches the value given
-  check_availability: ({ content_type, field, value }) => {
+  checkAvailability: ({ content_type, field, value }) => {
     let count = strapi.query(content_type).count({
       [field]: value,
     });
@@ -49,7 +63,7 @@ module.exports = {
   },
 
   // get the type of the property
-  get_type: (prop) => {
+  getType: (prop) => {
     return Object.prototype.toString
       .call(prop)
       .match(/\s([a-zA-Z]+)/)[1]
@@ -57,7 +71,7 @@ module.exports = {
   },
 
   // parse string value to primitive
-  parse_primitive: (value) => {
+  parsePrimitive: (value) => {
     try {
       return JSON.parse(value);
     } catch (err) {
@@ -66,9 +80,9 @@ module.exports = {
   },
 
   // get an seo friendly keyword
-  get_keyword: (value) => {
-    return strapi.services.helper
-      .get_name(
+  getKeyword: (value) => {
+    return strapi.services['helper']
+      .getName(
         value
           .replace(/https?:\/\/(www\.)?/g, '')
           .replace(
@@ -83,7 +97,7 @@ module.exports = {
   },
 
   // get an seo friendly name
-  get_name: (
+  getName: (
     words,
     wordSeparator = '_',
     pathSeparator = '_',
@@ -103,7 +117,7 @@ module.exports = {
   },
 
   // get a clean title
-  get_title: (path) => {
+  getTitle: (path) => {
     return path
       .replace(/[\[\]-_.]/g, ' ')
       .replace(/\s+/g, ' ')
@@ -112,61 +126,88 @@ module.exports = {
       });
   },
 
-  // set the state for a collection based on params
-  set_state: async (params, collection, state, msg = '') => {
-    if (!params || !collection || !state) return null;
-    if (strapi.services.helper.get_type(params) != 'object') {
-      params = { id: params };
-    }
-    return strapi
-      .query(collection)
-      .update(params, {
-        state: state,
-        state_msg: msg,
-        state_at: Date.now(),
-      })
-      .catch(function (err) {
-        switch (err.status) {
-          case 404:
-            strapi.log.warn(
-              `${collection} state not updated, no matching results`
-            );
-            break;
-          default:
-            strapi.log.warn(
-              `${collection} state not updated, error ${err.status}`
-            );
-            break;
-        }
-      });
+  // check if any of the fields are in the data
+  hasFields: (fields, data) => {
+    return _.intersection(_.keys(data), fields).length > 0;
   },
 
-  // log an event
-  log_event: async (
-    action,
-    type,
-    item,
-    user,
-    payload = null,
-    details = null
-  ) => {
-    // let { result, params, data }
-    strapi.services.event
-      .create({
-        type,
-        action,
-        item,
-        details,
-        payload,
-        user,
+  // stream source, parse json, process each object
+  getSource: async ({ source, pattern, process, after, error }) => {
+    const fetch = require('node-fetch');
+    const JSONStream = require('JSONStream');
+
+    let url = `https://raw.githubusercontent.com/castuofa/dataarc-source/main/${source}`;
+    let start = Date.now();
+    let streamed = 0;
+
+    if (!pattern) pattern = '*';
+    if (!process)
+      process = (data) => {
+        return data;
+      };
+    if (!after) after = () => {};
+    if (!error)
+      error = (err) => {
+        strapi.log.error(err.message);
+      };
+
+    // validate our results are OK or throw an error
+    let validate = (res) => {
+      let delta = Math.ceil(Date.now() - start);
+      strapi.log.debug(
+        `REQUEST ${source} (${delta} ms) ${codeToColor(res.status)}`
+      );
+      if (res.ok) return res;
+      else throw new Error(res.status);
+    };
+
+    // handle promises for each stream handler
+    let processes = [];
+    let end_processing = (res) => {
+      let delta = Math.ceil(Date.now() - start);
+      let results = _.groupBy(res, 'status');
+      let fulfilled = results.fulfilled ? results.fulfilled.length : 0;
+      let rejected = results.rejected ? results.rejected.length : 0;
+      strapi.log.debug(
+        `PROCESS ${chalk.cyan(streamed)} items (${delta} ms) ${chalk.green(
+          'DONE'
+        )}`
+      );
+      strapi.log.debug(`FULFILLED ${chalk.green(fulfilled)} items`);
+      strapi.log.debug(`REJECTED ${chalk.red(rejected)} items`);
+      after(results);
+    };
+    let end_stream = () => {
+      let delta = Math.ceil(Date.now() - start);
+      strapi.log.debug(
+        `STREAM ${chalk.cyan(streamed)} items (${delta} ms) ${chalk.green(
+          'DONE'
+        )}`
+      );
+      Promise.allSettled(processes).then(end_processing);
+    };
+
+    // define our json stream handler
+    let stream = JSONStream.parse(pattern)
+      .on('data', (data) => {
+        streamed++;
+        processes.push(process(data));
+        return data;
       })
-      .catch(function (err) {
-        strapi.log.warn(`${err.status}: event log error for ${type}:${action}`);
-      });
+      .on('error', error)
+      .on('end', end_stream);
+
+    // fetch, validate, and pipe the stream
+    fetch(url)
+      .then(validate)
+      .then((res) => {
+        res.body.pipe(stream);
+      })
+      .catch((e) => error);
   },
 
   // convert graphql parameters to rest equivilent
-  prefix_graphql_params: async (params) => {
+  getParams: async (params) => {
     let fixed = {};
     _.each(params, (value, key) => {
       fixed['_' + key] = value;
@@ -174,18 +215,8 @@ module.exports = {
     return fixed;
   },
 
-  // directly access the mongoose model to perform bulk actions
-  delete_many: async (collection, filter, options, callback) => {
-    return strapi.query(collection).model.deleteMany(filter, options, callback);
-  },
-
-  // directly access the mongoose model to perform bulk actions
-  insert_many: async (collection, docs, options, callback) => {
-    return strapi.query(collection).model.insertMany(docs, options, callback);
-  },
-
   // get a role based given a type {string}
-  get_role: async (type) => {
+  getRole: async (type) => {
     const service = await strapi.plugins['users-permissions'].services
       .userspermissions;
     const plugins = await service.getPlugins('en');
@@ -199,20 +230,20 @@ module.exports = {
   },
 
   // get or create the role if its missing
-  get_or_create_role: async (params) => {
-    let role = await strapi.services.helper.get_role(params.type);
+  getCreateRole: async (params) => {
+    let role = await strapi.services['helper'].getRole(params.type);
     if (!role) {
       strapi.log.warn(`Creating ${params.name} role.`);
       await strapi.query('role', 'users-permissions').create(params);
-      role = await strapi.services.helper.get_role(params.type);
+      role = await strapi.services['helper'].getRole(params.type);
     }
     return role;
   },
 
   // set permission for given: role,type,controller,action
-  set_permission: async (role, type, controller, action, enabled) => {
+  setPermission: async (role, type, controller, action, enabled) => {
     try {
-      // const role = await strapi.services.helper.get_role(role);
+      // const role = await strapi.services['helper'].getRole(role);
       role.permissions[type].controllers[controller][action].enabled = enabled;
     } catch (err) {
       console.log(`${err}`);
@@ -223,8 +254,8 @@ module.exports = {
   },
 
   // enable permissions
-  enable_permissions: async (role_type, type, controller, actions) => {
-    let role = await strapi.services.helper.get_role(role_type);
+  enablePermissions: async (role_type, type, controller, actions) => {
+    let role = await strapi.services['helper'].getRole(role_type);
     if (!role) return;
 
     // get target permissions for object

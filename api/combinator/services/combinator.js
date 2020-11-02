@@ -3,6 +3,14 @@
 const _ = require('lodash');
 
 module.exports = {
+  removeQueries: async (id) => {
+    strapi.query('combinator-query').model.deleteMany({ combinator: id });
+  },
+
+  markReview: async (id) => {
+    strapi.query('combinator').update({ id }, { review: true });
+  },
+
   results: async (params) => {
     let result = {
       combinator: null,
@@ -26,13 +34,13 @@ module.exports = {
       // loop through the queries getting results
       _.each(entry.queries, async (query) => {
         // set field name
-        let field = 'properties.' + query.property;
+        let field = 'properties.' + query.field;
 
         // get the primitive of the value
-        let value = strapi.services.helper.parse_primitive(query.value);
+        let value = strapi.services['helper'].parsePrimitive(query.value);
 
         // get the type of value
-        let type = strapi.services.helper.get_type(value);
+        let type = strapi.services['helper'].getType(value);
 
         // don't allowed if not an expected type
         let allowed = _.indexOf(allowed_types, type) !== -1;
@@ -145,28 +153,5 @@ module.exports = {
     }
 
     return result;
-  },
-
-  refresh: async (params) => {
-    // find the entry
-    const entry = await strapi.query('combinator').findOne(params);
-
-    // only proceed if we found an entry
-    if (entry != null) {
-      // run the combinator and get the results
-      const results = await strapi.services['combinator'].results(params);
-
-      // connect the combinator to the matching features
-      strapi
-        .query('combinator')
-        .update({ id: entry.id }, { features: results.features });
-
-      // connect the concepts to the matching features
-      _.each(entry.concepts, async (id) => {
-        strapi.query('concept').update({ id }, { features: results.features });
-      });
-    }
-
-    return entry;
   },
 };
