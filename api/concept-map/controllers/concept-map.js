@@ -9,41 +9,49 @@ const info = {
 
 module.exports = {
   process: async (ctx) => {
-    const { id } = ctx.params;
-    const entity = await strapi.services[info.name].findOne({ id });
-
-    // make sure the entity was found
-    if (entity != null) {
-      // log the event
-      strapi.services['event'].controller(info, entity, ctx);
-
-      // remove existing topics
-      strapi.services[info.name].removeTopics(entity.id);
-
-      // helper functions
-      let process = (data) => {
-        strapi.services[info.name].processNode(entity, data);
-        return data;
-      };
-      let error = (e) => {
-        strapi.services['event'].controller(info, entity, ctx, {
-          type: 'error',
-          details: e.message,
-        });
-        return ctx.response.badData(err.message);
-      };
-
-      // stream and process the nodes
-      strapi.services['helper']
-        .getSource({
-          source: entity.source,
-          pattern: 'nodes.*',
-          process,
-          error,
-        })
-        .catch((e) => error);
+    let entities;
+    if (ctx.query._q) {
+      entities = await strapi.services[info.name].search(ctx.query);
+    } else {
+      entities = await strapi.services[info.name].find(ctx.query);
     }
-    return sanitizeEntity(entity, { model: strapi.models[info.name] });
+    entities.map((entity) => {
+      // make sure the entity is not null
+      if (entity != null) {
+        // log the event
+        strapi.services['event'].controller(info, entity, ctx);
+
+        // remove existing topics
+        strapi.services[info.name].removeTopics(entity.id);
+
+        // helper functions
+        let process = (data) => {
+          strapi.services[info.name].processNode(entity, data);
+          return data;
+        };
+        let error = (e) => {
+          strapi.services['event'].controller(info, entity, ctx, {
+            type: 'error',
+            details: e.message,
+          });
+          return ctx.response.badData(err.message);
+        };
+
+        // stream and process the nodes
+        strapi.services['helper']
+          .getSource({
+            source: entity.source,
+            pattern: 'nodes.*',
+            process,
+            error,
+          })
+          .catch((e) => error);
+      }
+    });
+
+    return entities.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models[info.name] })
+    );
   },
 
   activate: async (ctx) => {

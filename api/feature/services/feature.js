@@ -1,7 +1,6 @@
 'use strict';
 
 const _ = require('lodash');
-const validate = require('jsonschema').validate;
 const pug = require('pug');
 
 const extract = (target, opts) => {
@@ -104,51 +103,23 @@ module.exports = {
   },
 
   process: (feature) => {
+    let promises = [];
     let { properties, fields } = extract(feature.source.properties, {
       safe: true,
     });
     feature.properties = properties;
     feature.fields = fields;
 
-    return strapi.query('feature').update({ id: feature.id }, feature);
-  },
-
-  refresh: async (feature) => {
-    let promises = [];
-
-    // make sure feature.properties is set
-    if (_.isEmpty(feature.properties))
-      throw new Error(`Feature properties are not defined, cannot refresh`);
-
-    // get the dataset fields
-    const fields = await strapi
-      .query('dataset-field')
-      .find({ dataset: feature.dataset.id });
-
     // ****************
     // *** CATEGORY ***
     // ****************
-
     // set the cateogry
     if (!_.isEmpty(feature.dataset.category))
       feature.category = feature.dataset.category;
 
-    // *****************
-    // *** URL FIELD ***
-    // *****************
-
-    // set the url
-    let url_field = _.find(fields, {
-      type: 'url',
-    });
-    if (url_field) {
-      feature.url = feature.properties[url_field.name];
-    }
-
     // ****************
     // *** KEYWORDS ***
     // ****************
-
     // build the keywords from string of the properties
     let words = JSON.stringify(feature.properties);
 
@@ -169,7 +140,6 @@ module.exports = {
     // ***************
     // *** SPATIAL ***
     // ***************
-
     // define our location schema to validate geometry
     const location_schema = {
       type: 'object',
@@ -192,10 +162,10 @@ module.exports = {
         },
       },
     };
-
     let loc = JSON.parse(JSON.stringify(feature.source.geometry));
 
     // validate against the schema
+    const validate = require('jsonschema').validate;
     let location_valid = validate(loc, location_schema, {
       required: true,
     }).valid;
@@ -219,37 +189,41 @@ module.exports = {
       // set the location
       feature.location = loc;
 
-      // radius
+      // set the radius if it exists
       if (feature.properties.radius) feature.radius = feature.properties.radius;
+    }
 
-      // continent, region_un, subregion, region_wb, country, state/province
-      const shapefile = require('shapefile');
-      const whichPolygon = require('which-polygon');
+    // update the feature
+    return strapi.query('feature').update({ id: feature.id }, feature);
+  },
 
-      let data_path = `${strapi.dir}/data`;
-      let spatial_config = require(`${data_path}/spatial.config.json`);
-      if (spatial_config) {
-        _.each(spatial_config, async (spatial) => {
-          promises.push(
-            shapefile
-              .read(`${data_path}/${spatial.file}`)
-              .then((geojson) => {
-                let query = whichPolygon(geojson);
-                let found = query([loc.coordinates[0], loc.coordinates[1]]);
-                if (found) {
-                  _.each(spatial.fields, (field) => {
-                    if (found[field.source])
-                      feature[field.target] = found[field.source];
-                  });
-                }
-              })
-              .catch((e) => {
-                console.log(e);
-              })
-          );
-        });
-      }
+  refresh: async (feature, inDepth = false) => {
+    let promises = [];
 
+    // make sure feature.properties is set
+    if (_.isEmpty(feature.properties))
+      throw new Error(`Feature properties are not defined, cannot refresh`);
+
+    // get the dataset fields
+    const fields = await strapi
+      .query('dataset-field')
+      .find({ dataset: feature.dataset.id });
+
+    // *****************
+    // *** URL FIELD ***
+    // *****************
+    // set the url
+    let url_field = _.find(fields, {
+      type: 'url',
+    });
+    if (url_field) {
+      feature.url = feature.properties[url_field.name];
+    }
+
+    // ***************
+    // *** SPATIAL ***
+    // ***************
+    if (feature.location) {
       // spatial_coverages
       promises.push(
         strapi
@@ -270,7 +244,6 @@ module.exports = {
     // ****************
     // *** TEMPORAL ***
     // ****************
-
     let valid_begin = false;
     let valid_end = false;
 
@@ -384,9 +357,9 @@ module.exports = {
     // **************
     // *** FINISH ***
     // **************
-
     // make sure all promises have been settled
     Promise.allSettled(promises).then((res) => {
+      strapi.log.debug(`Refresh complete`);
       // update the feature
       return strapi.query('feature').update({ id: feature.id }, feature);
     });

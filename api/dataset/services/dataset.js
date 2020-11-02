@@ -31,6 +31,66 @@ module.exports = {
       .update({ dataset: id }, { missing: true, review: true });
   },
 
+  // refresh feature spatial attributes
+  refreshFeaturesSpatial: async (id) => {
+    strapi.log.debug(`Refreshing features spatial attributes`);
+    let promises = [];
+
+    const features = await strapi
+      .query('feature')
+      .find({ dataset: id, _limit: 999999999 });
+
+    // continent, region_un, subregion, region_wb, country, state/province
+    const shapefile = require('shapefile');
+    const whichPolygon = require('which-polygon');
+
+    let data_path = `${strapi.dir}/data`;
+    let spatial_config = require(`${data_path}/spatial.config.json`);
+
+    if (spatial_config) {
+      _.each(spatial_config, async (spatial) => {
+        promises.push(
+          shapefile
+            .read(`${data_path}/${spatial.file}`)
+            .then((geojson) => {
+              let query = whichPolygon(geojson);
+              let update = {};
+
+              // loop through our features to find matching polygon
+              _.each(features, (feature) => {
+                let found = query([
+                  feature.location.coordinates[0],
+                  feature.location.coordinates[1],
+                ]);
+                if (found) {
+                  // check for the fields
+                  _.each(spatial.fields, (field) => {
+                    if (found[field.source])
+                      update[field.target] = found[field.source];
+                  });
+
+                  // update the feature
+                  promises.push(
+                    strapi.query('feature').update({ id: feature.id }, update)
+                  );
+                }
+              });
+            })
+            .catch((e) => {
+              console.log(e);
+            })
+        );
+      });
+    }
+
+    // make sure all promises have been settled
+    Promise.allSettled(promises).then((res) => {
+      // update the feature
+      console.log(res);
+      strapi.log.debug(`Feature spatial refresh complete`);
+    });
+  },
+
   // refresh features
   refreshFeatures: async (id) => {
     strapi.log.debug(`Refreshing features`);

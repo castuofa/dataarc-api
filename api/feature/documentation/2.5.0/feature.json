@@ -677,6 +677,9 @@
               "id": {
                 "type": "string"
               },
+              "name": {
+                "type": "string"
+              },
               "title": {
                 "type": "string"
               },
@@ -742,6 +745,9 @@
             ],
             "properties": {
               "id": {
+                "type": "string"
+              },
+              "name": {
                 "type": "string"
               },
               "title": {
