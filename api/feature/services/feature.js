@@ -100,7 +100,6 @@ module.exports = {
     }
 
     // define our variables
-    let promises = [];
     let feature = {};
 
     // extract our properties and fields
@@ -374,8 +373,6 @@ module.exports = {
     // **************
     // make sure all promises have been settled
     await Promise.allSettled(promises).then((res) => {
-      // strapi.log.debug(`Feature refreshed ${feature.id}`);
-      // update the feature
       return strapi.query('feature').update({ id: feature.id }, feature);
     });
   },
