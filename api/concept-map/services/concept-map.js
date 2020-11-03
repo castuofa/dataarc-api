@@ -78,6 +78,37 @@ module.exports = {
     });
     map.edges = edges;
 
+    // get related
+    let src = _.groupBy(edges, 'source');
+    let tgt = _.groupBy(edges, 'target');
+    let keys = _.union(Object.keys(src), Object.keys(tgt));
+    let related = {};
+    _.each(keys, (key) => {
+      related[key] = _.union(
+        _.map(src[key], 'target'),
+        _.map(tgt[key], 'source')
+      );
+    });
+
+    // get contextual
+    let contextual = {};
+    _.each(related, (value, key) => {
+      let ctx = [];
+      _.each(value, (id) => {
+        ctx = _.union(ctx, _.difference(related[id], [key]));
+        // ctx = _.union(ctx, related[id]);
+      });
+      if (!_.isEmpty(ctx)) contextual[key] = ctx;
+    });
+
+    // loop through the keys and update related/contextual
+    _.each(keys, (key) => {
+      let concept = {};
+      if (!_.isEmpty(related[key])) concept.related = related[key];
+      if (!_.isEmpty(contextual[key])) concept.contextual = contextual[key];
+      strapi.query('concept').update({ id: key }, concept);
+    });
+
     // deactivate any maps
     await strapi.query('concept-map').model.updateMany({}, { active: false });
 
