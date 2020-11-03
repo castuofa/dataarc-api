@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/query/map": {
+    "/query/features": {
       "get": {
         "deprecated": false,
         "description": "",

@@ -2,7 +2,7 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/ui/features",
+      "path": "/query/features",
       "handler": "query.features",
       "config": {
         "policies": []
@@ -10,7 +10,7 @@
     },
     {
       "method": "GET",
-      "path": "/ui/timeline",
+      "path": "/query/timeline",
       "handler": "query.timeline",
       "config": {
         "policies": []
@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/ui/concepts",
+      "path": "/query/concepts",
       "handler": "query.concepts",
       "config": {
         "policies": []
@@ -26,7 +26,7 @@
     },
     {
       "method": "GET",
-      "path": "/ui/matched",
+      "path": "/query/matched",
       "handler": "query.matched",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "GET",
-      "path": "/ui/related",
+      "path": "/query/related",
       "handler": "query.related",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "GET",
-      "path": "/ui/contextual",
+      "path": "/query/contextual",
       "handler": "query.contextual",
       "config": {
         "policies": []
