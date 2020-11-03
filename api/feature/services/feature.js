@@ -157,8 +157,6 @@ module.exports = {
           maxItems: 3,
           items: {
             type: 'number',
-            minimum: -180,
-            maximum: 180,
             required: true,
           },
         },
@@ -372,7 +370,7 @@ module.exports = {
     // *** FINISH ***
     // **************
     // make sure all promises have been settled
-    await Promise.allSettled(promises).then((res) => {
+    return Promise.allSettled(promises).then((res) => {
       return strapi.query('feature').update({ id: feature.id }, feature);
     });
   },
