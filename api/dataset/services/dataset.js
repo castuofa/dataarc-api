@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const pug = require('pug');
+const chalk = require('chalk');
 
 module.exports = {
   // remove all related features
@@ -29,6 +29,55 @@ module.exports = {
     return strapi
       .query('dataset-field')
       .update({ dataset: id }, { missing: true, review: true });
+  },
+
+  // process dataset
+  process: async (dataset) => {
+    let start = Date.now();
+    let source = await strapi.services['helper'].loadSource(dataset.source);
+    let valid = await strapi.services['helper'].checkSource(source);
+    if (!valid) throw new Error('Invalid data source');
+
+    // clear processed_at field
+    strapi.services['dataset'].setProcessedAt(dataset.id, null);
+
+    // set existing fields to missing and mark for review
+    strapi.services['dataset'].setFieldsMissing(dataset.id);
+
+    // remove existing features
+    await strapi.services['dataset'].removeFeatures(dataset.id);
+
+    // add the features
+    let promises = [];
+    _.each(source.features, (feature) => {
+      promises.push(strapi.services['feature'].process(dataset, feature));
+    });
+
+    // make sure all promises have been settled
+    Promise.allSettled(promises).then((res) => {
+      let delta = Math.ceil(Date.now() - start);
+      let results = _.groupBy(res, 'status');
+      let fulfilled = results.fulfilled ? results.fulfilled.length : 0;
+      let rejected = results.rejected ? results.rejected.length : 0;
+      strapi.log.debug(
+        `${chalk.green(fulfilled)} PROCESSED, ${chalk.red(
+          rejected
+        )} REJECTED (${delta} ms)`
+      );
+      let features = _.map(results.fulfilled, 'value');
+      strapi
+        .query('feature')
+        .model.insertMany(features)
+        .then((result) => {
+          let delta = Math.ceil(Date.now() - start);
+          strapi.log.debug(`Features inserted (${delta} ms)`);
+
+          // refresh the spatial attributes
+          strapi.services['dataset'].refreshFeaturesSpatial(dataset.id);
+        });
+    });
+
+    return '';
   },
 
   // refresh feature spatial attributes

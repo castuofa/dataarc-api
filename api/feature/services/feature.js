@@ -89,7 +89,7 @@ const extract = (target, opts) => {
 };
 
 module.exports = {
-  add: async (dataset, source) => {
+  process: async (dataset, source) => {
     // make sure source is a valid feature
     try {
       if (source.type.toLowerCase() != 'feature') return;
@@ -99,15 +99,18 @@ module.exports = {
       throw new Error(`This feature cannot be processed`);
     }
 
-    return strapi.query('feature').create({ dataset, source });
-  },
-
-  process: (feature) => {
+    // define our variables
     let promises = [];
-    if (!feature || !feature.source) return;
-    let { properties, fields } = extract(feature.source.properties, {
+    let feature = {};
+
+    // extract our properties and fields
+    let { properties, fields } = extract(source.properties, {
       safe: true,
     });
+
+    // set the initial attributes
+    feature.dataset = dataset.id;
+    feature.source = source;
     feature.properties = properties;
     feature.fields = fields;
 
@@ -115,8 +118,7 @@ module.exports = {
     // *** CATEGORY ***
     // ****************
     // set the cateogry
-    if (!_.isEmpty(feature.dataset.category))
-      feature.category = feature.dataset.category;
+    if (!_.isEmpty(dataset.category)) feature.category = dataset.category;
 
     // ****************
     // *** KEYWORDS ***
@@ -163,7 +165,7 @@ module.exports = {
         },
       },
     };
-    let loc = JSON.parse(JSON.stringify(feature.source.geometry));
+    let loc = JSON.parse(JSON.stringify(source.geometry));
 
     // validate against the schema
     const validate = require('jsonschema').validate;
@@ -192,54 +194,6 @@ module.exports = {
 
       // set the radius if it exists
       if (feature.properties.radius) feature.radius = feature.properties.radius;
-    }
-
-    // update the feature
-    return strapi.query('feature').update({ id: feature.id }, feature);
-  },
-
-  refresh: async (feature, inDepth = false) => {
-    let promises = [];
-
-    // make sure feature.properties is set
-    if (_.isEmpty(feature.properties))
-      throw new Error(`Feature properties are not defined, cannot refresh`);
-
-    // get the dataset fields
-    const fields = await strapi
-      .query('dataset-field')
-      .find({ dataset: feature.dataset.id });
-
-    // *****************
-    // *** URL FIELD ***
-    // *****************
-    // set the url
-    let url_field = _.find(fields, {
-      type: 'url',
-    });
-    if (url_field) {
-      feature.url = feature.properties[url_field.name];
-    }
-
-    // ***************
-    // *** SPATIAL ***
-    // ***************
-    if (feature.location) {
-      // spatial_coverages
-      promises.push(
-        strapi
-          .query('spatial-coverage')
-          .model.find({
-            geometry: {
-              $geoIntersects: {
-                $geometry: feature.location,
-              },
-            },
-          })
-          .then((results) => {
-            feature.spatial_coverages = _.map(results, 'id');
-          })
-      );
     }
 
     // ****************
@@ -272,7 +226,7 @@ module.exports = {
       }
     }
 
-    // if a valid range, set decades, centuries, millennia
+    // if valid set decades, centuries, millennia
     if (valid_begin && valid_end) {
       feature.decades = _.range(
         Math.floor(feature.begin / 10) * 10,
@@ -289,8 +243,51 @@ module.exports = {
         Math.ceil(feature.end / 1000) * 1000,
         1000
       );
+    }
 
-      // get associated temporal coverages
+    return feature;
+  },
+
+  refresh: async (feature) => {
+    let promises = [];
+
+    // make sure feature.properties is set
+    if (_.isEmpty(feature.properties))
+      throw new Error(`Feature properties are not defined, cannot refresh`);
+
+    // get the dataset fields
+    const fields = await strapi
+      .query('dataset-field')
+      .find({ dataset: feature.dataset.id });
+
+    // *************************
+    // *** SPATIAL COVERAGES ***
+    // *************************
+    if (feature.location) {
+      promises.push(
+        strapi
+          .query('spatial-coverage')
+          .model.find({
+            geometry: {
+              $geoIntersects: {
+                $geometry: feature.location,
+              },
+            },
+          })
+          .then((results) => {
+            feature.spatial_coverages = _.map(results, 'id');
+          })
+      );
+    }
+
+    // **************************
+    // *** TEMPORAL COVERAGES ***
+    // **************************
+    let begin_type = strapi.services['helper'].getType(feature.begin);
+    let end_type = strapi.services['helper'].getType(feature.end);
+
+    // if a valid range, set decades, centuries, millennia
+    if (begin_type === 'number' && end_type === 'number') {
       promises.push(
         strapi
           .query('temporal-coverage')
@@ -308,6 +305,17 @@ module.exports = {
     // ******************************
 
     // combinators, concepts
+
+    // *****************
+    // *** URL FIELD ***
+    // *****************
+    // set the url
+    let url_field = _.find(fields, {
+      type: 'url',
+    });
+    if (url_field) {
+      feature.url = feature.properties[url_field.name];
+    }
 
     // ***************
     // *** LAYOUTS ***

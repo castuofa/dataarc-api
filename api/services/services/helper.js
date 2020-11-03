@@ -1,10 +1,5 @@
 'use strict';
 
-/**
- * `helper` service.
- */
-
-const util = require('util');
 const _ = require('lodash');
 const slugify = require('slugify');
 const chalk = require('chalk');
@@ -129,6 +124,89 @@ module.exports = {
   // check if any of the fields are in the data
   hasFields: (fields, data) => {
     return _.intersection(_.keys(data), fields).length > 0;
+  },
+
+  // load source
+  loadSource: async (source) => {
+    const fetch = require('node-fetch');
+    const start = Date.now();
+
+    // validate our results are OK or throw an error
+    const validate = (res) => {
+      let delta = Math.ceil(Date.now() - start);
+      strapi.log.debug(
+        `FETCH ${source} (${delta} ms) ${codeToColor(res.status)}`
+      );
+      if (res.ok) return res;
+      else throw new Error(res.status);
+    };
+
+    // fetch the file
+    const response = await fetch(
+      `https://raw.githubusercontent.com/castuofa/dataarc-source/main/${source}`
+    ).catch((e) => {
+      strapi.log.error(e.message);
+    });
+
+    return validate(response).json();
+  },
+
+  // validate geojosn file
+  checkSource: async (geojson) => {
+    // define our location schema to validate geometry
+    const schema = {
+      type: 'object',
+      required: ['type', 'features'],
+      properties: {
+        type: {
+          type: 'string',
+          enum: ['FeatureCollection'],
+        },
+      },
+      features: {
+        type: 'array',
+        items: {
+          type: 'object',
+          required: ['type', 'geometry', 'properties'],
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['Feature'],
+            },
+            properties: {
+              oneOf: [{ type: 'null' }, { type: 'object' }],
+            },
+            geometry: {
+              type: 'object',
+              required: ['type', 'coordinates'],
+              properties: {
+                type: {
+                  type: 'string',
+                  enum: ['Point'],
+                },
+                coordinates: {
+                  type: 'array',
+                  minItems: 2,
+                  maxItems: 3,
+                  items: {
+                    type: 'number',
+                    minimum: -180,
+                    maximum: 180,
+                    required: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+
+    // validate against the schema
+    const validate = require('jsonschema').validate;
+    return validate(geojson, schema, {
+      required: true,
+    }).valid;
   },
 
   // stream source, parse json, process each object
