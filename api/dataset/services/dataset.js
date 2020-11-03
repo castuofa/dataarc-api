@@ -72,7 +72,8 @@ module.exports = {
           let delta = Math.ceil(Date.now() - start);
           strapi.log.debug(`Features inserted (${delta} ms)`);
 
-          // refresh the spatial attributes
+          // refresh the spatial attributes and feature data
+          strapi.services['dataset'].refreshFeatures(dataset.id);
           strapi.services['dataset'].refreshFeaturesSpatial(dataset.id);
         });
     });
@@ -136,8 +137,6 @@ module.exports = {
 
     // make sure all promises have been settled
     Promise.allSettled(promises).then((res) => {
-      // update the feature
-      // console.log(res);
       strapi.log.debug(`Feature spatial refresh complete`);
     });
   },
@@ -146,21 +145,31 @@ module.exports = {
   refreshFeatures: async (id) => {
     strapi.log.debug(`Refreshing all features`);
     let promises = [];
+    let map_points = {};
 
-    strapi
+    let features = await strapi
       .query('feature')
-      .find({ dataset: id, _limit: 999999999 })
-      .then((features) => {
-        _.each(features, (feature) => {
-          promises.push(strapi.services['feature'].refresh(feature));
-        });
-      });
+      .find({ dataset: id, _limit: 999999999 });
+
+    _.each(features, (feature) => {
+      if (feature.location) {
+        map_points[feature.id] = {
+          id: feature.id,
+          lng: feature.location.coordinates[0],
+          lat: feature.location.coordinates[1],
+        };
+      }
+      promises.push(strapi.services['feature'].refresh(feature));
+    });
 
     // make sure all promises have been settled
-    Promise.allSettled(promises).then((res) => {
-      // update the feature
-      // console.log(res);
+    return Promise.allSettled(promises).then((res) => {
       strapi.log.debug(`All features refreshed`);
+
+      // store a simple array of id, lat, lng for quick map building
+      strapi
+        .query('dataset')
+        .update({ id }, { map_points: _.values(map_points) });
     });
   },
 

@@ -51,24 +51,28 @@
       "type": "datetime"
     },
     "combinators": {
+      "autoPopulate": false,
       "collection": "combinator",
-      "via": "dataset",
-      "autoPopulate": false
+      "via": "dataset"
     },
     "category": {
+      "autoPopulate": false,
       "model": "category",
-      "via": "datasets",
-      "autoPopulate": false
+      "via": "datasets"
     },
     "fields": {
-      "via": "dataset",
       "autoPopulate": false,
-      "collection": "dataset-field"
+      "collection": "dataset-field",
+      "via": "dataset"
     },
     "features": {
-      "via": "dataset",
+      "autoPopulate": false,
       "collection": "feature",
-      "autoPopulate": false
+      "via": "dataset"
+    },
+    "map_points": {
+      "type": "json",
+      "private": true
     }
   }
 }

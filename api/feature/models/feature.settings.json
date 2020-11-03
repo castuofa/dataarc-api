@@ -108,6 +108,7 @@
       "collection": "concept"
     },
     "dataset": {
+      "via": "features",
       "model": "dataset"
     },
     "category": {

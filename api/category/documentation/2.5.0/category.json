@@ -604,6 +604,9 @@
                     "type": "string"
                   }
                 },
+                "map_points": {
+                  "type": "object"
+                },
                 "created_by": {
                   "type": "string"
                 },
