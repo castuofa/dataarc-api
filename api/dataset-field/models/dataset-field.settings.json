@@ -54,7 +54,6 @@
       "default": false
     },
     "dataset": {
-      "autoPopulate": false,
       "model": "dataset",
       "via": "fields"
     }
