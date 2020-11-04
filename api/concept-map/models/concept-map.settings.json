@@ -43,10 +43,12 @@
       "type": "datetime"
     },
     "topics": {
+      "autoPopulate": false,
       "via": "map",
       "collection": "concept-topic"
     },
     "links": {
+      "autoPopulate": false,
       "via": "map",
       "collection": "concept-link"
     }

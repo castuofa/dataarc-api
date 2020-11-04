@@ -21,12 +21,15 @@
       "type": "string"
     },
     "source_concept": {
+      "autoPopulate": false,
       "model": "concept"
     },
     "target_concept": {
+      "autoPopulate": false,
       "model": "concept"
     },
     "map": {
+      "autoPopulate": false,
       "model": "concept-map",
       "via": "links"
     }

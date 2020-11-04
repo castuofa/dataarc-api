@@ -108,10 +108,12 @@
       "collection": "concept"
     },
     "dataset": {
+      "autoPopulate": false,
       "via": "features",
       "model": "dataset"
     },
     "category": {
+      "autoPopulate": false,
       "model": "category"
     }
   }

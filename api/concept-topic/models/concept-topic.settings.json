@@ -18,9 +18,11 @@
       "type": "string"
     },
     "concept": {
+      "autoPopulate": false,
       "model": "concept"
     },
     "map": {
+      "autoPopulate": false,
       "model": "concept-map",
       "via": "topics"
     }
