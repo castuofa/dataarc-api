@@ -27,17 +27,20 @@
       "type": "string"
     },
     "source": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "fields": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "properties": {
       "type": "json"
     },
     "keywords": {
       "type": "text",
-      "index": "text"
+      "index": "text",
+      "private": true
     },
     "location": {
       "type": "json",
@@ -91,13 +94,16 @@
       "collection": "temporal-coverage"
     },
     "millennia": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "centuries": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "decades": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "combinators": {
       "autoPopulate": false,

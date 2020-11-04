@@ -5,6 +5,19 @@ const fs = require('fs');
 
 module.exports = {
   filter: async (filter) => {
+    /*
+{
+  "keywords": "a string of words",
+  "spatial": [
+    "minX",
+    "minY",
+    "maxX",
+    "maxY"
+  ],
+  "temporal": [],
+  "conceptual": []
+}
+*/
     console.log(filter);
   },
   features: async () => {
@@ -25,7 +38,25 @@ module.exports = {
 
     return file;
   },
-  timeline: async () => {},
+  timeline: async () => {
+    let features = await strapi.query('feature').find({ _limit: 999 });
+    console.log(features.length);
+    console.log(features[0]);
+
+    let group = _.groupBy(features, 'category');
+    console.log(group.length);
+
+    // {
+    //   "category": "ARCHAEOLOGICAL",
+    //   "label": "Archaeological",
+    //   "categoryId": 0,
+    //   "color": "hex_color",
+    //   "periods": ["integers..."],
+    //   "counts": ["integers..."]
+    //   }
+
+    return '';
+  },
   concepts: async () => {
     let map = await strapi.query('concept-map').findOne({ active: true });
     let concepts = {

@@ -651,17 +651,8 @@
           "url": {
             "type": "string"
           },
-          "source": {
-            "type": "object"
-          },
-          "fields": {
-            "type": "object"
-          },
           "properties": {
             "type": "object"
-          },
-          "keywords": {
-            "type": "string"
           },
           "location": {
             "type": "object"
@@ -775,15 +766,6 @@
                 "type": "string"
               }
             }
-          },
-          "millennia": {
-            "type": "object"
-          },
-          "centuries": {
-            "type": "object"
-          },
-          "decades": {
-            "type": "object"
           },
           "combinators": {
             "required": [
