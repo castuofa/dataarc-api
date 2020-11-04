@@ -117,7 +117,8 @@ module.exports = {
                     // check for the fields
                     _.each(spatial.fields, (field) => {
                       if (found[field.source])
-                        update[field.target] = found[field.source];
+                        update[`facets.spatial.${field.target}`] =
+                          found[field.source];
                     });
 
                     // update the feature
@@ -157,7 +158,7 @@ module.exports = {
           id: feature.id,
           lon: feature.location.coordinates[0],
           lat: feature.location.coordinates[1],
-          color: feature.category.color,
+          color: feature.facets.category.color,
         };
       }
       promises.push(strapi.services['feature'].refresh(feature));

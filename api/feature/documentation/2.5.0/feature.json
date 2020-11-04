@@ -969,6 +969,9 @@
           "properties": {
             "type": "object"
           },
+          "facets": {
+            "type": "object"
+          },
           "keywords": {
             "type": "string"
           },

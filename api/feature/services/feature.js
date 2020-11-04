@@ -112,13 +112,14 @@ module.exports = {
     feature.source = source;
     feature.properties = properties;
     feature.fields = fields;
+    feature.facets = {};
 
     // ****************
     // *** CATEGORY ***
     // ****************
     // set the cateogry
     if (!_.isEmpty(dataset.category)) {
-      feature.category = {
+      feature.facets.category = {
         id: dataset.category.id,
         name: dataset.category.name,
         color: dataset.category.color,
@@ -231,17 +232,18 @@ module.exports = {
 
     // if valid set decades, centuries, millennia
     if (valid_begin && valid_end) {
-      feature.decades = _.range(
+      feature.facets.temporal = {};
+      feature.facets.temporal.decades = _.range(
         Math.floor(feature.begin / 10) * 10,
         Math.ceil(feature.end / 10) * 10,
         10
       );
-      feature.centuries = _.range(
+      feature.facets.temporal.centuries = _.range(
         Math.floor(feature.begin / 100) * 100,
         Math.ceil(feature.end / 100) * 100,
         100
       );
-      feature.millennia = _.range(
+      feature.facets.temporal.millennia = _.range(
         Math.floor(feature.begin / 1000) * 1000,
         Math.ceil(feature.end / 1000) * 1000,
         1000

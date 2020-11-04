@@ -40,6 +40,10 @@
     "properties": {
       "type": "json"
     },
+    "facets": {
+      "type": "json",
+      "private": true
+    },
     "keywords": {
       "type": "text",
       "index": "text",
