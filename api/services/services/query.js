@@ -83,7 +83,7 @@ module.exports = {
     csv.push(`id,lon,lat,color`);
     _.each(_.compact(points), (point) => {
       if (_.indexOf(keys, point.id) == -1) {
-        csv.push(`${point.id},${point.lng},${point.lat},${point.color}`);
+        csv.push(`${point.id},${point.lon},${point.lat},${point.color}`);
         keys.push(point.id);
       }
     });
