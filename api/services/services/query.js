@@ -80,10 +80,10 @@ module.exports = {
     // convert to csv
     let csv = [];
     let keys = [];
-    csv.push(`id,lng,lat`);
+    csv.push(`id,lon,lat,color`);
     _.each(_.compact(points), (point) => {
       if (_.indexOf(keys, point.id) == -1) {
-        csv.push(`${point.id},${point.lng},${point.lat}`);
+        csv.push(`${point.id},${point.lng},${point.lat},${point.color}`);
         keys.push(point.id);
       }
     });

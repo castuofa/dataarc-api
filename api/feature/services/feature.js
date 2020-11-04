@@ -117,7 +117,13 @@ module.exports = {
     // *** CATEGORY ***
     // ****************
     // set the cateogry
-    if (!_.isEmpty(dataset.category)) feature.category = dataset.category;
+    if (!_.isEmpty(dataset.category)) {
+      feature.category = {
+        id: dataset.category.id,
+        name: dataset.category.name,
+        color: dataset.category.color,
+      };
+    }
 
     // ****************
     // *** KEYWORDS ***

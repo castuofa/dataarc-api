@@ -155,8 +155,9 @@ module.exports = {
       if (feature.location) {
         map_points[feature.id] = {
           id: feature.id,
-          lng: feature.location.coordinates[0],
+          lon: feature.location.coordinates[0],
           lat: feature.location.coordinates[1],
+          color: feature.category.color,
         };
       }
       promises.push(strapi.services['feature'].refresh(feature));

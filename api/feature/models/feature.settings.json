@@ -30,6 +30,9 @@
       "type": "json",
       "private": true
     },
+    "category": {
+      "type": "json"
+    },
     "fields": {
       "type": "json",
       "private": true
@@ -114,13 +117,9 @@
       "collection": "concept"
     },
     "dataset": {
-      "autoPopulate": false,
       "via": "features",
-      "model": "dataset"
-    },
-    "category": {
       "autoPopulate": false,
-      "model": "category"
+      "model": "dataset"
     }
   }
 }

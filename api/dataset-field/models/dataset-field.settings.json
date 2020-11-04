@@ -31,7 +31,15 @@
     },
     "type": {
       "type": "enumeration",
-      "enum": ["string", "number", "boolean", "array", "url", "begin", "end"],
+      "enum": [
+        "string",
+        "number",
+        "boolean",
+        "array",
+        "url",
+        "begin",
+        "end"
+      ],
       "default": "string"
     },
     "parent": {
@@ -46,8 +54,8 @@
       "default": false
     },
     "dataset": {
-      "autoPopulate": false,
       "via": "fields",
+      "autoPopulate": false,
       "model": "dataset"
     }
   }

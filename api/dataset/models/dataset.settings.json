@@ -55,11 +55,6 @@
       "collection": "combinator",
       "via": "dataset"
     },
-    "category": {
-      "autoPopulate": false,
-      "model": "category",
-      "via": "datasets"
-    },
     "fields": {
       "autoPopulate": false,
       "collection": "dataset-field",
@@ -69,6 +64,10 @@
       "autoPopulate": false,
       "collection": "feature",
       "via": "dataset"
+    },
+    "category": {
+      "model": "category",
+      "via": "datasets"
     },
     "map_points": {
       "type": "json",

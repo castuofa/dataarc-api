@@ -750,40 +750,6 @@
               }
             }
           },
-          "category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "fields": {
             "type": "array",
             "items": {
@@ -864,6 +830,9 @@
                 "source": {
                   "type": "object"
                 },
+                "category": {
+                  "type": "object"
+                },
                 "fields": {
                   "type": "object"
                 },
@@ -939,15 +908,46 @@
                 "dataset": {
                   "type": "string"
                 },
-                "category": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },
                 "updated_by": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "category": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           }
@@ -1001,9 +1001,6 @@
               "type": "string"
             }
           },
-          "category": {
-            "type": "string"
-          },
           "fields": {
             "type": "array",
             "items": {
@@ -1015,6 +1012,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "category": {
+            "type": "string"
           },
           "map_points": {
             "type": "object"

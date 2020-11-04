@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/04/2020 12:48:27 PM"
+    "x-generation-date": "11/04/2020 2:48:13 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8165,9 +8165,6 @@
                     "type": "string"
                   }
                 },
-                "category": {
-                  "type": "string"
-                },
                 "fields": {
                   "type": "array",
                   "items": {
@@ -8179,6 +8176,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "category": {
+                  "type": "string"
                 },
                 "map_points": {
                   "type": "object"
@@ -8494,9 +8494,6 @@
                   "type": "string"
                 }
               },
-              "category": {
-                "type": "string"
-              },
               "fields": {
                 "type": "array",
                 "items": {
@@ -8508,6 +8505,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "category": {
+                "type": "string"
               },
               "map_points": {
                 "type": "object"
@@ -9403,9 +9403,6 @@
                   "type": "string"
                 }
               },
-              "category": {
-                "type": "string"
-              },
               "fields": {
                 "type": "array",
                 "items": {
@@ -9417,6 +9414,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "category": {
+                "type": "string"
               },
               "map_points": {
                 "type": "object"
@@ -9586,40 +9586,6 @@
               }
             }
           },
-          "category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "fields": {
             "type": "array",
             "items": {
@@ -9700,6 +9666,9 @@
                 "source": {
                   "type": "object"
                 },
+                "category": {
+                  "type": "object"
+                },
                 "fields": {
                   "type": "object"
                 },
@@ -9775,15 +9744,46 @@
                 "dataset": {
                   "type": "string"
                 },
-                "category": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },
                 "updated_by": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "category": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           }
@@ -9837,9 +9837,6 @@
               "type": "string"
             }
           },
-          "category": {
-            "type": "string"
-          },
           "fields": {
             "type": "array",
             "items": {
@@ -9851,6 +9848,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "category": {
+            "type": "string"
           },
           "map_points": {
             "type": "object"
@@ -10005,6 +10005,9 @@
           },
           "url": {
             "type": "string"
+          },
+          "category": {
+            "type": "object"
           },
           "properties": {
             "type": "object"
@@ -10264,9 +10267,6 @@
                   "type": "string"
                 }
               },
-              "category": {
-                "type": "string"
-              },
               "fields": {
                 "type": "array",
                 "items": {
@@ -10279,42 +10279,11 @@
                   "type": "string"
                 }
               },
+              "category": {
+                "type": "string"
+              },
               "map_points": {
                 "type": "object"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "created_by": {
                 "type": "string"
@@ -10344,6 +10313,9 @@
             "type": "string"
           },
           "source": {
+            "type": "object"
+          },
+          "category": {
             "type": "object"
           },
           "fields": {
@@ -10419,9 +10391,6 @@
             "type": "string"
           },
           "dataset": {
-            "type": "string"
-          },
-          "category": {
             "type": "string"
           },
           "created_by": {

@@ -589,9 +589,6 @@
                     "type": "string"
                   }
                 },
-                "category": {
-                  "type": "string"
-                },
                 "fields": {
                   "type": "array",
                   "items": {
@@ -603,6 +600,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "category": {
+                  "type": "string"
                 },
                 "map_points": {
                   "type": "object"
