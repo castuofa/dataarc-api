@@ -55,12 +55,12 @@ module.exports = {
       // log the event
       strapi.services['event'].controller(info, entity, ctx);
 
-      // remove all existing links
-      strapi.services[info.name].removeLinks(entity.id);
+      let edges = [];
 
       // helper functions
       let process = async (data) => {
-        await strapi.services[info.name].processEdge(entity, data);
+        let edge = await strapi.services[info.name].processEdge(entity, data);
+        if (edge) edges.push(edge);
         return data;
       };
       let error = (e) => {
@@ -70,7 +70,7 @@ module.exports = {
         });
       };
       let after = () => {
-        strapi.services[info.name].activateMap(entity);
+        strapi.services[info.name].activateMap(entity, edges);
       };
 
       // stream and process the nodes

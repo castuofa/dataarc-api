@@ -4,15 +4,13 @@ const _ = require('lodash');
 
 module.exports = {
   removeTopics: async (id) => {
-    // remove topics from the concept mapp
     strapi.log.debug(`Removing existing topics for this map`);
     return strapi.query('concept-topic').model.deleteMany({ map: id });
   },
 
-  removeLinks: async (id) => {
-    // remove topics from the concept mapp
-    strapi.log.debug(`Removing all existing links`);
-    return strapi.query('concept-link').model.deleteMany({});
+  removeEdges: async (id) => {
+    strapi.log.debug(`Removing all existing edges`);
+    return strapi.query('concept-map').update({ id }, { edges: null });
   },
 
   processNode: async (map, node) => {
@@ -32,50 +30,39 @@ module.exports = {
   },
 
   processEdge: async (map, edge) => {
-    let link = {
-      source_topic: edge.source.toString(),
-      target_topic: edge.target.toString(),
-      title: edge.title,
-      map: map.id,
-    };
-
     let source = await strapi
       .query('concept-topic')
-      .findOne({ identifier: link.source_topic });
-    if (source && source.concept) link.source_concept = source.concept.id;
+      .findOne({ identifier: edge.source.toString() });
 
     let target = await strapi
       .query('concept-topic')
-      .findOne({ identifier: link.target_topic });
-    if (target && target.concept) link.target_concept = target.concept.id;
+      .findOne({ identifier: edge.target.toString() });
 
-    if (link.source_concept && link.target_concept)
-      await strapi.query('concept-link').create(link);
+    // console.log(
+    //   `${edge.source} -> ${edge.target} -- ${source.concept} -> ${target.concept}`
+    // );
+
+    if (source.concept && target.concept)
+      return {
+        title: edge.title,
+        source: source.concept,
+        target: target.concept,
+      };
+    return;
   },
 
-  activateMap: async (map) => {
+  activateMap: async (map, edges) => {
     // create nodes and edges objects and store them in the map
-    let topics = await strapi.query('concept-topic').find({ map: map.id });
+    let concepts = await strapi.query('concept').find({ _limit: 999999 });
     let nodes = [];
-    _.each(topics, (topic) => {
-      if (topic.concept)
-        nodes.push({
-          id: topic.concept.id,
-          title: topic.concept.title,
-        });
+
+    _.each(concepts, (concept) => {
+      nodes.push({
+        id: concept.id,
+        title: concept.title,
+      });
     });
     map.nodes = nodes;
-
-    let links = await strapi.query('concept-link').find({ map: map.id });
-    let edges = [];
-    _.each(links, (link) => {
-      if (link.source_concept && link.target_concept)
-        edges.push({
-          source: link.source_concept.id,
-          target: link.target_concept.id,
-          title: link.title,
-        });
-    });
     map.edges = edges;
 
     // get related

@@ -733,43 +733,6 @@
                 }
               }
             }
-          },
-          "links": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "source_topic": {
-                  "type": "string"
-                },
-                "target_topic": {
-                  "type": "string"
-                },
-                "source_concept": {
-                  "type": "string"
-                },
-                "target_concept": {
-                  "type": "string"
-                },
-                "map": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
           }
         }
       },
@@ -808,12 +771,6 @@
             "format": "date-time"
           },
           "topics": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "links": {
             "type": "array",
             "items": {
               "type": "string"

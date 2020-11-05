@@ -40,7 +40,6 @@ module.exports = {
 
       // delete related data
       strapi.services['concept-map'].removeTopics(result.id);
-      strapi.services['concept-map'].removeLinks(result.id);
     },
   },
 };
