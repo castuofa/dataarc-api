@@ -651,9 +651,6 @@
           "url": {
             "type": "string"
           },
-          "category": {
-            "type": "object"
-          },
           "properties": {
             "type": "object"
           },
@@ -697,41 +694,11 @@
               }
             }
           },
-          "continent": {
-            "type": "string"
-          },
-          "region_un": {
-            "type": "string"
-          },
-          "region_wb": {
-            "type": "string"
-          },
-          "subregion": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "subdivision": {
-            "type": "string"
-          },
-          "subdivision_type": {
-            "type": "string"
-          },
-          "marine": {
-            "type": "string"
-          },
-          "marine_type": {
-            "type": "string"
-          },
           "begin": {
             "type": "integer"
           },
           "end": {
             "type": "integer"
-          },
-          "temporal_keywords": {
-            "type": "string"
           },
           "temporal_coverages": {
             "required": [
@@ -960,9 +927,6 @@
           "source": {
             "type": "object"
           },
-          "category": {
-            "type": "object"
-          },
           "fields": {
             "type": "object"
           },
@@ -984,53 +948,14 @@
           "spatial_coverages": {
             "type": "string"
           },
-          "continent": {
-            "type": "string"
-          },
-          "region_un": {
-            "type": "string"
-          },
-          "region_wb": {
-            "type": "string"
-          },
-          "subregion": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "subdivision": {
-            "type": "string"
-          },
-          "subdivision_type": {
-            "type": "string"
-          },
-          "marine": {
-            "type": "string"
-          },
-          "marine_type": {
-            "type": "string"
-          },
           "begin": {
             "type": "integer"
           },
           "end": {
             "type": "integer"
           },
-          "temporal_keywords": {
-            "type": "string"
-          },
           "temporal_coverages": {
             "type": "string"
-          },
-          "millennia": {
-            "type": "object"
-          },
-          "centuries": {
-            "type": "object"
-          },
-          "decades": {
-            "type": "object"
           },
           "combinators": {
             "type": "string"

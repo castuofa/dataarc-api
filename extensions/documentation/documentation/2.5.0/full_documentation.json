@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/04/2020 4:14:31 PM"
+    "x-generation-date": "11/04/2020 5:09:52 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1592,7 +1592,7 @@
         ]
       }
     },
-    "/combinators/{id}/results": {
+    "/combinators/results/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -9666,9 +9666,6 @@
                 "source": {
                   "type": "object"
                 },
-                "category": {
-                  "type": "object"
-                },
                 "fields": {
                   "type": "object"
                 },
@@ -9690,53 +9687,14 @@
                 "spatial_coverages": {
                   "type": "string"
                 },
-                "continent": {
-                  "type": "string"
-                },
-                "region_un": {
-                  "type": "string"
-                },
-                "region_wb": {
-                  "type": "string"
-                },
-                "subregion": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "subdivision": {
-                  "type": "string"
-                },
-                "subdivision_type": {
-                  "type": "string"
-                },
-                "marine": {
-                  "type": "string"
-                },
-                "marine_type": {
-                  "type": "string"
-                },
                 "begin": {
                   "type": "integer"
                 },
                 "end": {
                   "type": "integer"
                 },
-                "temporal_keywords": {
-                  "type": "string"
-                },
                 "temporal_coverages": {
                   "type": "string"
-                },
-                "millennia": {
-                  "type": "object"
-                },
-                "centuries": {
-                  "type": "object"
-                },
-                "decades": {
-                  "type": "object"
                 },
                 "combinators": {
                   "type": "string"
@@ -10009,9 +9967,6 @@
           "url": {
             "type": "string"
           },
-          "category": {
-            "type": "object"
-          },
           "properties": {
             "type": "object"
           },
@@ -10055,41 +10010,11 @@
               }
             }
           },
-          "continent": {
-            "type": "string"
-          },
-          "region_un": {
-            "type": "string"
-          },
-          "region_wb": {
-            "type": "string"
-          },
-          "subregion": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "subdivision": {
-            "type": "string"
-          },
-          "subdivision_type": {
-            "type": "string"
-          },
-          "marine": {
-            "type": "string"
-          },
-          "marine_type": {
-            "type": "string"
-          },
           "begin": {
             "type": "integer"
           },
           "end": {
             "type": "integer"
-          },
-          "temporal_keywords": {
-            "type": "string"
           },
           "temporal_coverages": {
             "required": [
@@ -10318,9 +10243,6 @@
           "source": {
             "type": "object"
           },
-          "category": {
-            "type": "object"
-          },
           "fields": {
             "type": "object"
           },
@@ -10342,53 +10264,14 @@
           "spatial_coverages": {
             "type": "string"
           },
-          "continent": {
-            "type": "string"
-          },
-          "region_un": {
-            "type": "string"
-          },
-          "region_wb": {
-            "type": "string"
-          },
-          "subregion": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "subdivision": {
-            "type": "string"
-          },
-          "subdivision_type": {
-            "type": "string"
-          },
-          "marine": {
-            "type": "string"
-          },
-          "marine_type": {
-            "type": "string"
-          },
           "begin": {
             "type": "integer"
           },
           "end": {
             "type": "integer"
           },
-          "temporal_keywords": {
-            "type": "string"
-          },
           "temporal_coverages": {
             "type": "string"
-          },
-          "millennia": {
-            "type": "object"
-          },
-          "centuries": {
-            "type": "object"
-          },
-          "decades": {
-            "type": "object"
           },
           "combinators": {
             "type": "string"

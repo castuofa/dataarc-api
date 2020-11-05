@@ -30,9 +30,6 @@
       "type": "json",
       "private": true
     },
-    "category": {
-      "type": "json"
-    },
     "fields": {
       "type": "json",
       "private": true
@@ -60,57 +57,15 @@
       "autoPopulate": false,
       "collection": "spatial-coverage"
     },
-    "continent": {
-      "type": "string"
-    },
-    "region_un": {
-      "type": "string"
-    },
-    "region_wb": {
-      "type": "string"
-    },
-    "subregion": {
-      "type": "string"
-    },
-    "country": {
-      "type": "string"
-    },
-    "subdivision": {
-      "type": "string"
-    },
-    "subdivision_type": {
-      "type": "string"
-    },
-    "marine": {
-      "type": "string"
-    },
-    "marine_type": {
-      "type": "string"
-    },
     "begin": {
       "type": "integer"
     },
     "end": {
       "type": "integer"
     },
-    "temporal_keywords": {
-      "type": "string"
-    },
     "temporal_coverages": {
       "autoPopulate": false,
       "collection": "temporal-coverage"
-    },
-    "millennia": {
-      "type": "json",
-      "private": true
-    },
-    "centuries": {
-      "type": "json",
-      "private": true
-    },
-    "decades": {
-      "type": "json",
-      "private": true
     },
     "combinators": {
       "autoPopulate": false,

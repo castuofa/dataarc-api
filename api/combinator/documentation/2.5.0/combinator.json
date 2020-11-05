@@ -511,7 +511,7 @@
         ]
       }
     },
-    "/combinators/{id}/results": {
+    "/combinators/results/{id}": {
       "get": {
         "deprecated": false,
         "description": "",

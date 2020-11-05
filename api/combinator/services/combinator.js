@@ -27,93 +27,6 @@ module.exports = {
       let conditions = [];
       result.combinator = entry;
 
-      // define our allowed arrays
-      let allowed_types = ['string', 'number', 'boolean', 'array'];
-      let allowed_arrays = ['in', 'not_in'];
-
-      // loop through the queries getting results
-      _.each(entry.queries, async (query) => {
-        // set field name
-        let field = 'properties.' + query.field;
-
-        // get the primitive of the value
-        let value = strapi.services['helper'].parsePrimitive(query.value);
-
-        // get the type of value
-        let type = strapi.services['helper'].getType(value);
-
-        // don't allowed if not an expected type
-        let allowed = _.indexOf(allowed_types, type) !== -1;
-
-        // don't allowed empty strings
-        if (type === 'string') allowed = value.trim() !== '';
-
-        // only allowed arrays for in, not_in query
-        if (type === 'array')
-          allowed = _.indexOf(allowed_arrays, query.operator) !== -1;
-
-        // console.log(
-        //   `${field}: [${query.operator}] ${value} (${type}) -- ${
-        //     allowed ? 'keep' : 'reject'
-        //   }`
-        // );
-
-        // only continue if the query is allowed
-        if (!allowed) return;
-
-        // add the query that matches the operator
-        switch (query.operator) {
-          case 'equals':
-            conditions.push({ [field]: { $eq: value } });
-            break;
-          case 'not_equals':
-            conditions.push({ [field]: { $ne: value } });
-            break;
-          case 'less_than':
-            conditions.push({ [field]: { $lt: value } });
-            break;
-          case 'greater_than':
-            conditions.push({ [field]: { $gt: value } });
-            break;
-          case 'less_than_or_equal_to':
-            conditions.push({ [field]: { $lte: value } });
-            break;
-          case 'greater_than_or_equal_to':
-            conditions.push({ [field]: { $gte: value } });
-            break;
-          case 'in':
-            conditions.push({ [field]: { $in: value } });
-            break;
-          case 'not_in':
-            conditions.push({ [field]: { $nin: value } });
-            break;
-          case 'contains':
-            conditions.push({
-              [field]: { $regex: value, $options: 'i' },
-            });
-            break;
-          case 'not_contains':
-            conditions.push({
-              [field]: { $not: { $regex: value, $options: 'i' } },
-            });
-            break;
-          case 'starts_with':
-            conditions.push({
-              [field]: { $regex: '^' + value, $options: 'i' },
-            });
-            break;
-          case 'ends_with':
-            conditions.push({
-              [field]: { $regex: value + '$', $options: 'i' },
-            });
-            break;
-          default:
-            // default to equals
-            conditions.push({ [field]: { $eq: value } });
-            break;
-        }
-      });
-
       // set the combinator operator
       let op;
       switch (entry.operator) {
@@ -134,6 +47,17 @@ module.exports = {
           op = '$and';
           break;
       }
+
+      // loop through the queries getting results
+      let promises = [];
+      _.each(entry.queries, (query) => {
+        promises.push(strapi.services['combinator-query'].getObject(query));
+      });
+
+      await Promise.allSettled(promises).then((res) => {
+        let results = _.groupBy(res, 'status');
+        if (results.fulfilled) conditions = _.map(results.fulfilled, 'value');
+      });
 
       // if conditions are empty we're done
       if (conditions.length == 0) return result;
