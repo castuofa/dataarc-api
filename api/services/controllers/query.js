@@ -51,8 +51,8 @@ module.exports = {
     if (filter.temporal) {
       if (filter.temporal.start) where['begin_gte'] = filter.temporal.start;
       if (filter.temporal.end) where['end_lte'] = filter.temporal.end;
-      if (filter.temporal.period)
-        where['text_date_eq'] = filter.temporal.period;
+      // if (filter.temporal.period)
+      //   where['text_date_eq'] = filter.temporal.period;
     }
 
     // *spatial filter after the query below
