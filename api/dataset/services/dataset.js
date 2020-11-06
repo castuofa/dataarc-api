@@ -20,8 +20,11 @@ module.exports = {
   },
 
   // set processed_at
-  setProcessedAt: async (id, value) => {
-    return strapi.query('dataset').update({ id: id }, { processed_at: value });
+  setProcess: async (id, value) => {
+    let processing = value ? false : true;
+    return strapi
+      .query('dataset')
+      .update({ id: id }, { processed_at: value, processing: processing });
   },
 
   // set fields as missing and mark for review
@@ -39,7 +42,7 @@ module.exports = {
     if (!valid) throw new Error('Invalid data source');
 
     // clear processed_at field
-    strapi.services['dataset'].setProcessedAt(dataset.id, null);
+    strapi.services['dataset'].setProcess(dataset.id, null);
 
     // set existing fields to missing and mark for review
     strapi.services['dataset'].setFieldsMissing(dataset.id);
@@ -75,6 +78,9 @@ module.exports = {
           // refresh the spatial attributes and feature data
           strapi.services['dataset'].refreshFeatures(dataset.id);
           strapi.services['dataset'].refreshFeaturesSpatial(dataset.id);
+
+          // set the process datetime / boolean
+          strapi.services['dataset'].setProcess(dataset.id, Date.now());
         });
     });
 

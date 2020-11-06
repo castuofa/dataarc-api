@@ -694,6 +694,10 @@
           "details_layout": {
             "type": "string"
           },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
           "processed_at": {
             "type": "string",
             "format": "date-time"
@@ -951,6 +955,10 @@
           },
           "details_layout": {
             "type": "string"
+          },
+          "processing": {
+            "type": "boolean",
+            "default": false
           },
           "processed_at": {
             "type": "string",

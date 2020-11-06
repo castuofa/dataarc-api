@@ -870,6 +870,9 @@
               "details_layout": {
                 "type": "string"
               },
+              "processing": {
+                "type": "boolean"
+              },
               "processed_at": {
                 "type": "string"
               },
