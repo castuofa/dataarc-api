@@ -49,9 +49,8 @@ module.exports = {
 
     // check for temporal
     if (filter.temporal) {
-      if (filter.temporal.start)
-        where['start_date_gte'] = filter.temporal.start;
-      if (filter.temporal.end) where['end_date_lte'] = filter.temporal.end;
+      if (filter.temporal.start) where['begin_gte'] = filter.temporal.start;
+      if (filter.temporal.end) where['end_lte'] = filter.temporal.end;
       if (filter.temporal.period)
         where['text_date_eq'] = filter.temporal.period;
     }
