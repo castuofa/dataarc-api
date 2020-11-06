@@ -151,60 +151,88 @@ module.exports = {
     return validate(response).json();
   },
 
-  // validate geojosn file
-  checkSource: async (geojson) => {
-    // define our location schema to validate geometry
-    const schema = {
-      type: 'object',
-      required: ['type', 'features'],
-      properties: {
-        type: {
-          type: 'string',
-          enum: ['FeatureCollection'],
-        },
-      },
-      features: {
-        type: 'array',
-        items: {
+  // get schema by type
+  getSchema: async (type) => {
+    switch (type) {
+      case 'geojson':
+        return {
           type: 'object',
-          required: ['type', 'geometry', 'properties'],
+          required: ['type', 'features'],
           properties: {
             type: {
               type: 'string',
-              enum: ['Feature'],
+              enum: ['FeatureCollection'],
             },
-            properties: {
-              oneOf: [{ type: 'null' }, { type: 'object' }],
-            },
-            geometry: {
+          },
+          features: {
+            type: 'array',
+            items: {
               type: 'object',
-              required: ['type', 'coordinates'],
+              required: ['type', 'geometry', 'properties'],
               properties: {
                 type: {
                   type: 'string',
-                  enum: ['Point'],
+                  enum: ['Feature'],
                 },
-                coordinates: {
-                  type: 'array',
-                  minItems: 2,
-                  maxItems: 3,
-                  items: {
-                    type: 'number',
-                    minimum: -180,
-                    maximum: 180,
-                    required: true,
+                properties: {
+                  oneOf: [{ type: 'null' }, { type: 'object' }],
+                },
+                geometry: {
+                  type: 'object',
+                  required: ['type', 'coordinates'],
+                  properties: {
+                    type: {
+                      type: 'string',
+                      enum: ['Point'],
+                    },
+                    coordinates: {
+                      type: 'array',
+                      minItems: 2,
+                      maxItems: 3,
+                      items: {
+                        type: 'number',
+                        minimum: -180,
+                        maximum: 180,
+                        required: true,
+                      },
+                    },
                   },
                 },
               },
             },
           },
-        },
-      },
-    };
+        };
 
+      case 'concept-map':
+        return {
+          type: 'object',
+          required: ['nodes', 'links'],
+          nodes: {
+            type: 'array',
+            items: {
+              type: 'object',
+              required: ['id', 'title'],
+            },
+          },
+          links: {
+            type: 'array',
+            items: {
+              type: 'object',
+              required: ['source', 'target', 'title'],
+            },
+          },
+        };
+
+      default:
+        return {};
+    }
+  },
+
+  // validate json file
+  checkSource: async (schema, json) => {
     // validate against the schema
     const validate = require('jsonschema').validate;
-    return validate(geojson, schema, {
+    return validate(json, schema, {
       required: true,
     }).valid;
   },

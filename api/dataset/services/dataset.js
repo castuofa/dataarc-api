@@ -38,7 +38,8 @@ module.exports = {
   process: async (dataset) => {
     let start = Date.now();
     let source = await strapi.services['helper'].loadSource(dataset.source);
-    let valid = await strapi.services['helper'].checkSource(source);
+    let schema = await strapi.services['helper'].getSchema('geojson');
+    let valid = await strapi.services['helper'].checkSource(schema, source);
     if (!valid) throw new Error('Invalid data source');
 
     // clear processed_at field

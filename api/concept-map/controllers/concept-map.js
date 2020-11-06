@@ -17,31 +17,8 @@ module.exports = {
       // log the event
       strapi.services['event'].controller(info, entity, ctx);
 
-      // remove existing topics
-      strapi.services[info.name].removeTopics(entity.id);
-
-      // helper functions
-      let process = (data) => {
-        strapi.services[info.name].processNode(entity, data);
-        return data;
-      };
-      let error = (e) => {
-        strapi.services['event'].controller(info, entity, ctx, {
-          type: 'error',
-          details: e.message,
-        });
-        return ctx.response.badData(err.message);
-      };
-
-      // stream and process the nodes
-      strapi.services['helper']
-        .getSource({
-          source: entity.source,
-          pattern: 'nodes.*',
-          process,
-          error,
-        })
-        .catch((e) => error);
+      // process
+      strapi.services['concept-map'].process(entity);
     }
     return sanitizeEntity(entity, { model: strapi.models[info.name] });
   },

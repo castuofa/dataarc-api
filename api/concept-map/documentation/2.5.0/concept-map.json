@@ -699,6 +699,10 @@
             "type": "boolean",
             "default": false
           },
+          "processing": {
+            "type": "boolean",
+            "default": false
+          },
           "processed_at": {
             "type": "string",
             "format": "date-time"
@@ -763,6 +767,10 @@
             "type": "object"
           },
           "active": {
+            "type": "boolean",
+            "default": false
+          },
+          "processing": {
             "type": "boolean",
             "default": false
           },

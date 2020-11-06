@@ -616,6 +616,9 @@
               "active": {
                 "type": "boolean"
               },
+              "processing": {
+                "type": "boolean"
+              },
               "processed_at": {
                 "type": "string"
               },

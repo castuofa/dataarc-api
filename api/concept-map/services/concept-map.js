@@ -1,32 +1,119 @@
 'use strict';
 
 const _ = require('lodash');
+const chalk = require('chalk');
+
+const log = (msg, time) => {
+  if (time) time = Math.ceil(Date.now() - time);
+  strapi.log.debug(`${msg} (${time} ms)`);
+};
 
 module.exports = {
+  addTopics: async (topics) => {
+    let start = Date.now();
+    return strapi
+      .query('concept-topic')
+      .model.insertMany(topics)
+      .then((res) => {
+        log(`Topics successfully added`, start);
+      });
+  },
+
   removeTopics: async (id) => {
-    strapi.log.debug(`Removing existing topics for this map`);
-    return strapi.query('concept-topic').model.deleteMany({ map: id });
+    let start = Date.now();
+    return strapi
+      .query('concept-topic')
+      .model.deleteMany({ map: id })
+      .then((res) => {
+        log(`Topics successfully removed`, start);
+      });
   },
 
   removeEdges: async (id) => {
-    strapi.log.debug(`Removing all existing edges`);
-    return strapi.query('concept-map').update({ id }, { edges: null });
+    let start = Date.now();
+    return strapi
+      .query('concept-map')
+      .update({ id }, { edges: null })
+      .then((res) => {
+        log(`Edges successfully removed`, start);
+      });
+  },
+
+  // set processed_at
+  setProcess: async (id, value) => {
+    let start = Date.now();
+    let processing = value ? false : true;
+    return strapi
+      .query('concept-map')
+      .update({ id: id }, { processed_at: value, processing: processing })
+      .then((res) => {
+        log(`Processing ${processing ? 'started' : 'complete'}`, start);
+      });
+  },
+
+  // process
+  process: async (entity) => {
+    let start = Date.now();
+    let source = await strapi.services['helper'].loadSource(entity.source);
+    let schema = await strapi.services['helper'].getSchema('concept-map');
+    let valid = await strapi.services['helper'].checkSource(schema, source);
+    if (!valid) throw new Error('Invalid source');
+
+    // clear processed_at field
+    strapi.services['concept-map'].setProcess(entity.id, null);
+
+    // remove existing topics
+    await strapi.services['concept-map'].removeTopics(entity.id);
+
+    // process the data
+    let promises = [];
+    _.map(source.nodes, async (data) => {
+      promises.push(strapi.services['concept-map'].processNode(entity, data));
+    });
+
+    // make sure all promises have been settled
+    await Promise.allSettled(promises).then((res) => {
+      let results = _.groupBy(res, 'status');
+
+      // log the results
+      let fulfilled = results.fulfilled ? results.fulfilled.length : 0;
+      let rejected = results.rejected ? results.rejected.length : 0;
+      log(
+        `${chalk.green(fulfilled)} PROCESSED, ${chalk.red(rejected)} REJECTED`,
+        start
+      );
+
+      // add
+      start = Date.now();
+      let topics = _.map(results.fulfilled, 'value');
+      return strapi.services['concept-map'].addTopics(topics);
+    });
+
+    // log the result
+    log(`Concept topics inserted`, start);
+
+    // set the process datetime / boolean
+    strapi.services['concept-map'].setProcess(entity.id, Date.now());
+
+    return '';
   },
 
   processNode: async (map, node) => {
+    let start = Date.now();
     let topic = {
       identifier: node.id.toString(),
       title: node.title,
       map: map.id,
     };
+    console.log('node');
 
     let concept = await strapi.query('concept').findOne({ name: node.title });
     if (concept != null) {
-      strapi.log.debug(`Found matching concept ${concept.title}`);
+      log(`Found matching concept ${concept.title}`, start);
       topic.concept = concept.id;
     }
 
-    strapi.query('concept-topic').create(topic);
+    return topic;
   },
 
   processEdge: async (map, edge) => {

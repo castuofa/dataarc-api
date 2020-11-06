@@ -22,9 +22,9 @@
       "model": "concept"
     },
     "map": {
+      "via": "topics",
       "autoPopulate": false,
-      "model": "concept-map",
-      "via": "topics"
+      "model": "concept-map"
     }
   }
 }

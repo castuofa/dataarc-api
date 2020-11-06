@@ -39,13 +39,17 @@
       "type": "boolean",
       "default": false
     },
+    "processing": {
+      "type": "boolean",
+      "default": false
+    },
     "processed_at": {
       "type": "datetime"
     },
     "topics": {
       "autoPopulate": false,
-      "via": "map",
-      "collection": "concept-topic"
+      "collection": "concept-topic",
+      "via": "map"
     }
   }
 }
