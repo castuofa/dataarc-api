@@ -191,13 +191,32 @@ module.exports = {
                       maxItems: 3,
                       items: {
                         type: 'number',
-                        minimum: -180,
-                        maximum: 180,
                         required: true,
                       },
                     },
                   },
                 },
+              },
+            },
+          },
+        };
+
+      case 'location':
+        return {
+          type: 'object',
+          required: ['type', 'coordinates'],
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['Point'],
+            },
+            coordinates: {
+              type: 'array',
+              minItems: 2,
+              maxItems: 3,
+              items: {
+                type: 'number',
+                required: true,
               },
             },
           },

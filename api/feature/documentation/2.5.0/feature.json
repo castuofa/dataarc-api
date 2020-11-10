@@ -654,6 +654,9 @@
           "properties": {
             "type": "object"
           },
+          "facets": {
+            "type": "object"
+          },
           "location": {
             "type": "object"
           },

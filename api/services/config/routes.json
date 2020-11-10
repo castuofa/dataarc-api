@@ -9,7 +9,15 @@
       }
     },
     {
-      "method": "GET",
+      "method": "POST",
+      "path": "/query/features",
+      "handler": "query.features",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
       "path": "/query/timeline",
       "handler": "query.timeline",
       "config": {
@@ -25,25 +33,17 @@
       }
     },
     {
-      "method": "GET",
-      "path": "/query/matched",
-      "handler": "query.matched",
+      "method": "POST",
+      "path": "/query/concepts",
+      "handler": "query.concepts",
       "config": {
         "policies": []
       }
     },
     {
-      "method": "GET",
-      "path": "/query/related",
-      "handler": "query.related",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/query/contextual",
-      "handler": "query.contextual",
+      "method": "POST",
+      "path": "/query/results",
+      "handler": "query.results",
       "config": {
         "policies": []
       }

@@ -4,8 +4,8 @@ const _ = require('lodash');
 const chalk = require('chalk');
 
 const log = (msg, time) => {
-  if (time) time = Math.ceil(Date.now() - time);
-  strapi.log.debug(`${msg} (${time} ms)`);
+  if (time) time = `(${Math.ceil(Date.now() - time)} ms)`;
+  strapi.log.debug(`${msg}${time}`);
 };
 
 module.exports = {
@@ -60,21 +60,39 @@ module.exports = {
     if (!valid) throw new Error('Invalid source');
 
     // clear processed_at field
-    strapi.services['concept-map'].setProcess(entity.id, null);
+    await strapi.services['concept-map'].setProcess(entity.id, null);
 
     // remove existing topics
     await strapi.services['concept-map'].removeTopics(entity.id);
 
     // process the data
     let promises = [];
-    _.map(source.nodes, async (data) => {
-      promises.push(strapi.services['concept-map'].processNode(entity, data));
+    let topics = [];
+    let matched = 0;
+    _.each(source.nodes, (node) => {
+      let topic = {
+        identifier: node.id.toString(),
+        title: node.title,
+        map: entity.id,
+      };
+      promises.push(
+        strapi
+          .query('concept')
+          .findOne({ name: node.title.toLowerCase() })
+          .then((concept) => {
+            if (concept) {
+              log(`Found matching concept ${concept.title}`);
+              matched++;
+              topic.concept = concept.id;
+            }
+            topics.push(topic);
+          })
+      );
     });
 
     // make sure all promises have been settled
     await Promise.allSettled(promises).then((res) => {
       let results = _.groupBy(res, 'status');
-
       // log the results
       let fulfilled = results.fulfilled ? results.fulfilled.length : 0;
       let rejected = results.rejected ? results.rejected.length : 0;
@@ -82,39 +100,26 @@ module.exports = {
         `${chalk.green(fulfilled)} PROCESSED, ${chalk.red(rejected)} REJECTED`,
         start
       );
-
-      // add
-      start = Date.now();
-      let topics = _.map(results.fulfilled, 'value');
-      return strapi.services['concept-map'].addTopics(topics);
     });
+
+    // how many were matched?
+    log(`${chalk.green(matched)}/${chalk.red(topics.length)} matched`, start);
+
+    // add
+    start = Date.now();
+    // let topics = _.map(results.fulfilled, 'value');
+    await strapi.services['concept-map'].addTopics(topics);
 
     // log the result
     log(`Concept topics inserted`, start);
 
     // set the process datetime / boolean
-    strapi.services['concept-map'].setProcess(entity.id, Date.now());
+    await strapi.services['concept-map'].setProcess(entity.id, Date.now());
 
     return '';
   },
 
-  processNode: async (map, node) => {
-    let start = Date.now();
-    let topic = {
-      identifier: node.id.toString(),
-      title: node.title,
-      map: map.id,
-    };
-    console.log('node');
-
-    let concept = await strapi.query('concept').findOne({ name: node.title });
-    if (concept != null) {
-      log(`Found matching concept ${concept.title}`, start);
-      topic.concept = concept.id;
-    }
-
-    return topic;
-  },
+  processNode: async (map, node) => {},
 
   processEdge: async (map, edge) => {
     let source = await strapi

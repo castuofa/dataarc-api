@@ -2,25 +2,75 @@
 
 const _ = require('lodash');
 const fs = require('fs');
+const ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
-  filter: async (filter) => {
-    /*
-{
-  "keywords": "a string of words",
-  "spatial": [
-    "minX",
-    "minY",
-    "maxX",
-    "maxY"
-  ],
-  "temporal": [],
-  "conceptual": []
-}
-*/
-    console.log(filter);
+  filterToParams: async (filter) => {
+    // check the filter
+    if (!filter) return;
+    let params = {};
+
+    // check for categories
+    if (filter.category) {
+      if (strapi.services['helper'].getType(filter.category) === 'string')
+        filter.category = [filter.category];
+      params['category'] = { $in: _.map(filter.category, ObjectId) };
+    }
+
+    // check for datasets
+    if (filter.dataset) {
+      if (strapi.services['helper'].getType(filter.dataset) === 'string')
+        filter.dataset = [filter.dataset];
+      params['dataset'] = { $in: _.map(filter.dataset, ObjectId) };
+    }
+
+    // check for keywords
+    if (filter.keywords) {
+      params['$text'] = {
+        $search: filter.keywords,
+      };
+    }
+
+    // check for spatial
+    if (filter.spatial) {
+      params['location'] = {
+        $geoWithin: {
+          $box: filter.spatial,
+        },
+      };
+    }
+
+    // check for temporal
+    if (filter.temporal) {
+      if (strapi.services['helper'].getType(filter.temporal) === 'string')
+        filter.temporal = [filter.temporal];
+      params['temporal'] = { $in: _.map(filter.temporal, ObjectId) };
+    }
+
+    // check for conceptual
+    if (filter.conceptual) {
+      if (strapi.services['helper'].getType(filter.conceptual) === 'string')
+        filter.conceptual = [filter.conceptual];
+      params['conceptual'] = { $in: _.map(filter.conceptual, ObjectId) };
+    }
+
+    return params;
   },
-  features: async () => {
+
+  aggregateCounts: async (field, params) => {
+    params[field] = { $not: { $size: 0 } };
+    const pipe = [
+      {
+        $match: params,
+      },
+      {
+        $sortByCount: `$${field}`,
+      },
+    ];
+    return strapi.query('feature').model.aggregate(pipe);
+  },
+
+  getFeatures: async () => {
     let dir = `${strapi.dir}/public/cache`;
     let file = `${dir}/features.csv`;
 
@@ -35,37 +85,9 @@ module.exports = {
 
     // if the file doesn't exist, wait for it to be created
     await strapi.services['query'].createFeaturesFile(file);
-
     return file;
   },
-  timeline: async () => {
-    let features = await strapi.query('feature').find({ _limit: 999 });
-    console.log(features.length);
-    console.log(features[0]);
 
-    let group = _.groupBy(features, 'category');
-    console.log(group.length);
-
-    // {
-    //   "category": "ARCHAEOLOGICAL",
-    //   "label": "Archaeological",
-    //   "categoryId": 0,
-    //   "color": "hex_color",
-    //   "periods": ["integers..."],
-    //   "counts": ["integers..."]
-    //   }
-
-    return '';
-  },
-  concepts: async () => {
-    let map = await strapi.query('concept-map').findOne({ active: true });
-    let concepts = {
-      nodes: map.nodes,
-      edges: map.edges,
-    };
-    return concepts;
-  },
-  results: async () => {},
   createFeaturesFile: async (path) => {
     let datasets = await strapi.query('dataset').find({ _limit: 999999999 });
 
@@ -92,5 +114,254 @@ module.exports = {
     await fs.writeFile(path, csv.join('\n'), 'utf8', function (err) {
       if (err) strapi.log.error(`Features file not saved or corrupted`);
     });
+  },
+
+  filterFeatures: async (params) => {
+    const pipe = [
+      { $match: params },
+      { $group: { _id: null, items: { $push: '$_id' } } },
+      { $project: { items: true, _id: false } },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+    if (!results.length) return [];
+    return results.pop().items;
+  },
+
+  filterTimeline: async (params, start, resolution) => {
+    const pipe = [
+      { $match: params },
+      {
+        $group: {
+          _id: {
+            category_id: '$facets.category.id',
+            category: '$facets.category.title',
+            color: '$facets.category.color',
+          },
+          a: { $push: '$facets.decades' },
+        },
+      },
+      { $unwind: '$a' },
+      { $unwind: '$a' },
+      {
+        $group: {
+          _id: {
+            category: '$_id',
+            item: '$a',
+          },
+          itemCount: { $sum: 1 },
+        },
+      },
+      {
+        $group: {
+          _id: '$_id.category',
+          items: {
+            $push: { period: '$_id.item', count: '$itemCount' },
+          },
+        },
+      },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+
+    let increment = 1000;
+    if (resolution === 'millennia') increment = 1000;
+    if (resolution === 'centuries') increment = 100;
+    if (resolution === 'decades') increment = 10;
+    let end = start + increment * 10;
+    let range = _.range(start, end, increment);
+    let out = [];
+    _.each(results, (result) => {
+      if (result._id.category) {
+        let periods = {};
+        _.each(range, (period) => {
+          let val = _.find(result.items, { period: period });
+          periods[period] = val ? val.count : 0;
+        });
+        out.push({
+          category: result._id.category,
+          category_id: result._id.category_id,
+          color: result._id.color,
+          total: result.total,
+          periods: _.keys(periods),
+          counts: _.values(periods),
+        });
+      }
+    });
+
+    return out;
+  },
+
+  getConcepts: async () => {
+    let map = await strapi.query('concept-map').findOne({ active: true });
+    let concepts = {
+      nodes: map.nodes,
+      edges: map.edges,
+    };
+    return concepts;
+  },
+
+  filterConcepts: async (params) => {
+    const pipe = [
+      { $project: { a: '$concepts' } },
+      { $unwind: '$a' },
+      { $unwind: '$a' },
+      { $group: { _id: 'a', items: { $addToSet: '$a' } } },
+      { $project: { items: true, _id: false } },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+    if (!results.length) return [];
+    return results.pop().items;
+  },
+
+  matchedResults: async (params) => {
+    const pipe = [
+      {
+        $match: params,
+      },
+      {
+        $group: {
+          _id: {
+            category_id: '$facets.category.id',
+            category: '$facets.category.title',
+            dataset_id: '$facets.dataset.id',
+            dataset: '$facets.dataset.title',
+          },
+          total: {
+            $sum: 1,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            category_id: '$_id.category_id',
+            category: '$_id.category',
+          },
+          total: {
+            $sum: '$total',
+          },
+          datasets: {
+            $push: {
+              dataset_id: '$_id.dataset_id',
+              dataset: '$_id.dataset',
+              total: '$total',
+            },
+          },
+        },
+      },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+    let out = [];
+    _.each(results, (result) => {
+      if (result._id.category_id)
+        out.push({
+          category: result._id.category,
+          category_id: result._id.category_id,
+          total: result.total,
+          datasets: result.datasets,
+        });
+    });
+    return out;
+  },
+
+  relatedResults: async (params) => {
+    const pipe = [
+      {
+        $match: params,
+      },
+      {
+        $group: {
+          _id: {
+            category_id: '$facets.category.id',
+            category: '$facets.category.title',
+            dataset_id: '$facets.dataset.id',
+            dataset: '$facets.dataset.title',
+          },
+          total: {
+            $sum: 1,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            category_id: '$_id.category_id',
+            category: '$_id.category',
+          },
+          total: {
+            $sum: '$total',
+          },
+          datasets: {
+            $push: {
+              dataset_id: '$_id.dataset_id',
+              dataset: '$_id.dataset',
+              total: '$total',
+            },
+          },
+        },
+      },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+    let out = [];
+    _.each(results, (result) => {
+      if (result._id.category_id)
+        out.push({
+          category: result._id.category,
+          category_id: result._id.category_id,
+          total: result.total,
+          datasets: result.datasets,
+        });
+    });
+    return out;
+  },
+
+  contextualResults: async (params) => {
+    const pipe = [
+      {
+        $match: params,
+      },
+      {
+        $group: {
+          _id: {
+            category_id: '$facets.category.id',
+            category: '$facets.category.title',
+            dataset_id: '$facets.dataset.id',
+            dataset: '$facets.dataset.title',
+          },
+          total: {
+            $sum: 1,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            category_id: '$_id.category_id',
+            category: '$_id.category',
+          },
+          total: {
+            $sum: '$total',
+          },
+          datasets: {
+            $push: {
+              dataset_id: '$_id.dataset_id',
+              dataset: '$_id.dataset',
+              total: '$total',
+            },
+          },
+        },
+      },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+    let out = [];
+    _.each(results, (result) => {
+      if (result._id.category_id)
+        out.push({
+          category: result._id.category,
+          category_id: result._id.category_id,
+          total: result.total,
+          datasets: result.datasets,
+        });
+    });
+    return out;
   },
 };

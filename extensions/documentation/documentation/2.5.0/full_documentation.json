@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/06/2020 12:27:07 PM"
+    "x-generation-date": "11/10/2020 2:15:06 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -6228,12 +6228,10 @@
           "Unclassified"
         ],
         "parameters": []
-      }
-    },
-    "/query/timeline": {
-      "get": {
+      },
+      "post": {
         "deprecated": false,
-        "description": "",
+        "description": "Create a new record",
         "responses": {
           "200": {
             "description": "response",
@@ -6284,7 +6282,92 @@
         "tags": [
           "Unclassified"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query/timeline": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Unclassified"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/query/concepts": {
@@ -6342,12 +6425,10 @@
           "Unclassified"
         ],
         "parameters": []
-      }
-    },
-    "/query/matched": {
-      "get": {
+      },
+      "post": {
         "deprecated": false,
-        "description": "",
+        "description": "Create a new record",
         "responses": {
           "200": {
             "description": "response",
@@ -6398,13 +6479,27 @@
         "tags": [
           "Unclassified"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/query/related": {
-      "get": {
+    "/query/results": {
+      "post": {
         "deprecated": false,
-        "description": "",
+        "description": "Create a new record",
         "responses": {
           "200": {
             "description": "response",
@@ -6455,64 +6550,21 @@
         "tags": [
           "Unclassified"
         ],
-        "parameters": []
-      }
-    },
-    "/query/contextual": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
                   }
                 }
               }
             }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
           }
-        },
-        "summary": "",
-        "tags": [
-          "Unclassified"
-        ],
-        "parameters": []
+        }
       }
     },
     "/spatial-coverages": {
@@ -9238,6 +9290,9 @@
             "type": "string"
           },
           "properties": {
+            "type": "object"
+          },
+          "facets": {
             "type": "object"
           },
           "location": {

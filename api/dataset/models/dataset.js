@@ -40,12 +40,12 @@ module.exports = {
           data
         )
       )
-        strapi.services['dataset'].refreshFeatures(result.id);
+        strapi.services['dataset'].refreshFeatures(result);
 
       // refresh dataset if it has been processed
       if (strapi.services['helper'].hasFields(['processed_at'], data))
         if (result.processed_at != null)
-          strapi.services['dataset'].refreshFeatures(result.id);
+          strapi.services['dataset'].refreshFeatures(result);
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {

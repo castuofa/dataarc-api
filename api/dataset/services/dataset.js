@@ -35,26 +35,26 @@ module.exports = {
   },
 
   // process dataset
-  process: async (dataset) => {
+  process: async (entity) => {
     let start = Date.now();
-    let source = await strapi.services['helper'].loadSource(dataset.source);
+    let source = await strapi.services['helper'].loadSource(entity.source);
     let schema = await strapi.services['helper'].getSchema('geojson');
     let valid = await strapi.services['helper'].checkSource(schema, source);
     if (!valid) throw new Error('Invalid data source');
 
     // clear processed_at field
-    strapi.services['dataset'].setProcess(dataset.id, null);
+    strapi.services['dataset'].setProcess(entity.id, null);
 
     // set existing fields to missing and mark for review
-    strapi.services['dataset'].setFieldsMissing(dataset.id);
+    strapi.services['dataset'].setFieldsMissing(entity.id);
 
     // remove existing features
-    await strapi.services['dataset'].removeFeatures(dataset.id);
+    await strapi.services['dataset'].removeFeatures(entity.id);
 
     // add the features
     let promises = [];
     _.each(source.features, (feature) => {
-      promises.push(strapi.services['feature'].process(dataset, feature));
+      promises.push(strapi.services['feature'].process(entity, feature));
     });
 
     // make sure all promises have been settled
@@ -77,11 +77,11 @@ module.exports = {
           strapi.log.debug(`Features inserted (${delta} ms)`);
 
           // refresh the spatial attributes and feature data
-          strapi.services['dataset'].refreshFeatures(dataset.id);
-          strapi.services['dataset'].refreshFeaturesSpatial(dataset.id);
+          strapi.services['dataset'].refreshFeatures(entity);
+          // strapi.services['dataset'].refreshFeaturesSpatial(entity);
 
           // set the process datetime / boolean
-          strapi.services['dataset'].setProcess(dataset.id, Date.now());
+          strapi.services['dataset'].setProcess(entity.id, Date.now());
         });
     });
 
@@ -89,13 +89,13 @@ module.exports = {
   },
 
   // refresh feature spatial attributes
-  refreshFeaturesSpatial: async (id) => {
+  refreshFeaturesSpatial: async (entity) => {
     strapi.log.debug(`Refreshing features spatial attributes`);
     let promises = [];
 
     const features = await strapi
       .query('feature')
-      .find({ dataset: id, _limit: 999999999 });
+      .find({ dataset: entity.id, _limit: 999999999 });
 
     let data_path = `${strapi.dir}/data`;
     let spatial_config = require(`${data_path}/spatial.config.json`);
@@ -150,14 +150,14 @@ module.exports = {
   },
 
   // refresh features
-  refreshFeatures: async (id) => {
+  refreshFeatures: async (entity) => {
     strapi.log.debug(`Refreshing all features`);
     let promises = [];
     let map_points = {};
 
     let features = await strapi
       .query('feature')
-      .find({ dataset: id, _limit: 999999999 });
+      .find({ dataset: entity.id, _limit: 999999999 });
 
     _.each(features, (feature) => {
       if (feature.location) {
@@ -168,7 +168,7 @@ module.exports = {
           color: feature.facets.category.color,
         };
       }
-      promises.push(strapi.services['feature'].refresh(feature));
+      promises.push(strapi.services['feature'].refresh(feature, entity));
     });
 
     // make sure all promises have been settled
@@ -178,21 +178,21 @@ module.exports = {
       // store a simple array of id, lat, lng for quick map building
       strapi
         .query('dataset')
-        .update({ id }, { map_points: _.values(map_points) });
+        .update({ id: entity.id }, { map_points: _.values(map_points) });
     });
   },
 
   // extract all fields from the features
-  extractFields: async (dataset) => {
+  extractFields: async (entity) => {
     strapi.log.debug(`Extracting fields`);
     let promises = [];
     const features = await strapi
       .query('feature')
-      .find({ dataset: dataset.id, _limit: 999999999 });
+      .find({ dataset: entity.id, _limit: 999999999 });
 
     const existing = await strapi
       .query('dataset-field')
-      .find({ dataset: dataset.id, _limit: 999999 });
+      .find({ dataset: entity.id, _limit: 999999 });
 
     // get a list of unique fields from all the features
     let fields = {};
@@ -201,7 +201,7 @@ module.exports = {
         if (!fields[field.name]) {
           field.review = true;
           field.missing = false;
-          field.dataset = dataset.id;
+          field.dataset = entity.id;
           let exists = _.find(existing, ['name', field.name]);
           if (exists) {
             delete field.type;

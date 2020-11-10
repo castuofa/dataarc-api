@@ -72,7 +72,7 @@ module.exports = {
 
       //   // get the related spatial data
       //   promises.push(
-      //     strapi.services[info.name].refreshFeaturesSpatial(entity.id)
+      //     strapi.services[info.name].refreshFeaturesSpatial(entity)
       //   );
 
       //   // make sure all promises have been settled
@@ -114,7 +114,7 @@ module.exports = {
       strapi.services['event'].controller(info, entity, ctx);
 
       // refresh the features
-      strapi.services[info.name].refreshFeatures(entity.id);
+      strapi.services[info.name].refreshFeatures(entity);
     }
     return sanitizeEntity(entity, { model: strapi.models[info.name] });
   },
