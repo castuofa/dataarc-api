@@ -195,18 +195,19 @@ module.exports = {
     let out = [];
     _.each(results, (result) => {
       if (result._id.category) {
-        let periods = {};
+        let periods = [];
         _.each(range, (period) => {
           let val = _.find(result.items, { period: period });
-          periods[period] = val ? val.count : 0;
+          if (!val) val = { period: period, count: 0 };
+          periods.push(val);
         });
         out.push({
           category: result._id.category,
           category_id: result._id.category_id,
           color: result._id.color,
           total: result.total,
-          periods: _.keys(periods),
-          counts: _.values(periods),
+          periods: _.map(periods, 'period'),
+          counts: _.map(periods, 'count'),
         });
       }
     });
