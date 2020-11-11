@@ -70,51 +70,84 @@ module.exports = {
     return strapi.query('feature').model.aggregate(pipe);
   },
 
+  // getFeatures: async () => {
+  //   let dir = `${strapi.dir}/public/cache`;
+  //   let file = `${dir}/features.csv`;
+
+  //   // check to see if the cache dir exists, create it
+  //   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+
+  //   // if file exists, return immediately and fire refresh
+  //   if (fs.existsSync(file)) {
+  //     strapi.services['query'].createFeaturesFile(file);
+  //     return file;
+  //   }
+
+  //   // if the file doesn't exist, wait for it to be created
+  //   await strapi.services['query'].createFeaturesFile(file);
+  //   return file;
+  // },
+
   getFeatures: async () => {
-    let dir = `${strapi.dir}/public/cache`;
-    let file = `${dir}/features.csv`;
-
-    // check to see if the cache dir exists, create it
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-
-    // if file exists, return immediately and fire refresh
-    if (fs.existsSync(file)) {
-      strapi.services['query'].createFeaturesFile(file);
-      return file;
-    }
-
-    // if the file doesn't exist, wait for it to be created
-    await strapi.services['query'].createFeaturesFile(file);
-    return file;
-  },
-
-  createFeaturesFile: async (path) => {
-    let datasets = await strapi.query('dataset').find({ _limit: 999999999 });
-
-    // get the points stored in the dataset
-    let points = [];
-    _.each(datasets, (dataset) => {
-      if (dataset.map_points) {
-        points = _.union(points, dataset.map_points);
+    const pipe = [
+      {
+        $group: {
+          _id: {
+            category: '$facets.category.title',
+            color: '$facets.category.color',
+            dataset: '$facets.dataset.title',
+            id: '$_id',
+            title: '$title',
+            coords: '$location.coordinates',
+          },
+        },
+      },
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe);
+    if (!results.length) return [];
+    let out = [];
+    out.push(`id,lon,lat,color,title`);
+    _.each(results, (result) => {
+      if (result._id.coords && result._id.coords.length) {
+        let title = `"<b>${result._id.title.replace('"', '""')}</b><br>${
+          result._id.dataset
+        }<br>${result._id.category}"`;
+        out.push(
+          `${result._id.id},${result._id.coords[0]},${result._id.coords[1]},${result._id.color},${title}`
+        );
       }
     });
 
-    // convert to csv
-    let csv = [];
-    let keys = [];
-    csv.push(`id,lon,lat,color`);
-    _.each(_.compact(points), (point) => {
-      if (_.indexOf(keys, point.id) == -1) {
-        csv.push(`${point.id},${point.lon},${point.lat},${point.color}`);
-        keys.push(point.id);
-      }
-    });
-
-    // write the cache file
-    await fs.writeFile(path, csv.join('\n'), 'utf8', function (err) {
-      if (err) strapi.log.error(`Features file not saved or corrupted`);
-    });
+    return out.join('\n');
   },
+
+  // createFeaturesFile: async (path) => {
+  //   let datasets = await strapi.query('dataset').find({ _limit: 999999999 });
+
+  //   // get the points stored in the dataset
+  //   let points = [];
+  //   _.each(datasets, (dataset) => {
+  //     if (dataset.map_points) {
+  //       points = _.union(points, dataset.map_points);
+  //     }
+  //   });
+
+  //   // convert to csv
+  //   let csv = [];
+  //   let keys = [];
+  //   csv.push(`id,lon,lat,color`);
+  //   _.each(_.compact(points), (point) => {
+  //     if (_.indexOf(keys, point.id) == -1) {
+  //       csv.push(`${point.id},${point.lon},${point.lat},${point.color}`);
+  //       keys.push(point.id);
+  //     }
+  //   });
+
+  //   // write the cache file
+  //   await fs.writeFile(path, csv.join('\n'), 'utf8', function (err) {
+  //     if (err) strapi.log.error(`Features file not saved or corrupted`);
+  //   });
+  // },
 
   filterFeatures: async (params) => {
     const pipe = [
