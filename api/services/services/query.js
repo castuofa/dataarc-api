@@ -31,11 +31,20 @@ module.exports = {
       };
     }
 
-    // check for spatial
-    if (filter.spatial) {
+    // check for bounding box
+    if (filter.box) {
       params['location'] = {
         $geoWithin: {
-          $box: filter.spatial,
+          $box: filter.box,
+        },
+      };
+    }
+
+    // check for polygon
+    if (filter.polygon) {
+      params['location'] = {
+        $geoWithin: {
+          $polygon: filter.polygon,
         },
       };
     }
@@ -69,24 +78,6 @@ module.exports = {
     ];
     return strapi.query('feature').model.aggregate(pipe);
   },
-
-  // getFeatures: async () => {
-  //   let dir = `${strapi.dir}/public/cache`;
-  //   let file = `${dir}/features.csv`;
-
-  //   // check to see if the cache dir exists, create it
-  //   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-
-  //   // if file exists, return immediately and fire refresh
-  //   if (fs.existsSync(file)) {
-  //     strapi.services['query'].createFeaturesFile(file);
-  //     return file;
-  //   }
-
-  //   // if the file doesn't exist, wait for it to be created
-  //   await strapi.services['query'].createFeaturesFile(file);
-  //   return file;
-  // },
 
   getFeatures: async () => {
     const pipe = [
