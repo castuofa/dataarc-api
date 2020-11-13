@@ -49,6 +49,15 @@ module.exports = {
       };
     }
 
+    // check for circle
+    if (filter.circle) {
+      params['location'] = {
+        $geoWithin: {
+          $center: filter.circle,
+        },
+      };
+    }
+
     // check for temporal
     if (filter.temporal) {
       if (strapi.services['helper'].getType(filter.temporal) === 'string')
