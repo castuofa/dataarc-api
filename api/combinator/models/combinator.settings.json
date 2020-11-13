@@ -36,7 +36,6 @@
       "default": false
     },
     "dataset": {
-      "autoPopulate": false,
       "model": "dataset",
       "via": "combinators"
     },
@@ -45,7 +44,6 @@
       "via": "combinator"
     },
     "concepts": {
-      "autoPopulate": false,
       "collection": "concept"
     },
     "features": {
