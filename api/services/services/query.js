@@ -59,10 +59,13 @@ module.exports = {
     }
 
     // check for temporal
-    if (filter.temporal) {
-      if (strapi.services['helper'].getType(filter.temporal) === 'string')
-        filter.temporal = [filter.temporal];
-      params['temporal'] = { $in: _.map(filter.temporal, ObjectId) };
+    if (filter.temporal && _.isArray(filter.temporal)) {
+      _.each(filter.temporal, (period) => {
+        if (period.begin)
+          params['begin'] = { $gte: period.begin };
+        if (period.end)
+          params['end'] = { $lte: period.end };
+      });
     }
 
     // check for conceptual
