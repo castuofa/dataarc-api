@@ -28,12 +28,7 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": [
-        "and",
-        "or",
-        "nor",
-        "not"
-      ],
+      "enum": ["and", "or", "nor", "not"],
       "default": "or"
     },
     "review": {
@@ -41,17 +36,21 @@
       "default": false
     },
     "dataset": {
-      "via": "combinators",
       "autoPopulate": false,
-      "model": "dataset"
+      "model": "dataset",
+      "via": "combinators"
     },
     "queries": {
-      "via": "combinator",
-      "collection": "combinator-query"
+      "collection": "combinator-query",
+      "via": "combinator"
     },
     "concepts": {
-      "collection": "concept",
-      "autoPopulate": false
+      "autoPopulate": false,
+      "collection": "concept"
+    },
+    "features": {
+      "autoPopulate": false,
+      "collection": "feature"
     }
   }
 }

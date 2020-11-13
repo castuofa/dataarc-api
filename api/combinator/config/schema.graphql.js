@@ -3,6 +3,7 @@ module.exports = {
     extend type Combinator {
       queries_count: Int
       concepts_count: Int
+      features_count: Int
     }
     type CombinatorResults {
       combinator: Combinator
@@ -31,8 +32,9 @@ module.exports = {
           const params = await strapi.services['helper'].getParams(options);
           const results = await strapi.query('combinator').find(params);
           results.map((doc) => {
-            doc.queries_count = doc.queries ? doc.queries.length : 0;
             doc.concepts_count = doc.concepts ? doc.concepts.length : 0;
+            doc.queries_count = doc.queries ? doc.queries.length : 0;
+            doc.features_count = doc.features ? doc.features.length : 0;
           });
           return results;
         },

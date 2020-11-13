@@ -781,6 +781,9 @@
               "concepts": {
                 "type": "string"
               },
+              "features": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

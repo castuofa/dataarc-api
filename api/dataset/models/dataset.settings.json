@@ -55,9 +55,9 @@
       "type": "datetime"
     },
     "combinators": {
+      "via": "dataset",
       "autoPopulate": false,
-      "collection": "combinator",
-      "via": "dataset"
+      "collection": "combinator"
     },
     "fields": {
       "autoPopulate": false,

@@ -780,6 +780,79 @@
                 "type": "string"
               }
             }
+          },
+          "features": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "details": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "source": {
+                "type": "object"
+              },
+              "fields": {
+                "type": "object"
+              },
+              "properties": {
+                "type": "object"
+              },
+              "facets": {
+                "type": "object"
+              },
+              "keywords": {
+                "type": "string"
+              },
+              "location": {
+                "type": "object"
+              },
+              "radius": {
+                "type": "number"
+              },
+              "spatial_coverages": {
+                "type": "string"
+              },
+              "begin": {
+                "type": "integer"
+              },
+              "end": {
+                "type": "integer"
+              },
+              "temporal_coverages": {
+                "type": "string"
+              },
+              "combinators": {
+                "type": "string"
+              },
+              "concepts": {
+                "type": "string"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -824,6 +897,9 @@
             }
           },
           "concepts": {
+            "type": "string"
+          },
+          "features": {
             "type": "string"
           },
           "created_by": {

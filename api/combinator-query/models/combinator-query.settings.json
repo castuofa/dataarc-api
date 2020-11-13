@@ -45,9 +45,9 @@
       "model": "dataset-field"
     },
     "combinator": {
+      "via": "queries",
       "autoPopulate": false,
-      "model": "combinator",
-      "via": "queries"
+      "model": "combinator"
     }
   }
 }
