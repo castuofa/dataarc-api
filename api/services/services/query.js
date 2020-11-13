@@ -34,7 +34,7 @@ module.exports = {
     // check for bounding box
     if (filter.box) {
       params['location'] = {
-        $geoIntersects: {
+        $geoWithin: {
           $box: filter.box,
         },
       };
@@ -43,7 +43,7 @@ module.exports = {
     // check for polygon
     if (filter.polygon) {
       params['location'] = {
-        $geoIntersects: {
+        $geoWithin: {
           $polygon: filter.polygon,
         },
       };
