@@ -25,9 +25,9 @@ module.exports = {
     }
 
     // check for keywords
-    if (filter.keywords) {
+    if (filter.keyword) {
       params['$text'] = {
-        $search: filter.keywords,
+        $search: filter.keyword,
       };
     }
 
@@ -59,13 +59,13 @@ module.exports = {
     }
 
     // check for spatial_coverages
-    if (filter.spatial_coverages) {
+    if (filter.spatial_coverage) {
       if (
-        strapi.services['helper'].getType(filter.spatial_coverages) === 'string'
+        strapi.services['helper'].getType(filter.spatial_coverage) === 'string'
       )
-        filter.spatial_coverages = [filter.spatial_coverages];
+        filter.spatial_coverage = [filter.spatial_coverage];
       params['spatial_coverages'] = {
-        $all: _.map(filter.spatial_coverages, ObjectId),
+        $all: _.map(filter.spatial_coverage, ObjectId),
       };
     }
 
@@ -78,29 +78,28 @@ module.exports = {
     }
 
     // check for temporal_coverages
-    if (filter.temporal_coverages) {
+    if (filter.temporal_coverage) {
       if (
-        strapi.services['helper'].getType(filter.temporal_coverages) ===
-        'string'
+        strapi.services['helper'].getType(filter.temporal_coverage) === 'string'
       )
-        filter.temporal_coverages = [filter.temporal_coverages];
+        filter.temporal_coverage = [filter.temporal_coverage];
       params['temporal_coverages'] = {
-        $all: _.map(filter.temporal_coverages, ObjectId),
+        $all: _.map(filter.temporal_coverage, ObjectId),
       };
     }
 
     // check for concepts
-    if (filter.concepts) {
-      if (strapi.services['helper'].getType(filter.concepts) === 'string')
-        filter.concepts = [filter.concepts];
-      params['concepts'] = { $all: _.map(filter.concepts, ObjectId) };
+    if (filter.concept) {
+      if (strapi.services['helper'].getType(filter.concept) === 'string')
+        filter.concept = [filter.concept];
+      params['concepts'] = { $all: _.map(filter.concept, ObjectId) };
     }
 
     // check for combinators
-    if (filter.combinators) {
-      if (strapi.services['helper'].getType(filter.combinators) === 'string')
-        filter.combinators = [filter.combinators];
-      params['combinators'] = { $all: _.map(filter.combinators, ObjectId) };
+    if (filter.combinator) {
+      if (strapi.services['helper'].getType(filter.combinator) === 'string')
+        filter.combinator = [filter.combinator];
+      params['combinators'] = { $all: _.map(filter.combinator, ObjectId) };
     }
 
     return params;
