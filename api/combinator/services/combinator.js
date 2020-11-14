@@ -11,6 +11,30 @@ module.exports = {
     strapi.query('combinator').update({ id }, { review: true });
   },
 
+  updateFeatures: async (results) => {
+    _.each(results.features, (feature) => {
+      let combinators = _.union(feature.combinators, [results.combinator.id]);
+      let concepts = _.union(
+        feature.concepts,
+        _.map(results.combinator.concepts, 'id')
+      );
+      strapi
+        .query('feature')
+        .update({ id: feature.id }, { combinators, concepts });
+    });
+  },
+
+  saveResults: async (results) => {
+    // set the related features
+    let features = _.map(results.features, 'id');
+    if (features.length) {
+      strapi.services['combinator'].updateFeatures(results);
+      strapi
+        .query('combinator')
+        .update({ id: results.combinator.id }, { features });
+    }
+  },
+
   results: async (params) => {
     let result = {
       combinator: null,
@@ -74,6 +98,9 @@ module.exports = {
       result.total_count = await strapi
         .query('feature')
         .count({ dataset: entry.dataset });
+
+      // save the results
+      strapi.services['combinator'].saveResults(result);
     }
 
     return result;

@@ -32,6 +32,10 @@ module.exports = {
       strapi.services['event'].lifecycle('update', info, result, {
         payload: { params, data },
       });
+
+      // if combinator was saved manually, run results to set relations
+      if (!strapi.services['helper'].hasFields(['features'], data))
+        strapi.services['combinator'].results({ id: result.id });
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {
