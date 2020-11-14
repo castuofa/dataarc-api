@@ -170,6 +170,12 @@ module.exports = {
     strapi.log.debug(`Refreshing all combinators in ${entity.title}`);
     let promises = [];
 
+    // clear the combinators and concepts
+    await strapi
+      .query('feature')
+      .update({ dataset: entity.id }, { combinators: [], concepts: [] });
+
+    // process all combinators
     _.each(entity.combinators, (id) => {
       promises.push(strapi.services['combinator'].results({ id }));
     });
