@@ -26,8 +26,8 @@
       "description": "DataARC API"
     },
     {
-      "url": "https://api.data-arc.org",
-      "description": "DataARC API"
+      "url": "https://api-stage.data-arc.org",
+      "description": "Staging"
     },
     {
       "url": "http://localhost:1337",

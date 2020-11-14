@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/13/2020 6:11:03 PM"
+    "x-generation-date": "11/14/2020 9:54:51 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -28,8 +28,8 @@
       "description": "DataARC API"
     },
     {
-      "url": "https://api.data-arc.org",
-      "description": "DataARC API"
+      "url": "https://api-stage.data-arc.org",
+      "description": "Staging"
     },
     {
       "url": "http://localhost:1337",
