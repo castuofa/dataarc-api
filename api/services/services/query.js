@@ -149,9 +149,9 @@ module.exports = {
     out.push(`id,lon,lat,color,title`);
     _.each(results, (result) => {
       if (result._id.coords && result._id.coords.length) {
-        let title = `"<b>${result._id.title.replace('"', '""')}</b><br>${
-          result._id.dataset
-        }<br>${result._id.category}"`;
+        let title = `"<b>${
+          result._id.title ? result._id.title.replace('"', '""') : ''
+        }</b><br>${result._id.dataset}<br>${result._id.category}"`;
         out.push(
           `${result._id.id},${result._id.coords[0]},${result._id.coords[1]},${result._id.color},${title}`
         );
