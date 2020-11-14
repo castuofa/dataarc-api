@@ -81,8 +81,13 @@ module.exports = {
     const params = await strapi.services['query'].filterToParams(filter);
 
     // get the results
-    const results = await strapi.services['query'].matchedResults(params);
+    if (type === 'matched')
+      return await strapi.services['query'].matchedResults(params);
+    if (type === 'related')
+      return await strapi.services['query'].relatedResults(params);
+    if (type === 'contextual')
+      return await strapi.services['query'].contextualResults(params);
 
-    return results;
+    return;
   },
 };

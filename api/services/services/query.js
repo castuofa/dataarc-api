@@ -33,18 +33,28 @@ module.exports = {
 
     // check for bounding box
     if (filter.box) {
+      let minX = filter.box[0][0];
+      let maxX = filter.box[1][0];
+      let minY = filter.box[1][1];
+      let maxY = filter.box[0][1];
       params['location'] = {
         $geoWithin: {
-          $box: filter.box,
+          $box: [
+            [minX, minY],
+            [maxX, maxY],
+          ],
         },
       };
     }
 
     // check for polygon
     if (filter.polygon) {
+      let poly = filter.polygon;
+      // close the polygon if we need to
+      if (!_.isEqual(poly[0], poly[poly.length - 1])) poly.push(poly[0]);
       params['location'] = {
         $geoWithin: {
-          $polygon: filter.polygon,
+          $polygon: poly,
         },
       };
     }
@@ -151,34 +161,6 @@ module.exports = {
     return out.join('\n');
   },
 
-  // createFeaturesFile: async (path) => {
-  //   let datasets = await strapi.query('dataset').find({ _limit: 999999999 });
-
-  //   // get the points stored in the dataset
-  //   let points = [];
-  //   _.each(datasets, (dataset) => {
-  //     if (dataset.map_points) {
-  //       points = _.union(points, dataset.map_points);
-  //     }
-  //   });
-
-  //   // convert to csv
-  //   let csv = [];
-  //   let keys = [];
-  //   csv.push(`id,lon,lat,color`);
-  //   _.each(_.compact(points), (point) => {
-  //     if (_.indexOf(keys, point.id) == -1) {
-  //       csv.push(`${point.id},${point.lon},${point.lat},${point.color}`);
-  //       keys.push(point.id);
-  //     }
-  //   });
-
-  //   // write the cache file
-  //   await fs.writeFile(path, csv.join('\n'), 'utf8', function (err) {
-  //     if (err) strapi.log.error(`Features file not saved or corrupted`);
-  //   });
-  // },
-
   filterFeatures: async (params) => {
     const pipe = [
       { $match: params },
@@ -222,6 +204,7 @@ module.exports = {
           },
         },
       },
+      { $sort: { '_id.category': 1 } },
     ];
     const results = await strapi.query('feature').model.aggregate(pipe);
 
@@ -276,11 +259,107 @@ module.exports = {
     return results.pop().items;
   },
 
+  // get concepts associated with records that match the filter
+  matchedConcepts: async (params) => {
+    const pipe = [
+      { $match: params },
+      { $group: { _id: null, a: { $push: '$concepts' } } },
+      { $unwind: '$a' },
+      { $unwind: '$a' },
+      { $group: { _id: '$a' } },
+      { $group: { _id: null, matched: { $push: '$_id' } } },
+    ];
+    let matched = await strapi.query('feature').model.aggregate(pipe);
+    matched = !matched.length ? [] : matched.pop().matched;
+    return matched;
+  },
+
+  // get related concepts that match params
+  relatedConcepts: async (params) => {
+    const pipe = [
+      { $match: params },
+      { $unwind: '$related' },
+      { $unwind: '$related' },
+      { $group: { _id: '$related' } },
+      { $group: { _id: null, related: { $push: '$_id' } } },
+    ];
+    let related = await strapi.query('concept').model.aggregate(pipe);
+    related = !related.length ? [] : related.pop().related;
+    return related;
+  },
+
+  // get contextual concepts that match params
+  contextualConcepts: async (params) => {
+    const pipe = [
+      { $match: params },
+      { $unwind: '$contextual' },
+      { $unwind: '$contextual' },
+      { $group: { _id: '$contextual' } },
+      { $group: { _id: null, contextual: { $push: '$_id' } } },
+    ];
+    let contextual = await strapi.query('concept').model.aggregate(pipe);
+    contextual = !contextual.length ? [] : contextual.pop().contextual;
+    return contextual;
+  },
+
+  // array of matched feature ids
+  matchedFeatures: async (params) => {
+    return await strapi.services['query'].filterFeatures(params);
+  },
+
+  // array of related feature ids
+  relatedFeatures: async (params) => {
+    // get the matched concepts
+    let concepts = await strapi.services['query'].matchedConcepts(params);
+
+    // get the related concepts
+    let related = await strapi.services['query'].relatedConcepts({
+      related: { $in: _.map(concepts, ObjectId) },
+    });
+
+    // get the matched features
+    let matched = await strapi.services['query'].filterFeatures(params);
+
+    // include combined concepts
+    params['concepts'] = { $in: _.map(_.union(concepts, related), ObjectId) };
+
+    // eclude features that matched
+    params['_id'] = { $nin: _.map(matched, ObjectId) };
+
+    return await strapi.services['query'].filterFeatures(params);
+  },
+
+  // array of contextual feature ids
+  contextualFeatures: async (params) => {
+    // get the matched concepts
+    let concepts = await strapi.services['query'].matchedConcepts(params);
+
+    // get the contextual concepts
+    let contextual = await strapi.services['query'].contextualConcepts({
+      contextual: { $in: _.map(concepts, ObjectId) },
+    });
+
+    // get the matched features
+    let matched = await strapi.services['query'].matchedFeatures(params);
+
+    // get the related features
+    let related = await strapi.services['query'].relatedFeatures(params);
+
+    // include contextual concepts
+    params['concepts'] = { $in: _.map(contextual, ObjectId) };
+
+    // eclude features that matched
+    params['_id'] = {
+      $nin: _.map(_.union(matched, related), ObjectId),
+    };
+
+    return await strapi.services['query'].filterFeatures(params);
+  },
+
+  // get result counts that match the filter
   matchedResults: async (params) => {
     const pipe = [
-      {
-        $match: params,
-      },
+      { $match: params },
       {
         $group: {
           _id: {
@@ -312,6 +391,7 @@ module.exports = {
           },
         },
       },
+      { $sort: { category: 1 } },
     ];
     const results = await strapi.query('feature').model.aggregate(pipe);
     let out = [];
@@ -327,105 +407,23 @@ module.exports = {
     return out;
   },
 
+  // get result counts that are related
   relatedResults: async (params) => {
-    const pipe = [
-      {
-        $match: params,
-      },
-      {
-        $group: {
-          _id: {
-            category_id: '$facets.category.id',
-            category: '$facets.category.title',
-            dataset_id: '$facets.dataset.id',
-            dataset: '$facets.dataset.title',
-          },
-          total: {
-            $sum: 1,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: {
-            category_id: '$_id.category_id',
-            category: '$_id.category',
-          },
-          total: {
-            $sum: '$total',
-          },
-          datasets: {
-            $push: {
-              dataset_id: '$_id.dataset_id',
-              dataset: '$_id.dataset',
-              total: '$total',
-            },
-          },
-        },
-      },
-    ];
-    const results = await strapi.query('feature').model.aggregate(pipe);
-    let out = [];
-    _.each(results, (result) => {
-      if (result._id.category_id)
-        out.push({
-          category: result._id.category,
-          category_id: result._id.category_id,
-          total: result.total,
-          datasets: result.datasets,
-        });
-    });
-    return out;
+    // get the matched features
+    let features = await strapi.services['query'].relatedFeatures(params);
+
+    // only include related features
+    params['_id'] = { $in: _.map(features, ObjectId) };
+    return await strapi.services['query'].matchedResults(params);
   },
 
+  // get result counts that are contextual
   contextualResults: async (params) => {
-    const pipe = [
-      {
-        $match: params,
-      },
-      {
-        $group: {
-          _id: {
-            category_id: '$facets.category.id',
-            category: '$facets.category.title',
-            dataset_id: '$facets.dataset.id',
-            dataset: '$facets.dataset.title',
-          },
-          total: {
-            $sum: 1,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: {
-            category_id: '$_id.category_id',
-            category: '$_id.category',
-          },
-          total: {
-            $sum: '$total',
-          },
-          datasets: {
-            $push: {
-              dataset_id: '$_id.dataset_id',
-              dataset: '$_id.dataset',
-              total: '$total',
-            },
-          },
-        },
-      },
-    ];
-    const results = await strapi.query('feature').model.aggregate(pipe);
-    let out = [];
-    _.each(results, (result) => {
-      if (result._id.category_id)
-        out.push({
-          category: result._id.category,
-          category_id: result._id.category_id,
-          total: result.total,
-          datasets: result.datasets,
-        });
-    });
-    return out;
+    // get the matched features
+    let features = await strapi.services['query'].contextualFeatures(params);
+
+    // only include related features
+    params['_id'] = { $in: _.map(features, ObjectId) };
+    return await strapi.services['query'].matchedResults(params);
   },
 };
