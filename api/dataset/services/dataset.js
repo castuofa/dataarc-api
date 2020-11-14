@@ -151,34 +151,32 @@ module.exports = {
 
   // refresh features
   refreshFeatures: async (entity) => {
-    strapi.log.debug(`Refreshing all features`);
+    strapi.log.debug(`Refreshing all features in ${entity.title}`);
     let promises = [];
-    let map_points = {};
 
-    let features = await strapi
-      .query('feature')
-      .find({ dataset: entity.id, _limit: 999999999 });
+    _.each(entity.features, (id) => {
+      promises.push(strapi.services['feature'].refresh({ id }));
+    });
 
-    _.each(features, (feature) => {
-      if (feature.location) {
-        map_points[feature.id] = {
-          id: feature.id,
-          lon: feature.location.coordinates[0],
-          lat: feature.location.coordinates[1],
-          color: feature.facets.category.color,
-        };
-      }
-      promises.push(strapi.services['feature'].refresh(feature, entity));
+    // make sure all promises have been settled
+    return Promise.allSettled(promises).then(async (res) => {
+      strapi.log.debug(`All features refreshed`);
+      await strapi.services['dataset'].refreshCombinators(entity);
+    });
+  },
+
+  // refresh combinators
+  refreshCombinators: async (entity) => {
+    strapi.log.debug(`Refreshing all combinators in ${entity.title}`);
+    let promises = [];
+
+    _.each(entity.combinators, (id) => {
+      promises.push(strapi.services['combinator'].results({ id }));
     });
 
     // make sure all promises have been settled
     return Promise.allSettled(promises).then((res) => {
-      strapi.log.debug(`All features refreshed`);
-
-      // store a simple array of id, lat, lng for quick map building
-      strapi
-        .query('dataset')
-        .update({ id: entity.id }, { map_points: _.values(map_points) });
+      strapi.log.debug(`All combinators refreshed`);
     });
   },
 
