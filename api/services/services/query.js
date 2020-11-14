@@ -58,21 +58,49 @@ module.exports = {
       };
     }
 
+    // check for spatial_coverages
+    if (filter.spatial_coverages) {
+      if (
+        strapi.services['helper'].getType(filter.spatial_coverages) === 'string'
+      )
+        filter.spatial_coverages = [filter.spatial_coverages];
+      params['spatial_coverages'] = {
+        $all: _.map(filter.spatial_coverages, ObjectId),
+      };
+    }
+
     // check for temporal
     if (filter.temporal && _.isArray(filter.temporal)) {
       _.each(filter.temporal, (period) => {
-        if (period.begin)
-          params['begin'] = { $gte: period.begin };
-        if (period.end)
-          params['end'] = { $lte: period.end };
+        if (period.begin) params['begin'] = { $gte: period.begin };
+        if (period.end) params['end'] = { $lte: period.end };
       });
     }
 
-    // check for conceptual
-    if (filter.conceptual) {
-      if (strapi.services['helper'].getType(filter.conceptual) === 'string')
-        filter.conceptual = [filter.conceptual];
-      params['conceptual'] = { $in: _.map(filter.conceptual, ObjectId) };
+    // check for temporal_coverages
+    if (filter.temporal_coverages) {
+      if (
+        strapi.services['helper'].getType(filter.temporal_coverages) ===
+        'string'
+      )
+        filter.temporal_coverages = [filter.temporal_coverages];
+      params['temporal_coverages'] = {
+        $all: _.map(filter.temporal_coverages, ObjectId),
+      };
+    }
+
+    // check for concepts
+    if (filter.concepts) {
+      if (strapi.services['helper'].getType(filter.concepts) === 'string')
+        filter.concepts = [filter.concepts];
+      params['concepts'] = { $all: _.map(filter.concepts, ObjectId) };
+    }
+
+    // check for combinators
+    if (filter.combinators) {
+      if (strapi.services['helper'].getType(filter.combinators) === 'string')
+        filter.combinators = [filter.combinators];
+      params['combinators'] = { $all: _.map(filter.combinators, ObjectId) };
     }
 
     return params;
