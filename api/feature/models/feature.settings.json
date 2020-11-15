@@ -38,7 +38,8 @@
       "type": "json"
     },
     "facets": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "keywords": {
       "type": "text",

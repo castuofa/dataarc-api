@@ -60,7 +60,6 @@
       "collection": "combinator"
     },
     "fields": {
-      "autoPopulate": false,
       "collection": "dataset-field",
       "via": "dataset"
     },

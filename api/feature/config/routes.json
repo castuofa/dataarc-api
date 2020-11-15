@@ -26,14 +26,6 @@
     },
     {
       "method": "GET",
-      "path": "/features/refresh",
-      "handler": "feature.refresh",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
       "path": "/features/:id",
       "handler": "feature.findOne",
       "config": {

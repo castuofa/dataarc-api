@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/14/2020 9:54:51 AM"
+    "x-generation-date": "11/15/2020 5:26:03 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5405,63 +5405,6 @@
         "parameters": []
       }
     },
-    "/features/refresh": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Feature"
-        ],
-        "parameters": []
-      }
-    },
     "/features/{id}": {
       "get": {
         "deprecated": false,
@@ -9378,9 +9321,6 @@
             "type": "string"
           },
           "properties": {
-            "type": "object"
-          },
-          "facets": {
             "type": "object"
           },
           "location": {
