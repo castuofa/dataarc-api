@@ -1,13 +1,17 @@
 'use strict';
 
 const _ = require('lodash');
+const fs = require('fs');
 
 module.exports = {
   features: async (ctx) => {
     // return csv for plotly if get request
     if (ctx.request.method === 'GET') {
-      const results = await strapi.services['query'].getFeatures();
-      return results;
+      // ctx.type = 'text/csv';
+      // ctx.body = Readable.from(await strapi.services['query'].streamFeatures());
+
+      let file = await strapi.services['query'].getFeatures();
+      return fs.createReadStream(file);
     }
 
     // get the filter

@@ -128,7 +128,23 @@ module.exports = {
     return strapi.query('feature').model.aggregate(pipe);
   },
 
-  getFeatures: async () => {
+  // query to get all of the featurs and create the csv cache file
+  refreshFeaturesCache: async (file) => {
+    const dir = `${strapi.dir}/public/cache`;
+    const transform = (feature) => {
+      let doc = feature._id;
+      if (doc && doc.coords && doc.coords.length) {
+        let text = ``;
+        if (doc.title) text += `<b>${_.truncate(doc.title)}</b><br>`;
+        if (doc.dataset) text += `${doc.dataset}<br>`;
+        if (doc.category) text += `${doc.category}`;
+        let id = doc.id;
+        let lon = doc.coords[0];
+        let lat = doc.coords[1];
+        let color = doc.color || '#222222';
+        return `${id},${lon},${lat},${color},${text}`;
+      }
+    };
     const pipe = [
       {
         $group: {
@@ -143,24 +159,42 @@ module.exports = {
         },
       },
     ];
-    const results = await strapi.query('feature').model.aggregate(pipe);
-    if (!results.length) return [];
-    let out = [];
-    out.push(`id,lon,lat,color,title`);
-    _.each(results, (result) => {
-      if (result._id.coords && result._id.coords.length) {
-        let title = `"<b>${
-          result._id.title ? result._id.title.replace('"', '""') : ''
-        }</b><br>${result._id.dataset}<br>${result._id.category}"`;
-        out.push(
-          `${result._id.id},${result._id.coords[0]},${result._id.coords[1]},${result._id.color},${title}`
-        );
-      }
-    });
 
-    return out.join('\n');
+    // get the results
+    const results = await strapi.query('feature').model.aggregate(pipe);
+
+    // check to see if the cache dir exists, create it
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+
+    // write the cache file
+    await fs.writeFile(
+      file,
+      ['id,lon,lat,color,text', ..._.map(results, transform)].join('\n'),
+      'utf8',
+      (err) => {
+        if (err) strapi.log.error(`Features file not saved or corrupted`);
+      }
+    );
+
+    return file;
   },
 
+  // get the features file and refresh
+  getFeatures: async () => {
+    const dir = `${strapi.dir}/public/cache`;
+    const file = `${dir}/features.csv`;
+
+    // if file exists, return immediately and fire refresh
+    if (fs.existsSync(file)) {
+      strapi.services['query'].refreshFeaturesCache(file);
+      return file;
+    }
+
+    // if it doesnt exist, refresh the file then return
+    return await strapi.services['query'].refreshFeaturesCache(file);
+  },
+
+  // get id list of features
   filterFeatures: async (params) => {
     const pipe = [
       { $match: params },
@@ -172,6 +206,7 @@ module.exports = {
     return results.pop().items;
   },
 
+  // get counts for the timeline
   filterTimeline: async (params, start, resolution) => {
     const pipe = [
       { $match: params },
@@ -237,6 +272,7 @@ module.exports = {
     return out;
   },
 
+  // get concepts
   getConcepts: async () => {
     let map = await strapi.query('concept-map').findOne({ active: true });
     let concepts = {
@@ -246,6 +282,7 @@ module.exports = {
     return concepts;
   },
 
+  // get filtered concepts
   filterConcepts: async (params) => {
     const pipe = [
       { $project: { a: '$concepts' } },
