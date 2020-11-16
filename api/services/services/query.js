@@ -391,17 +391,18 @@ module.exports = {
     // get the matched features
     let matched = await strapi.services['query'].filterFeatures(params);
 
+    let related_params = [];
     // include combined concepts
-    params.push({
+    related_params.push({
       concepts: { $in: _.map(_.union(concepts, related), ObjectId) },
     });
 
     // eclude features that matched
-    params.push({
+    related_params.push({
       _id: { $nin: _.map(matched, ObjectId) },
     });
 
-    return await strapi.services['query'].filterFeatures(params);
+    return await strapi.services['query'].filterFeatures(related_params);
   },
 
   // array of contextual feature ids
@@ -420,17 +421,18 @@ module.exports = {
     // get the related features
     let related = await strapi.services['query'].relatedFeatures(params);
 
+    let contextual_params = [];
     // include contextual concepts
-    params.push({
+    contextual_params.push({
       concepts: { $in: _.map(contextual, ObjectId) },
     });
 
     // eclude features that matched
-    params.push({
+    contextual_params.push({
       _id: { $nin: _.map(_.union(matched, related), ObjectId) },
     });
 
-    return await strapi.services['query'].filterFeatures(params);
+    return await strapi.services['query'].filterFeatures(contextual_params);
   },
 
   // get result counts that match the filter
@@ -489,11 +491,12 @@ module.exports = {
     // get the matched features
     let features = await strapi.services['query'].relatedFeatures(params);
 
+    let related_params = [];
     // only include related features
-    params.push({
+    related_params.push({
       _id: { $in: _.map(features, ObjectId) },
     });
-    return await strapi.services['query'].matchedResults(params);
+    return await strapi.services['query'].matchedResults(related_params);
   },
 
   // get result counts that are contextual
@@ -501,12 +504,13 @@ module.exports = {
     // get the matched features
     let features = await strapi.services['query'].contextualFeatures(params);
 
+    let contextual_params = [];
     // only include related features
-    params.push({
+    contextual_params.push({
       _id: { $in: _.map(features, ObjectId) },
     });
 
-    return await strapi.services['query'].matchedResults(params);
+    return await strapi.services['query'].matchedResults(contextual_params);
   },
 };
 
