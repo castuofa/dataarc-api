@@ -23,6 +23,7 @@ module.exports = {
 
     // filter the features
     const results = await strapi.services['query'].filterFeatures(params);
+    console.log(results.length);
     return results;
   },
 

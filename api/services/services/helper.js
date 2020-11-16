@@ -152,7 +152,7 @@ module.exports = {
   },
 
   // get schema by type
-  getSchema: async (type) => {
+  getSchema: (type) => {
     switch (type) {
       case 'geojson':
         return {
@@ -248,7 +248,7 @@ module.exports = {
   },
 
   // validate json file
-  checkSource: async (schema, json) => {
+  checkSource: (schema, json) => {
     // validate against the schema
     const validate = require('jsonschema').validate;
     return validate(json, schema, {
