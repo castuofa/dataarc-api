@@ -33,6 +33,9 @@ module.exports = {
         payload: { params, data },
       });
 
+      // refresh combinators when dataset changes
+      strapi.services['dataset'].refreshCombinators(result);
+
       // refresh dataset if layouts have changed
       if (
         strapi.services['helper'].hasFields(

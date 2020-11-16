@@ -235,12 +235,10 @@ module.exports = {
     // clear the combinators and concepts
     await strapi
       .query('feature')
-      .model.update(
+      .model.updateMany(
         { dataset: entity.id },
         { $set: { combinators: [], concepts: [] } }
       );
-
-    console.log(entity);
 
     // process all combinators
     _.each(entity.combinators, (id) => {
