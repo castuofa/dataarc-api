@@ -251,25 +251,25 @@ module.exports = {
             category: '$facets.category.title',
             color: '$facets.category.color',
           },
-          a: { $push: '$facets.decades' },
+          periods: { $push: '$facets.' + resolution },
         },
       },
-      { $unwind: '$a' },
-      { $unwind: '$a' },
+      { $unwind: '$periods' },
+      { $unwind: '$periods' },
       {
         $group: {
           _id: {
             category: '$_id',
-            item: '$a',
+            period: '$periods',
           },
-          itemCount: { $sum: 1 },
+          count: { $sum: 1 },
         },
       },
       {
         $group: {
           _id: '$_id.category',
           items: {
-            $push: { period: '$_id.item', count: '$itemCount' },
+            $push: { period: '$_id.period', count: '$count' },
           },
         },
       },
@@ -512,9 +512,8 @@ module.exports = {
 
 const joinParams = (params, op) => {
   op = op || '$and';
-  // if (!params.length) return {};
+  if (!params.length) return {};
   let query = {};
-  console.log(params);
   query[op] = params;
   return query;
 };
