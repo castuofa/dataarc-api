@@ -385,7 +385,7 @@ module.exports = {
 
     // get the related concepts
     let related = await strapi.services['query'].relatedConcepts({
-      related: { $in: _.map(concepts, ObjectId) },
+      id: { $in: _.map(concepts, ObjectId) },
     });
 
     // get the matched features
@@ -412,7 +412,7 @@ module.exports = {
 
     // get the contextual concepts
     let contextual = await strapi.services['query'].contextualConcepts({
-      contextual: { $in: _.map(concepts, ObjectId) },
+      id: { $in: _.map(concepts, ObjectId) },
     });
 
     // get the matched features
