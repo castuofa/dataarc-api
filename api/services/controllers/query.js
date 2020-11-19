@@ -18,13 +18,23 @@ module.exports = {
     const filter = ctx.request.body;
     if (!filter) return;
 
+    // get the type
+    const type = filter.type || 'matched';
+    if (type !== 'matched' && type !== 'related' && type !== 'contextual')
+      return;
+
     // get the params
     const params = await strapi.services['query'].filterToParams(filter);
 
-    // filter the features
-    const results = await strapi.services['query'].filterFeatures(params);
-    console.log(results.length);
-    return results;
+    // get the results
+    if (type === 'matched')
+      return await strapi.services['query'].matchedFeatures(params);
+    if (type === 'related')
+      return await strapi.services['query'].relatedFeatures(params);
+    if (type === 'contextual')
+      return await strapi.services['query'].contextualFeatures(params);
+
+    return;
   },
 
   timeline: async (ctx) => {
@@ -77,7 +87,7 @@ module.exports = {
     const filter = ctx.request.body;
     if (!filter) return;
 
-    // get the results type
+    // get the type
     const type = filter.type || 'matched';
     if (type !== 'matched' && type !== 'related' && type !== 'contextual')
       return;
