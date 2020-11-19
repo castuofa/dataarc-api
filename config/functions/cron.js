@@ -11,6 +11,19 @@
  */
 
 module.exports = {
+  '*/1 * * * *': () => {
+    console.log('1 minute later');
+  },
+
+  // check if concept-map needs to be processed
+  // check if concept map needs to be activated
+  // check if dataset needs to be processed
+  // check if dataset needs refreshed
+  // check if combinator needs refreshed
+  // check if search results need to be generated
+  // check if search results need to be deleted
+
+
   /**
    * Simple example.
    * Every monday at 1am.
@@ -18,4 +31,5 @@ module.exports = {
   // '0 1 * * 1': () => {
   //
   // }
+
 };
