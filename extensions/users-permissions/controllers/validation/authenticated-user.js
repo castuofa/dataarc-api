@@ -16,6 +16,8 @@ const profileUpdateSchema = yup
       .matches(/[A-Z]/, '${path} must contain at least one uppercase character')
       .matches(/\d/, '${path} must contain at least one number')
       .notNull(),
+    firstName: yup.string(),
+    lastName: yup.string(),
   })
   // Won't let users update relations
   .noUnknown();
