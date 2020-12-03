@@ -694,66 +694,37 @@
           "details_layout": {
             "type": "string"
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "review": {
-                  "type": "boolean"
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "string"
-                },
-                "features": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "category": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -868,7 +839,10 @@
                   "type": "string"
                 },
                 "combinators": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "concepts": {
                   "type": "string"
@@ -885,39 +859,77 @@
               }
             }
           },
-          "category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
+          "combinators": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "review": {
+                  "type": "boolean"
+                },
+                "refresh": {
+                  "type": "boolean"
+                },
+                "refreshed": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -959,19 +971,8 @@
           "details_layout": {
             "type": "string"
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "category": {
+            "type": "string"
           },
           "fields": {
             "type": "array",
@@ -985,11 +986,27 @@
               "type": "string"
             }
           },
-          "category": {
-            "type": "string"
+          "combinators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
-          "map_points": {
-            "type": "object"
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"

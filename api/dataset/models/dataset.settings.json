@@ -47,17 +47,9 @@
     "details_layout": {
       "type": "text"
     },
-    "processing": {
-      "type": "boolean",
-      "default": false
-    },
-    "processed_at": {
-      "type": "datetime"
-    },
-    "combinators": {
-      "via": "dataset",
-      "autoPopulate": false,
-      "collection": "combinator"
+    "category": {
+      "model": "category",
+      "via": "datasets"
     },
     "fields": {
       "collection": "dataset-field",
@@ -68,13 +60,26 @@
       "collection": "feature",
       "via": "dataset"
     },
-    "category": {
-      "model": "category",
-      "via": "datasets"
+    "combinators": {
+      "via": "dataset",
+      "autoPopulate": false,
+      "collection": "combinator"
     },
-    "map_points": {
-      "type": "json",
+    "process": {
+      "type": "boolean",
+      "default": false,
       "private": true
+    },
+    "processed": {
+      "type": "datetime"
+    },
+    "refresh": {
+      "type": "boolean",
+      "default": false,
+      "private": true
+    },
+    "refreshed": {
+      "type": "datetime"
     }
   }
 }

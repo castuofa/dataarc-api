@@ -42,6 +42,16 @@ module.exports = {
       .update({ dataset: id }, { missing: true, review: true });
   },
 
+  // process the queued up datasets
+  processNext: async () => {
+    console.log('process next loaded');
+    let datasets = await strapi.query('dataset').find({ process: 1 });
+    datasets.forEach(dataset => {
+      console.log(`processing ${dataset.title}`);
+    });
+    console.log('process is done');
+  },
+
   // process dataset
   process: async (entity) => {
     let start = Date.now();
@@ -309,7 +319,7 @@ module.exports = {
 // ************************
 
 // simple log function with time calculation
-const log = (type, msg, time) => {
+const log = (type, msg, time = '') => {
   type = type || 'debug';
   if (time) time = ` (${Math.ceil(Date.now() - time)} ms)`;
   strapi.log[type](`${msg}${time}`);
