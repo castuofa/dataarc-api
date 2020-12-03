@@ -681,54 +681,66 @@
             }
           },
           "combinators": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string"
-              },
-              "review": {
-                "type": "boolean"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "queries": {
-                "type": "array",
-                "items": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "review": {
+                  "type": "boolean"
+                },
+                "refresh": {
+                  "type": "boolean"
+                },
+                "refreshed": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "concepts": {
-                "type": "string"
-              },
-              "features": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -816,17 +828,8 @@
               "details_layout": {
                 "type": "string"
               },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
+              "category": {
                 "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "fields": {
                 "type": "array",
@@ -840,11 +843,23 @@
                   "type": "string"
                 }
               },
-              "category": {
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
                 "type": "string"
               },
-              "map_points": {
-                "type": "object"
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -907,7 +922,10 @@
             "type": "string"
           },
           "combinators": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "concepts": {
             "type": "string"

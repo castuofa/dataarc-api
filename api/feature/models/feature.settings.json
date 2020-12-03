@@ -68,7 +68,7 @@
       "collection": "temporal-coverage"
     },
     "combinators": {
-      "autoPopulate": false,
+      "via": "features",
       "collection": "combinator"
     },
     "concepts": {
