@@ -28,6 +28,31 @@ const validateProfileUpdateInput = (data) => {
     .catch(handleReject);
 };
 
-module.exports = {
-  validateProfileUpdateInput,
+module.exports = async (ctx, next) => {
+  // If the user is an administrator we allow them to perform this action unrestricted
+  if (ctx.state.user.role.name === "Administrator") {
+    return next();
+  }
+
+  // Get the target user id and the the updating users id
+  const { id: currentUserId } = ctx.state.user;
+  const userToUpdate = ctx.params.id;
+
+  // Make sure current user can only update their own profile
+  if (currentUserId !== userToUpdate) {
+    return ctx.unauthorized("Unable to edit this user");
+  }
+
+  // Retrieve the input
+  const input = ctx.request.body;
+
+  // Validate the input
+  try {
+    await validateProfileUpdateInput(input);
+  } catch (err) {
+    return ctx.badRequest('Validation error', err);
+  }
+
+  // continue to update
+  return next();
 };
