@@ -29,10 +29,17 @@ module.exports = {
       const output = fs.createWriteStream(`${dir}${filename}`);
       const archive = archiver('zip');
 
-      output.on('close', () => {
-        strapi.query('search').update({ id: search.id }, { process: 0, processed: Date.now(), expires: expires, filename: filename });
+      output.on('close', async () => {
+        await strapi.query('search').update({ id: search.id }, { process: 0, processed: Date.now(), expires: expires, filename: filename });
         log('debug', `Search results generated, ${archive.pointer()} total bytes`, start);
+
         // send email notification
+        await strapi.plugins['email'].services.email.send({
+          to: search.user.email,
+          from: 'no-reply@data-arc.org',
+          subject: 'DataARC Search Results',
+          html: `<h1>DataARC</h1><p>Your search results have been successfully generated. You can download them from your profile or by clicking the link below.</p><p>Download Results: <a href="https://api.data-arc.org${dir}${filename}">https://api.data-arc.org${dir}${filename}</a></p>`,
+        });
       });
       output.on('error', (err) => {
         log('error', err)
