@@ -615,10 +615,6 @@
               "not"
             ]
           },
-          "review": {
-            "type": "boolean",
-            "default": false
-          },
           "dataset": {
             "required": [
               "id"
@@ -663,17 +659,8 @@
               "details_layout": {
                 "type": "string"
               },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
+              "category": {
                 "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "fields": {
                 "type": "array",
@@ -687,11 +674,23 @@
                   "type": "string"
                 }
               },
-              "category": {
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
                 "type": "string"
               },
-              "map_points": {
-                "type": "object"
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -782,77 +781,91 @@
             }
           },
           "features": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "summary": {
-                "type": "string"
-              },
-              "details": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "source": {
-                "type": "object"
-              },
-              "fields": {
-                "type": "object"
-              },
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
               "properties": {
-                "type": "object"
-              },
-              "facets": {
-                "type": "object"
-              },
-              "keywords": {
-                "type": "string"
-              },
-              "location": {
-                "type": "object"
-              },
-              "radius": {
-                "type": "number"
-              },
-              "spatial_coverages": {
-                "type": "string"
-              },
-              "begin": {
-                "type": "integer"
-              },
-              "end": {
-                "type": "integer"
-              },
-              "temporal_coverages": {
-                "type": "string"
-              },
-              "combinators": {
-                "type": "string"
-              },
-              "concepts": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "object"
+                },
+                "fields": {
+                  "type": "object"
+                },
+                "properties": {
+                  "type": "object"
+                },
+                "facets": {
+                  "type": "object"
+                },
+                "keywords": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "object"
+                },
+                "radius": {
+                  "type": "number"
+                },
+                "spatial_coverages": {
+                  "type": "string"
+                },
+                "begin": {
+                  "type": "integer"
+                },
+                "end": {
+                  "type": "integer"
+                },
+                "temporal_coverages": {
+                  "type": "string"
+                },
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
+          },
+          "review": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -883,10 +896,6 @@
               "not"
             ]
           },
-          "review": {
-            "type": "boolean",
-            "default": false
-          },
           "dataset": {
             "type": "string"
           },
@@ -900,7 +909,22 @@
             "type": "string"
           },
           "features": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "review": {
+            "type": "boolean",
+            "default": false
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"

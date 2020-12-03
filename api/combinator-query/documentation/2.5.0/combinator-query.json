@@ -639,9 +639,6 @@
               "operator": {
                 "type": "string"
               },
-              "review": {
-                "type": "boolean"
-              },
               "dataset": {
                 "type": "string"
               },
@@ -655,6 +652,18 @@
                 "type": "string"
               },
               "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "review": {
+                "type": "boolean"
+              },
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
                 "type": "string"
               },
               "created_by": {

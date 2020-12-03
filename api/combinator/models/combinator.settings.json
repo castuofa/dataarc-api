@@ -28,12 +28,13 @@
     },
     "operator": {
       "type": "enumeration",
-      "enum": ["and", "or", "nor", "not"],
+      "enum": [
+        "and",
+        "or",
+        "nor",
+        "not"
+      ],
       "default": "or"
-    },
-    "review": {
-      "type": "boolean",
-      "default": false
     },
     "dataset": {
       "model": "dataset",
@@ -47,8 +48,21 @@
       "collection": "concept"
     },
     "features": {
-      "autoPopulate": false,
-      "collection": "feature"
+      "collection": "feature",
+      "via": "combinators",
+      "dominant": true
+    },
+    "review": {
+      "type": "boolean",
+      "default": false
+    },
+    "refresh": {
+      "type": "boolean",
+      "default": false,
+      "private": true
+    },
+    "refreshed": {
+      "type": "datetime"
     }
   }
 }
