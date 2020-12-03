@@ -586,7 +586,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "filename": {
+          "path": {
             "type": "string"
           },
           "expires": {
@@ -617,7 +617,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "filename": {
+          "path": {
             "type": "string"
           },
           "expires": {

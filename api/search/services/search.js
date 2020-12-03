@@ -10,17 +10,17 @@ module.exports = {
     searches.forEach(async (search) => {
       let start = Date.now();
 
-      let dir = `${strapi.dir}/public/export/`;
-      let filename = `${search.id}.zip`;
+      let dir = `/public/export/`;
+      let path = `${dir}${search.id}.zip`;
 
-      if (fs.existsSync(dir + filename)) {
+      if (fs.existsSync(strapi.dir + path)) {
         log('debug', `Export already exists for ${search.id}`);
         strapi
           .query('search')
-          .update({ id: search.id }, { process: 0, filename: filename });
+          .update({ id: search.id }, { process: 0, path: path });
         return;
       }
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+      if (!fs.existsSync(strapi.dir + dir)) fs.mkdirSync(strapi.dir + dir);
 
       log('debug', `Generating search export for ${search.id}`);
       const results = await strapi.services['query'].exportResults(
@@ -31,21 +31,19 @@ module.exports = {
       let expires = new Date();
       expires.setDate(expires.getDate() + daysExpire);
 
-      const output = fs.createWriteStream(`${dir}${filename}`);
+      const output = fs.createWriteStream(`${strapi.dir}${path}`);
       const archive = archiver('zip');
 
       output.on('close', async () => {
-        await strapi
-          .query('search')
-          .update(
-            { id: search.id },
-            {
-              process: 0,
-              processed: Date.now(),
-              expires: expires,
-              filename: filename,
-            }
-          );
+        await strapi.query('search').update(
+          { id: search.id },
+          {
+            process: 0,
+            processed: Date.now(),
+            expires: expires,
+            path: path,
+          }
+        );
         log(
           'debug',
           `Search results generated, ${archive.pointer()} total bytes`,
@@ -56,7 +54,7 @@ module.exports = {
         await strapi.plugins['email'].services.email.send({
           to: search.user.email,
           subject: 'DataARC Search Results',
-          html: `<h1>DataARC</h1><p>Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in ${daysExpire} days.</p><p>Download Results: <a href="https://api.data-arc.org${dir}${filename}">https://api.data-arc.org${dir}${filename}</a></p>`,
+          html: `<h1>DataARC</h1><p>Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in ${daysExpire} days.</p><p>Download Results: <a href="https://api.data-arc.org${path}">https://api.data-arc.org${path}</a></p>`,
         });
       });
       output.on('error', (err) => {
@@ -80,12 +78,11 @@ module.exports = {
       log('debug', `Found ${searches.length} expired search(es)`);
     else return;
     searches.forEach((search) => {
-      let dir = `${strapi.dir}/public/export/`;
-      fs.unlink(`${dir}${search.filename}`, (err) => {
+      fs.unlink(`${strapi.dir}${search.path}`, (err) => {
         log('debug', `Export removed for ${search.id}`);
         strapi
           .query('search')
-          .update({ id: search.id }, { expires: null, filename: null });
+          .update({ id: search.id }, { expires: null, path: null });
       });
     });
   },

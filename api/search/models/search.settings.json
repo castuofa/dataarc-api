@@ -32,7 +32,7 @@
     "processed": {
       "type": "datetime"
     },
-    "filename": {
+    "path": {
       "type": "string"
     },
     "expires": {
