@@ -14,7 +14,7 @@ module.exports = {
       smtpPort: 25,
     },
     settings: {
-      defaultFrom: 'DataARC <mail@data-arc.org>',
+      defaultFrom: 'DataARC <no-reply@data-arc.org>',
     },
   },
 };
