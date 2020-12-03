@@ -38,7 +38,7 @@ module.exports = {
           to: search.user.email,
           from: 'no-reply@data-arc.org',
           subject: 'DataARC Search Results',
-          html: `<h1>DataARC</h1><p>Your search results have been successfully generated. You can download them from your profile or by clicking the link below.</p><p>Download Results: <a href="https://api.data-arc.org${dir}${filename}">https://api.data-arc.org${dir}${filename}</a></p>`,
+          html: `<h1>DataARC</h1><p>Your search results have been successfully generated. You can download the file from your profile or by clicking the link below.</p><p>Download Results: <a href="https://api.data-arc.org${dir}${filename}">https://api.data-arc.org${dir}${filename}</a></p>`,
         });
       });
       output.on('error', (err) => {
