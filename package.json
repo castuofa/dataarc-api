@@ -27,7 +27,7 @@
     "strapi-plugin-graphql": "3.3.3",
     "strapi-plugin-upload": "3.3.3",
     "strapi-plugin-users-permissions": "3.3.3",
-    "strapi-provider-email-smtp": "^1.0.0",
+    "strapi-provider-email-sendmail": "^3.3.4",
     "strapi-utils": "3.3.3",
     "which-polygon": "^2.2.0"
   },

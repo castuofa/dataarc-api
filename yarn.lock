@@ -7413,11 +7413,6 @@ nodemailer-shared@1.1.0:
   dependencies:
     nodemailer-fetch "1.6.0"
 
-nodemailer@^6.4.6:
-  version "6.4.16"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.4.16.tgz#5cb6391b1d79ab7eff32d6f9f48366b5a7117293"
-  integrity sha512-68K0LgZ6hmZ7PVmwL78gzNdjpj5viqBdFqKrTtr9bZbJYj6BRj5W6WGkxXrEnUl3Co3CBXi3CZBUlpV/foGnOQ==
-
 noop-logger@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/noop-logger/-/noop-logger-0.1.1.tgz#94a2b1633c4f1317553007d8966fd0e841b6a4c2"
@@ -10257,13 +10252,13 @@ strapi-provider-email-sendmail@3.3.3:
     sendmail "^1.6.1"
     strapi-utils "3.3.3"
 
-strapi-provider-email-smtp@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/strapi-provider-email-smtp/-/strapi-provider-email-smtp-1.0.0.tgz#288824f584401d07ae8ef498807c9f7e544b2959"
-  integrity sha512-iUGdacLqF8825A2maMeFvuBXrr3LrNGsXoBXZ1ctMeSdfmKt1LzcKGq2WXiqtD9rA3+TkVLht2t2A2dhsCJQrw==
+strapi-provider-email-sendmail@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/strapi-provider-email-sendmail/-/strapi-provider-email-sendmail-3.3.4.tgz#d871d92892ac23d9391ab2b1c553eae89660208d"
+  integrity sha512-ErtNGjKsFmQjr4BjasNNXGNORWC7VZ/pwZ065SSZVU2ft9xTdNJkB8PT7qpy+T8McC26bYMAUUYDHewg9SC/AA==
   dependencies:
-    lodash "^4.17.15"
-    nodemailer "^6.4.6"
+    sendmail "^1.6.1"
+    strapi-utils "3.3.4"
 
 strapi-provider-upload-local@3.3.3:
   version "3.3.3"
@@ -10274,6 +10269,18 @@ strapi-utils@3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/strapi-utils/-/strapi-utils-3.3.3.tgz#9b8cdd263735e8eab48f4e2f2b31424c823793f1"
   integrity sha512-up7SEMZFE3pmKVCZ93y/wu8efIs2dmU/yHcrYBhu2A0VKgNOVQ94M31CnayrY2tpJ3/xm4oxmWyb7fC8jX5fdw==
+  dependencies:
+    "@sindresorhus/slugify" "1.1.0"
+    date-fns "^2.8.1"
+    lodash "4.17.19"
+    pino "^4.7.1"
+    pluralize "^8.0.0"
+    yup "0.29.3"
+
+strapi-utils@3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/strapi-utils/-/strapi-utils-3.3.4.tgz#d45148779897dc6705a7afb46fe49368b4a4e11e"
+  integrity sha512-5rIberNccSIzKQGtfnsH37fBjDmsMkP2Lak1qlioYbohlhel23rN7nvq7PRN+VlFoNVsZAIj91mveZKKG1tsvw==
   dependencies:
     "@sindresorhus/slugify" "1.1.0"
     date-fns "^2.8.1"
