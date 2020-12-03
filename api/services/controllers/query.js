@@ -14,17 +14,17 @@ module.exports = {
       return fs.createReadStream(file);
     }
 
-    // get the filter
-    const filter = ctx.request.body;
-    if (!filter) return;
+    // get the filters
+    const filters = ctx.request.body;
+    if (!filters) return;
 
     // get the type
-    const type = filter.type || 'matched';
+    const type = filters.type || 'matched';
     if (type !== 'matched' && type !== 'related' && type !== 'contextual')
       return;
 
     // get the params
-    const params = await strapi.services['query'].filterToParams(filter);
+    const params = await strapi.services['query'].filtersToParams(filters);
 
     // get the results
     if (type === 'matched')
@@ -38,21 +38,21 @@ module.exports = {
   },
 
   timeline: async (ctx) => {
-    // get the filter
-    const filter = ctx.request.body;
-    if (!filter) return;
+    // get the filters
+    const filters = ctx.request.body;
+    if (!filters) return;
 
     // get the timeline resolution
-    const type = filter.type || 'millennia';
+    const type = filters.type || 'millennia';
     if (type !== 'millennia' && type !== 'centuries' && type !== 'decades')
       return;
 
     // get the results type
-    if (!Number.isInteger(filter.start)) return;
-    const start = filter.start;
+    if (!Number.isInteger(filters.start)) return;
+    const start = filters.start;
 
     // get the params
-    const params = await strapi.services['query'].filterToParams(filter);
+    const params = await strapi.services['query'].filtersToParams(filters);
 
     // get the results
     const results = await strapi.services['query'].filterTimeline(
@@ -70,12 +70,12 @@ module.exports = {
       return await strapi.services['query'].getConcepts();
     }
 
-    // get the filter
-    const filter = ctx.request.body;
-    if (!filter) return;
+    // get the filters
+    const filters = ctx.request.body;
+    if (!filters) return;
 
     // get the params
-    const params = await strapi.services['query'].filterToParams(filter);
+    const params = await strapi.services['query'].filtersToParams(filters);
 
     // filter the concepts
     const results = await strapi.services['query'].filterConcepts(params);
@@ -83,17 +83,17 @@ module.exports = {
   },
 
   results: async (ctx) => {
-    // get the filter
-    const filter = ctx.request.body;
-    if (!filter) return;
+    // get the filters
+    const filters = ctx.request.body;
+    if (!filters) return;
 
     // get the type
-    const type = filter.type || 'matched';
+    const type = filters.type || 'matched';
     if (type !== 'matched' && type !== 'related' && type !== 'contextual')
       return;
 
     // get the params
-    const params = await strapi.services['query'].filterToParams(filter);
+    const params = await strapi.services['query'].filtersToParams(filters);
 
     // get the results
     if (type === 'matched')

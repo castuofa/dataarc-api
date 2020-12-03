@@ -20,13 +20,23 @@
     "filters": {
       "type": "json"
     },
-    "results": {
-      "type": "json"
-    },
     "user": {
       "plugin": "users-permissions",
-      "model": "user",
-      "autoPopulate": false
+      "model": "user"
+    },
+    "process": {
+      "type": "boolean",
+      "default": false,
+      "private": true
+    },
+    "processed": {
+      "type": "datetime"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "expires": {
+      "type": "datetime"
     }
   }
 }

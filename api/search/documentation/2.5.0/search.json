@@ -531,9 +531,6 @@
           "filters": {
             "type": "object"
           },
-          "results": {
-            "type": "object"
-          },
           "user": {
             "required": [
               "id",
@@ -584,6 +581,17 @@
                 "type": "string"
               }
             }
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -598,11 +606,23 @@
           "filters": {
             "type": "object"
           },
-          "results": {
-            "type": "object"
-          },
           "user": {
             "type": "string"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"

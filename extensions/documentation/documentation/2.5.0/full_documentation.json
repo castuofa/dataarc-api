@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/23/2020 2:50:30 PM"
+    "x-generation-date": "12/02/2020 10:39:12 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7627,17 +7627,8 @@
                 "details_layout": {
                   "type": "string"
                 },
-                "processing": {
-                  "type": "boolean"
-                },
-                "processed_at": {
+                "category": {
                   "type": "string"
-                },
-                "combinators": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "fields": {
                   "type": "array",
@@ -7651,11 +7642,23 @@
                     "type": "string"
                   }
                 },
-                "category": {
+                "combinators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "process": {
+                  "type": "boolean"
+                },
+                "processed": {
                   "type": "string"
                 },
-                "map_points": {
-                  "type": "object"
+                "refresh": {
+                  "type": "boolean"
+                },
+                "refreshed": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -7808,9 +7811,6 @@
               "operator": {
                 "type": "string"
               },
-              "review": {
-                "type": "boolean"
-              },
               "dataset": {
                 "type": "string"
               },
@@ -7828,6 +7828,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "review": {
+                "type": "boolean"
+              },
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -7917,10 +7926,6 @@
               "not"
             ]
           },
-          "review": {
-            "type": "boolean",
-            "default": false
-          },
           "dataset": {
             "required": [
               "id"
@@ -7965,17 +7970,8 @@
               "details_layout": {
                 "type": "string"
               },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
+              "category": {
                 "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "fields": {
                 "type": "array",
@@ -7989,11 +7985,23 @@
                   "type": "string"
                 }
               },
-              "category": {
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
                 "type": "string"
               },
-              "map_points": {
-                "type": "object"
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -8161,6 +8169,14 @@
                 }
               }
             }
+          },
+          "review": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -8191,10 +8207,6 @@
               "not"
             ]
           },
-          "review": {
-            "type": "boolean",
-            "default": false
-          },
           "dataset": {
             "type": "string"
           },
@@ -8212,6 +8224,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "review": {
+            "type": "boolean",
+            "default": false
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -8253,18 +8277,6 @@
           "edges": {
             "type": "object"
           },
-          "active": {
-            "type": "boolean",
-            "default": false
-          },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
           "topics": {
             "type": "array",
             "items": {
@@ -8295,6 +8307,14 @@
                 }
               }
             }
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -8324,23 +8344,23 @@
           "edges": {
             "type": "object"
           },
-          "active": {
-            "type": "boolean",
-            "default": false
-          },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
           "topics": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -8436,20 +8456,20 @@
               "edges": {
                 "type": "object"
               },
-              "active": {
-                "type": "boolean"
-              },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
-                "type": "string"
-              },
               "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -8739,17 +8759,8 @@
               "details_layout": {
                 "type": "string"
               },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
+              "category": {
                 "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "fields": {
                 "type": "array",
@@ -8763,11 +8774,23 @@
                   "type": "string"
                 }
               },
-              "category": {
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
                 "type": "string"
               },
-              "map_points": {
-                "type": "object"
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -8878,69 +8901,37 @@
           "details_layout": {
             "type": "string"
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "citation": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "review": {
-                  "type": "boolean"
-                },
-                "dataset": {
-                  "type": "string"
-                },
-                "queries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "concepts": {
-                  "type": "string"
-                },
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "category": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "datasets": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -9075,39 +9066,77 @@
               }
             }
           },
-          "category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string"
-              },
-              "datasets": {
-                "type": "array",
-                "items": {
+          "combinators": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "citation": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "dataset": {
+                  "type": "string"
+                },
+                "queries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concepts": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "review": {
+                  "type": "boolean"
+                },
+                "refresh": {
+                  "type": "boolean"
+                },
+                "refreshed": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -9149,19 +9178,8 @@
           "details_layout": {
             "type": "string"
           },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "combinators": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "category": {
+            "type": "string"
           },
           "fields": {
             "type": "array",
@@ -9175,11 +9193,27 @@
               "type": "string"
             }
           },
-          "category": {
-            "type": "string"
+          "combinators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
-          "map_points": {
-            "type": "object"
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -9452,9 +9486,6 @@
                 "operator": {
                   "type": "string"
                 },
-                "review": {
-                  "type": "boolean"
-                },
                 "dataset": {
                   "type": "string"
                 },
@@ -9472,6 +9503,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "review": {
+                  "type": "boolean"
+                },
+                "refresh": {
+                  "type": "boolean"
+                },
+                "refreshed": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -9566,17 +9606,8 @@
               "details_layout": {
                 "type": "string"
               },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
+              "category": {
                 "type": "string"
-              },
-              "combinators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "fields": {
                 "type": "array",
@@ -9590,11 +9621,23 @@
                   "type": "string"
                 }
               },
-              "category": {
+              "combinators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
                 "type": "string"
               },
-              "map_points": {
-                "type": "object"
+              "refresh": {
+                "type": "boolean"
+              },
+              "refreshed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -9743,6 +9786,17 @@
                 "type": "string"
               }
             }
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -9759,6 +9813,21 @@
           },
           "user": {
             "type": "string"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"

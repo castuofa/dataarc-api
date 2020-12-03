@@ -3,24 +3,26 @@
 const _ = require('lodash');
 const fs = require('fs');
 const ObjectId = require('mongodb').ObjectID;
+const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
-  filterToParams: (filter) => {
-    // check the filter
-    if (!filter) return;
+  // convert filters to params
+  filtersToParams: (filters) => {
+    // check the filters
+    if (!filters) return;
     let params = [];
 
     // check for keywords *THIS SHOULD BE FIRST
-    if (filter.keyword) {
-      params.push({ $text: { $search: filter.keyword } });
+    if (filters.keyword) {
+      params.push({ $text: { $search: filters.keyword } });
     }
 
     // check for bounding box
-    if (filter.box) {
-      let minX = filter.box[0][0];
-      let maxX = filter.box[1][0];
-      let minY = filter.box[1][1];
-      let maxY = filter.box[0][1];
+    if (filters.box) {
+      let minX = filters.box[0][0];
+      let maxX = filters.box[1][0];
+      let minY = filters.box[1][1];
+      let maxY = filters.box[0][1];
       params.push({
         location: {
           $geoWithin: {
@@ -34,8 +36,8 @@ module.exports = {
     }
 
     // check for polygon
-    if (filter.polygon) {
-      let poly = filter.polygon;
+    if (filters.polygon) {
+      let poly = filters.polygon;
       // close the polygon if we need to
       if (!_.isEqual(poly[0], poly[poly.length - 1])) poly.push(poly[0]);
       params.push({
@@ -48,19 +50,19 @@ module.exports = {
     }
 
     // check for circle
-    if (filter.circle) {
+    if (filters.circle) {
       params.push({
         location: {
           $geoWithin: {
-            $center: filter.circle,
+            $center: filters.circle,
           },
         },
       });
     }
 
     // check for temporal
-    if (filter.temporal && _.isArray(filter.temporal)) {
-      _.each(filter.temporal, (period) => {
+    if (filters.temporal && _.isArray(filters.temporal)) {
+      _.each(filters.temporal, (period) => {
         if (Number.isInteger(period.begin) && Number.isInteger(period.end)) {
           params.push({
             $and: [
@@ -84,69 +86,92 @@ module.exports = {
     }
 
     // check for categories
-    if (filter.category) {
-      if (strapi.services['helper'].getType(filter.category) === 'string')
-        filter.category = [filter.category];
-      params.push({ category: { $in: _.map(filter.category, ObjectId) } });
+    if (filters.category) {
+      if (strapi.services['helper'].getType(filters.category) === 'string')
+        filters.category = [filters.category];
+      params.push({ category: { $in: _.map(filters.category, ObjectId) } });
     }
 
     // check for datasets
-    if (filter.dataset) {
-      if (strapi.services['helper'].getType(filter.dataset) === 'string')
-        filter.dataset = [filter.dataset];
-      params.push({ dataset: { $in: _.map(filter.dataset, ObjectId) } });
+    if (filters.dataset) {
+      if (strapi.services['helper'].getType(filters.dataset) === 'string')
+        filters.dataset = [filters.dataset];
+      params.push({ dataset: { $in: _.map(filters.dataset, ObjectId) } });
     }
 
     // check for spatial_coverages
-    if (filter.spatial_coverage) {
+    if (filters.spatial_coverage) {
       if (
-        strapi.services['helper'].getType(filter.spatial_coverage) === 'string'
+        strapi.services['helper'].getType(filters.spatial_coverage) === 'string'
       )
-        filter.spatial_coverage = [filter.spatial_coverage];
+        filters.spatial_coverage = [filters.spatial_coverage];
       params.push({
         spatial_coverage: {
-          $all: _.map(filter.spatial_coverage, ObjectId),
+          $all: _.map(filters.spatial_coverage, ObjectId),
         },
       });
     }
 
     // check for temporal_coverages
-    if (filter.temporal_coverage) {
+    if (filters.temporal_coverage) {
       if (
-        strapi.services['helper'].getType(filter.temporal_coverage) === 'string'
+        strapi.services['helper'].getType(filters.temporal_coverage) === 'string'
       )
-        filter.temporal_coverage = [filter.temporal_coverage];
+        filters.temporal_coverage = [filters.temporal_coverage];
       params.push({
         temporal_coverages: {
-          $all: _.map(filter.temporal_coverage, ObjectId),
+          $all: _.map(filters.temporal_coverage, ObjectId),
         },
       });
     }
 
     // check for concepts
-    if (filter.concept) {
-      if (strapi.services['helper'].getType(filter.concept) === 'string')
-        filter.concept = [filter.concept];
+    if (filters.concept) {
+      if (strapi.services['helper'].getType(filters.concept) === 'string')
+        filters.concept = [filters.concept];
       params.push({
-        concepts: { $all: _.map(filter.concept, ObjectId) },
+        concepts: { $all: _.map(filters.concept, ObjectId) },
       });
     }
 
     // check for combinators
-    if (filter.combinator) {
-      if (strapi.services['helper'].getType(filter.combinator) === 'string')
-        filter.combinator = [filter.combinator];
+    if (filters.combinator) {
+      if (strapi.services['helper'].getType(filters.combinator) === 'string')
+        filters.combinator = [filters.combinator];
       params.push({
-        combinators: { $all: _.map(filter.combinator, ObjectId) },
+        combinators: { $all: _.map(filters.combinator, ObjectId) },
       });
     }
 
     return params;
   },
 
-  filterToParamsObject: (filter) => {
-    let params = strapi.services['query'].filterToParams(filter);
+  // convert filters to params object
+  filtersToParamsObject: (filters) => {
+    let params = strapi.services['query'].filtersToParams(filters);
     return joinParams(params);
+  },
+
+  // get array of ids matching given params for a given collection
+  getIds: async (collection, params) => {
+    const pipe = [
+      { $match: joinParams(params) },
+      { $group: { _id: null, ids: { $push: '$_id' } } },
+      { $project: { ids: true, _id: false } },
+    ];
+    const results = await strapi.query(collection).model.aggregate(pipe);
+    if (!results.length) return [];
+    return results.pop().ids;
+  },
+
+  // get array od documents matching given params for a given collection
+  getDocs: async (collection, params) => {
+    const pipe = [
+      { $match: joinParams(params) }
+    ];
+    const results = await strapi.query(collection).model.aggregate(pipe);
+    if (!results.length) return [];
+    return results;
   },
 
   aggregateCounts: async (field, params) => {
@@ -236,6 +261,18 @@ module.exports = {
       { $project: { items: true, _id: false } },
     ];
     const results = await strapi.query('feature').model.aggregate(pipe);
+    if (!results.length) return [];
+    return results.pop().items;
+  },
+
+  // get id list of combinators
+  filterCombinators: async (params) => {
+    const pipe = [
+      { $match: joinParams(params) },
+      { $group: { _id: null, items: { $push: '$_id' } } },
+      { $project: { items: true, _id: false } },
+    ];
+    const results = await strapi.query('combinator').model.aggregate(pipe);
     if (!results.length) return [];
     return results.pop().items;
   },
@@ -512,8 +549,58 @@ module.exports = {
 
     return await strapi.services['query'].matchedResults(contextual_params);
   },
+
+  // get the matched combinators
+  matchedCombinators: async (params, ids) => {
+    if (!ids) {
+      // get the matched features
+      const features = await strapi.services['query'].getIds('feature', params);
+      ids = {
+        features: { $in: _.map(features, ObjectId) },
+      };
+    }
+
+    // get the combinators associated with the matched features
+    return await strapi.services['query'].getDocs('combinator', [ids]);
+  },
+
+  // get the search results export
+  exportResults: async (filters) => {
+    let results = {};
+    results.filters = filters;
+
+    // get the params
+    const params = await strapi.services['query'].filtersToParams(filters);
+
+    // get the matched feature ids
+    const ids = await strapi.services['query'].getIds('feature', params);
+
+    // get matched feature docs
+    const features = await strapi.services['query'].getDocs('feature', [{ _id: { $in: _.map(ids, ObjectId) }}]);
+
+    // get matched concept docs
+    const concepts = await strapi.services['query'].matchedConcepts(params);
+
+    // get matched combinators
+    const combinators = await strapi.services['query'].getDocs('combinator', [{ features: { $in: _.map(ids, ObjectId) }}]);
+
+    // santitize the results
+    results.features = features.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models['feature'] })
+    );
+    results.concepts = concepts.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models['concept'] })
+    );
+    results.combinators = combinators.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models['combinator'] })
+    );
+
+    return results;
+  }
 };
 
+
+// helper function to join the params
 const joinParams = (params, op) => {
   op = op || '$and';
   if (!params.length) return {};
