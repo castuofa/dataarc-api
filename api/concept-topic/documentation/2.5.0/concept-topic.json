@@ -613,20 +613,20 @@
               "edges": {
                 "type": "object"
               },
-              "active": {
-                "type": "boolean"
-              },
-              "processing": {
-                "type": "boolean"
-              },
-              "processed_at": {
-                "type": "string"
-              },
               "topics": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "process": {
+                "type": "boolean"
+              },
+              "processed": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

@@ -695,18 +695,6 @@
           "edges": {
             "type": "object"
           },
-          "active": {
-            "type": "boolean",
-            "default": false
-          },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
           "topics": {
             "type": "array",
             "items": {
@@ -737,6 +725,14 @@
                 }
               }
             }
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -766,23 +762,23 @@
           "edges": {
             "type": "object"
           },
-          "active": {
-            "type": "boolean",
-            "default": false
-          },
-          "processing": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed_at": {
-            "type": "string",
-            "format": "date-time"
-          },
           "topics": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "active": {
+            "type": "boolean",
+            "default": false
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
