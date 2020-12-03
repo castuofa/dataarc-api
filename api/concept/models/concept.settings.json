@@ -41,11 +41,9 @@
       ]
     },
     "related": {
-      "autoPopulate": false,
       "collection": "concept"
     },
     "contextual": {
-      "autoPopulate": false,
       "collection": "concept"
     }
   }
