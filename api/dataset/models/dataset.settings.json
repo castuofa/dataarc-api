@@ -61,14 +61,13 @@
       "via": "dataset"
     },
     "combinators": {
-      "via": "dataset",
-      "autoPopulate": false,
-      "collection": "combinator"
+      "collection": "combinator",
+      "via": "dataset"
     },
     "process": {
       "type": "boolean",
       "default": false,
-      "private": true
+      "private": false
     },
     "processed": {
       "type": "datetime"
@@ -76,7 +75,7 @@
     "refresh": {
       "type": "boolean",
       "default": false,
-      "private": true
+      "private": false
     },
     "refreshed": {
       "type": "datetime"

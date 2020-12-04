@@ -4,6 +4,7 @@ let running = false;
 
 module.exports = {
   '*/1 * * * *': async () => {
+    let promises = [];
     // make sure only one instance is running to avoid conflicts
     if (!running) {
       running = true;
@@ -18,15 +19,18 @@ module.exports = {
       // await strapi.services['concept-map'].
       // await strapi.services['concept-map'].process();
 
-      // // process datasets that are queued
-      // await strapi.services['dataset'].process();
+      // process datasets that are queued
+      await strapi.services['dataset'].processDatasets();
 
       // refresh datasets that are queued
-      // await strapi.services['dataset'].refresh();
+      await strapi.services['dataset'].refreshFeatures();
 
-      // // refresh combinators
-      // await strapi.services['combinator'].refresh();
+      // refresh combinators
+      await strapi.services['combinator'].refreshQuery();
+
+      // clean up relations
+
+      running = false;
     }
-    running = false;
   },
 };

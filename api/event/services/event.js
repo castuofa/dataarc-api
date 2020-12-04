@@ -42,7 +42,7 @@ module.exports = {
   },
 
   // log an event to the console
-  log: async (event) => {
+  log: async (event, store = false, time = '') => {
     event = event || {};
     if (
       !event.type ||
@@ -53,11 +53,14 @@ module.exports = {
     )
       return;
     event.controller = pluralize.plural(event.controller);
-    strapi.log[event.type === 'info' ? 'debug' : event.type](
-      `${actionToColor(event.action)} /${event.controller}/${event.document} (${
-        event.name
-      })`
-    );
+    let type = event.type === 'info' ? 'debug' : event.type;
+    let msg = `${actionToColor(event.action)} /${event.controller}/${
+      event.document
+    } (${event.name})`;
+
+    log(type, msg, time);
+
+    if (store) strapi.services['event'].store(event);
   },
 
   // shortcut to log controller events
@@ -109,4 +112,11 @@ module.exports = {
     // store the event
     if (opts.store) strapi.services['event'].store(event);
   },
+};
+
+// simple log function with time calculation
+const log = (type, msg, time = '') => {
+  type = type || 'debug';
+  if (time) time = ` (${Math.ceil(Date.now() - time)} ms)`;
+  strapi.log[type](`${msg}${time}`);
 };

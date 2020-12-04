@@ -923,9 +923,17 @@
               }
             }
           },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
           "processed": {
             "type": "string",
             "format": "date-time"
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
           },
           "refreshed": {
             "type": "string",

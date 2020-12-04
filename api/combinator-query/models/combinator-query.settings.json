@@ -41,12 +41,10 @@
       "default": false
     },
     "dataset_field": {
-      "autoPopulate": false,
       "model": "dataset-field"
     },
     "combinator": {
       "via": "queries",
-      "autoPopulate": false,
       "model": "combinator"
     }
   }

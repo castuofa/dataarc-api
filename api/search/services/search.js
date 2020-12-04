@@ -2,12 +2,13 @@
 
 const fs = require('fs');
 const archiver = require('archiver');
+const { resolve } = require('path');
 
 module.exports = {
   exportResults: async () => {
     let searches = await strapi.query('search').find({ process: 1 });
     if (searches.length) log('debug', `Found ${searches.length} search job(s)`);
-    searches.forEach(async (search) => {
+    for (const search of searches) {
       let start = Date.now();
 
       let dir = `/public/export/`;
@@ -66,7 +67,8 @@ module.exports = {
         name: 'results.json',
       });
       archive.finalize();
-    });
+    }
+    resolve('resolved');
   },
 
   // remove expired searches
@@ -77,14 +79,14 @@ module.exports = {
     if (searches.length)
       log('debug', `Found ${searches.length} expired search(es)`);
     else return;
-    searches.forEach((search) => {
+    for (const search of searches) {
       fs.unlink(`${strapi.dir}${search.path}`, (err) => {
         log('debug', `Export removed for ${search.id}`);
         strapi
           .query('search')
           .update({ id: search.id }, { expires: null, path: null });
       });
-    });
+    }
   },
 };
 

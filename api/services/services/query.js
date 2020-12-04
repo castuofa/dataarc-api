@@ -7,7 +7,7 @@ const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
   // convert filters to params
-  filtersToParams: (filters) => {
+  filtersToParams: async (filters) => {
     // check the filters
     if (!filters) return;
     let params = [];
@@ -107,7 +107,7 @@ module.exports = {
         filters.spatial_coverage = [filters.spatial_coverage];
       params.push({
         spatial_coverage: {
-          $all: _.map(filters.spatial_coverage, ObjectId),
+          $in: _.map(filters.spatial_coverage, ObjectId),
         },
       });
     }
@@ -115,12 +115,13 @@ module.exports = {
     // check for temporal_coverages
     if (filters.temporal_coverage) {
       if (
-        strapi.services['helper'].getType(filters.temporal_coverage) === 'string'
+        strapi.services['helper'].getType(filters.temporal_coverage) ===
+        'string'
       )
         filters.temporal_coverage = [filters.temporal_coverage];
       params.push({
         temporal_coverages: {
-          $all: _.map(filters.temporal_coverage, ObjectId),
+          $in: _.map(filters.temporal_coverage, ObjectId),
         },
       });
     }
@@ -129,8 +130,13 @@ module.exports = {
     if (filters.concept) {
       if (strapi.services['helper'].getType(filters.concept) === 'string')
         filters.concept = [filters.concept];
+      let ids = await strapi.services['query'].getIdsUnwind(
+        'combinator',
+        [{ concepts: { $in: _.map(filters.concept, ObjectId) } }],
+        'features'
+      );
       params.push({
-        concepts: { $all: _.map(filters.concept, ObjectId) },
+        _id: { $in: _.map(ids, ObjectId) },
       });
     }
 
@@ -138,8 +144,13 @@ module.exports = {
     if (filters.combinator) {
       if (strapi.services['helper'].getType(filters.combinator) === 'string')
         filters.combinator = [filters.combinator];
+      let ids = await strapi.services['query'].getIdsUnwind(
+        'combinator',
+        [{ _id: { $in: _.map(filters.combinator, ObjectId) } }],
+        'features'
+      );
       params.push({
-        combinators: { $all: _.map(filters.combinator, ObjectId) },
+        _id: { $in: _.map(ids, ObjectId) },
       });
     }
 
@@ -156,35 +167,34 @@ module.exports = {
   getIds: async (collection, params) => {
     const pipe = [
       { $match: joinParams(params) },
-      { $group: { _id: null, ids: { $push: '$_id' } } },
+      { $group: { _id: null, ids: { $addToSet: '$_id' } } },
       { $project: { ids: true, _id: false } },
     ];
     const results = await strapi.query(collection).model.aggregate(pipe);
     if (!results.length) return [];
-    return results.pop().ids;
+    return _.map(results.pop().ids, String);
   },
 
   // get array od documents matching given params for a given collection
   getDocs: async (collection, params) => {
-    const pipe = [
-      { $match: joinParams(params) }
-    ];
+    const pipe = [{ $match: joinParams(params) }];
     const results = await strapi.query(collection).model.aggregate(pipe);
     if (!results.length) return [];
     return results;
   },
 
-  aggregateCounts: async (field, params) => {
-    params.push({ field: { $not: { $size: 0 } } });
+  // get feature ids by concepts
+  getIdsUnwind: async (collection, params, unwind) => {
     const pipe = [
-      {
-        $match: joinParams(params),
-      },
-      {
-        $sortByCount: `$${field}`,
-      },
+      { $match: joinParams(params) },
+      { $unwind: `$${unwind}` },
+      { $unwind: `$${unwind}` },
+      { $group: { _id: null, ids: { $addToSet: `$${unwind}` } } },
+      { $project: { ids: true, _id: false } },
     ];
-    return strapi.query('feature').model.aggregate(pipe);
+    const results = await strapi.query(collection).model.aggregate(pipe);
+    if (!results.length) return [];
+    return _.map(results.pop().ids, String);
   },
 
   // query to get all of the featurs and create the csv cache file
@@ -251,18 +261,6 @@ module.exports = {
 
     // if it doesnt exist, refresh the file then return
     return await strapi.services['query'].refreshFeaturesCache(file);
-  },
-
-  // get id list of features
-  filterFeatures: async (params) => {
-    const pipe = [
-      { $match: joinParams(params) },
-      { $group: { _id: null, items: { $push: '$_id' } } },
-      { $project: { items: true, _id: false } },
-    ];
-    const results = await strapi.query('feature').model.aggregate(pipe);
-    if (!results.length) return [];
-    return results.pop().items;
   },
 
   // get id list of combinators
@@ -369,107 +367,131 @@ module.exports = {
 
   // get concepts associated with records that match the filter
   matchedConcepts: async (params) => {
-    const pipe = [
-      { $match: joinParams(params) },
-      { $group: { _id: null, a: { $push: '$concepts' } } },
-      { $unwind: '$a' },
-      { $unwind: '$a' },
-      { $group: { _id: '$a' } },
-      { $group: { _id: null, matched: { $push: '$_id' } } },
-    ];
-    let matched = await strapi.query('feature').model.aggregate(pipe);
-    matched = !matched.length ? [] : matched.pop().matched;
-    return matched;
+    // get the features
+    const features = await strapi.services['query'].matchedFeatures(params);
+
+    // get the combinators
+    const combinators = await strapi.services['query'].getIds('combinator', [
+      {
+        features: { $in: _.map(features, ObjectId) },
+      },
+    ]);
+
+    // get the concepts
+    return strapi.services['query'].getIdsUnwind(
+      'combinator',
+      [
+        {
+          _id: { $in: _.map(combinators, ObjectId) },
+        },
+      ],
+      'concepts'
+    );
   },
 
   // get related concepts that match params
   relatedConcepts: async (params) => {
-    const pipe = [
-      { $match: joinParams(params) },
-      { $unwind: '$related' },
-      { $unwind: '$related' },
-      { $group: { _id: '$related' } },
-      { $group: { _id: null, related: { $push: '$_id' } } },
-    ];
-    let related = await strapi.query('concept').model.aggregate(pipe);
-    related = !related.length ? [] : related.pop().related;
-    return related;
+    // get the matched concepts
+    const matched = await strapi.services['query'].matchedConcepts(params);
+
+    // get the related concepts
+    const related = await strapi.services['query'].getIdsUnwind(
+      'concept',
+      [
+        {
+          _id: { $in: _.map(matched, ObjectId) },
+        },
+      ],
+      'related'
+    );
+    return _.difference(related, matched);
   },
 
   // get contextual concepts that match params
   contextualConcepts: async (params) => {
-    const pipe = [
-      { $match: joinParams(params) },
-      { $unwind: '$contextual' },
-      { $unwind: '$contextual' },
-      { $group: { _id: '$contextual' } },
-      { $group: { _id: null, contextual: { $push: '$_id' } } },
-    ];
-    let contextual = await strapi.query('concept').model.aggregate(pipe);
-    contextual = !contextual.length ? [] : contextual.pop().contextual;
-    return contextual;
+    // get the matched concepts
+    const matched = await strapi.services['query'].matchedConcepts(params);
+
+    // get the related concepts
+    const related = await strapi.services['query'].getIdsUnwind(
+      'concept',
+      [
+        {
+          _id: { $in: _.map(matched, ObjectId) },
+        },
+      ],
+      'related'
+    );
+    let filtered = _.difference(related, matched);
+
+    // get the related concepts
+    const contextual = await strapi.services['query'].getIdsUnwind(
+      'concept',
+      [
+        {
+          _id: { $in: _.map(matched, ObjectId) },
+        },
+      ],
+      'contextual'
+    );
+    return _.difference(contextual, filtered);
   },
 
   // array of matched feature ids
   matchedFeatures: async (params) => {
-    return await strapi.services['query'].filterFeatures(params);
+    return strapi.services['query'].getIds('feature', params);
   },
 
   // array of related feature ids
   relatedFeatures: async (params) => {
-    // get the matched concepts
-    let concepts = await strapi.services['query'].matchedConcepts(params);
+    // get the matched features
+    const features = await strapi.services['query'].matchedFeatures(params);
 
     // get the related concepts
-    let related = await strapi.services['query'].relatedConcepts({
-      id: { $in: _.map(concepts, ObjectId) },
-    });
+    // const matched = await strapi.services['query'].matchedConcepts(params);
+    const concepts = await strapi.services['query'].relatedConcepts(params);
 
-    // get the matched features
-    let matched = await strapi.services['query'].filterFeatures(params);
-
-    let related_params = [];
     // include combined concepts
-    related_params.push({
-      concepts: { $in: _.map(_.union(concepts, related), ObjectId) },
-    });
+    let ids = await strapi.services['query'].getIdsUnwind(
+      'combinator',
+      [{ concepts: { $in: _.map(concepts, ObjectId) } }],
+      'features'
+    );
 
-    // eclude features that matched
-    related_params.push({
-      _id: { $nin: _.map(matched, ObjectId) },
-    });
+    // exclude matched features
+    ids = _.difference(ids, features);
 
-    return await strapi.services['query'].filterFeatures(related_params);
+    return strapi.services['query'].getIds('feature', [
+      {
+        _id: { $in: _.map(ids, ObjectId) },
+      },
+    ]);
   },
 
   // array of contextual feature ids
   contextualFeatures: async (params) => {
-    // get the matched concepts
-    let concepts = await strapi.services['query'].matchedConcepts(params);
+    // get the matched and related features
+    const matched = await strapi.services['query'].matchedFeatures(params);
+    const related = await strapi.services['query'].relatedFeatures(params);
 
     // get the contextual concepts
-    let contextual = await strapi.services['query'].contextualConcepts({
-      id: { $in: _.map(concepts, ObjectId) },
-    });
+    const concepts = await strapi.services['query'].contextualConcepts(params);
 
-    // get the matched features
-    let matched = await strapi.services['query'].matchedFeatures(params);
+    // include combined concepts
+    let ids = await strapi.services['query'].getIdsUnwind(
+      'combinator',
+      [{ concepts: { $in: _.map(concepts, ObjectId) } }],
+      'features'
+    );
 
-    // get the related features
-    let related = await strapi.services['query'].relatedFeatures(params);
+    // exclude matched features
+    ids = _.difference(ids, matched, related);
 
-    let contextual_params = [];
-    // include contextual concepts
-    contextual_params.push({
-      concepts: { $in: _.map(contextual, ObjectId) },
-    });
-
-    // eclude features that matched
-    contextual_params.push({
-      _id: { $nin: _.map(_.union(matched, related), ObjectId) },
-    });
-
-    return await strapi.services['query'].filterFeatures(contextual_params);
+    return strapi.services['query'].getIds('feature', [
+      {
+        _id: { $in: _.map(ids, ObjectId) },
+      },
+    ]);
   },
 
   // get result counts that match the filter
@@ -551,17 +573,16 @@ module.exports = {
   },
 
   // get the matched combinators
-  matchedCombinators: async (params, ids) => {
-    if (!ids) {
-      // get the matched features
-      const features = await strapi.services['query'].getIds('feature', params);
-      ids = {
-        features: { $in: _.map(features, ObjectId) },
-      };
-    }
+  matchedCombinators: async (params) => {
+    // get the features
+    const features = await strapi.services['query'].matchedFeatures(params);
 
-    // get the combinators associated with the matched features
-    return await strapi.services['query'].getDocs('combinator', [ids]);
+    // get the combinators
+    return strapi.services['query'].getIds('combinator', [
+      {
+        features: { $in: _.map(features, ObjectId) },
+      },
+    ]);
   },
 
   // get the search results export
@@ -572,17 +593,25 @@ module.exports = {
     // get the params
     const params = await strapi.services['query'].filtersToParams(filters);
 
-    // get the matched feature ids
-    const ids = await strapi.services['query'].getIds('feature', params);
-
-    // get matched feature docs
-    const features = await strapi.services['query'].getDocs('feature', [{ _id: { $in: _.map(ids, ObjectId) }}]);
+    // get the matched feature docs
+    const featureIds = await strapi.services['query'].matchedFeatures(params);
+    const features = await strapi.services['query'].getDocs('feature', [
+      { _id: { $in: _.map(featureIds, ObjectId) } },
+    ]);
 
     // get matched concept docs
-    const concepts = await strapi.services['query'].matchedConcepts(params);
+    const conceptIds = await strapi.services['query'].matchedConcepts(params);
+    const concepts = await strapi.services['query'].getDocs('concept', [
+      { _id: { $in: _.map(conceptIds, ObjectId) } },
+    ]);
 
-    // get matched combinators
-    const combinators = await strapi.services['query'].getDocs('combinator', [{ features: { $in: _.map(ids, ObjectId) }}]);
+    // get matched combinator docs
+    const combinatorIds = await strapi.services['query'].matchedCombinators(
+      params
+    );
+    const combinators = await strapi.services['query'].getDocs('combinator', [
+      { _id: { $in: _.map(combinatorIds, ObjectId) } },
+    ]);
 
     // santitize the results
     results.features = features.map((entity) =>
@@ -596,9 +625,8 @@ module.exports = {
     );
 
     return results;
-  }
+  },
 };
-
 
 // helper function to join the params
 const joinParams = (params, op) => {

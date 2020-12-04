@@ -11,31 +11,52 @@ module.exports = {
     strapi.query('combinator').update({ id }, { review: true });
   },
 
-  updateFeatures: async (results) => {
-    _.each(results.features, (feature) => {
-      let combinators = _.union(feature.combinators, [results.combinator.id]);
-      let concepts = _.union(
-        feature.concepts,
-        _.map(results.combinator.concepts, 'id')
-      );
-      strapi
-        .query('feature')
-        .update({ id: feature.id }, { combinators, concepts });
-    });
-  },
-
   saveResults: async (results) => {
     // set the related features
     let features = _.map(results.features, 'id');
     if (features.length) {
-      strapi.services['combinator'].updateFeatures(results);
-      strapi
+      await strapi
         .query('combinator')
         .update({ id: results.combinator.id }, { features });
     }
   },
 
-  results: async (params) => {
+  // set refresh flag
+  setRefresh: async (id, value, datetime) => {
+    datetime = datetime || null;
+    let data = { refresh: value };
+    if (datetime) data.refreshed = datetime;
+    return strapi.query('combinator').update({ id: id }, data);
+  },
+
+  refreshQuery: async () => {
+    let startMain = Date.now();
+    let combinators = await strapi.query('combinator').find({ refresh: 1 });
+    for (const combinator of combinators) {
+      let startCombinator = Date.now();
+
+      // run the results
+      await strapi.services['combinator'].refresh(combinator);
+
+      // set the refresh datetime / boolean
+      await strapi.services['combinator'].setRefresh(
+        combinator.id,
+        false,
+        Date.now()
+      );
+
+      log(
+        'debug',
+        `Combinator ${combinator.id} has been refreshed`,
+        startCombinator
+      );
+    }
+
+    // log end
+    log('debug', 'Combinators have all been refreshed', startMain);
+  },
+
+  refresh: async (combinator) => {
     let result = {
       combinator: null,
       features: [],
@@ -43,17 +64,14 @@ module.exports = {
       total_count: 0,
     };
 
-    // find the entry
-    const entry = await strapi.query('combinator').findOne(params);
-
-    // only proceed if we found an entry
-    if (entry != null) {
+    // only proceed if we found an combinator
+    if (combinator != null) {
       let conditions = [];
-      result.combinator = entry;
+      result.combinator = combinator;
 
       // set the combinator operator
       let op;
-      switch (entry.operator) {
+      switch (combinator.operator) {
         case 'and':
           op = '$and';
           break;
@@ -73,22 +91,29 @@ module.exports = {
       }
 
       // loop through the queries getting results
-      let promises = [];
-      _.each(entry.queries, (query) => {
-        promises.push(strapi.services['combinator-query'].getObject(query));
-      });
+      for (const query of combinator.queries) {
+        // get the field object
+        let dataset_field = await strapi
+          .query('dataset-field')
+          .findOne({ id: query.dataset_field });
+        conditions.push(getObject(dataset_field, query));
+      }
+      // _.each(combinator.queries, (query) => {
+      //   promises.push(getObject(query));
+      // });
 
-      await Promise.allSettled(promises).then((res) => {
-        let results = _.groupBy(res, 'status');
-        if (results.fulfilled) conditions = _.map(results.fulfilled, 'value');
-      });
+      // await Promise.allSettled(promises).then((res) => {
+      //   let results = _.groupBy(res, 'status');
+      //   if (results.fulfilled) conditions = _.map(results.fulfilled, 'value');
+      // });
 
       // if conditions are empty we're done
+      conditions = _.compact(conditions);
       if (conditions.length == 0) return result;
 
       // build the query conditions and get our features
       let where = {
-        dataset: entry.dataset,
+        dataset: combinator.dataset.id,
         [op]: conditions,
       };
 
@@ -97,7 +122,7 @@ module.exports = {
       result.matched_count = result.features.length;
       result.total_count = await strapi
         .query('feature')
-        .count({ dataset: entry.dataset });
+        .count({ dataset: combinator.dataset });
 
       // save the results
       strapi.services['combinator'].saveResults(result);
@@ -105,4 +130,96 @@ module.exports = {
 
     return result;
   },
+
+  results: async (params) => {
+    // find the combinator
+    const combinator = await strapi.query('combinator').findOne(params);
+    return strapi.services['combinator'].refresh(combinator);
+  },
+};
+
+// simple log function with time calculation
+const log = (type, msg, time = '') => {
+  type = type || 'debug';
+  if (time) time = ` (${Math.ceil(Date.now() - time)} ms)`;
+  strapi.log[type](`${msg}${time}`);
+};
+
+const getObject = (dataset_field, query) => {
+  // set field name
+  let field = query.field;
+
+  // if field is within an array prepend array name to field name
+  if (dataset_field.parent) field = `${dataset_field.parent}.${field}`;
+
+  // prepend properties
+  field = `properties.${field}`;
+
+  // get the primitive of the value
+  let value = strapi.services['helper'].parsePrimitive(query.value);
+
+  // get the type of value
+  let type = strapi.services['helper'].getType(value);
+
+  // define our allowed arrays
+  let allowed_types = ['string', 'number', 'boolean', 'array'];
+  let allowed_arrays = ['in', 'not_in'];
+
+  // don't allowed if not an expected type
+  let allowed = _.indexOf(allowed_types, type) !== -1;
+
+  // don't allowed empty strings
+  if (type === 'string') allowed = value.trim() !== '';
+
+  // only allowed arrays for in, not_in query
+  if (type === 'array')
+    allowed = _.indexOf(allowed_arrays, query.operator) !== -1;
+
+  // console.log(
+  //   `${field}: [${query.operator}] ${value} (${type}) -- ${
+  //     allowed ? 'keep' : 'reject'
+  //   }`
+  // );
+
+  // only continue if the query is allowed
+  if (!allowed) return;
+
+  // add the query that matches the operator
+  switch (query.operator) {
+    case 'equals':
+      return { [field]: { $eq: value } };
+    case 'not_equals':
+      return { [field]: { $ne: value } };
+    case 'less_than':
+      return { [field]: { $lt: value } };
+    case 'greater_than':
+      return { [field]: { $gt: value } };
+    case 'less_than_or_equal_to':
+      return { [field]: { $lte: value } };
+    case 'greater_than_or_equal_to':
+      return { [field]: { $gte: value } };
+    case 'in':
+      return { [field]: { $in: value } };
+    case 'not_in':
+      return { [field]: { $nin: value } };
+    case 'contains':
+      return {
+        [field]: { $regex: value, $options: 'i' },
+      };
+    case 'not_contains':
+      return {
+        [field]: { $not: { $regex: value, $options: 'i' } },
+      };
+    case 'starts_with':
+      return {
+        [field]: { $regex: '^' + value, $options: 'i' },
+      };
+    case 'ends_with':
+      return {
+        [field]: { $regex: value + '$', $options: 'i' },
+      };
+    default:
+      // default to equals
+      return { [field]: { $eq: value } };
+  }
 };

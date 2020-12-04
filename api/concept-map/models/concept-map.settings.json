@@ -36,7 +36,6 @@
       "type": "json"
     },
     "topics": {
-      "autoPopulate": false,
       "collection": "concept-topic",
       "via": "map"
     },
@@ -47,7 +46,7 @@
     "process": {
       "type": "boolean",
       "default": false,
-      "private": true
+      "private": false
     },
     "processed": {
       "type": "datetime"

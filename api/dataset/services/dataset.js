@@ -27,90 +27,277 @@ module.exports = {
     return strapi.query('combinator').model.deleteMany({ dataset: id });
   },
 
-  // set processed_at
-  setProcess: async (id, value) => {
-    let processing = value ? false : true;
-    return strapi
-      .query('dataset')
-      .update({ id: id }, { processed_at: value, processing: processing });
-  },
-
   // set fields as missing and mark for review
   setFieldsMissing: async (id) => {
-    return strapi
+    await strapi
       .query('dataset-field')
-      .update({ dataset: id }, { missing: true, review: true });
+      .model.updateMany({ dataset: id }, { missing: true, review: true })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 
-  // process the queued up datasets
-  processNext: async () => {
-    console.log('process next loaded');
+  // set process flag
+  setProcess: async (id, value, datetime) => {
+    datetime = datetime || null;
+    let data = { process: value };
+    if (datetime) data.processed = datetime;
+    return strapi.query('dataset').update({ id: id }, data);
+  },
+
+  // set refresh flag
+  setRefresh: async (id, value, datetime) => {
+    datetime = datetime || null;
+    let data = { refresh: value };
+    if (datetime) data.refreshed = datetime;
+    return strapi.query('dataset').update({ id: id }, data);
+  },
+
+  // process datasets
+  processDatasets: async () => {
+    let startMain = Date.now();
     let datasets = await strapi.query('dataset').find({ process: 1 });
-    datasets.forEach(dataset => {
-      console.log(`processing ${dataset.title}`);
-    });
-    console.log('process is done');
-  },
+    for (const dataset of datasets) {
+      let start = Date.now();
 
-  // process dataset
-  process: async (entity) => {
-    let start = Date.now();
-    let source = await strapi.services['helper'].loadSource(entity.source);
-    let schema = await strapi.services['helper'].getSchema('geojson');
-    let valid = await strapi.services['helper'].checkSource(schema, source);
-    if (!valid) throw new Error('Invalid data source');
+      // get and validate the source
+      const fetch = require('node-fetch');
+      const sourceUrl = `https://raw.githubusercontent.com/castuofa/dataarc-source/main/${dataset.source}`;
 
-    // clear processed_at field
-    await strapi.services['dataset'].setProcess(entity.id, null);
+      // fetch the file
+      start = Date.now();
+      let valid_response = true;
+      const response = await fetch(sourceUrl).catch((err) => {
+        // disable processing and log event
+        strapi.services['dataset'].setProcess(dataset.id, false);
+        strapi.services.event.log(
+          {
+            type: 'error',
+            action: 'process',
+            controller: 'dataset',
+            document: dataset.id,
+            name: dataset.name,
+            details: err.message,
+          },
+          true
+        );
+        valid_response = false;
+      });
+      if (!valid_response) continue;
 
-    // set existing fields to missing and mark for review
-    await strapi.services['dataset'].setFieldsMissing(entity.id);
-
-    // remove existing features
-    await strapi.services['dataset'].removeFeatures(entity.id);
-
-    // add the features
-    let features = [];
-    _.each(source.features, (source) => {
-      let processed = process(entity, source);
-      if (processed) {
-        let refreshed = refresh(entity, processed);
-        if (refreshed) features.push(refreshed);
-      }
-    });
-
-    // log that we're done processing
-    log(
-      'debug',
-      `${chalk.green(features.length)} processed, ${chalk.red(
-        source.features.length - features.length
-      )} rejected`,
-      start
-    );
-
-    // prepart to insert the features
-    start = Date.now();
-    let insert = await strapi.services['dataset'].addFeatures(features, {
-      ordered: false,
-    });
-    if (insert) {
+      // log our response
       log(
         'debug',
-        `${chalk.green(insert.length)} inserted, ${chalk.red(
-          features.length - insert.length
+        `FETCH ${dataset.source} ${codeToColor(response.status)}`,
+        start
+      );
+
+      // validate our results are OK or throw an error
+      valid_response = response.ok;
+      if (!valid_response) {
+        // disable processing and log event
+        await strapi.services['dataset'].setProcess(dataset.id, false);
+        await strapi.services.event.log(
+          {
+            type: 'error',
+            action: 'process',
+            controller: 'dataset',
+            document: dataset.id,
+            name: dataset.name,
+            details: response.statusText,
+          },
+          true
+        );
+        continue;
+      }
+
+      // the response was valid so get the contents as text and check for BOM
+      let text = await response.text();
+      if (text.charCodeAt(0) === 0xfeff) {
+        text = text.substr(1);
+      }
+      let source;
+      try {
+        source = JSON.parse(text);
+      } catch (err) {
+        // disable processing and log event
+        await strapi.services['dataset'].setProcess(dataset.id, false);
+        await strapi.services.event.log(
+          {
+            type: 'error',
+            action: 'process',
+            controller: 'dataset',
+            document: dataset.id,
+            name: dataset.name,
+            details: err.message,
+          },
+          true
+        );
+        continue;
+      }
+
+      // define the valid dataset schema
+      const schema = {
+        type: 'object',
+        required: ['type', 'features'],
+        properties: {
+          type: {
+            type: 'string',
+            enum: ['FeatureCollection'],
+          },
+        },
+        features: {
+          type: 'array',
+          items: {
+            type: 'object',
+            required: ['type', 'geometry', 'properties'],
+            properties: {
+              type: {
+                type: 'string',
+                enum: ['Feature'],
+              },
+              properties: {
+                oneOf: [{ type: 'null' }, { type: 'object' }],
+              },
+              geometry: {
+                type: 'object',
+                required: ['type', 'coordinates'],
+                properties: {
+                  type: {
+                    type: 'string',
+                    enum: ['Point'],
+                  },
+                  coordinates: {
+                    type: 'array',
+                    maxItems: 3,
+                    items: {
+                      type: 'number',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // validate the dataset source against the schema
+      const validate = require('jsonschema').validate;
+      let valid_geojson = validate(source, schema, {
+        required: true,
+      }).valid;
+
+      // if source is not valid, skip processing this dataset
+      if (!valid_geojson) {
+        // disable processing and log event
+        await strapi.services['dataset'].setProcess(dataset.id, false);
+        await strapi.services.event.log(
+          {
+            type: 'error',
+            action: 'process',
+            controller: 'dataset',
+            document: dataset.id,
+            name: dataset.name,
+            details: 'Invalid geojson source',
+          },
+          true
+        );
+        continue;
+      }
+
+      // set existing fields to missing and mark for review
+      await strapi.services['dataset'].setFieldsMissing(dataset.id);
+
+      // remove existing features
+      await strapi.services['dataset'].removeFeatures(dataset.id);
+
+      // process and refresh the features from source
+      let features = [];
+      for (const feature of source.features) {
+        const processed = process(dataset, feature);
+        if (processed) {
+          const refreshed = refresh(dataset, processed);
+          if (refreshed) features.push(refreshed);
+        }
+      }
+
+      // log that we're done processing
+      log(
+        'debug',
+        `${chalk.green(features.length)} processed, ${chalk.red(
+          source.features.length - features.length
         )} rejected`,
         start
       );
 
-      // refresh the spatial attributes and feature data
-      // strapi.services['dataset'].refreshFeatures(entity);
-      // strapi.services['dataset'].refreshFeaturesSpatial(entity);
+      // insert the features
+      start = Date.now();
+      const insert = await strapi.services['dataset'].addFeatures(features, {
+        ordered: false,
+      });
+      if (insert) {
+        log(
+          'debug',
+          `${chalk.green(insert.length)} inserted, ${chalk.red(
+            features.length - insert.length
+          )} rejected`,
+          start
+        );
 
-      // set the process datetime / boolean
-      await strapi.services['dataset'].setProcess(entity.id, Date.now());
+        // start the field extraction process
+        await strapi.services['dataset'].extractFields(dataset);
+
+        // refresh the spatial attributes and feature data
+        // strapi.services['dataset'].refreshFeatures(dataset);
+        // strapi.services['dataset'].refreshFeaturesSpatial(dataset);
+
+        // set the process datetime / boolean
+        await strapi.services['dataset'].setProcess(
+          dataset.id,
+          false,
+          Date.now()
+        );
+      }
     }
 
-    return '';
+    // log end
+    log('debug', 'Datasets have all been processed', startMain);
+  },
+
+  // refresh features
+  refreshFeatures: async () => {
+    let startMain = Date.now();
+    let datasets = await strapi.query('dataset').find({ refresh: 1 });
+    for (const dataset of datasets) {
+      let startDataset = Date.now();
+
+      log('debug', `Refreshing all features in ${dataset.title}`);
+
+      // get all dataset features
+      let features = await strapi
+        .query('feature')
+        .find({ dataset: dataset.id });
+
+      // refresh each feature
+      for (const feature of features) {
+        let start = Date.now();
+        let refreshed = refresh(dataset, feature);
+        await strapi.query('feature').update({ id: feature.id }, refreshed);
+        log('debug', `Feature ${feature.id} refreshed`, start);
+      }
+
+      // set the refresh datetime / boolean
+      await strapi.services['dataset'].setRefresh(
+        dataset.id,
+        false,
+        Date.now()
+      );
+
+      log('debug', `Dataset has been refreshed`, startDataset);
+    }
+
+    // log end
+    log('debug', 'Datasets have all been refreshed', startMain);
   },
 
   // refresh feature spatial attributes
@@ -213,28 +400,6 @@ module.exports = {
     });
   },
 
-  // refresh features
-  refreshFeatures: async (entity) => {
-    log('debug', `Refreshing all features in ${entity.title}`);
-
-    // get all dataset features
-    let features = await strapi
-      .query('feature')
-      .model.find({ dataset: entity.id });
-
-    console.log(features.length);
-
-    // _.each(entity.features, (id) => {
-    //   promises.push(strapi.services['feature'].refresh({ id }));
-    // });
-
-    // make sure all promises have been settled
-    // return Promise.allSettled(promises).then(async (res) => {
-    //   strapi.log.debug(`All features refreshed`);
-    //   await strapi.services['dataset'].refreshCombinators(entity);
-    // });
-  },
-
   // refresh combinators
   refreshCombinators: async (entity) => {
     if (!entity) return;
@@ -317,6 +482,19 @@ module.exports = {
 // ************************
 // *** HELPER FUNCTIONS ***
 // ************************
+
+// convert http code to color
+const codeToColor = (code) => {
+  return code >= 500
+    ? chalk.red(code)
+    : code >= 400
+    ? chalk.yellow(code)
+    : code >= 300
+    ? chalk.cyan(code)
+    : code >= 200
+    ? chalk.green(code)
+    : code;
+};
 
 // simple log function with time calculation
 const log = (type, msg, time = '') => {
