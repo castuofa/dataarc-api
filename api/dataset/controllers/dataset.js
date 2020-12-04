@@ -17,7 +17,7 @@ module.exports = {
       strapi.services['event'].controller(info, entity, ctx);
 
       // flag dataset for processing
-      strapi.services[info.name].setProcess(entity.id, true);
+      strapi.services[info.name].flagProcess(entity.id);
     }
     return sanitizeEntity(entity, { model: strapi.models[info.name] });
   },
@@ -31,7 +31,7 @@ module.exports = {
       strapi.services['event'].controller(info, entity, ctx);
 
       // flag dataset for refreshing
-      strapi.services[info.name].setRefresh(entity.id, true);
+      strapi.services[info.name].flagRefresh(entity.id);
     }
     return sanitizeEntity(entity, { model: strapi.models[info.name] });
   },

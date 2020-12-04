@@ -7,23 +7,26 @@ const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
   // convert filters to params
-  filtersToParams: async (filters) => {
+  processFilters: async (filters) => {
     // check the filters
     if (!filters) return;
-    let params = [];
+    let params = {
+      filters: filters,
+      query: [],
+    };
 
     // check for keywords *THIS SHOULD BE FIRST
-    if (filters.keyword) {
-      params.push({ $text: { $search: filters.keyword } });
+    if (params.filters.keyword) {
+      params.query.push({ $text: { $search: params.filters.keyword } });
     }
 
     // check for bounding box
-    if (filters.box) {
-      let minX = filters.box[0][0];
-      let maxX = filters.box[1][0];
-      let minY = filters.box[1][1];
-      let maxY = filters.box[0][1];
-      params.push({
+    if (params.filters.box) {
+      let minX = params.filters.box[0][0];
+      let maxX = params.filters.box[1][0];
+      let minY = params.filters.box[1][1];
+      let maxY = params.filters.box[0][1];
+      params.query.push({
         location: {
           $geoWithin: {
             $box: [
@@ -36,11 +39,11 @@ module.exports = {
     }
 
     // check for polygon
-    if (filters.polygon) {
-      let poly = filters.polygon;
+    if (params.filters.polygon) {
+      let poly = params.filters.polygon;
       // close the polygon if we need to
       if (!_.isEqual(poly[0], poly[poly.length - 1])) poly.push(poly[0]);
-      params.push({
+      params.query.push({
         location: {
           $geoWithin: {
             $polygon: poly,
@@ -50,21 +53,21 @@ module.exports = {
     }
 
     // check for circle
-    if (filters.circle) {
-      params.push({
+    if (params.filters.circle) {
+      params.query.push({
         location: {
           $geoWithin: {
-            $center: filters.circle,
+            $center: params.filters.circle,
           },
         },
       });
     }
 
     // check for temporal
-    if (filters.temporal && _.isArray(filters.temporal)) {
-      _.each(filters.temporal, (period) => {
+    if (params.filters.temporal && _.isArray(params.filters.temporal)) {
+      _.each(params.filters.temporal, (period) => {
         if (Number.isInteger(period.begin) && Number.isInteger(period.end)) {
-          params.push({
+          params.query.push({
             $and: [
               { begin: { $lt: period.end } },
               { end: { $gt: period.begin } },
@@ -72,12 +75,12 @@ module.exports = {
           });
         } else {
           if (Number.isInteger(period.begin)) {
-            params.push({
+            params.query.push({
               end: { $gt: period.begin },
             });
           }
           if (Number.isInteger(period.end)) {
-            params.push({
+            params.query.push({
               begin: { $lt: period.end },
             });
           }
@@ -86,70 +89,84 @@ module.exports = {
     }
 
     // check for categories
-    if (filters.category) {
-      if (strapi.services['helper'].getType(filters.category) === 'string')
-        filters.category = [filters.category];
-      params.push({ category: { $in: _.map(filters.category, ObjectId) } });
+    if (params.filters.category) {
+      if (
+        strapi.services['helper'].getType(params.filters.category) === 'string'
+      )
+        params.filters.category = [params.filters.category];
+      params.query.push({
+        category: { $in: _.map(params.filters.category, ObjectId) },
+      });
     }
 
     // check for datasets
-    if (filters.dataset) {
-      if (strapi.services['helper'].getType(filters.dataset) === 'string')
-        filters.dataset = [filters.dataset];
-      params.push({ dataset: { $in: _.map(filters.dataset, ObjectId) } });
+    if (params.filters.dataset) {
+      if (
+        strapi.services['helper'].getType(params.filters.dataset) === 'string'
+      )
+        params.filters.dataset = [params.filters.dataset];
+      params.query.push({
+        dataset: { $in: _.map(params.filters.dataset, ObjectId) },
+      });
     }
 
     // check for spatial_coverages
-    if (filters.spatial_coverage) {
+    if (params.filters.spatial_coverage) {
       if (
-        strapi.services['helper'].getType(filters.spatial_coverage) === 'string'
+        strapi.services['helper'].getType(params.filters.spatial_coverage) ===
+        'string'
       )
-        filters.spatial_coverage = [filters.spatial_coverage];
-      params.push({
+        params.filters.spatial_coverage = [params.filters.spatial_coverage];
+      params.query.push({
         spatial_coverage: {
-          $in: _.map(filters.spatial_coverage, ObjectId),
+          $in: _.map(params.filters.spatial_coverage, ObjectId),
         },
       });
     }
 
     // check for temporal_coverages
-    if (filters.temporal_coverage) {
+    if (params.filters.temporal_coverage) {
       if (
-        strapi.services['helper'].getType(filters.temporal_coverage) ===
+        strapi.services['helper'].getType(params.filters.temporal_coverage) ===
         'string'
       )
-        filters.temporal_coverage = [filters.temporal_coverage];
-      params.push({
+        params.filters.temporal_coverage = [params.filters.temporal_coverage];
+      params.query.push({
         temporal_coverages: {
-          $in: _.map(filters.temporal_coverage, ObjectId),
+          $in: _.map(params.filters.temporal_coverage, ObjectId),
         },
       });
     }
 
     // check for concepts
-    if (filters.concept) {
-      if (strapi.services['helper'].getType(filters.concept) === 'string')
-        filters.concept = [filters.concept];
+    if (params.filters.concept) {
+      if (
+        strapi.services['helper'].getType(params.filters.concept) === 'string'
+      )
+        params.filters.concept = [params.filters.concept];
       let ids = await strapi.services['query'].getIdsUnwind(
         'combinator',
-        [{ concepts: { $in: _.map(filters.concept, ObjectId) } }],
+        [{ concepts: { $in: _.map(params.filters.concept, ObjectId) } }],
         'features'
       );
-      params.push({
+      params.query.push({
         _id: { $in: _.map(ids, ObjectId) },
       });
     }
 
     // check for combinators
-    if (filters.combinator) {
-      if (strapi.services['helper'].getType(filters.combinator) === 'string')
-        filters.combinator = [filters.combinator];
+    if (params.filters.combinator) {
+      if (
+        strapi.services['helper'].getType(params.filters.combinator) ===
+        'string'
+      )
+        params.filters.combinator = [params.filters.combinator];
       let ids = await strapi.services['query'].getIdsUnwind(
         'combinator',
-        [{ _id: { $in: _.map(filters.combinator, ObjectId) } }],
+        [{ _id: { $in: _.map(params.filters.combinator, ObjectId) } }],
         'features'
       );
-      params.push({
+      params.query.push({
         _id: { $in: _.map(ids, ObjectId) },
       });
     }
@@ -157,16 +174,10 @@ module.exports = {
     return params;
   },
 
-  // convert filters to params object
-  filtersToParamsObject: (filters) => {
-    let params = strapi.services['query'].filtersToParams(filters);
-    return joinParams(params);
-  },
-
   // get array of ids matching given params for a given collection
   getIds: async (collection, params) => {
     const pipe = [
-      { $match: joinParams(params) },
+      { $match: joinQuery(params.query) },
       { $group: { _id: null, ids: { $addToSet: '$_id' } } },
       { $project: { ids: true, _id: false } },
     ];
@@ -177,7 +188,7 @@ module.exports = {
 
   // get array od documents matching given params for a given collection
   getDocs: async (collection, params) => {
-    const pipe = [{ $match: joinParams(params) }];
+    const pipe = [{ $match: joinQuery(params.query) }];
     const results = await strapi.query(collection).model.aggregate(pipe);
     if (!results.length) return [];
     return results;
@@ -186,7 +197,7 @@ module.exports = {
   // get feature ids by concepts
   getIdsUnwind: async (collection, params, unwind) => {
     const pipe = [
-      { $match: joinParams(params) },
+      { $match: joinQuery(params.query) },
       { $unwind: `$${unwind}` },
       { $unwind: `$${unwind}` },
       { $group: { _id: null, ids: { $addToSet: `$${unwind}` } } },
@@ -266,7 +277,7 @@ module.exports = {
   // get id list of combinators
   filterCombinators: async (params) => {
     const pipe = [
-      { $match: joinParams(params) },
+      { $match: joinQuery(params.query) },
       { $group: { _id: null, items: { $push: '$_id' } } },
       { $project: { items: true, _id: false } },
     ];
@@ -278,7 +289,7 @@ module.exports = {
   // get counts for the timeline
   filterTimeline: async (params, start, resolution) => {
     const pipe = [
-      { $match: joinParams(params) },
+      { $match: joinQuery(params.query) },
       {
         $group: {
           _id: {
@@ -368,7 +379,9 @@ module.exports = {
   // get concepts associated with records that match the filter
   matchedConcepts: async (params) => {
     // get the features
-    const features = await strapi.services['query'].matchedFeatures(params);
+    const features = await strapi.services['query'].matchedFeatures(
+      params.query
+    );
 
     // get the combinators
     const combinators = await strapi.services['query'].getIds('combinator', [
@@ -392,7 +405,9 @@ module.exports = {
   // get related concepts that match params
   relatedConcepts: async (params) => {
     // get the matched concepts
-    const matched = await strapi.services['query'].matchedConcepts(params);
+    const matched = await strapi.services['query'].matchedConcepts(
+      params.query
+    );
 
     // get the related concepts
     const related = await strapi.services['query'].getIdsUnwind(
@@ -410,7 +425,9 @@ module.exports = {
   // get contextual concepts that match params
   contextualConcepts: async (params) => {
     // get the matched concepts
-    const matched = await strapi.services['query'].matchedConcepts(params);
+    const matched = await strapi.services['query'].matchedConcepts(
+      params.query
+    );
 
     // get the related concepts
     const related = await strapi.services['query'].getIdsUnwind(
@@ -439,17 +456,21 @@ module.exports = {
 
   // array of matched feature ids
   matchedFeatures: async (params) => {
-    return strapi.services['query'].getIds('feature', params);
+    return strapi.services['query'].getIds('feature', params.query);
   },
 
   // array of related feature ids
   relatedFeatures: async (params) => {
     // get the matched features
-    const features = await strapi.services['query'].matchedFeatures(params);
+    const features = await strapi.services['query'].matchedFeatures(
+      params.query
+    );
 
     // get the related concepts
     // const matched = await strapi.services['query'].matchedConcepts(params);
-    const concepts = await strapi.services['query'].relatedConcepts(params);
+    const concepts = await strapi.services['query'].relatedConcepts(
+      params.query
+    );
 
     // include combined concepts
     let ids = await strapi.services['query'].getIdsUnwind(
@@ -471,11 +492,17 @@ module.exports = {
   // array of contextual feature ids
   contextualFeatures: async (params) => {
     // get the matched and related features
-    const matched = await strapi.services['query'].matchedFeatures(params);
-    const related = await strapi.services['query'].relatedFeatures(params);
+    const matched = await strapi.services['query'].matchedFeatures(
+      params.query
+    );
+    const related = await strapi.services['query'].relatedFeatures(
+      params.query
+    );
 
     // get the contextual concepts
-    const concepts = await strapi.services['query'].contextualConcepts(params);
+    const concepts = await strapi.services['query'].contextualConcepts(
+      params.query
+    );
 
     // include combined concepts
     let ids = await strapi.services['query'].getIdsUnwind(
@@ -497,7 +524,7 @@ module.exports = {
   // get result counts that match the filter
   matchedResults: async (params) => {
     const pipe = [
-      { $match: joinParams(params) },
+      { $match: joinQuery(params.query) },
       {
         $group: {
           _id: {
@@ -548,7 +575,7 @@ module.exports = {
   // get result counts that are related
   relatedResults: async (params) => {
     // get the matched features
-    let features = await strapi.services['query'].relatedFeatures(params);
+    let features = await strapi.services['query'].relatedFeatures(params.query);
 
     let related_params = [];
     // only include related features
@@ -561,7 +588,9 @@ module.exports = {
   // get result counts that are contextual
   contextualResults: async (params) => {
     // get the matched features
-    let features = await strapi.services['query'].contextualFeatures(params);
+    let features = await strapi.services['query'].contextualFeatures(
+      params.query
+    );
 
     let contextual_params = [];
     // only include related features
@@ -575,7 +604,9 @@ module.exports = {
   // get the matched combinators
   matchedCombinators: async (params) => {
     // get the features
-    const features = await strapi.services['query'].matchedFeatures(params);
+    const features = await strapi.services['query'].matchedFeatures(
+      params.query
+    );
 
     // get the combinators
     return strapi.services['query'].getIds('combinator', [
@@ -591,23 +622,27 @@ module.exports = {
     results.filters = filters;
 
     // get the params
-    const params = await strapi.services['query'].filtersToParams(filters);
+    const params = await strapi.services['query'].processFilters(filters);
 
     // get the matched feature docs
-    const featureIds = await strapi.services['query'].matchedFeatures(params);
+    const featureIds = await strapi.services['query'].matchedFeatures(
+      params.query
+    );
     const features = await strapi.services['query'].getDocs('feature', [
       { _id: { $in: _.map(featureIds, ObjectId) } },
     ]);
 
     // get matched concept docs
-    const conceptIds = await strapi.services['query'].matchedConcepts(params);
+    const conceptIds = await strapi.services['query'].matchedConcepts(
+      params.query
+    );
     const concepts = await strapi.services['query'].getDocs('concept', [
       { _id: { $in: _.map(conceptIds, ObjectId) } },
     ]);
 
     // get matched combinator docs
     const combinatorIds = await strapi.services['query'].matchedCombinators(
-      params
+      params.query
     );
     const combinators = await strapi.services['query'].getDocs('combinator', [
       { _id: { $in: _.map(combinatorIds, ObjectId) } },
@@ -629,10 +664,10 @@ module.exports = {
 };
 
 // helper function to join the params
-const joinParams = (params, op) => {
+const joinQuery = (query, op) => {
   op = op || '$and';
-  if (!params.length) return {};
-  let query = {};
-  query[op] = params;
-  return query;
+  if (!query.length) return {};
+  let q = {};
+  q[op] = query;
+  return q;
 };

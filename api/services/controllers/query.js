@@ -24,15 +24,15 @@ module.exports = {
       return;
 
     // get the params
-    const params = await strapi.services['query'].filtersToParams(filters);
+    const params = await strapi.services['query'].processFilters(filters);
 
     // get the results
     if (type === 'matched')
-      return await strapi.services['query'].matchedFeatures(params);
+      return await strapi.services['query'].matchedFeatures(params.query);
     if (type === 'related')
-      return await strapi.services['query'].relatedFeatures(params);
+      return await strapi.services['query'].relatedFeatures(params.query);
     if (type === 'contextual')
-      return await strapi.services['query'].contextualFeatures(params);
+      return await strapi.services['query'].contextualFeatures(params.query);
 
     return;
   },
@@ -52,11 +52,11 @@ module.exports = {
     const start = filters.start;
 
     // get the params
-    const params = await strapi.services['query'].filtersToParams(filters);
+    const params = await strapi.services['query'].processFilters(filters);
 
     // get the results
     const results = await strapi.services['query'].filterTimeline(
-      params,
+      params.query,
       start,
       type
     );
@@ -80,15 +80,15 @@ module.exports = {
       return;
 
     // get the params
-    const params = await strapi.services['query'].filtersToParams(filters);
+    const params = await strapi.services['query'].processFilters(filters);
 
     // get the concepts
     if (type === 'matched')
-      return await strapi.services['query'].matchedConcepts(params);
+      return await strapi.services['query'].matchedConcepts(params.query);
     if (type === 'related')
-      return await strapi.services['query'].relatedConcepts(params);
+      return await strapi.services['query'].relatedConcepts(params.query);
     if (type === 'contextual')
-      return await strapi.services['query'].contextualConcepts(params);
+      return await strapi.services['query'].contextualConcepts(params.query);
 
     return;
   },
@@ -104,7 +104,7 @@ module.exports = {
       return;
 
     // get the params
-    const params = await strapi.services['query'].filtersToParams(filters);
+    const params = await strapi.services['query'].processFilters(filters);
 
     // get the results
     if (type === 'matched')

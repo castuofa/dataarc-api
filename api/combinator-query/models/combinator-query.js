@@ -36,7 +36,7 @@ module.exports = {
       // if query was set to review, mark combinator to review
       if (strapi.services['helper'].hasFields(['review'], data)) {
         if (data.review && data.combinator)
-          strapi.services['combinator'].markReview(data.combinator.id);
+          strapi.services['combinator'].flagReview(data.combinator.id);
       }
     },
     afterDelete: async (result, params) => {

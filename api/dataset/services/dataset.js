@@ -38,19 +38,13 @@ module.exports = {
   },
 
   // set process flag
-  setProcess: async (id, value, datetime) => {
-    datetime = datetime || null;
-    let data = { process: value };
-    if (datetime) data.processed = datetime;
-    return strapi.query('dataset').update({ id: id }, data);
+  flagProcess: async (id) => {
+    return strapi.query('dataset').update({ id: id }, { process: true });
   },
 
   // set refresh flag
-  setRefresh: async (id, value, datetime) => {
-    datetime = datetime || null;
-    let data = { refresh: value };
-    if (datetime) data.refreshed = datetime;
-    return strapi.query('dataset').update({ id: id }, data);
+  flagRefresh: async (id) => {
+    return strapi.query('dataset').update({ id: id }, { refresh: true });
   },
 
   // process datasets

@@ -7,10 +7,6 @@ module.exports = {
     strapi.query('combinator-query').model.deleteMany({ combinator: id });
   },
 
-  markReview: async (id) => {
-    strapi.query('combinator').update({ id }, { review: true });
-  },
-
   saveResults: async (results) => {
     // set the related features
     let features = _.map(results.features, 'id');
@@ -21,12 +17,14 @@ module.exports = {
     }
   },
 
+  // set review flag
+  flagReview: async (id) => {
+    return strapi.query('combinator').update({ id: id }, { review: true });
+  },
+
   // set refresh flag
-  setRefresh: async (id, value, datetime) => {
-    datetime = datetime || null;
-    let data = { refresh: value };
-    if (datetime) data.refreshed = datetime;
-    return strapi.query('combinator').update({ id: id }, data);
+  flagRefresh: async (id) => {
+    return strapi.query('combinator').update({ id: id }, { refresh: true });
   },
 
   refreshQuery: async () => {
