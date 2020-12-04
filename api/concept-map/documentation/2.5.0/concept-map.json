@@ -726,6 +726,10 @@
               }
             }
           },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
           "active": {
             "type": "boolean",
             "default": false
@@ -733,10 +737,6 @@
           "process": {
             "type": "boolean",
             "default": false
-          },
-          "processed": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -772,6 +772,10 @@
               "type": "string"
             }
           },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
           "active": {
             "type": "boolean",
             "default": false
@@ -780,9 +784,9 @@
             "type": "boolean",
             "default": false
           },
-          "processed": {
-            "type": "string",
-            "format": "date-time"
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

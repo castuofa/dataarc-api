@@ -55,9 +55,13 @@ module.exports = {
 
   // process datasets
   processDatasets: async () => {
-    let startMain = Date.now();
-    let datasets = await strapi.query('dataset').find({ process: 1 });
-    for (const dataset of datasets) {
+    const dataset = await strapi
+      .query('dataset')
+      .model.findOneAndUpdate(
+        { process: true, busy: false },
+        { $set: { busy: true } }
+      );
+    if (dataset) {
       let start = Date.now();
 
       // get and validate the source
@@ -69,7 +73,9 @@ module.exports = {
       let valid_response = true;
       const response = await fetch(sourceUrl).catch((err) => {
         // disable processing and log event
-        strapi.services['dataset'].setProcess(dataset.id, false);
+        strapi
+          .query('dataset')
+          .update({ id: dataset.id }, { process: false, busy: false });
         strapi.services.event.log(
           {
             type: 'error',
@@ -83,7 +89,7 @@ module.exports = {
         );
         valid_response = false;
       });
-      if (!valid_response) continue;
+      if (!valid_response) return;
 
       // log our response
       log(
@@ -96,7 +102,9 @@ module.exports = {
       valid_response = response.ok;
       if (!valid_response) {
         // disable processing and log event
-        await strapi.services['dataset'].setProcess(dataset.id, false);
+        await strapi
+          .query('dataset')
+          .update({ id: dataset.id }, { process: false, busy: false });
         await strapi.services.event.log(
           {
             type: 'error',
@@ -108,7 +116,7 @@ module.exports = {
           },
           true
         );
-        continue;
+        return;
       }
 
       // the response was valid so get the contents as text and check for BOM
@@ -121,7 +129,9 @@ module.exports = {
         source = JSON.parse(text);
       } catch (err) {
         // disable processing and log event
-        await strapi.services['dataset'].setProcess(dataset.id, false);
+        await strapi
+          .query('dataset')
+          .update({ id: dataset.id }, { process: false, busy: false });
         await strapi.services.event.log(
           {
             type: 'error',
@@ -133,7 +143,7 @@ module.exports = {
           },
           true
         );
-        continue;
+        return;
       }
 
       // define the valid dataset schema
@@ -190,7 +200,9 @@ module.exports = {
       // if source is not valid, skip processing this dataset
       if (!valid_geojson) {
         // disable processing and log event
-        await strapi.services['dataset'].setProcess(dataset.id, false);
+        await strapi
+          .query('dataset')
+          .update({ id: dataset.id }, { process: false, busy: false });
         await strapi.services.event.log(
           {
             type: 'error',
@@ -202,7 +214,7 @@ module.exports = {
           },
           true
         );
-        continue;
+        return;
       }
 
       // set existing fields to missing and mark for review
@@ -252,23 +264,27 @@ module.exports = {
         // strapi.services['dataset'].refreshFeaturesSpatial(dataset);
 
         // set the process datetime / boolean
-        await strapi.services['dataset'].setProcess(
-          dataset.id,
-          false,
-          Date.now()
-        );
+        await strapi
+          .query('dataset')
+          .update(
+            { id: dataset.id },
+            { process: false, busy: false, processed: Date.now() }
+          );
       }
+    } else {
+      log('debug', 'No datasets to process');
     }
-
-    // log end
-    log('debug', 'Datasets have all been processed', startMain);
   },
 
   // refresh features
   refreshFeatures: async () => {
-    let startMain = Date.now();
-    let datasets = await strapi.query('dataset').find({ refresh: 1 });
-    for (const dataset of datasets) {
+    const dataset = await strapi
+      .query('dataset')
+      .model.findOneAndUpdate(
+        { refresh: true, busy: false },
+        { $set: { busy: true } }
+      );
+    if (dataset) {
       let startDataset = Date.now();
 
       log('debug', `Refreshing all features in ${dataset.title}`);
@@ -287,17 +303,17 @@ module.exports = {
       }
 
       // set the refresh datetime / boolean
-      await strapi.services['dataset'].setRefresh(
-        dataset.id,
-        false,
-        Date.now()
-      );
+      await strapi
+        .query('dataset')
+        .update(
+          { id: dataset.id },
+          { refresh: false, busy: false, refreshed: Date.now() }
+        );
 
       log('debug', `Dataset has been refreshed`, startDataset);
+    } else {
+      log('debug', 'No datasets to refresh');
     }
-
-    // log end
-    log('debug', 'Datasets have all been refreshed', startMain);
   },
 
   // refresh feature spatial attributes

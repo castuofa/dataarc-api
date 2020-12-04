@@ -560,9 +560,69 @@
           "value": {
             "type": "string"
           },
-          "review": {
-            "type": "boolean",
-            "default": false
+          "combinator": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "concepts": {
+                "type": "string"
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "review": {
+                "type": "boolean"
+              },
+              "refresh": {
+                "type": "boolean"
+              },
+              "busy": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "dataset_field": {
             "required": [
@@ -613,66 +673,9 @@
               }
             }
           },
-          "combinator": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "queries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "concepts": {
-                "type": "string"
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "review": {
-                "type": "boolean"
-              },
-              "refresh": {
-                "type": "boolean"
-              },
-              "refreshed": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "review": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -703,15 +706,15 @@
           "value": {
             "type": "string"
           },
-          "review": {
-            "type": "boolean",
-            "default": false
+          "combinator": {
+            "type": "string"
           },
           "dataset_field": {
             "type": "string"
           },
-          "combinator": {
-            "type": "string"
+          "review": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

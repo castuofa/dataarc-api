@@ -64,21 +64,26 @@
       "collection": "combinator",
       "via": "dataset"
     },
+    "processed": {
+      "type": "datetime"
+    },
+    "refreshed": {
+      "type": "datetime"
+    },
     "process": {
       "type": "boolean",
       "default": false,
       "private": false
     },
-    "processed": {
-      "type": "datetime"
-    },
     "refresh": {
       "type": "boolean",
       "default": false,
-      "private": false
+      "private": true
     },
-    "refreshed": {
-      "type": "datetime"
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "private": true
     }
   }
 }

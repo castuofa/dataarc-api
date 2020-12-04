@@ -36,16 +36,16 @@
     "value": {
       "type": "string"
     },
-    "review": {
-      "type": "boolean",
-      "default": false
+    "combinator": {
+      "via": "queries",
+      "model": "combinator"
     },
     "dataset_field": {
       "model": "dataset-field"
     },
-    "combinator": {
-      "via": "queries",
-      "model": "combinator"
+    "review": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

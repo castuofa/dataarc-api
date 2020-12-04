@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/04/2020 3:28:12 PM"
+    "x-generation-date": "12/04/2020 3:49:26 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7648,17 +7648,20 @@
                     "type": "string"
                   }
                 },
-                "process": {
-                  "type": "boolean"
-                },
                 "processed": {
                   "type": "string"
+                },
+                "refreshed": {
+                  "type": "string"
+                },
+                "process": {
+                  "type": "boolean"
                 },
                 "refresh": {
                   "type": "boolean"
                 },
-                "refreshed": {
-                  "type": "string"
+                "busy": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -7732,9 +7735,69 @@
           "value": {
             "type": "string"
           },
-          "review": {
-            "type": "boolean",
-            "default": false
+          "combinator": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "dataset": {
+                "type": "string"
+              },
+              "queries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "concepts": {
+                "type": "string"
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "review": {
+                "type": "boolean"
+              },
+              "refresh": {
+                "type": "boolean"
+              },
+              "busy": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "dataset_field": {
             "required": [
@@ -7785,66 +7848,9 @@
               }
             }
           },
-          "combinator": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string"
-              },
-              "dataset": {
-                "type": "string"
-              },
-              "queries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "concepts": {
-                "type": "string"
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "review": {
-                "type": "boolean"
-              },
-              "refresh": {
-                "type": "boolean"
-              },
-              "refreshed": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "review": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -7875,15 +7881,15 @@
           "value": {
             "type": "string"
           },
-          "review": {
-            "type": "boolean",
-            "default": false
+          "combinator": {
+            "type": "string"
           },
           "dataset_field": {
             "type": "string"
           },
-          "combinator": {
-            "type": "string"
+          "review": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
@@ -7991,17 +7997,20 @@
                   "type": "string"
                 }
               },
-              "process": {
-                "type": "boolean"
-              },
               "processed": {
                 "type": "string"
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "process": {
+                "type": "boolean"
               },
               "refresh": {
                 "type": "boolean"
               },
-              "refreshed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -8033,14 +8042,14 @@
                 "value": {
                   "type": "string"
                 },
-                "review": {
-                  "type": "boolean"
+                "combinator": {
+                  "type": "string"
                 },
                 "dataset_field": {
                   "type": "string"
                 },
-                "combinator": {
-                  "type": "string"
+                "review": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -8170,17 +8179,13 @@
               }
             }
           },
-          "review": {
-            "type": "boolean",
-            "default": false
-          },
-          "refresh": {
-            "type": "boolean",
-            "default": false
-          },
           "refreshed": {
             "type": "string",
             "format": "date-time"
+          },
+          "review": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -8229,6 +8234,10 @@
               "type": "string"
             }
           },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
+          },
           "review": {
             "type": "boolean",
             "default": false
@@ -8237,9 +8246,9 @@
             "type": "boolean",
             "default": false
           },
-          "refreshed": {
-            "type": "string",
-            "format": "date-time"
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
@@ -8312,6 +8321,10 @@
               }
             }
           },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
           "active": {
             "type": "boolean",
             "default": false
@@ -8319,10 +8332,6 @@
           "process": {
             "type": "boolean",
             "default": false
-          },
-          "processed": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -8358,6 +8367,10 @@
               "type": "string"
             }
           },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
           "active": {
             "type": "boolean",
             "default": false
@@ -8366,9 +8379,9 @@
             "type": "boolean",
             "default": false
           },
-          "processed": {
-            "type": "string",
-            "format": "date-time"
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
@@ -8470,14 +8483,17 @@
                   "type": "string"
                 }
               },
+              "processed": {
+                "type": "string"
+              },
               "active": {
                 "type": "boolean"
               },
               "process": {
                 "type": "boolean"
               },
-              "processed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -8788,17 +8804,20 @@
                   "type": "string"
                 }
               },
-              "process": {
-                "type": "boolean"
-              },
               "processed": {
                 "type": "string"
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "process": {
+                "type": "boolean"
               },
               "refresh": {
                 "type": "boolean"
               },
-              "refreshed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -9120,14 +9139,17 @@
                     "type": "string"
                   }
                 },
+                "refreshed": {
+                  "type": "string"
+                },
                 "review": {
                   "type": "boolean"
                 },
                 "refresh": {
                   "type": "boolean"
                 },
-                "refreshed": {
-                  "type": "string"
+                "busy": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -9138,21 +9160,17 @@
               }
             }
           },
-          "process": {
-            "type": "boolean",
-            "default": false
-          },
           "processed": {
             "type": "string",
             "format": "date-time"
           },
-          "refresh": {
-            "type": "boolean",
-            "default": false
-          },
           "refreshed": {
             "type": "string",
             "format": "date-time"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -9215,21 +9233,25 @@
               "type": "string"
             }
           },
-          "process": {
-            "type": "boolean",
-            "default": false
-          },
           "processed": {
             "type": "string",
             "format": "date-time"
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
           },
           "refresh": {
             "type": "boolean",
             "default": false
           },
-          "refreshed": {
-            "type": "string",
-            "format": "date-time"
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
@@ -9520,14 +9542,17 @@
                     "type": "string"
                   }
                 },
+                "refreshed": {
+                  "type": "string"
+                },
                 "review": {
                   "type": "boolean"
                 },
                 "refresh": {
                   "type": "boolean"
                 },
-                "refreshed": {
-                  "type": "string"
+                "busy": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -9643,17 +9668,20 @@
                   "type": "string"
                 }
               },
-              "process": {
-                "type": "boolean"
-              },
               "processed": {
                 "type": "string"
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "process": {
+                "type": "boolean"
               },
               "refresh": {
                 "type": "boolean"
               },
-              "refreshed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"

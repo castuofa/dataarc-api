@@ -48,17 +48,23 @@
       "via": "combinators",
       "dominant": true
     },
-    "review": {
-      "type": "boolean",
-      "default": false
+    "refreshed": {
+      "type": "datetime"
     },
-    "refresh": {
+    "review": {
       "type": "boolean",
       "default": false,
       "private": false
     },
-    "refreshed": {
-      "type": "datetime"
+    "refresh": {
+      "type": "boolean",
+      "default": false,
+      "private": true
+    },
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "private": true
     }
   }
 }

@@ -619,14 +619,17 @@
                   "type": "string"
                 }
               },
+              "processed": {
+                "type": "string"
+              },
               "active": {
                 "type": "boolean"
               },
               "process": {
                 "type": "boolean"
               },
-              "processed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"

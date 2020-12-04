@@ -680,17 +680,20 @@
                   "type": "string"
                 }
               },
-              "process": {
-                "type": "boolean"
-              },
               "processed": {
                 "type": "string"
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "process": {
+                "type": "boolean"
               },
               "refresh": {
                 "type": "boolean"
               },
-              "refreshed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -722,14 +725,14 @@
                 "value": {
                   "type": "string"
                 },
-                "review": {
-                  "type": "boolean"
+                "combinator": {
+                  "type": "string"
                 },
                 "dataset_field": {
                   "type": "string"
                 },
-                "combinator": {
-                  "type": "string"
+                "review": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -859,17 +862,13 @@
               }
             }
           },
-          "review": {
-            "type": "boolean",
-            "default": false
-          },
-          "refresh": {
-            "type": "boolean",
-            "default": false
-          },
           "refreshed": {
             "type": "string",
             "format": "date-time"
+          },
+          "review": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -918,6 +917,10 @@
               "type": "string"
             }
           },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
+          },
           "review": {
             "type": "boolean",
             "default": false
@@ -926,9 +929,9 @@
             "type": "boolean",
             "default": false
           },
-          "refreshed": {
-            "type": "string",
-            "format": "date-time"
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

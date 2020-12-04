@@ -905,14 +905,17 @@
                     "type": "string"
                   }
                 },
+                "refreshed": {
+                  "type": "string"
+                },
                 "review": {
                   "type": "boolean"
                 },
                 "refresh": {
                   "type": "boolean"
                 },
-                "refreshed": {
-                  "type": "string"
+                "busy": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -923,21 +926,17 @@
               }
             }
           },
-          "process": {
-            "type": "boolean",
-            "default": false
-          },
           "processed": {
             "type": "string",
             "format": "date-time"
           },
-          "refresh": {
-            "type": "boolean",
-            "default": false
-          },
           "refreshed": {
             "type": "string",
             "format": "date-time"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -1000,21 +999,25 @@
               "type": "string"
             }
           },
-          "process": {
-            "type": "boolean",
-            "default": false
-          },
           "processed": {
             "type": "string",
             "format": "date-time"
+          },
+          "refreshed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
           },
           "refresh": {
             "type": "boolean",
             "default": false
           },
-          "refreshed": {
-            "type": "string",
-            "format": "date-time"
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

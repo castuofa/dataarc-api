@@ -39,6 +39,9 @@
       "collection": "concept-topic",
       "via": "map"
     },
+    "processed": {
+      "type": "datetime"
+    },
     "active": {
       "type": "boolean",
       "default": false
@@ -48,8 +51,10 @@
       "default": false,
       "private": false
     },
-    "processed": {
-      "type": "datetime"
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "private": true
     }
   }
 }

@@ -642,17 +642,20 @@
                   "type": "string"
                 }
               },
-              "process": {
-                "type": "boolean"
-              },
               "processed": {
                 "type": "string"
+              },
+              "refreshed": {
+                "type": "string"
+              },
+              "process": {
+                "type": "boolean"
               },
               "refresh": {
                 "type": "boolean"
               },
-              "refreshed": {
-                "type": "string"
+              "busy": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"

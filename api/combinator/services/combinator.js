@@ -30,30 +30,34 @@ module.exports = {
   },
 
   refreshQuery: async () => {
-    let startMain = Date.now();
-    let combinators = await strapi.query('combinator').find({ refresh: 1 });
-    for (const combinator of combinators) {
+    const combinator = await strapi
+      .query('combinator')
+      .model.findOneAndUpdate(
+        { refresh: true, busy: false },
+        { $set: { busy: true } }
+      );
+    if (combinator) {
       let startCombinator = Date.now();
 
       // run the results
       await strapi.services['combinator'].refresh(combinator);
 
       // set the refresh datetime / boolean
-      await strapi.services['combinator'].setRefresh(
-        combinator.id,
-        false,
-        Date.now()
-      );
+      await strapi
+        .query('combinator')
+        .update(
+          { id: combinator.id },
+          { refresh: false, busy: false, refreshed: Date.now() }
+        );
 
       log(
         'debug',
         `Combinator ${combinator.id} has been refreshed`,
         startCombinator
       );
+    } else {
+      log('debug', 'No combinators to refresh');
     }
-
-    // log end
-    log('debug', 'Combinators have all been refreshed', startMain);
   },
 
   refresh: async (combinator) => {

@@ -77,7 +77,7 @@ module.exports = {
       });
       archive.finalize();
     } else {
-      log('debug', `No search exports found`);
+      log('debug', `No searches to process`);
     }
   },
 
