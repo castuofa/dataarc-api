@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/03/2020 9:25:41 PM"
+    "x-generation-date": "12/04/2020 3:28:12 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9752,6 +9752,13 @@
           "filters": {
             "type": "object"
           },
+          "path": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
           "user": {
             "required": [
               "id",
@@ -9806,13 +9813,6 @@
           "processed": {
             "type": "string",
             "format": "date-time"
-          },
-          "path": {
-            "type": "string"
-          },
-          "expires": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -9827,23 +9827,27 @@
           "filters": {
             "type": "object"
           },
-          "user": {
-            "type": "string"
-          },
-          "process": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed": {
-            "type": "string",
-            "format": "date-time"
-          },
           "path": {
             "type": "string"
           },
           "expires": {
             "type": "string",
             "format": "date-time"
+          },
+          "user": {
+            "type": "string"
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

@@ -20,23 +20,28 @@
     "filters": {
       "type": "json"
     },
+    "path": {
+      "type": "string"
+    },
+    "expires": {
+      "type": "datetime"
+    },
     "user": {
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "processed": {
+      "type": "datetime"
     },
     "process": {
       "type": "boolean",
       "default": false,
       "private": true
     },
-    "processed": {
-      "type": "datetime"
-    },
-    "path": {
-      "type": "string"
-    },
-    "expires": {
-      "type": "datetime"
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "private": true
     }
   }
 }

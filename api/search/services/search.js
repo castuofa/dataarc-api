@@ -6,10 +6,15 @@ const { resolve } = require('path');
 
 module.exports = {
   exportResults: async () => {
-    let searches = await strapi.query('search').find({ process: 1 });
-    if (searches.length) log('debug', `Found ${searches.length} search job(s)`);
-    for (const search of searches) {
+    const search = await strapi
+      .query('search')
+      .model.findOneAndUpdate(
+        { process: true, busy: false },
+        { $set: { busy: true } }
+      );
+    if (search) {
       let start = Date.now();
+      log('debug', `Found search job for ${search.id}`);
 
       let dir = `/public/export/`;
       let path = `${dir}${search.id}.zip`;
@@ -18,7 +23,10 @@ module.exports = {
         log('debug', `Export already exists for ${search.id}`);
         strapi
           .query('search')
-          .update({ id: search.id }, { process: 0, path: path });
+          .update(
+            { id: search.id },
+            { process: false, busy: false, path: path }
+          );
         return;
       }
       if (!fs.existsSync(strapi.dir + dir)) fs.mkdirSync(strapi.dir + dir);
@@ -39,7 +47,8 @@ module.exports = {
         await strapi.query('search').update(
           { id: search.id },
           {
-            process: 0,
+            process: false,
+            busy: false,
             processed: Date.now(),
             expires: expires,
             path: path,
@@ -67,8 +76,9 @@ module.exports = {
         name: 'results.json',
       });
       archive.finalize();
+    } else {
+      log('debug', `No search exports found`);
     }
-    resolve('resolved');
   },
 
   // remove expired searches

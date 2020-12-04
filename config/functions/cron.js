@@ -4,7 +4,6 @@ let running = false;
 
 module.exports = {
   '*/1 * * * *': async () => {
-    let promises = [];
     // make sure only one instance is running to avoid conflicts
     if (!running) {
       running = true;

@@ -531,6 +531,13 @@
           "filters": {
             "type": "object"
           },
+          "path": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
           "user": {
             "required": [
               "id",
@@ -585,13 +592,6 @@
           "processed": {
             "type": "string",
             "format": "date-time"
-          },
-          "path": {
-            "type": "string"
-          },
-          "expires": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -606,23 +606,27 @@
           "filters": {
             "type": "object"
           },
-          "user": {
-            "type": "string"
-          },
-          "process": {
-            "type": "boolean",
-            "default": false
-          },
-          "processed": {
-            "type": "string",
-            "format": "date-time"
-          },
           "path": {
             "type": "string"
           },
           "expires": {
             "type": "string",
             "format": "date-time"
+          },
+          "user": {
+            "type": "string"
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "process": {
+            "type": "boolean",
+            "default": false
+          },
+          "busy": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
