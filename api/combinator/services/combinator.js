@@ -38,7 +38,17 @@ module.exports = {
       let startCombinator = Date.now();
 
       // run the results
-      await strapi.services['combinator'].refresh(combinator);
+      let results = await strapi.services['combinator'].refresh(combinator);
+      if (!results) {
+        await strapi
+          .query('combinator')
+          .update({ id: combinator.id }, { refresh: false, busy: false });
+        log(
+          'error',
+          `Unable to process combinator ${combinator.id}, missing queries`
+        );
+        return;
+      }
 
       // set the refresh datetime / boolean
       await strapi
@@ -70,6 +80,9 @@ module.exports = {
     if (combinator != null) {
       let conditions = [];
       result.combinator = combinator;
+
+      // make sure there are queries
+      if (!combinator.queries) return;
 
       // set the combinator operator
       let op;

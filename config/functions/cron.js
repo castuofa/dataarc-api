@@ -8,27 +8,30 @@ module.exports = {
     if (!running) {
       running = true;
 
-      // remove expired searches
-      await strapi.services['search'].removeExpired();
+      try {
+        // remove expired searches
+        await strapi.services['search'].removeExpired();
 
-      // process search first to get results they expect
-      await strapi.services['search'].exportResults();
+        // process search first to get results they expect
+        await strapi.services['search'].exportResults();
 
-      // process concept map
-      // await strapi.services['concept-map'].
-      // await strapi.services['concept-map'].process();
+        // process concept map
+        // await strapi.services['concept-map'].
+        // await strapi.services['concept-map'].process();
 
-      // process datasets that are queued
-      await strapi.services['dataset'].processDatasets();
+        // process datasets that are queued
+        await strapi.services['dataset'].processDatasets();
 
-      // refresh datasets that are queued
-      await strapi.services['dataset'].refreshFeatures();
+        // refresh datasets that are queued
+        await strapi.services['dataset'].refreshFeatures();
 
-      // refresh combinators
-      await strapi.services['combinator'].refreshQuery();
+        // refresh combinators
+        await strapi.services['combinator'].refreshQuery();
 
-      // clean up relations
-
+        // clean up relations
+      } catch (err) {
+        strapi.log.error(err.message);
+      }
       running = false;
     }
   },
