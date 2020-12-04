@@ -74,12 +74,23 @@ module.exports = {
     const filters = ctx.request.body;
     if (!filters) return;
 
+    // get the type
+    const type = filters.type || 'matched';
+    if (type !== 'matched' && type !== 'related' && type !== 'contextual')
+      return;
+
     // get the params
     const params = await strapi.services['query'].filtersToParams(filters);
 
-    // filter the concepts
-    const results = await strapi.services['query'].filterConcepts(params);
-    return results;
+    // get the concepts
+    if (type === 'matched')
+      return await strapi.services['query'].matchedConcepts(params);
+    if (type === 'related')
+      return await strapi.services['query'].relatedConcepts(params);
+    if (type === 'contextual')
+      return await strapi.services['query'].contextualConcepts(params);
+
+    return;
   },
 
   results: async (ctx) => {
