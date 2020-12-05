@@ -42,7 +42,7 @@ module.exports = {
   },
 
   refreshQuery: async () => {
-    const combinator = await strapi
+    let combinator = await strapi
       .query('combinator')
       .model.findOneAndUpdate(
         { refresh: true, busy: false },
@@ -50,6 +50,9 @@ module.exports = {
       );
     if (combinator) {
       let startCombinator = Date.now();
+      combinator = await strapi
+        .query('combinator')
+        .findOne({ id: combinator.id });
 
       // run the results
       let results = await strapi.services['combinator'].refresh(combinator);

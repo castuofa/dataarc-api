@@ -49,7 +49,7 @@ module.exports = {
 
   // process datasets
   processDatasets: async () => {
-    const dataset = await strapi
+    let dataset = await strapi
       .query('dataset')
       .model.findOneAndUpdate(
         { process: true, busy: false },
@@ -57,6 +57,7 @@ module.exports = {
       );
     if (dataset) {
       let start = Date.now();
+      dataset = await strapi.query('dataset').findOne({ id: dataset.id });
 
       // get and validate the source
       const fetch = require('node-fetch');
@@ -275,7 +276,7 @@ module.exports = {
 
   // refresh features
   refreshFeatures: async () => {
-    const dataset = await strapi
+    let dataset = await strapi
       .query('dataset')
       .model.findOneAndUpdate(
         { refresh: true, busy: false },
@@ -283,6 +284,7 @@ module.exports = {
       );
     if (dataset) {
       let startDataset = Date.now();
+      dataset = await strapi.query('dataset').findOne({ id: dataset.id });
 
       log('debug', `Refreshing all features in ${dataset.title}`);
 
@@ -293,10 +295,8 @@ module.exports = {
 
       // refresh each feature
       for (const feature of features) {
-        let start = Date.now();
         let refreshed = refresh(dataset, feature);
         await strapi.query('feature').update({ id: feature.id }, refreshed);
-        log('debug', `Feature ${feature.id} refreshed`, start);
       }
 
       // set the refresh datetime / boolean
