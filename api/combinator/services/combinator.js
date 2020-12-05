@@ -27,6 +27,20 @@ module.exports = {
     return strapi.query('combinator').update({ id: id }, { refresh: true });
   },
 
+  // set review by dataset
+  flagReviewDataset: async (id) => {
+    return strapi
+      .query('combinator')
+      .model.updateMany({ dataset: id }, { review: true });
+  },
+
+  // set refresh by dataset
+  flagRefreshDataset: async (id) => {
+    return strapi
+      .query('combinator')
+      .model.updateMany({ dataset: id }, { refresh: true });
+  },
+
   refreshQuery: async () => {
     const combinator = await strapi
       .query('combinator')

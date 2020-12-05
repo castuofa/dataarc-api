@@ -253,6 +253,9 @@ module.exports = {
         // start the field extraction process
         await strapi.services['dataset'].extractFields(dataset);
 
+        // flag combiantor for refresh
+        await strapi.services['combinator'].flagRefreshDataset(dataset.id);
+
         // refresh the spatial attributes and feature data
         // strapi.services['dataset'].refreshFeatures(dataset);
         // strapi.services['dataset'].refreshFeaturesSpatial(dataset);
@@ -304,7 +307,10 @@ module.exports = {
           { refresh: false, busy: false, refreshed: Date.now() }
         );
 
-      log('debug', `Dataset has been refreshed`, startDataset);
+      // flag combiantor for refresh
+      await strapi.services['combinator'].flagRefreshDataset(dataset.id);
+
+      log('debug', `Dataset ${dataset.name} has been refreshed`, startDataset);
     } else {
       log('debug', 'No datasets to refresh');
     }
@@ -407,32 +413,6 @@ module.exports = {
     // make sure all promises have been settled
     Promise.allSettled(promises).then((res) => {
       strapi.log.debug(`Feature spatial refresh complete`);
-    });
-  },
-
-  // refresh combinators
-  refreshCombinators: async (entity) => {
-    if (!entity) return;
-    if (!entity.combinators) return;
-    strapi.log.debug(`Refreshing all combinators in ${entity.title}`);
-    let promises = [];
-
-    // clear the combinators and concepts
-    await strapi
-      .query('feature')
-      .model.updateMany(
-        { dataset: entity.id },
-        { $set: { combinators: [], concepts: [] } }
-      );
-
-    // process all combinators
-    _.each(entity.combinators, (id) => {
-      promises.push(strapi.services['combinator'].results({ id }));
-    });
-
-    // make sure all promises have been settled
-    return Promise.allSettled(promises).then((res) => {
-      strapi.log.debug(`All combinators refreshed`);
     });
   },
 
