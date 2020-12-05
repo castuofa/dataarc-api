@@ -474,6 +474,8 @@ module.exports = {
     // exclude matched features
     ids = _.difference(ids, features);
 
+    // *** here is where you would apply other filters to related features
+
     return strapi.services['query'].getIds('feature', [
       {
         _id: { $in: _.map(ids, ObjectId) },
@@ -499,6 +501,8 @@ module.exports = {
 
     // exclude matched features
     ids = _.difference(ids, matched, related);
+
+    // *** here is where you would apply other filters to contextual features
 
     return strapi.services['query'].getIds('feature', [
       {
