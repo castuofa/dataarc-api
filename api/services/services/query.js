@@ -379,7 +379,7 @@ module.exports = {
   // get concepts associated with records that match the filter
   matchedConcepts: async (params) => {
     // return the filter concepts if they exist
-    // if (params.filter.concept) return params.filter.concept;
+    if (params.filters.concept) return params.filters.concept;
 
     // get the features
     const features = await strapi.services['query'].matchedFeatures(params);
@@ -447,7 +447,7 @@ module.exports = {
       ],
       'contextual'
     );
-    return _.difference(contextual, _.uniq(_.union(related, matched)));
+    return _.difference(contextual, matched, related);
   },
 
   // array of matched feature ids
