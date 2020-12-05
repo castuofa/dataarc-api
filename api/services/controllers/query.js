@@ -28,11 +28,11 @@ module.exports = {
 
     // get the results
     if (type === 'matched')
-      return await strapi.services['query'].matchedFeatures(params.query);
+      return await strapi.services['query'].matchedFeatures(params);
     if (type === 'related')
-      return await strapi.services['query'].relatedFeatures(params.query);
+      return await strapi.services['query'].relatedFeatures(params);
     if (type === 'contextual')
-      return await strapi.services['query'].contextualFeatures(params.query);
+      return await strapi.services['query'].contextualFeatures(params);
 
     return;
   },
@@ -56,7 +56,7 @@ module.exports = {
 
     // get the results
     const results = await strapi.services['query'].filterTimeline(
-      params.query,
+      params,
       start,
       type
     );
@@ -84,11 +84,11 @@ module.exports = {
 
     // get the concepts
     if (type === 'matched')
-      return await strapi.services['query'].matchedConcepts(params.query);
+      return await strapi.services['query'].matchedConcepts(params);
     if (type === 'related')
-      return await strapi.services['query'].relatedConcepts(params.query);
+      return await strapi.services['query'].relatedConcepts(params);
     if (type === 'contextual')
-      return await strapi.services['query'].contextualConcepts(params.query);
+      return await strapi.services['query'].contextualConcepts(params);
 
     return;
   },
