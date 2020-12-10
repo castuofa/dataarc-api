@@ -121,7 +121,10 @@ module.exports = {
       }
       let source;
       try {
-        source = JSON.parse(text);
+        let encode_utf8 = function(str) {
+          return unescape(encodeURIComponent(str))
+        }
+        source = JSON.parse(encode_utf8(text));
       } catch (err) {
         // disable processing and log event
         await strapi
