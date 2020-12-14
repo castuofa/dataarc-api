@@ -8,13 +8,18 @@ module.exports = {
     amountLimit: 100,
   },
   email: {
-    provider: 'sendmail',
+    provider: 'smtp',
     providerOptions: {
-      smtpHost: 'smtp-relay.gmail.com',
-      smtpPort: 25,
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      username: 'mail@data-arc.org',
+      password: 'haumexmwzlhpttbi',
+      requireTLS: true,
+      connectionTimeout: 1,
     },
     settings: {
-      defaultFrom: 'DataARC <no-reply@data-arc.org>',
+      from: 'DataARC <no-reply@data-arc.org>',
     },
   },
 };
