@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = ({ env }) => ({
   graphql: {
     endpoint: '/graphql',
     tracing: false,
@@ -8,13 +8,18 @@ module.exports = {
     amountLimit: 100,
   },
   email: {
-    provider: 'sendmail',
+    provider: 'smtp',
     providerOptions: {
-      smtpHost: 'smtp-relay.gmail.com',
-      smtpPort: 25,
+      host: env('SMTP_HOST', 'smtp.gmail.com'),
+      port: env.int('SMTP_PORT', 465),
+      secure: env.bool('SMTP_SECURE', true),
+      username: env('SMTP_USERNAME', 'mail@data-arc.org'),
+      password: env('SMTP_PASSWORD', ''),
+      requireTLS: env.bool('SMTP_TLS', true),
+      connectionTimeout: env.int('SMTP_TIMEOUT', 1),
     },
     settings: {
-      defaultFrom: 'DataARC <no-reply@data-arc.org>',
+      from: env('SMTP_FROM', 'DataARC <no-reply@data-arc.org>'),
     },
   },
-};
+});
