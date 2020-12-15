@@ -225,7 +225,7 @@ module.exports = {
       return `${id},${lon},${lat},${color},${text}`;
     };
     const filterEmpty = (feature) => {
-      return feature._id && feature.coords && feature.coords.length;
+      return feature._id && feature._id.coords && feature._id.coords.length;
     }
     const pipe = [
       {
