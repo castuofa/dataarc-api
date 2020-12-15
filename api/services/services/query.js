@@ -213,18 +213,20 @@ module.exports = {
     const dir = `${strapi.dir}/public/cache`;
     const transform = (feature) => {
       let doc = feature._id;
-      if (doc && doc.coords && doc.coords.length) {
-        let text = ``;
-        if (doc.title) text += `<b>${_.truncate(doc.title)}</b><br>`;
-        if (doc.dataset) text += `${doc.dataset}<br>`;
-        if (doc.category) text += `${doc.category}`;
-        let id = doc.id;
-        let lon = doc.coords[0];
-        let lat = doc.coords[1];
-        let color = doc.color || '#222222';
-        return `${id},${lon},${lat},${color},${text}`;
-      }
+      let text = ``;
+      if (doc.title) text += `<b>${_.truncate(doc.title)}</b><br>`;
+      if (doc.dataset) text += `${doc.dataset}<br>`;
+      if (doc.category) text += `${doc.category}`;
+      let id = doc.id;
+      let lon = doc.coords[0];
+      let lat = doc.coords[1];
+      let color = doc.color || '#222222';
+      
+      return `${id},${lon},${lat},${color},${text}`;
     };
+    const filterEmpty = (feature) => {
+      return feature._id && feature.coords && feature.coords.length;
+    }
     const pipe = [
       {
         $group: {
@@ -249,7 +251,7 @@ module.exports = {
     // write the cache file
     await fs.writeFile(
       file,
-      ['id,lon,lat,color,text', ..._.map(results, transform)].join('\n'),
+      ['id,lon,lat,color,text', ..._.map(_.filter(results, filterEmpty), transform)].join('\n'),
       'utf8',
       (err) => {
         if (err) strapi.log.error(`Features file not saved or corrupted`);
