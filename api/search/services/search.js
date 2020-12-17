@@ -67,10 +67,10 @@ module.exports = {
           subject: 'DataARC Search Results',
           text: `DataARC
             Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in <%= daysExpire %> days.
-            Download Results: https://api.data-arc.org<%= path %>`,
+            Download Results: <%= fullPath %>`,
           html: `<h1>DataARC</h1>
             <p>Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in <%= daysExpire %> days.</p>
-            <p>Download Results: <a href="https://api.data-arc.org<%= path %>">https://api.data-arc.org<%= path %></a></p>`,
+            <p>Download Results: <a href="<%= fullPath %>"><%= fullPath %></a></p>`,
         };
 
         // send email notification
@@ -80,8 +80,8 @@ module.exports = {
           },
           emailTemplate,
           {
-            path: path,
-            daysExpire: daysExpire
+            fullPath: process.env.URL + path,
+            daysExpire: daysExpire,
           }
         );
       });
