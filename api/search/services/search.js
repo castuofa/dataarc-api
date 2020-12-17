@@ -60,12 +60,30 @@ module.exports = {
           start
         );
 
-        // send email notification
-        await strapi.plugins['email'].services.email.send({
-          to: search.user.email,
+
+        let user = await strapi.query('user', 'users-permissions').findOne({ id: search.user });
+
+        const emailTemplate = {
           subject: 'DataARC Search Results',
-          html: `<h1>DataARC</h1><p>Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in ${daysExpire} days.</p><p>Download Results: <a href="https://api.data-arc.org${path}">https://api.data-arc.org${path}</a></p>`,
-        });
+          text: `DataARC
+            Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in <%= daysExpire %> days.
+            Download Results: https://api.data-arc.org<%= path %>`,
+          html: `<h1>DataARC</h1>
+            <p>Your search results have been successfully generated. You can download the file from your profile or by clicking the link below. These results will expire and automatically be removed in <%= daysExpire %> days.</p>
+            <p>Download Results: <a href="https://api.data-arc.org<%= path %>">https://api.data-arc.org<%= path %></a></p>`,
+        };
+
+        // send email notification
+        await strapi.plugins['email'].services.email.sendTemplatedEmail(
+          {
+            to: user.email,
+          },
+          emailTemplate,
+          {
+            path: path,
+            daysExpire: daysExpire
+          }
+        );
       });
       output.on('error', (err) => {
         log('error', err);
