@@ -5,7 +5,7 @@ let running = false;
 module.exports = {
   '*/1 * * * *': async () => {
     // make sure only one instance is running to avoid conflicts
-    if (!running) {
+    if (!running && process.env.NODE_ENV=='production') {
       running = true;
 
       try {
