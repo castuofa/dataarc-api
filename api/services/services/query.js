@@ -17,7 +17,7 @@ module.exports = {
 
     // check for keywords *THIS SHOULD BE FIRST
     if (params.filters.keyword) {
-      params.query.push({ $text: { $search: params.filters.keyword } });
+      params.query.push({ $text: { $search: _.toString(params.filters.keyword) } });
     }
 
     // check for bounding box
