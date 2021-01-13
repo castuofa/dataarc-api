@@ -3,8 +3,20 @@
 const _ = require('lodash');
 const chalk = require('chalk');
 const pug = require('pug');
+const ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
+  updateOne: async (params, data) => {
+    if (!params || !params.id) return;
+    const validData = await strapi.entityValidator.validateEntityUpdate(
+      strapi.models.dataset,
+      data
+    );
+    await strapi.query('dataset').model.updateOne({ _id: params.id }, { $set: validData });
+    const entry = strapi.query('dataset').findOne(params);
+    return entry;
+  },
+
   // add array of features
   addFeatures: async (features) => {
     return strapi

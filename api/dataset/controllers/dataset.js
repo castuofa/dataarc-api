@@ -35,4 +35,10 @@ module.exports = {
     }
     return sanitizeEntity(entity, { model: strapi.models[info.name] });
   },
+
+  update: async (ctx) => {
+    const { id } = ctx.params;
+    let entity = await strapi.services[info.name].updateOne({ id }, ctx.request.body);
+    return sanitizeEntity(entity, { model: strapi.models[info.name] });
+  },
 };
