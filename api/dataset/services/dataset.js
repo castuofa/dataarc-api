@@ -13,8 +13,7 @@ module.exports = {
       data
     );
     await strapi.query('dataset').model.updateOne({ _id: params.id }, { $set: validData });
-    const entry = strapi.query('dataset').findOne(params);
-    return entry;
+    return await strapi.query('dataset').findOne(params);
   },
 
   // add array of features
