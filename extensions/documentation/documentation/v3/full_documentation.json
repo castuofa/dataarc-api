@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "2.5.0",
+    "version": "v3",
     "title": "DataARC API",
     "description": "DataARC API REST Documentation",
     "termsOfService": "",
@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/04/2020 3:49:26 PM"
+    "x-generation-date": "01/14/2021 10:05:51 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -6168,7 +6168,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "parameters": []
       },
@@ -6223,7 +6223,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -6294,7 +6294,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -6365,7 +6365,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "parameters": []
       },
@@ -6420,7 +6420,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -6491,7 +6491,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -10050,7 +10050,7 @@
       "name": "Search"
     },
     {
-      "name": "Unclassified"
+      "name": "Query"
     }
   ]
 }
