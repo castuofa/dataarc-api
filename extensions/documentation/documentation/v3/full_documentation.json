@@ -6168,7 +6168,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "parameters": []
       },
@@ -6223,7 +6223,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -6294,7 +6294,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -6365,7 +6365,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "parameters": []
       },
@@ -6420,7 +6420,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -6491,7 +6491,7 @@
         },
         "summary": "",
         "tags": [
-          "Unclassified"
+          "Query"
         ],
         "requestBody": {
           "description": "",
@@ -10050,7 +10050,7 @@
       "name": "Search"
     },
     {
-      "name": "Unclassified"
+      "name": "Query"
     }
   ]
 }
