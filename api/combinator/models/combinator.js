@@ -32,6 +32,10 @@ module.exports = {
       strapi.services['event'].lifecycle('update', info, result, {
         payload: { params, data },
       });
+      if (!strapi.services['helper'].hasFields(['review'], data)) {
+        strapi.query('combinator').update({ id: result.id }, { review: false });
+        strapi.query('combinator-query').update({ combinator: result.id }, { review: false });
+      }
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {

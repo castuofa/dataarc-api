@@ -22,6 +22,9 @@ module.exports = {
         strapi.services['dataset'].flagRefresh(result.dataset);
       if (result)
         strapi.services['combinator-query'].markReviewByField(result.id);
+      if (!strapi.services['helper'].hasFields(['review'], data)) {
+        strapi.query('dataset-field').update({ id: result.id }, { review: false });
+      }
     },
     afterDelete: async (result, params) => {
       strapi.services['event'].lifecycle('delete', info, result, {
