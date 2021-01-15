@@ -221,7 +221,7 @@ module.exports = {
       let lon = doc.coords[0];
       let lat = doc.coords[1];
       let color = doc.color || '#222222';
-      
+
       return `${id},${lon},${lat},${color},${text}`;
     };
     const filterEmpty = (feature) => {
@@ -290,61 +290,71 @@ module.exports = {
 
   // get counts for the timeline
   filterTimeline: async (params, start, resolution) => {
-    const pipe = [
-      { $match: joinQuery(params.query) },
-      {
-        $group: {
-          _id: {
-            category_id: '$facets.category.id',
-            category: '$facets.category.title',
-            color: '$facets.category.color',
-          },
-          periods: { $push: '$facets.' + resolution },
-        },
-      },
-      { $unwind: '$periods' },
-      { $unwind: '$periods' },
-      {
-        $group: {
-          _id: {
-            category: '$_id',
-            period: '$periods',
-          },
-          count: { $sum: 1 },
-        },
-      },
-      {
-        $group: {
-          _id: '$_id.category',
-          items: {
-            $push: { period: '$_id.period', count: '$count' },
-          },
-        },
-      },
-      { $sort: { '_id.category': 1 } },
-    ];
-    const results = await strapi.query('feature').model.aggregate(pipe);
-
     let increment = 1000;
     if (resolution === 'millennia') increment = 1000;
     if (resolution === 'centuries') increment = 100;
     if (resolution === 'decades') increment = 10;
     let end = start + increment * 10;
     let range = _.range(start, end, increment);
+
+    const pipe = [
+      { $match: joinQuery(params.query) },
+      { $match: { ['facets.' + resolution]: { $in: range } } },
+      { $unwind: '$facets.' + resolution },
+      {
+        $group: {
+          _id: {
+            id: '$facets.category.id',
+            name: '$facets.category.name',
+            color: '$facets.category.color',
+            period: '$facets.' + resolution
+          },
+          count: {
+            $sum: 1
+          },
+        }
+      },
+      { $match: { '_id.period': { $gte: start, $lt: end } } },
+      { $sort: { '_id.name': 1, '_id.period': 1 } },
+      {
+        $group: {
+          _id: {
+            id: '$_id.id',
+            name: '$_id.name',
+            color: '$_id.color',
+          },
+          periods: {
+            $push: {
+              'period': '$_id.period',
+              'count': '$count',
+            }
+          }
+        }
+      },
+      {
+        $project: {
+        _id: false,
+        id: '$_id.id',
+        name: '$_id.name',
+        color: '$_id.color',
+        periods: true
+      }}
+    ];
+    const results = await strapi.query('feature').model.aggregate(pipe).allowDiskUse(true);
+
     let out = [];
     _.each(results, (result) => {
-      if (result._id.category) {
+      if (result.name) {
         let periods = [];
         _.each(range, (period) => {
-          let val = _.find(result.items, { period: period });
+          let val = _.find(result.periods, { period: period });
           if (!val) val = { period: period, count: 0 };
           periods.push(val);
         });
         out.push({
-          category: result._id.category,
-          category_id: result._id.category_id,
-          color: result._id.color,
-          total: result.total,
+          category: result.name,
+          category_id: result.id,
+          color: result.color,
           periods: _.map(periods, 'period'),
           counts: _.map(periods, 'count'),
         });

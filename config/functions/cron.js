@@ -4,8 +4,9 @@ let running = false;
 
 module.exports = {
   '*/1 * * * *': async () => {
+    let env = process.env.NODE_ENV || 'development';
     // make sure only one instance is running to avoid conflicts
-    if (!running && process.env.NODE_ENV=='production') {
+    if (!running && env==='production') {
       running = true;
 
       try {
