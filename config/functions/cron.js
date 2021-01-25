@@ -4,11 +4,12 @@ let running = false;
 
 module.exports = {
   '*/1 * * * *': async () => {
-    let env = process.env.NODE_ENV || 'development';
     // make sure only one instance is running to avoid conflicts
-    if (!running && env==='production') {
+    if (!running) {
       running = true;
+      strapi.log.debug(`Running cron tasks`);
 
+      // cron tasks
       try {
         // remove expired searches
         await strapi.services['search'].removeExpired();
@@ -33,6 +34,7 @@ module.exports = {
       } catch (err) {
         strapi.log.error(err.message);
       }
+
       running = false;
     }
   },

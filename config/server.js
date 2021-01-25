@@ -3,7 +3,7 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   url: env('URL', ''),
   cron: {
-    enabled: true
+    enabled: env.bool('CRON_ENABLED', false),
   },
   admin: {
     url: env('ADMIN_URL', '/admin'),

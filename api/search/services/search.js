@@ -17,15 +17,17 @@ module.exports = {
       log('debug', `Found search job for ${search.id}`);
 
       let dir = `/public/export/`;
-      let path = `${dir}${search.id}.zip`;
+      let file = `${search.id}.zip`;
+      let fs_path = `${dir}${file}`;
+      let url_path = `/export/${file}`;
 
-      if (fs.existsSync(strapi.dir + path)) {
+      if (fs.existsSync(strapi.dir + fs_path)) {
         log('debug', `Export already exists for ${search.id}`);
         strapi
           .query('search')
           .update(
             { id: search.id },
-            { process: false, busy: false, path: path }
+            { process: false, busy: false, path: url_path }
           );
         return;
       }
@@ -40,7 +42,7 @@ module.exports = {
       let expires = new Date();
       expires.setDate(expires.getDate() + daysExpire);
 
-      const output = fs.createWriteStream(`${strapi.dir}${path}`);
+      const output = fs.createWriteStream(`${strapi.dir}${fs_path}`);
       const archive = archiver('zip');
 
       output.on('close', async () => {
@@ -51,7 +53,7 @@ module.exports = {
             busy: false,
             processed: Date.now(),
             expires: expires,
-            path: path,
+            path: url_path,
           }
         );
         log(
@@ -60,8 +62,9 @@ module.exports = {
           start
         );
 
-
-        let user = await strapi.query('user', 'users-permissions').findOne({ id: search.user });
+        let user = await strapi
+          .query('user', 'users-permissions')
+          .findOne({ id: search.user });
 
         const emailTemplate = {
           subject: 'DataARC Search Results',
@@ -80,7 +83,7 @@ module.exports = {
           },
           emailTemplate,
           {
-            fullPath: process.env.URL + path,
+            fullPath: process.env.URL + url_path,
             daysExpire: daysExpire,
           }
         );
