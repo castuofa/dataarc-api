@@ -17,7 +17,9 @@ module.exports = {
 
     // check for keywords *THIS SHOULD BE FIRST
     if (params.filters.keyword) {
-      params.query.push({ $text: { $search: _.toString(params.filters.keyword) } });
+      params.query.push({
+        $text: { $search: _.toString(params.filters.keyword) },
+      });
     }
 
     // check for bounding box
@@ -226,7 +228,7 @@ module.exports = {
     };
     const filterEmpty = (feature) => {
       return feature._id && feature._id.coords && feature._id.coords.length;
-    }
+    };
     const pipe = [
       {
         $group: {
@@ -251,7 +253,10 @@ module.exports = {
     // write the cache file
     await fs.writeFile(
       file,
-      ['id,lon,lat,color,text', ..._.map(_.filter(results, filterEmpty), transform)].join('\n'),
+      [
+        'id,lon,lat,color,text',
+        ..._.map(_.filter(results, filterEmpty), transform),
+      ].join('\n'),
       'utf8',
       (err) => {
         if (err) strapi.log.error(`Features file not saved or corrupted`);
@@ -307,12 +312,12 @@ module.exports = {
             id: '$facets.category.id',
             name: '$facets.category.name',
             color: '$facets.category.color',
-            period: '$facets.' + resolution
+            period: '$facets.' + resolution,
           },
           count: {
-            $sum: 1
+            $sum: 1,
           },
-        }
+        },
       },
       { $match: { '_id.period': { $gte: start, $lt: end } } },
       { $sort: { '_id.name': 1, '_id.period': 1 } },
@@ -325,22 +330,26 @@ module.exports = {
           },
           periods: {
             $push: {
-              'period': '$_id.period',
-              'count': '$count',
-            }
-          }
-        }
+              period: '$_id.period',
+              count: '$count',
+            },
+          },
+        },
       },
       {
         $project: {
-        _id: false,
-        id: '$_id.id',
-        name: '$_id.name',
-        color: '$_id.color',
-        periods: true
-      }}
+          _id: false,
+          id: '$_id.id',
+          name: '$_id.name',
+          color: '$_id.color',
+          periods: true,
+        },
+      },
     ];
-    const results = await strapi.query('feature').model.aggregate(pipe).allowDiskUse(true);
+    const results = await strapi
+      .query('feature')
+      .model.aggregate(pipe)
+      .allowDiskUse(true);
 
     let out = [];
     _.each(results, (result) => {
@@ -647,14 +656,14 @@ module.exports = {
     ]);
 
     // santitize the results
-    results.features = features.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['feature'] })
-    );
     results.concepts = concepts.map((entity) =>
       sanitizeEntity(entity, { model: strapi.models['concept'] })
     );
     results.combinators = combinators.map((entity) =>
       sanitizeEntity(entity, { model: strapi.models['combinator'] })
+    );
+    results.features = features.map((entity) =>
+      sanitizeEntity(entity, { model: strapi.models['feature'] })
     );
 
     return results;
