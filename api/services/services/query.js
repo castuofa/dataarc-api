@@ -639,13 +639,13 @@ module.exports = {
     const featureIds = await strapi.services['query'].matchedFeatures(params);
     const features = await strapi
       .query('feature')
-      .find({ _id: { $in: _.map(featureIds, ObjectId) } });
+      .find({ _id: { $in: _.map(featureIds, ObjectId) }, _limit: 1e9 });
 
     // get matched concept docs
     const conceptIds = await strapi.services['query'].matchedConcepts(params);
     const concepts = await strapi
       .query('concept')
-      .find({ _id: { $in: _.map(conceptIds, ObjectId) } });
+      .find({ _id: { $in: _.map(conceptIds, ObjectId) }, _limit: 1e9 });
 
     // get matched combinator docs
     const combinatorIds = await strapi.services['query'].matchedCombinators(
@@ -653,7 +653,7 @@ module.exports = {
     );
     const combinators = await strapi
       .query('combinator')
-      .find({ _id: { $in: _.map(combinatorIds, ObjectId) } });
+      .find({ _id: { $in: _.map(combinatorIds, ObjectId) }, _limit: 1e9 });
 
     // COMBINATORS
     results.combinators = combinators.map((entity) => {
@@ -733,6 +733,8 @@ module.exports = {
 
       return feature;
     });
+
+    console.log(results.features.length);
 
     return results;
   },
