@@ -597,6 +597,9 @@
           "properties": {
             "type": "object"
           },
+          "facets": {
+            "type": "object"
+          },
           "location": {
             "type": "object"
           },
@@ -747,46 +750,6 @@
               }
             }
           },
-          "concepts": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "citation": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "group": {
-                "type": "string"
-              },
-              "related": {
-                "type": "string"
-              },
-              "contextual": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "dataset": {
             "required": [
               "id"
@@ -932,9 +895,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "concepts": {
-            "type": "string"
           },
           "dataset": {
             "type": "string"

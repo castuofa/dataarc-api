@@ -38,8 +38,7 @@
       "type": "json"
     },
     "facets": {
-      "type": "json",
-      "private": true
+      "type": "json"
     },
     "keywords": {
       "type": "text",
@@ -71,10 +70,6 @@
       "autoPopulate": false,
       "via": "features",
       "collection": "combinator"
-    },
-    "concepts": {
-      "autoPopulate": false,
-      "collection": "concept"
     },
     "dataset": {
       "via": "features",

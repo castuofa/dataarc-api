@@ -847,9 +847,6 @@
                     "type": "string"
                   }
                 },
-                "concepts": {
-                  "type": "string"
-                },
                 "dataset": {
                   "type": "string"
                 },
