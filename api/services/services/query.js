@@ -17,7 +17,9 @@ module.exports = {
 
     // check for keywords *THIS SHOULD BE FIRST
     if (params.filters.keyword) {
-      params.query.push({ $text: { $search: _.toString(params.filters.keyword) } });
+      params.query.push({
+        $text: { $search: _.toString(params.filters.keyword) },
+      });
     }
 
     // check for bounding box
@@ -226,7 +228,7 @@ module.exports = {
     };
     const filterEmpty = (feature) => {
       return feature._id && feature._id.coords && feature._id.coords.length;
-    }
+    };
     const pipe = [
       {
         $group: {
@@ -251,7 +253,10 @@ module.exports = {
     // write the cache file
     await fs.writeFile(
       file,
-      ['id,lon,lat,color,text', ..._.map(_.filter(results, filterEmpty), transform)].join('\n'),
+      [
+        'id,lon,lat,color,text',
+        ..._.map(_.filter(results, filterEmpty), transform),
+      ].join('\n'),
       'utf8',
       (err) => {
         if (err) strapi.log.error(`Features file not saved or corrupted`);
@@ -307,12 +312,12 @@ module.exports = {
             id: '$facets.category.id',
             name: '$facets.category.name',
             color: '$facets.category.color',
-            period: '$facets.' + resolution
+            period: '$facets.' + resolution,
           },
           count: {
-            $sum: 1
+            $sum: 1,
           },
-        }
+        },
       },
       { $match: { '_id.period': { $gte: start, $lt: end } } },
       { $sort: { '_id.name': 1, '_id.period': 1 } },
@@ -325,22 +330,26 @@ module.exports = {
           },
           periods: {
             $push: {
-              'period': '$_id.period',
-              'count': '$count',
-            }
-          }
-        }
+              period: '$_id.period',
+              count: '$count',
+            },
+          },
+        },
       },
       {
         $project: {
-        _id: false,
-        id: '$_id.id',
-        name: '$_id.name',
-        color: '$_id.color',
-        periods: true
-      }}
+          _id: false,
+          id: '$_id.id',
+          name: '$_id.name',
+          color: '$_id.color',
+          periods: true,
+        },
+      },
     ];
-    const results = await strapi.query('feature').model.aggregate(pipe).allowDiskUse(true);
+    const results = await strapi
+      .query('feature')
+      .model.aggregate(pipe)
+      .allowDiskUse(true);
 
     let out = [];
     _.each(results, (result) => {
@@ -628,34 +637,102 @@ module.exports = {
 
     // get the matched feature docs
     const featureIds = await strapi.services['query'].matchedFeatures(params);
-    const features = await strapi.services['query'].getDocs('feature', [
-      { _id: { $in: _.map(featureIds, ObjectId) } },
-    ]);
+    const features = await strapi
+      .query('feature')
+      .find({ _id: { $in: _.map(featureIds, ObjectId) } });
 
     // get matched concept docs
     const conceptIds = await strapi.services['query'].matchedConcepts(params);
-    const concepts = await strapi.services['query'].getDocs('concept', [
-      { _id: { $in: _.map(conceptIds, ObjectId) } },
-    ]);
+    const concepts = await strapi
+      .query('concept')
+      .find({ _id: { $in: _.map(conceptIds, ObjectId) } });
 
     // get matched combinator docs
     const combinatorIds = await strapi.services['query'].matchedCombinators(
       params
     );
-    const combinators = await strapi.services['query'].getDocs('combinator', [
-      { _id: { $in: _.map(combinatorIds, ObjectId) } },
-    ]);
+    const combinators = await strapi
+      .query('combinator')
+      .find({ _id: { $in: _.map(combinatorIds, ObjectId) } });
 
-    // santitize the results
-    results.features = features.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['feature'] })
-    );
-    results.concepts = concepts.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['concept'] })
-    );
-    results.combinators = combinators.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['combinator'] })
-    );
+    // COMBINATORS
+    results.combinators = combinators.map((entity) => {
+      const combinator = {
+        id: entity.id,
+        title: entity.title,
+        description: entity.description || '',
+        citation: entity.citation || '',
+        url: entity.url || '',
+        operator: entity.operator,
+        refreshed: entity.refreshed,
+        dataset: {
+          id: entity.dataset.id,
+          title: entity.dataset.title,
+        },
+        queries: [],
+        concepts: [],
+        features: [],
+      };
+      if (entity.queries)
+        combinator.queries = entity.queries.map((o) => {
+          return {
+            field: o.field,
+            operator: o.operator,
+            value: o.value,
+          };
+        });
+      if (entity.concepts)
+        combinator.concepts = entity.concepts.map((o) => o.id);
+      if (entity.features)
+        combinator.features = entity.features.map((f) => String(f));
+      return combinator;
+    });
+
+    // CONCEPTS
+    results.concepts = concepts.map((entity) => {
+      const concept = {
+        id: entity.id,
+        title: entity.title,
+        description: entity.description || '',
+        citation: entity.citation || '',
+        url: entity.url || '',
+        group: entity.group,
+        related: [],
+        contextual: [],
+      };
+      if (entity.related) concept.related = entity.related.map((o) => o.id);
+      if (entity.contextual)
+        concept.contextual = entity.contextual.map((o) => o.id);
+      return concept;
+    });
+
+    // FEATURES
+    results.features = features.map((entity) => {
+      const feature = {
+        id: entity.id,
+        url: entity.url || '',
+        category: {},
+        dataset: {
+          id: entity.dataset,
+        },
+        location: entity.location,
+        begin: entity.begin,
+        end: entity.end,
+        properties: entity.properties,
+      };
+      if (entity.facets && entity.facets.dataset && entity.facets.dataset.title)
+        feature.dataset.title = entity.facets.dataset.title;
+      if (entity.facets && entity.facets.category && entity.facets.category.id)
+        feature.category.id = entity.facets.category.id;
+      if (
+        entity.facets &&
+        entity.facets.category &&
+        entity.facets.category.title
+      )
+        feature.category.title = entity.facets.category.title;
+
+      return feature;
+    });
 
     return results;
   },

@@ -28,7 +28,8 @@
     },
     "user": {
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "autoPopulate": false
     },
     "processed": {
       "type": "datetime"
