@@ -656,14 +656,26 @@ module.exports = {
     ]);
 
     // santitize the results
-    results.concepts = concepts.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['concept'] })
-    );
     results.combinators = combinators.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['combinator'] })
+      cleanExportRecord(
+        sanitizeEntity(entity, {
+          model: strapi.models['combinator'],
+        })
+      )
+    );
+    results.concepts = concepts.map((entity) =>
+      cleanExportRecord(
+        sanitizeEntity(entity, {
+          model: strapi.models['concept'],
+        })
+      )
     );
     results.features = features.map((entity) =>
-      sanitizeEntity(entity, { model: strapi.models['feature'] })
+      cleanExportRecord(
+        sanitizeEntity(entity, {
+          model: strapi.models['feature'],
+        })
+      )
     );
 
     return results;
@@ -677,4 +689,15 @@ const joinQuery = (query, op) => {
   let q = {};
   q[op] = query;
   return q;
+};
+
+// santitize result records
+const cleanExportRecord = async (entity) => {
+  if (entity._id) entity.id = entity._id;
+  if (entity.__v) delete entity.__v;
+  if (entity.name) delete entity.name;
+  if (entity.createdAt) delete entity.createdAt;
+  if (entity.updatedAt) delete entity.updatedAt;
+  if (entity.spatial_coverage) delete entity.spatial_coverage;
+  if (entity.temporal_coverage) delete entity.temporal_coverage;
 };
