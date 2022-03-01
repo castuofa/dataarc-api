@@ -17,7 +17,7 @@
     "pug": "^3.0.0",
     "shapefile": "^0.6.6",
     "slugify": "^1.4.6",
-    "strapi": "3.4.5",
+    "strapi": "3.6.8",
     "strapi-admin": "3.4.5",
     "strapi-connector-mongoose": "3.4.5",
     "strapi-plugin-content-manager": "3.4.5",
